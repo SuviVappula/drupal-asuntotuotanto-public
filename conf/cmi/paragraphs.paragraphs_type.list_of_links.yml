@@ -1,0 +1,12 @@
+uuid: 2e5952c7-526d-4c16-966c-1162c3c3bc01
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: orJFXvwu2gBLMtrtkLMovwShKNNom05orGPW0VfSfHk
+id: list_of_links
+label: 'List of links'
+icon_uuid: null
+icon_default: null
+description: 'List of internal or external links. Different designs available.'
+behavior_plugins: {  }
