@@ -16,6 +16,8 @@ public/themes/custom/hdbt*
 # Ignore modules with own repositories
 public/modules/custom/helfi_*
 
+*.sql
+
 # Ignore OSX generated files
 ._*
 .DS_Store

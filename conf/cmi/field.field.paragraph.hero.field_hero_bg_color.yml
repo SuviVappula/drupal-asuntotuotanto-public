@@ -1,0 +1,25 @@
+uuid: eb1c6207-ba19-48d6-947b-a2dcb145c1f6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_hero_bg_color
+    - paragraphs.paragraphs_type.hero
+  module:
+    - options
+_core:
+  default_config_hash: oBcxkQvh42-sDZQOEHuml4LAI9GzDoFVzO7bmbnyVAA
+id: paragraph.hero.field_hero_bg_color
+field_name: field_hero_bg_color
+entity_type: paragraph
+bundle: hero
+label: 'Background color'
+description: 'Choose the background color for the hero element.'
+required: true
+translatable: false
+default_value:
+  -
+    value: coat-of-arms
+default_value_callback: ''
+settings: {  }
+field_type: list_string
