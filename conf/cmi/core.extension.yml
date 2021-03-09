@@ -18,6 +18,7 @@ module:
   entity_reference_revisions: 0
   features: 0
   field: 0
+  field_ui: 0
   file: 0
   filter: 0
   focal_point: 0
@@ -56,6 +57,7 @@ module:
   paragraphs_asymmetric_translation_widgets: 0
   path: 0
   path_alias: 0
+  personal_id: 0
   responsive_image: 0
   select2: 0
   serialization: 0
