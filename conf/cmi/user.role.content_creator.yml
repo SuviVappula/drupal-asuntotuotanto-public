@@ -4,6 +4,6 @@ status: true
 dependencies: {  }
 id: content_creator
 label: 'Content creator'
-weight: 5
+weight: -7
 is_admin: null
 permissions: {  }
