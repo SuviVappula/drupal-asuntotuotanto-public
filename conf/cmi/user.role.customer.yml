@@ -4,6 +4,6 @@ status: true
 dependencies: {  }
 id: customer
 label: Customer
-weight: 2
+weight: -8
 is_admin: null
 permissions: {  }
