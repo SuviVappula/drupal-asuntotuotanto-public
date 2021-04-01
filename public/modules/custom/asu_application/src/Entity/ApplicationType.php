@@ -2,13 +2,16 @@
 namespace Drupal\asu_application\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+use Drupal\Core\Entity\Annotation\ConfigEntityType;
+
 /**
- * Application Type
+ * Defines the Application Type entity. A configuration entity used to manage
+ * bundles for the Application entity.
  *
  * @ConfigEntityType(
  *   id = "application_type",
  *   label = @Translation("Application Type"),
- *   bundle_of = "application_type",
+ *   bundle_of = "asu_application",
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",
@@ -20,6 +23,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *     "label",
  *   },
  *   handlers = {
+ *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
+ *     "list_builder" = "Drupal\Core\Entity\EntityListBuilder",
  *     "form" = {
  *       "default" = "Drupal\asu_application\Form\ApplicationTypeEntityForm",
  *       "add" = "Drupal\asu_application\Form\ApplicationTypeEntityForm",
@@ -30,7 +35,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *       "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
  *     },
  *   },
- *   admin_permission = "administer site configuration",
+ *   admin_permission = "administer content",
  *   links = {
  *     "canonical" = "/admin/structure/application_type/{application_type}",
  *     "add-form" = "/admin/structure/application_type/add",
@@ -41,17 +46,10 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  * )
  */
 class ApplicationType extends ConfigEntityBundleBase {
-  /**
-   * The machine name of the entity.
-   *
-   * @var string
-   */
-  protected $id;
 
-  /**
-   * The human-readable name of the entity.
+  /*
+   *  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
+ *     "list_builder" = "Drupal\asu_application\ApplicationTypeListBuilder",
    *
-   * @var string
    */
-  protected $label;
 }
