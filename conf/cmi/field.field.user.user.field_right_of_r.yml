@@ -1,0 +1,24 @@
+uuid: 2967b7cd-f29a-4ba7-869d-d23e0cc94093
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_right_of_r
+  module:
+    - user
+id: user.user.field_right_of_r
+field_name: field_right_of_r
+entity_type: user
+bundle: user
+label: 'Right of residence number'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
