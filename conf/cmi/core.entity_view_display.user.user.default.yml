@@ -6,11 +6,14 @@ dependencies:
     - field.field.user.user.field_address
     - field.field.user.user.field_bank_account_number
     - field.field.user.user.field_city
+    - field.field.user.user.field_contact_methods
     - field.field.user.user.field_first_name
-    - field.field.user.user.field_haso_number
     - field.field.user.user.field_identification_number
     - field.field.user.user.field_last_name
     - field.field.user.user.field_phone_number
+    - field.field.user.user.field_postal_code
+    - field.field.user.user.field_right_of_r
+    - field.field.user.user.field_wealth_report
   module:
     - personal_id
     - user
@@ -51,14 +54,6 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_haso_number:
-    weight: 12
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   field_identification_number:
     weight: 11
     label: above
@@ -88,4 +83,8 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  field_contact_methods: true
+  field_postal_code: true
+  field_right_of_r: true
+  field_wealth_report: true
   langcode: true
