@@ -6,14 +6,11 @@ dependencies:
     - core.entity_form_mode.user.register
     - field.field.user.user.field_address
     - field.field.user.user.field_bank_account_number
-    - field.field.user.user.field_city
-    - field.field.user.user.field_contact_methods
     - field.field.user.user.field_first_name
     - field.field.user.user.field_identification_number
     - field.field.user.user.field_last_name
     - field.field.user.user.field_phone_number
-    - field.field.user.user.field_postal_code
-    - field.field.user.user.field_wealth_report
+    - field.field.user.user.field_right_of_r
   module:
     - user
 id: user.user.register
@@ -22,12 +19,12 @@ bundle: user
 mode: register
 content:
   account:
-    weight: 2
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
   field_first_name:
-    weight: 0
+    weight: 1
     settings:
       size: 60
       placeholder: ''
@@ -35,7 +32,7 @@ content:
     type: string_textfield
     region: content
   field_last_name:
-    weight: 1
+    weight: 2
     settings:
       size: 60
       placeholder: ''
@@ -45,12 +42,9 @@ content:
 hidden:
   field_address: true
   field_bank_account_number: true
-  field_city: true
-  field_contact_methods: true
   field_identification_number: true
   field_phone_number: true
-  field_postal_code: true
-  field_wealth_report: true
+  field_right_of_r: true
   langcode: true
   language: true
   path: true

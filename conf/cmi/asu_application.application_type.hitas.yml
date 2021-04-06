@@ -1,6 +1,8 @@
-uuid: a83705ec-6800-4085-b479-f0977b0a7816
+uuid: 20533450-9cf3-49fc-9961-3d8d409234f1
 langcode: fi
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: jft6YhftUbVuhqdGjSDHEB3JMtY61jI7gjO4sCz3jMg
 id: hitas
 label: Hitas

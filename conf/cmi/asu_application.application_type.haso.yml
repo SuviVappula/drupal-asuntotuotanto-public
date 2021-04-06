@@ -1,6 +1,8 @@
-uuid: 4d4b2c30-ca93-4d73-b753-8d3dbd8bfa8b
+uuid: d860c2ec-5bf1-4d04-8010-ac1f1c2ad404
 langcode: fi
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: 51ffPOkS47QJVtRemqHWrkFHFGBlNTdds8kfu1-nw7c
 id: haso
 label: Haso
