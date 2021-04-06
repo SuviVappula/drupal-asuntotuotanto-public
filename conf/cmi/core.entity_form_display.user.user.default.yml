@@ -9,7 +9,6 @@ dependencies:
     - field.field.user.user.field_identification_number
     - field.field.user.user.field_last_name
     - field.field.user.user.field_phone_number
-    - field.field.user.user.field_right_of_r
   module:
     - personal_id
     - user
@@ -70,13 +69,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
-    region: content
-  field_right_of_r:
-    weight: 8
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-    type: number
     region: content
   language:
     weight: 7

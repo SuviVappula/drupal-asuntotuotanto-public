@@ -10,7 +10,6 @@ dependencies:
     - field.field.user.user.field_identification_number
     - field.field.user.user.field_last_name
     - field.field.user.user.field_phone_number
-    - field.field.user.user.field_right_of_r
   module:
     - user
 id: user.user.register
@@ -44,7 +43,6 @@ hidden:
   field_bank_account_number: true
   field_identification_number: true
   field_phone_number: true
-  field_right_of_r: true
   langcode: true
   language: true
   path: true
