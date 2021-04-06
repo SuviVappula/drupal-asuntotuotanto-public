@@ -6,7 +6,9 @@ dependencies:
     - core.entity_form_mode.user.register
     - field.field.user.user.field_address
     - field.field.user.user.field_bank_account_number
+    - field.field.user.user.field_city
     - field.field.user.user.field_first_name
+    - field.field.user.user.field_haso_number
     - field.field.user.user.field_identification_number
     - field.field.user.user.field_last_name
     - field.field.user.user.field_phone_number
@@ -41,6 +43,8 @@ content:
 hidden:
   field_address: true
   field_bank_account_number: true
+  field_city: true
+  field_haso_number: true
   field_identification_number: true
   field_phone_number: true
   langcode: true

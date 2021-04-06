@@ -1,16 +1,16 @@
-uuid: b54e7ab1-d8f4-4647-a28f-d51910462b0b
+uuid: c6beb70b-b93b-4058-8196-dfdc017a0f68
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_city
+    - field.storage.user.field_haso_number
   module:
     - user
-id: user.user.field_city
-field_name: field_city
+id: user.user.field_haso_number
+field_name: field_haso_number
 entity_type: user
 bundle: user
-label: City
+label: 'Haso number'
 description: ''
 required: false
 translatable: false
