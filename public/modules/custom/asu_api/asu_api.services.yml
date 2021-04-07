@@ -1,0 +1,18 @@
+services:
+  asu_api.subscriber:
+    class: Drupal\asu_api\EventSubscriber\ApplicationSubscriber
+    arguments:
+      - '@asu_api.backendapi'
+    tags:
+      - { name: event_subscriber }
+
+  asu_api.backendapi:
+    class: Drupal\asu_api\Api\BackendApi\BackendApi
+    arguments:
+      - 'localhost:8000'
+
+  asu_api.drupalapi:
+    class: Drupal\asu_api\Api\DrupalApi\DrupalApi
+    arguments:
+      - 'localhost:8000'
+
