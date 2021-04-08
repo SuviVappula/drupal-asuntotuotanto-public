@@ -4,16 +4,23 @@ namespace Drupal\asu_api\Api\BackendApi\Request;
 
 use Drupal\asu_api\Api\Request;
 
-class ResultRequest extends Request
-{
+/**
+ * Result request.
+ */
+class ResultRequest extends Request {
 
+  /**
+   * Construct.
+   */
   public function __construct() {
-    //TODO: implementat
+    // @todo implementat
   }
 
-  public function toArray(): array
-  {
-    // TODO: Implement toArray() method.
+  /**
+   * Data to array.
+   */
+  public function toArray(): array {
+    // @todo Implement toArray() method.
   }
 
 }

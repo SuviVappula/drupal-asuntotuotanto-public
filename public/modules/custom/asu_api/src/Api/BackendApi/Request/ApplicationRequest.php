@@ -6,19 +6,60 @@ use Drupal\asu_api\Api\Request;
 use Drupal\asu_application\Entity\Application;
 use Drupal\user\Entity\User;
 
+/**
+ * Application request.
+ */
 class ApplicationRequest extends Request {
-
+  /**
+   * Api path.
+   *
+   * @var string
+   */
   protected const PATH = '/application';
+
+  /**
+   * Method.
+   *
+   * @var string
+   */
   protected const METHOD = 'POST';
 
+  /**
+   * User id.
+   *
+   * @var string
+   */
   private $userId;
 
+  /**
+   * Application id.
+   *
+   * @var string
+   */
   private $applicationId;
 
+  /**
+   * Application type.
+   *
+   * @var string
+   */
   private string $applicationType;
 
+  /**
+   * Apartment ids.
+   *
+   * @var array
+   */
   private array $apartmentIds;
 
+  /**
+   * Constructor.
+   *
+   * @param \Drupal\user\Entity\User $user
+   *   Owner of the application.
+   * @param \Drupal\asu_application\Entity\Application $application
+   *   Application.
+   */
   public function __construct(
     User $user,
     Application $application
@@ -29,46 +70,50 @@ class ApplicationRequest extends Request {
     $this->setApartmentIds($application->getApartments());
   }
 
-  public static function create(
-    User $user,
-    Application $application
-  ): self {
-    $instance = new static();
-    $instance->setUserId($user->id());
-    $instance->setApplicationId($application->id());
-    $instance->setApplicationType($application->getType());
-    $instance->setApartmentIds($application->getApartments());
-    return $instance;
-  }
-
-  public function setUserId($userId){
+  /**
+   * Set user id.
+   *
+   * @param string $userId
+   *   User id.
+   */
+  public function setUserId($userId) {
     $this->userId = $userId;
   }
 
-  public function setApplicationId($applicationId){
+  /**
+   * Set application id.
+   *
+   * @param string $applicationId
+   *   Application id.
+   */
+  public function setApplicationId($applicationId) {
     $this->applicationId = $applicationId;
   }
 
-  public function setApplicationType($application_type){
+  /**
+   * Set application type.
+   *
+   * @param string $application_type
+   *   Application type.
+   */
+  public function setApplicationType($application_type) {
     $this->applicationType = $application_type;
   }
 
-  public function setApartmentIds(array $apartmentIds){
+  /**
+   * Set apartment ids.
+   *
+   * @param array $apartmentIds
+   *   Apartment ids.
+   */
+  public function setApartmentIds(array $apartmentIds) {
     $this->apartmentIds = $apartmentIds;
   }
 
-  public function toHttpRequest(){
-    $headers = [];
-    return new \GuzzleHttp\Psr7\Request(
-      $this->getMethod(),
-      $this->getPath(),
-      $headers,
-      $this->toArray(),
-    );
-  }
-
-  public function toArray(): array
-  {
+  /**
+   * Data to array.
+   */
+  public function toArray(): array {
     $values = [
       'user_id' => $this->user_id,
       'application_id' => $this->application_id,

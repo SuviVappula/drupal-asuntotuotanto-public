@@ -1,16 +1,23 @@
 <?php
+
 namespace Drupal\asu_api\Api;
 
-use Drupal\asu_api\Api\RequestHandler;
-
+/**
+ * Base class for services.
+ */
 abstract class ServiceBase {
   /**
+   * Request handler.
+   *
    * @var Drupal\asu_api\BackendApi\RequestHandler
    */
   protected $requestHandler;
 
-  public function __construct(RequestHandler $requestHandler)
-  {
+  /**
+   * Constructor.
+   */
+  public function __construct(RequestHandler $requestHandler) {
     $this->requestHandler = $requestHandler;
   }
+
 }

@@ -2,22 +2,39 @@
 
 namespace Drupal\asu_api\Api;
 
-use Drupal\asu_api\BackendApi\Request\Request;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Handles requests.
+ */
 class RequestHandler {
 
-  /** @var \GuzzleHttp\Client */
+  /**
+   * Guzzle http-client.
+   *
+   * @var \GuzzleHttp\Client
+   */
   private $client;
 
-  private $backendBaseUrl;
+  /**
+   * Api url.
+   *
+   * @var string
+   */
+  private $apiUrl;
 
-  public function __construct(string $backendBaseUrl) {
-    $this->backendBaseUrl = $backendBaseUrl;
+  /**
+   * Constructor.
+   */
+  public function __construct(string $apiUrl) {
+    $this->apiUrl = $apiUrl;
     $this->client = \Drupal::httpClient();
   }
 
+  /**
+   * Send request.
+   */
   public function send(RequestInterface $request): ResponseInterface {
     $options = [];
     return $this->client->send($request, $options);

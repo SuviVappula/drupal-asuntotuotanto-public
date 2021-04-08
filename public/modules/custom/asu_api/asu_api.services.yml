@@ -6,13 +6,13 @@ services:
     tags:
       - { name: event_subscriber }
 
-  asu_api.backendapi:
+  asu_api.backend_api:
     class: Drupal\asu_api\Api\BackendApi\BackendApi
     arguments:
       - 'localhost:8000'
 
-  asu_api.drupalapi:
+  asu_api.drupal_api:
     class: Drupal\asu_api\Api\DrupalApi\DrupalApi
     arguments:
-      - 'localhost:8000'
+      - 'http://dev.asuntotuotanto.druidfi.wod.by/'
 

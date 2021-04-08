@@ -2,7 +2,6 @@
 
 namespace Drupal\asu_application\Plugin\Field\FieldType;
 
-use Drupal\Core\Field\Annotation\FieldType;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinition;
@@ -20,28 +19,32 @@ use Drupal\Core\TypedData\DataDefinition;
  */
 class ApartmentFieldItem extends FieldItemBase {
 
-  public static function schema(FieldStorageDefinitionInterface $field_definition)
-  {
+  /**
+   *
+   */
+  public static function schema(FieldStorageDefinitionInterface $field_definition) {
     return [
       'columns' => [
         'id' => [
           'type' => 'varchar',
           'length' => 255,
           'default' => '',
-          #'not_null' => FALSE,
+          // 'not_null' => FALSE,
         ],
         'information' => [
           'type' => 'varchar',
           'length' => 255,
-          'default' => ''
-          #'not_null' => FALSE,
+          'default' => '',
+          // 'not_null' => FALSE,
         ],
-      ]
+      ],
     ];
   }
 
-  public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition)
-  {
+  /**
+   *
+   */
+  public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $properties = [];
     $properties['id'] = DataDefinition::create('string')
       ->setLabel(t('id'));
@@ -50,13 +53,17 @@ class ApartmentFieldItem extends FieldItemBase {
     return $properties;
   }
 
-  public static function defaultFieldSettings()
-  {
+  /**
+   *
+   */
+  public static function defaultFieldSettings() {
     return parent::defaultFieldSettings();
   }
 
-  public function isEmpty()
-  {
+  /**
+   *
+   */
+  public function isEmpty() {
     return $this->id === NULL || $this->id === '';
   }
 

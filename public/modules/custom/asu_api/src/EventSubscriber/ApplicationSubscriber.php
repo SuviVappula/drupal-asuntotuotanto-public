@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace Drupal\asu_api\EventSubscriber;
 
@@ -7,21 +7,35 @@ use Drupal\asu_api\ApplicationEvent;
 use Drupal\asu_api\BackendApi\Request\ApplicationRequest;
 use Drupal\asu_api\Api\BackendApi\BackendApi;
 use Drupal\Core\Messenger\MessengerTrait;
-use Psr\Log\LoggerTrait;
 
+/**
+ * Application subscriber.
+ */
 class ApplicationSubscriber implements EventSubscriberInterface {
 
   use MessengerTrait;
-  use LoggerTrait;
 
+  /**
+   * Backend api.
+   *
+   * @var \Drupal\asu_api\Api\BackendApi\BackendApi
+   */
   private BackendApi $backendApi;
 
+  /**
+   * Constructor.
+   *
+   * @param \Drupal\asu_api\Api\BackendApi\BackendApi $backendApi
+   *   Backend api.
+   */
   public function __construct(BackendApi $backendApi) {
     $this->backendApi = $backendApi;
   }
 
   /**
-   * @inheritDoc
+   * Get subscribed events.
+   *
+   * @return array The event names to listen to
    */
   public static function getSubscribedEvents() {
     $events[ApplicationEvent::EVENT_NAME] = ['sendApplication'];
@@ -47,10 +61,9 @@ class ApplicationSubscriber implements EventSubscriberInterface {
         ->sendApplication($request)
         ->getContent();
 
-      // TODO: impelment rest of the logic.
-
+      // @todo impelment rest of the logic.
     }
-    catch(\Exception $e) {
+    catch (\Exception $e) {
       $this->log('critical', 'Exception while sending application to backend: application id ' . $entity->id() . '. ' . $e->getMessage());
     }
   }

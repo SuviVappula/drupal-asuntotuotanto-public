@@ -2,10 +2,15 @@
 
 namespace Drupal\asu_api\Api\DrupalApi\Request;
 
+/**
+ * Application request.
+ */
 class ApplicationRequest {
 
-  public function __construct()
-  {
+  /**
+   * Constructor.
+   */
+  public function __construct() {
   }
 
 }

@@ -2,6 +2,9 @@
 
 namespace Drupal\asu_api\Api;
 
+/**
+ * Request class.
+ */
 abstract class Request {
 
   protected const METHOD = 'GET';
@@ -13,7 +16,7 @@ abstract class Request {
    * @return string
    *   The HTTP method.
    */
-  public function getMethod(): string{
+  public function getMethod(): string {
     return static::METHOD;
   }
 

@@ -2,13 +2,11 @@
 
 namespace Drupal\asu_application\Plugin\Field\FieldType;
 
-use Drupal\Core\Field\Annotation\FieldType;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\DataDefinition;
-use Drupal\taxonomy\Entity\Vocabulary;
 
 /**
  * Provides a field type of applicant.
@@ -30,28 +28,32 @@ class ApplicantFieldItem extends FieldItemBase implements FieldItemInterface {
     return parent::defaultStorageSettings();
   }
 
-  public static function schema(FieldStorageDefinitionInterface $field_definition)
-  {
+  /**
+   *
+   */
+  public static function schema(FieldStorageDefinitionInterface $field_definition) {
     return [
       'columns' => [
         'name' => [
           'type' => 'varchar',
           'length' => 255,
           'default' => '',
-          #'not_null' => FALSE,
+          // 'not_null' => FALSE,
         ],
         'email' => [
           'type' => 'varchar',
           'length' => 255,
-          'default' => ''
-          #'not_null' => FALSE,
+          'default' => '',
+          // 'not_null' => FALSE,
         ],
-      ]
+      ],
     ];
   }
 
-  public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition)
-  {
+  /**
+   *
+   */
+  public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $properties = [];
     $properties['name'] = DataDefinition::create('string')
       ->setLabel(t('Name'));
@@ -67,8 +69,10 @@ class ApplicantFieldItem extends FieldItemBase implements FieldItemInterface {
     return parent::storageSettingsForm($form, $form_state, $has_data);
   }
 
-  public function isEmpty()
-  {
+  /**
+   *
+   */
+  public function isEmpty() {
     return $this->name === NULL || $this->name === '';
   }
 

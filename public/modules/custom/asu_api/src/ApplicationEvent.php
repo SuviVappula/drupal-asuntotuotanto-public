@@ -15,20 +15,20 @@ class ApplicationEvent extends Event {
    *
    * @var int
    */
-  protected $application_id;
+  protected $applicationId;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct($application_id) {
-    $this->application_id = $application_id;
+  public function __construct($applicationId) {
+    $this->applicationId = $applicationId;
   }
 
   /**
    * Gets the application id.
    */
   public function getApplicationId() {
-    return $this->application_id;
+    return $this->applicationId;
   }
 
 }

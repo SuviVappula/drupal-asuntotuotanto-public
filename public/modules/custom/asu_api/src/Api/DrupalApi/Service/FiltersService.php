@@ -3,56 +3,40 @@
 namespace Drupal\asu_api\Api\DrupalApi\Service;
 
 use Drupal\asu_api\Api\BackendApi\Response\ApplicationResponse;
-use Drupal\asu_api\Api\DrupalApi\Request\ApplicationRequest;
+use Drupal\asu_api\Api\DrupalApi\Request\FiltersRequest;
 use Drupal\asu_api\Api\RequestHandler;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Application service.
+ *
  */
-class ApplicationService {
+class FiltersService {
   /**
-   * Request handler.
-   *
    * @var \Drupal\asu_api\Api\RequestHandler
    */
   private RequestHandler $requestHandler;
 
   /**
-   * Constructor.
+   *
    */
   public function __construct(RequestHandler $requestHandler) {
     $this->requestHandler = $requestHandler;
   }
 
   /**
-   * Send application.
    *
-   * @param \Drupal\asu_api\Api\DrupalApi\Request\ApplicationRequest $request
-   *   ApplicationRequest.
-   *
-   * @return \Drupal\asu_api\Api\BackendApi\Response\ApplicationResponse
-   *   ApplicationResponse.
-   *
-   * @throws \Exception
    */
-  public function sendApplication(ApplicationRequest $request) {
+  public function getFilters(FiltersRequest $request) {
     $httpRequest = $this->buildRequest($request);
     $response = $this->requestHandler->send($httpRequest);
     return ApplicationResponse::createFromHttpResponse($response);
   }
 
   /**
-   * Build request for application.
    *
-   * @param \Drupal\asu_api\Api\DrupalApi\Request\ApplicationRequest $request
-   *   ApplicationRequest.
-   *
-   * @return \GuzzleHttp\Psr7\RequestInterface
-   *   GuzzleRequest.
    */
-  private function buildRequest(ApplicationRequest $request): RequestInterface {
+  private function buildRequest(FiltersRequest $request): RequestInterface {
     $payload = $request->toArray();
     return new Request(
       $request->getMethod(),
