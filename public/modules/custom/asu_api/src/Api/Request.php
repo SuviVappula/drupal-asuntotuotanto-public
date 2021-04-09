@@ -3,7 +3,7 @@
 namespace Drupal\asu_api\Api;
 
 /**
- * Request class.
+ * The request class.
  */
 abstract class Request {
 

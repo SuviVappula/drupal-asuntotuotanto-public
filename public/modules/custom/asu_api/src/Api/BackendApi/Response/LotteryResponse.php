@@ -3,7 +3,7 @@
 namespace Drupal\asu_api\Api\BackendApi\Response;
 
 /**
- * LotteryResponse.
+ * Lottery response.
  */
 class LotteryResponse {
 

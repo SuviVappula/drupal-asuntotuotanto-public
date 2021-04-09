@@ -66,6 +66,11 @@ class ApplicationRequest extends Request {
    */
   private string $rightOfResidenceNumber;
 
+  /**
+   * Project id.
+   *
+   * @var int
+   */
   private string $projectId;
 
   /**

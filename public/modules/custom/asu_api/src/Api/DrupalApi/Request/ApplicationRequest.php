@@ -16,7 +16,7 @@ class ApplicationRequest extends Request {
   }
 
   /**
-   *
+   * Data to array.
    */
   public function toArray(): array {
     // @todo Implement toArray() method.

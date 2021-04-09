@@ -47,7 +47,7 @@ class RequestHandler {
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function send(RequestInterface $request, $options = []): ResponseInterface {
+  public function send(RequestInterface $request, array $options = []): ResponseInterface {
     return $this->client->send($request, $options);
   }
 
@@ -55,6 +55,7 @@ class RequestHandler {
    * Build request to be sent.
    *
    * @param \Drupal\asu_api\Api\Request $request
+   *   Request.
    *
    * @return \GuzzleHttp\Psr7\RequestInterface
    *   Request to send.
