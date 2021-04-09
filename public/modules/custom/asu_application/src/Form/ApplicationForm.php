@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\user\Entity\User;
 
 /**
- * Class ApplicationForm.
+ * Form ApplicationForm.
  */
 class ApplicationForm extends ContentEntityForm {
 
@@ -38,7 +38,7 @@ class ApplicationForm extends ContentEntityForm {
 
     $project_data = $this->getApartments($project_id);
 
-    $form['#title'] = t('Application for ') . $project_data['project'];
+    $form['#title'] = $this->t('Application for') . ' ' . $project_data['project'];
 
     if ($application_type_id == 'haso') {
       if ($this->entity->isNew()) {
@@ -84,20 +84,13 @@ class ApplicationForm extends ContentEntityForm {
   }
 
   /**
+   * Get project apartments.
    *
-   */
-  private function getApplicationType($type) {
-
-  }
-
-  /**
-   *
+   * @return array
+   *   Array of apartments.
    */
   private function getApartments() {
-    // Get apartments.
-    /** @var \GuzzleHttp\Client $client */
-    // $client = Drupal::httpClient();
-    // $client->post();
+    // @todo Get apartments from elsewhere.
     $apartments = [
       '0' => $this->t('Select'),
       '2' => 'Kaakelikuja 22 A1',

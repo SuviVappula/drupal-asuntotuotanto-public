@@ -38,7 +38,8 @@ class ApplicationService {
    * @throws \Exception
    */
   public function sendApplication(ApplicationRequest $request) {
-    $httpRequest = $this->buildRequest($request);
+    $httpRequest = $this->requestHandler->buildRequest($request);
+    // $httpRequest = $this->buildRequest($request);
     $response = $this->requestHandler->send($httpRequest);
     return ApplicationResponse::createFromHttpResponse($response);
   }
@@ -54,11 +55,12 @@ class ApplicationService {
    */
   private function buildRequest(ApplicationRequest $request): RequestInterface {
     $payload = $request->toArray();
+    // Return $this->requestHandler->buildRequest()
     return new Request(
       $request->getMethod(),
       $request->getPath(),
       ['Content-Type' => 'application/json'],
-      $payload
+      json_encode($payload)
     );
   }
 

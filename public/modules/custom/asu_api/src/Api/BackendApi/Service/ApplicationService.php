@@ -4,7 +4,7 @@ namespace Drupal\asu_api\Api\BackendApi\Service;
 
 use Drupal\asu_api\Api\BackendApi\Response\ApplicationResponse;
 use Drupal\asu_api\Api\ServiceBase;
-use Drupal\asu_api\BackendApi\Request\ApplicationRequest;
+use Drupal\asu_api\Api\BackendApi\Request\ApplicationRequest;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 

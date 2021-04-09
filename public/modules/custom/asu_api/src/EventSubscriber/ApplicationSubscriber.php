@@ -2,9 +2,9 @@
 
 namespace Drupal\asu_api\EventSubscriber;
 
-use Composer\EventDispatcher\EventSubscriberInterface;
 use Drupal\asu_api\ApplicationEvent;
-use Drupal\asu_api\BackendApi\Request\ApplicationRequest;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Drupal\asu_api\Api\BackendApi\Request\ApplicationRequest;
 use Drupal\asu_api\Api\BackendApi\BackendApi;
 use Drupal\Core\Messenger\MessengerTrait;
 
@@ -64,7 +64,7 @@ class ApplicationSubscriber implements EventSubscriberInterface {
       // @todo impelment rest of the logic.
     }
     catch (\Exception $e) {
-      $this->log('critical', 'Exception while sending application to backend: application id ' . $entity->id() . '. ' . $e->getMessage());
+      // $this->log('critical', 'Exception while sending application to backend: application id ' . $entity->id() . '. ' . $e->getMessage());
     }
   }
 

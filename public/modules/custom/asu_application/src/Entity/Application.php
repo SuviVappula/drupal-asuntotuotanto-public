@@ -66,14 +66,27 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
   use EntityOwnerTrait;
 
   /**
+   * Gets project id.
    *
+   * @return string
+   *   Project id.
    */
   public function getProjectId() {
     return $this->project_id->value;
   }
 
   /**
+   * Return has children.
    *
+   * @return bool
+   *   Has children.
+   */
+  public function getHasChildren(): bool {
+    return $this->has_children->value == FALSE;
+  }
+
+  /**
+   * @inheritDoc
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);

@@ -15,7 +15,7 @@ class ApplicationRequest extends Request {
    *
    * @var string
    */
-  protected const PATH = '/application';
+  protected const PATH = 'application';
 
   /**
    * Method.
@@ -53,6 +53,22 @@ class ApplicationRequest extends Request {
   private array $apartmentIds;
 
   /**
+   * Has children.
+   *
+   * @var bool
+   */
+  private bool $hasChildren;
+
+  /**
+   * Right of residence number.
+   *
+   * @var int
+   */
+  private string $rightOfResidenceNumber;
+
+  private string $projectId;
+
+  /**
    * Constructor.
    *
    * @param \Drupal\user\Entity\User $user
@@ -66,8 +82,11 @@ class ApplicationRequest extends Request {
   ) {
     $this->setUserId($user->id());
     $this->setApplicationId($application->id());
+    $this->setRightOfResidenceNumber($user->field_right_of_r->value);
     $this->setApplicationType($application->getType());
     $this->setApartmentIds($application->getApartments());
+    $this->setHasChildren($application->getHasChildren());
+    $this->projectId = $application->getProjectId();
   }
 
   /**
@@ -111,15 +130,41 @@ class ApplicationRequest extends Request {
   }
 
   /**
+   * Set Right of residence number.
+   *
+   * @param string $value
+   *   Application type.
+   */
+  public function setRightOfResidenceNumber($value) {
+    $this->hasoNumber = $value;
+  }
+
+  /**
+   * Set HasChildren.
+   *
+   * @param bool $value
+   *   Application type.
+   */
+  public function setHasChildren($value) {
+    $this->hasChildren = $value;
+  }
+
+  /**
    * Data to array.
    */
   public function toArray(): array {
     $values = [
-      'user_id' => $this->user_id,
-      'application_id' => $this->application_id,
-      'application_type' => $this->application_type,
-      'apartment_ids' => $this->apartment_ids,
+      'user_id' => $this->userId,
+      'application_id' => $this->applicationId,
+      'project_id' => $this->projectId,
+      'application_type' => $this->applicationType,
+      'apartment_ids' => $this->apartmentIds,
+      'has_children' => $this->hasChildren,
     ];
+
+    if ($this->rightOfResidenceNumber) {
+      $values['haso_number'] = $this->rightOfResidenceNumber;
+    }
 
     return $values;
   }

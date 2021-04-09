@@ -1,3 +1,7 @@
+parameters:
+  asu_api.backend.base_url: 'localhost:8000'
+  asu_api.drupal.base_url: 'http://dev.asuntotuotanto.druidfi.wod.by/'
+
 services:
   asu_api.subscriber:
     class: Drupal\asu_api\EventSubscriber\ApplicationSubscriber
@@ -6,13 +10,10 @@ services:
     tags:
       - { name: event_subscriber }
 
-  asu_api.backend_api:
+  asu_api.backendapi:
     class: Drupal\asu_api\Api\BackendApi\BackendApi
-    arguments:
-      - 'localhost:8000'
+    arguments: ['%asu_api.backend.base_url%']
 
-  asu_api.drupal_api:
+  asu_api.drupalapi:
     class: Drupal\asu_api\Api\DrupalApi\DrupalApi
-    arguments:
-      - 'http://dev.asuntotuotanto.druidfi.wod.by/'
-
+    arguments: ['%asu_api.drupal.base_url%']
