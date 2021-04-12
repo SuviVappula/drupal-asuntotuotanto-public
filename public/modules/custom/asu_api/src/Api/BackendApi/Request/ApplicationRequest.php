@@ -5,6 +5,7 @@ namespace Drupal\asu_api\Api\BackendApi\Request;
 use Drupal\asu_api\Api\Request;
 use Drupal\asu_application\Entity\Application;
 use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
 
 /**
  * Application request.
@@ -64,7 +65,7 @@ class ApplicationRequest extends Request {
    *
    * @var int
    */
-  private string $rightOfResidenceNumber;
+  private ?string $rightOfResidenceNumber;
 
   /**
    * Project id.
@@ -82,14 +83,25 @@ class ApplicationRequest extends Request {
    *   Application.
    */
   public function __construct(
-    User $user,
+    UserInterface $user,
     Application $application
   ) {
     $this->setUserId($user->id());
     $this->setApplicationId($application->id());
     $this->setRightOfResidenceNumber($user->field_right_of_r->value);
-    $this->setApplicationType($application->getType());
-    $this->setApartmentIds($application->getApartments());
+    $this->setApplicationType($application->bundle());
+
+    $apartments = [];
+    foreach($application->getApartments()->getValue() as $key => $value){
+      if (isset($value['id'])) {
+        $apartments[$key+1] = (int)$value['id'];
+      }
+    }
+    if(empty($apartments)){
+      throw new \Exception('Application apartments cannot be empty.');
+    }
+
+    $this->setApartmentIds($apartments);
     $this->setHasChildren($application->getHasChildren());
     $this->projectId = $application->getProjectId();
   }
@@ -141,7 +153,7 @@ class ApplicationRequest extends Request {
    *   Application type.
    */
   public function setRightOfResidenceNumber($value) {
-    $this->hasoNumber = $value;
+    $this->rightOfResidenceNumber = $value;
   }
 
   /**

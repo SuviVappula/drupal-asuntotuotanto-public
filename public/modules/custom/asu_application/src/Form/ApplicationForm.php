@@ -5,6 +5,8 @@ namespace Drupal\asu_application\Form;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\user\Entity\User;
+use Drupal\asu_application\Event\ApplicationEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Form ApplicationForm.
@@ -71,6 +73,10 @@ class ApplicationForm extends ContentEntityForm {
 
     switch ($status) {
       case SAVED_NEW:
+        $event = new ApplicationEvent($entity->id());
+        /** @var EventDispatcher $event_dispatcher */
+        $event_dispatcher = \Drupal::service('event_dispatcher');
+        $event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
         $this->messenger()->addStatus($this->t('Created the %bundle_label - %content_entity_label entity:  %entity_label.', $message_params));
         break;
 

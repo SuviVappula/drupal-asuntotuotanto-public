@@ -1,15 +1,8 @@
 parameters:
-  asu_api.backend.base_url: 'localhost:8000'
+  asu_api.backend.base_url: 'localhost:8000/'
   asu_api.drupal.base_url: 'http://dev.asuntotuotanto.druidfi.wod.by/'
 
 services:
-  asu_api.subscriber:
-    class: Drupal\asu_api\EventSubscriber\ApplicationSubscriber
-    arguments:
-      - '@asu_api.backendapi'
-    tags:
-      - { name: event_subscriber }
-
   asu_api.backendapi:
     class: Drupal\asu_api\Api\BackendApi\BackendApi
     arguments: ['%asu_api.backend.base_url%']

@@ -2,6 +2,7 @@
 
 namespace Drupal\asu_api\Api\BackendApi\Response;
 
+use Drupal\asu_api\Exception\ApplicationRequestException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -46,8 +47,8 @@ class ApplicationResponse {
    * @throws \Exception
    */
   public static function createFromHttpResponse(ResponseInterface $response) {
-    if ($response->getStatusCode() !== 200) {
-      throw new \Exception('Bad status code: ' . $response->getStatusCode());
+    if ($response->getStatusCode() < 200 && $response->getStatusCode() > 299) {
+      throw new ApplicationRequestException('Bad status code: ' . $response->getStatusCode());
     }
     $content = json_decode($response->getBody()->getContents(), FALSE);
     return new self($content);

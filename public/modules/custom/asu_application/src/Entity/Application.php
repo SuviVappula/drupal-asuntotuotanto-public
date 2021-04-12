@@ -85,6 +85,10 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
     return $this->has_children->value == FALSE;
   }
 
+  public function getApartments() {
+    return $this->apartment;
+  }
+
   /**
    * @inheritDoc
    */

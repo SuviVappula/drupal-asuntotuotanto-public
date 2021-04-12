@@ -5,7 +5,7 @@ namespace Drupal\asu_api\Api;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Drupal\asu_api\Api\Request as RequestDto;
+use Drupal\asu_api\Api\Request as AppRequest;
 
 /**
  * Handles requests.
@@ -60,9 +60,9 @@ class RequestHandler {
    * @return \GuzzleHttp\Psr7\RequestInterface
    *   Request to send.
    */
-  public function buildRequest(RequestDto $request): RequestInterface {
+  public function buildRequest(AppRequest $request): RequestInterface {
     $method = $request->getMethod();
-    $uri = "{$this->apiUrl}/{$request->getPath()}";
+    $uri = "{$this->apiUrl}{$request->getPath()}";
     $payload = $request->toArray();
     return new Request(
       $method,
