@@ -2,30 +2,30 @@
 
 namespace Drupal\asu_application\Form;
 
-use Drupal\asu_application\Entity\ApplicationType;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\user\Entity\User;
+use Drupal\asu_application\Event\ApplicationEvent;
 
 /**
- * Class ApplicationForm
+ * Form ApplicationForm.
  */
 class ApplicationForm extends ContentEntityForm {
+
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state)
-  {
-    if(!$this->entity->isNew() && !$this->entity->getProjectId()){
+  public function buildForm(array $form, FormStateInterface $form_state) {
+    if (!$this->entity->isNew() && !$this->entity->getProjectId()) {
       die('you should not be here');
     }
 
     $parameters = \Drupal::routeMatch()->getParameters();
 
-    if($this->entity->isNew()){
+    if ($this->entity->isNew()) {
       $project_id = $parameters->get('project_id');
       $user = User::load(\Drupal::currentUser()->id());
-      /** @var ApplicationType $application */
+      /** @var \Drupal\asu_application\Entity\ApplicationType $application */
       $application = $parameters->get('application_type');
       $application_type_id = $application->id();
     }
@@ -39,23 +39,22 @@ class ApplicationForm extends ContentEntityForm {
 
     $project_data = $this->getApartments($project_id);
 
-    $form['#title'] = t('Application for ') . $project_data['project'];
+    $form['#title'] = $this->t('Application for') . ' ' . $project_data['project'];
 
-    if($application_type_id == 'haso'){
-      if($this->entity->isNew()){
-        if(!$user->field_right_of_r->value){
+    if ($application_type_id == 'haso') {
+      if ($this->entity->isNew()) {
+        if (!$user->field_right_of_r->value) {
           $this->messenger()->addMessage("Your user account is missing the right of residence number. You must add a valid right of residence number in order to apply.");
         }
       }
 
     }
-    else if($application_type_id == 'hitas') {
+    elseif ($application_type_id == 'hitas') {
 
     }
 
     return $form;
   }
-
 
   /**
    * {@inheritdoc}
@@ -73,7 +72,11 @@ class ApplicationForm extends ContentEntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        $this->messenger()->addStatus($this->t('Created the %bundle_label - %content_entity_label entity:  %entity_label.', $message_params ));
+        $event = new ApplicationEvent($entity->id());
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $event_dispatcher */
+        $event_dispatcher = \Drupal::service('event_dispatcher');
+        $event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
+        $this->messenger()->addStatus($this->t('Created the %bundle_label - %content_entity_label entity:  %entity_label.', $message_params));
         break;
 
       default:
@@ -85,16 +88,14 @@ class ApplicationForm extends ContentEntityForm {
 
   }
 
-  private function getApplicationType($type){
-
-  }
-
-  private function getApartments(){
-    //get apartments
-    /** @var \GuzzleHttp\Client $client */
-    #$client = Drupal::httpClient();
-    #$client->post();
-
+  /**
+   * Get project apartments.
+   *
+   * @return array
+   *   Array of apartments.
+   */
+  private function getApartments() {
+    // @todo Get apartments from elsewhere.
     $apartments = [
       '0' => $this->t('Select'),
       '2' => 'Kaakelikuja 22 A1',
@@ -113,7 +114,7 @@ class ApplicationForm extends ContentEntityForm {
 
     $data = [
       'project' => 'Kaakelikuja 22',
-      'apartments' => $apartments
+      'apartments' => $apartments,
     ];
 
     return $data;

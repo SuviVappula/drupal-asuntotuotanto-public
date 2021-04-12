@@ -1,12 +1,11 @@
 <?php
+
 namespace Drupal\asu_application\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
-use Drupal\Core\Entity\Annotation\ConfigEntityType;
 
 /**
- * Defines the Application Type entity. A configuration entity used to manage
- * bundles for the Application entity.
+ * Defines the Application Type entity.
  *
  * @ConfigEntityType(
  *   id = "application_type",
@@ -49,7 +48,7 @@ class ApplicationType extends ConfigEntityBundleBase {
 
   /*
    *  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\asu_application\ApplicationTypeListBuilder",
+   *     "list_builder" = "Drupal\asu_application\ApplicationTypeListBuilder",
    *
    */
 }
