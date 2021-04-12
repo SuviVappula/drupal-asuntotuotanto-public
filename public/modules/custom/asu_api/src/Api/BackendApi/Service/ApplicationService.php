@@ -22,7 +22,7 @@ class ApplicationService extends ServiceBase {
    *
    * @throws \Exception
    */
-  public function sendApplication(ApplicationRequest $request) {
+  public function sendApplication(ApplicationRequest $request): ApplicationResponse {
     $httpRequest = $this->requestHandler->buildRequest($request);
     $response = $this->requestHandler->send($httpRequest);
     return ApplicationResponse::createFromHttpResponse($response);

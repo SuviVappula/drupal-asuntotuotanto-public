@@ -23,40 +23,21 @@ class ApplicantWidget extends WidgetBase {
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
-    return parent::defaultSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    /*
-    $element['wrap'] = [
-    '#type',
-    '#cardinality' => $this->fieldDefinition->getFieldStorageDefinition()->getCardinality(),
-    ]
-     */
-
     $element['name'] = [
       '#type' => 'textfield',
-      '#title' => t('Name'),
+      '#title' => $this->t('Name'),
       '#size' => 255,
       '#default_value' => isset($items->getValue()[$delta]['name']) ? $items->getValue()[$delta]['name'] : '',
     ];
 
     $element['email'] = [
       '#type' => 'email',
-      '#title' => t('Email'),
+      '#title' => $this->t('Email'),
       '#size' => 255,
       '#default_value' => isset($items->getValue()[$delta]['email']) ? $items->getValue()[$delta]['email'] : '',
     ];
 
-    // Setting default value to all fields from above
-    // $children = Element::children($element);
-    // foreach ($children as $child) {
-    // $element[$child]['#default_value'] = isset($items[$delta]->{$child}) ? $items[$delta]->{$child} : NULL;
-    // }.
     return $element;
   }
 

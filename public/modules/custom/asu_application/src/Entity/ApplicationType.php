@@ -5,8 +5,7 @@ namespace Drupal\asu_application\Entity;
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
 
 /**
- * Defines the Application Type entity. A configuration entity used to manage
- * bundles for the Application entity.
+ * Defines the Application Type entity.
  *
  * @ConfigEntityType(
  *   id = "application_type",

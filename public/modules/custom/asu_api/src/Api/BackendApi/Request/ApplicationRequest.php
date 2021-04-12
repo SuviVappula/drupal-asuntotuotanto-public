@@ -4,7 +4,6 @@ namespace Drupal\asu_api\Api\BackendApi\Request;
 
 use Drupal\asu_api\Api\Request;
 use Drupal\asu_application\Entity\Application;
-use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 
 /**
@@ -77,7 +76,7 @@ class ApplicationRequest extends Request {
   /**
    * Constructor.
    *
-   * @param \Drupal\user\Entity\User $user
+   * @param \Drupal\user\Entity\UserInterface $user
    *   Owner of the application.
    * @param \Drupal\asu_application\Entity\Application $application
    *   Application.
@@ -92,12 +91,12 @@ class ApplicationRequest extends Request {
     $this->setApplicationType($application->bundle());
 
     $apartments = [];
-    foreach($application->getApartments()->getValue() as $key => $value){
+    foreach ($application->getApartments()->getValue() as $key => $value) {
       if (isset($value['id'])) {
-        $apartments[$key+1] = (int)$value['id'];
+        $apartments[$key + 1] = (int) $value['id'];
       }
     }
-    if(empty($apartments)){
+    if (empty($apartments)) {
       throw new \Exception('Application apartments cannot be empty.');
     }
 

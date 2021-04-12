@@ -20,7 +20,7 @@ use Drupal\Core\TypedData\DataDefinition;
 class ApartmentFieldItem extends FieldItemBase {
 
   /**
-   *
+   * {@inheritdoc}
    */
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
     return [
@@ -42,7 +42,7 @@ class ApartmentFieldItem extends FieldItemBase {
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $properties = [];
@@ -54,14 +54,7 @@ class ApartmentFieldItem extends FieldItemBase {
   }
 
   /**
-   *
-   */
-  public static function defaultFieldSettings() {
-    return parent::defaultFieldSettings();
-  }
-
-  /**
-   *
+   * {@inheritdoc}
    */
   public function isEmpty() {
     return $this->id === NULL || $this->id === '';

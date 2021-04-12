@@ -5,7 +5,6 @@ namespace Drupal\asu_application\Plugin\Field\FieldType;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
@@ -23,13 +22,6 @@ class ApplicantFieldItem extends FieldItemBase implements FieldItemInterface {
 
   /**
    * {@inheritdoc}
-   */
-  public static function defaultStorageSettings() {
-    return parent::defaultStorageSettings();
-  }
-
-  /**
-   *
    */
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
     return [
@@ -51,7 +43,7 @@ class ApplicantFieldItem extends FieldItemBase implements FieldItemInterface {
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $properties = [];
@@ -63,14 +55,7 @@ class ApplicantFieldItem extends FieldItemBase implements FieldItemInterface {
   }
 
   /**
-   * Storage settings form for personnel.
-   */
-  public function storageSettingsForm(array &$form, FormStateInterface $form_state, $has_data) {
-    return parent::storageSettingsForm($form, $form_state, $has_data);
-  }
-
-  /**
-   *
+   * {@inheritdoc}
    */
   public function isEmpty() {
     return $this->name === NULL || $this->name === '';

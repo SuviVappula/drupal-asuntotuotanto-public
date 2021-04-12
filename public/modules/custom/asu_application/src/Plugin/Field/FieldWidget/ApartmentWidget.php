@@ -23,18 +23,11 @@ class ApartmentWidget extends WidgetBase {
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
-    return parent::defaultSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element['id'] = [
       '#type' => 'select',
       '#cardinality' => -1,
-      '#title' => t('Apartment'),
+      '#title' => $this->t('Apartment'),
       '#required' => FALSE,
       '#options' => $this->getApartments(),
       '#default_value' => isset($items->getValue()[$delta]['id']) ? $items->getValue()[$delta]['id'] : 0,
@@ -44,22 +37,26 @@ class ApartmentWidget extends WidgetBase {
   }
 
   /**
-   * @inheritDoc
+   * {@inheritdoc}
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state): array {
     $values = parent::massageFormValues($values, $form, $form_state);
-    foreach($values as $key => $value){
+    foreach ($values as $key => $value) {
       $values[$key]['information'] = $form['apartment']['widget'][$key]['id']['#options']['apartments'][$value['id']];
     }
     return $values;
   }
 
   /**
+   * Get apartments.
    *
+   * @return array
+   *   Array of project and apartments.
    */
   private function getApartments() {
     // Get apartments.
     /** @var \GuzzleHttp\Client $client */
+
     // $client = Drupal::httpClient();
     // $client->post();
     $apartments = [

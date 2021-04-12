@@ -26,14 +26,14 @@ class ApplicationSubscriber implements EventSubscriberInterface {
   /**
    * Logger.
    *
-   * @var LoggerInterface
+   * @var \Psr\Log\LoggerInterface
    */
   private LoggerInterface $logger;
 
   /**
    * Constructor.
    *
-   * @param LoggerInterface $logger
+   * @param \Psr\Log\LoggerInterface $logger
    * @param \Drupal\asu_api\Api\BackendApi\BackendApi $backendApi
    *   Backend api.
    */
@@ -49,7 +49,7 @@ class ApplicationSubscriber implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents() {
     return [
-      ApplicationEvent::EVENT_NAME => 'sendApplication'
+      ApplicationEvent::EVENT_NAME => 'sendApplication',
     ];
   }
 
@@ -57,15 +57,12 @@ class ApplicationSubscriber implements EventSubscriberInterface {
    * Sends application to backend.
    */
   public function sendApplication(ApplicationEvent $applicationEvent) {
-    $this->logger->info('starting application sending');
     $entity_type = 'asu_application';
     $entity_id = $applicationEvent->getApplicationId();
 
     /** @var \Drupal\asu_application\Entity\Application $entity */
     $entity = \Drupal::entityTypeManager()->getStorage($entity_type)->load($entity_id);
     $user = $entity->getOwner();
-
-    $this->logger->info('sending application: ' . $entity->id());
 
     try {
       $request = new ApplicationRequest($user, $entity);
@@ -74,13 +71,12 @@ class ApplicationSubscriber implements EventSubscriberInterface {
         ->sendApplication($request)
         ->getContent();
 
-      $this->logger->info(json_decode(json_encode($content), TRUE));
       // @todo implement rest of the logic.
     }
     catch (ApplicationRequestException $e) {
       // Backend returned non 2xx response.
       // Queue worker maybe.
-      $this->logger->critical('Unexpected ApplicatoinRequestException while sending application to backend: application id ' . $entity->id() . ' ' . $e->getMessage());
+      $this->logger->critical('Unexpected ApplicationRequestException while sending application to backend: application id ' . $entity->id() . ' ' . $e->getMessage());
     }
     catch (\Exception $e) {
       // Any other exception.
