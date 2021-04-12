@@ -3,6 +3,7 @@ module:
   api_tools: 0
   asu_apartment_search: 0
   asu_api: 0
+  asu_application: 0
   block: 0
   breakpoint: 0
   ckeditor: 0
