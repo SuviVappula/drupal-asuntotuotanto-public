@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\asu_api;
+namespace Drupal\asu_application\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -27,7 +27,7 @@ class ApplicationEvent extends Event {
   /**
    * Gets the application id.
    */
-  public function getApplicationId() {
+  public function getApplicationId(): string {
     return $this->applicationId;
   }
 
