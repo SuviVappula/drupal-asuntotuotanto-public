@@ -15,7 +15,7 @@ mode: default
 content:
   field_gallery_slide_caption:
     weight: 1
-    label: hidden
+    label: inline
     settings: {  }
     third_party_settings: {  }
     type: basic_string
@@ -29,4 +29,5 @@ content:
       link: false
     third_party_settings: {  }
     region: content
-hidden: {  }
+hidden:
+  search_api_excerpt: true

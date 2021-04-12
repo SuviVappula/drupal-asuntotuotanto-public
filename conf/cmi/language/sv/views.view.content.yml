@@ -25,9 +25,6 @@ display:
           separator: ', '
         name:
           label: Författare
-        langcode:
-          label: Språk
-          separator: ', '
         status:
           label: Status
           settings:

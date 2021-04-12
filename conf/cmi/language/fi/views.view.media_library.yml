@@ -17,8 +17,13 @@ display:
           tags:
             previous: ‹‹
             next: ››
+      fields:
+        media_bulk_form:
+          action_title: Toiminto
       filters:
         status:
+          expose:
+            label: 'Julkaisun tila'
           group_info:
             label: Julkaistu
             group_items:
@@ -29,14 +34,28 @@ display:
         name:
           expose:
             label: Nimi
+        bundle:
+          expose:
+            label: 'Median tyyppi'
+          group_info:
+            label: 'Median tyyppi'
         langcode:
           expose:
             label: Kieli
+      sorts:
+        created:
+          expose:
+            label: 'Uusin ensin'
       title: Media
+      empty:
+        area_text_custom:
+          content: 'Ei mediaa saatavilla.'
   page:
     display_title: Sivu
     display_options:
       fields:
+        media_bulk_form:
+          action_title: Toiminto
         name:
           separator: ', '
         edit_media:
@@ -44,6 +63,7 @@ display:
         delete_media:
           text: Poista
   widget:
+    display_title: Widgetti
     display_options:
       filters:
         name:
@@ -53,13 +73,20 @@ display:
         bundle:
           exception:
             title: Kaikki
+      header:
+        display_link_grid:
+          label: Ruudukko
+        display_link_table:
+          label: Taulukko
   widget_table:
     display_options:
       fields:
+        thumbnail__target_id:
+          label: Pienoiskuva
         name:
           label: Nimi
         uid:
-          label: Kirjoittaja
+          label: Tekijä
         changed:
           label: Päivitetty
       filters:
@@ -70,3 +97,8 @@ display:
         bundle:
           exception:
             title: Kaikki
+      header:
+        display_link_grid:
+          label: Ruudukko
+        display_link_table:
+          label: Taulukko

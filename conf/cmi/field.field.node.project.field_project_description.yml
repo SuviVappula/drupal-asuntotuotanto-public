@@ -1,0 +1,19 @@
+uuid: 8620ed88-12f4-4882-9b9d-39d70dda4c81
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_project_description
+    - node.type.project
+id: node.project.field_project_description
+field_name: field_project_description
+entity_type: node
+bundle: project
+label: 'Project description'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

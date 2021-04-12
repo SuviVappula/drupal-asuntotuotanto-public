@@ -1,7 +1,6 @@
-uuid: 437af95c-c110-4e18-afbd-0ffab552668e
-name: 'Drush Site-Install'
-mail: admin@example.com
-slogan: ''
+name: 'City of Helsinki - Asuntotuotanto'
+mail: drupal-accounts@druid.fi
+slogan: Asuntotuotanto
 page:
   403: ''
   404: ''
@@ -12,4 +11,3 @@ langcode: en
 default_langcode: en
 _core:
   default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI
-mail_notification: ''

@@ -1,7 +1,10 @@
+label: Arkiv
+description: 'Allt innehåll, månadsvis.'
 display:
   default:
     display_title: Huvud
     display_options:
+      title: 'Månatligt arkiv'
       exposed_form:
         options:
           submit_button: Verkställ
@@ -18,5 +21,14 @@ display:
           tags:
             previous: ‹‹
             next: ››
+      arguments:
+        created_year_month:
+          title: '{{ arguments.created_year_month }}'
+  block_1:
+    display_title: Block
+    display_options:
+      arguments:
+        created_year_month:
+          title: '{{ arguments.created_year_month }}'
   page_1:
     display_title: Sida

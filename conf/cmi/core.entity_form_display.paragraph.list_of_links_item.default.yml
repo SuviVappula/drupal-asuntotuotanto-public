@@ -1,4 +1,5 @@
 uuid: 6b92459a-3a38-4e43-afa0-d4daca9d8b9c
+uuid: c34ba1c1-8eda-4076-9d0f-b4da2d8a86f9
 langcode: en
 status: true
 dependencies:
@@ -8,7 +9,7 @@ dependencies:
     - field.field.paragraph.list_of_links_item.field_list_of_links_link
     - paragraphs.paragraphs_type.list_of_links_item
   module:
-    - link
+    - hdbt_admin_editorial
     - media_library
 _core:
   default_config_hash: 9ElpMw3fHqZspnclfXzt4bkZQZCgDAZfel_Kk40HOFM
@@ -37,8 +38,9 @@ content:
     settings:
       placeholder_url: ''
       placeholder_title: ''
+      link_target: ''
     third_party_settings: {  }
-    type: link_default
+    type: link_target_field_widget
     region: content
 hidden:
   created: true

@@ -1,4 +1,4 @@
-uuid: 753ee134-30fc-4877-9d11-d88e0c18437c
+uuid: 8707ffc8-1082-4fa7-b7d4-76325ff5dc09
 langcode: en
 status: true
 dependencies:
@@ -9,6 +9,7 @@ dependencies:
     - field.field.paragraph.columns.field_columns_title
     - paragraphs.paragraphs_type.columns
   module:
+    - hdbt_admin_editorial
     - paragraphs
 _core:
   default_config_hash: epEWSZ1PtLCc7zcGls3RWqhFaaCFGlehVQb8QLysEX0
@@ -21,7 +22,7 @@ content:
     weight: 1
     settings: {  }
     third_party_settings: {  }
-    type: options_select
+    type: design_field_widget
     region: content
   field_columns_left_column:
     type: paragraphs

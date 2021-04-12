@@ -1,4 +1,5 @@
 label: Media
+description: 'Hitta och hantera media.'
 display:
   default:
     display_title: Huvud
@@ -22,9 +23,13 @@ display:
             first: '« Första'
             last: 'Sista »'
       fields:
+        media_bulk_form:
+          action_title: Åtgärd
         thumbnail__target_id:
+          label: Miniatyr
           separator: ', '
         name:
+          label: Medianamn
           separator: ', '
         bundle:
           label: Typ
@@ -44,10 +49,15 @@ display:
         operations:
           label: Funktioner
       filters:
+        name:
+          expose:
+            label: Medianamn
         bundle:
           expose:
             label: Typ
         status:
+          expose:
+            label: Sant
           group_info:
             label: 'Status för publicering'
             group_items:
@@ -59,6 +69,9 @@ display:
           expose:
             label: Språk
       title: Media
+      empty:
+        area_text_custom:
+          content: 'Ingen media tillgänglig.'
   media_page_list:
     display_title: Media
     display_options:

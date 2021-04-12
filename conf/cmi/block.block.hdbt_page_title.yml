@@ -2,6 +2,8 @@ uuid: 84276af7-3e8f-4b75-a1dd-2b3b46ca1e83
 langcode: en
 status: true
 dependencies:
+  module:
+    - ctools
   theme:
     - hdbt
 _core:
@@ -17,4 +19,11 @@ settings:
   label: 'Page title'
   provider: core
   label_display: '0'
-visibility: {  }
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      unit: unit
+    negate: true
+    context_mapping:
+      node: '@node.node_route_context:node'
