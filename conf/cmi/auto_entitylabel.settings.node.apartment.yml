@@ -1,6 +1,0 @@
-status: 0
-pattern: '[node:field_apartment_address]'
-escape: true
-dependencies:
-  config:
-    - node.type.apartment

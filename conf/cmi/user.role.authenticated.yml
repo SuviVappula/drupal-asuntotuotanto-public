@@ -10,10 +10,7 @@ weight: 1
 is_admin: false
 permissions:
   - 'access content'
-  - 'administer rest resources'
   - 'display eu cookie compliance popup'
-  - 'restful get filter_rest_resource'
-  - 'restful post mailinglist'
   - 'use text format full_html'
   - 'view media'
   - 'view remote entities'

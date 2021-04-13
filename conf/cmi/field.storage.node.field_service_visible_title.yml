@@ -1,20 +1,19 @@
-uuid: ac41b9b4-b23b-4064-b9a1-ca83dcfd508c
+uuid: edc8f466-d5db-4946-849f-08db75eb60eb
 langcode: en
 status: true
 dependencies:
   module:
     - node
+    - text
 _core:
-  default_config_hash: pP4SCsjHchk9WVmmxxs9egtpSrcqsXJmOTVx9N65JVw
-id: node.field_author
-field_name: field_author
+  default_config_hash: d3nRL_vdE7lnqV09jUiMqolPyEdXph8Q1jfhhkzQb2g
+id: node.field_service_visible_title
+field_name: field_service_visible_title
 entity_type: node
-type: string
+type: text
 settings:
   max_length: 255
-  is_ascii: false
-  case_sensitive: false
-module: core
+module: text
 locked: false
 cardinality: 1
 translatable: true
