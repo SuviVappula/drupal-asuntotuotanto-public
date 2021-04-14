@@ -16,6 +16,7 @@ module:
   crop: 0
   ctools: 0
   datetime: 0
+  dblog: 0
   default_content: 0
   diff: 0
   easy_breadcrumb: 0
@@ -83,6 +84,7 @@ module:
   token_filter: 0
   toolbar: 0
   twig_tweak: 0
+  update: 0
   user: 0
   views_ui: 0
   pathauto: 1
