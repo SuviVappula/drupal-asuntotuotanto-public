@@ -1,0 +1,27 @@
+uuid: d0b83752-e47b-4566-b045-2133d39523df
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_wealth_report
+  module:
+    - file
+    - user
+id: user.user.field_wealth_report
+field_name: field_wealth_report
+entity_type: user
+bundle: user
+label: 'Wealth report'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: pdf
+  max_filesize: '5 MB'
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file
