@@ -90,9 +90,11 @@ module:
   pathauto: 1
   content_translation: 10
   views: 10
-  eu_cookie_compliance: 11
   paragraphs: 11
+  minimal: 1000
+  eu_cookie_compliance: 1001
 theme:
+  stark: 0
   stable9: 0
   claro: 0
   hdbt: 0
