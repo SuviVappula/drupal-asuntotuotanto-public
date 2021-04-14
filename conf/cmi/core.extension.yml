@@ -6,24 +6,13 @@ module:
   asu_apartment_search: 0
   asu_api: 0
   asu_application: 0
-  asu_content: 0
-  asu_csv_import: 0
-  asu_editorial: 0
-  asu_elastic: 0
-  asu_rest: 0
-  asu_tasklist: 0
-  asu_translation: 0
-  auto_entitylabel: 0
   block: 0
   block_content: 0
   breakpoint: 0
   ckeditor: 0
-  computed_field_plugin: 0
   config: 0
   config_translation: 0
   config_update: 0
-  context: 0
-  context_ui: 0
   contextual: 0
   crop: 0
   ctools: 0
@@ -35,16 +24,13 @@ module:
   dynamic_page_cache: 0
   easy_breadcrumb: 0
   editor: 0
-  elasticsearch_connector: 0
   entity_reference_revisions: 0
   features: 0
   field: 0
-  field_group: 0
   field_ui: 0
   file: 0
   filter: 0
   focal_point: 0
-  gin_login: 0
   gin_toolbar: 0
   hal: 0
   hdbt_admin_editorial: 0
@@ -54,7 +40,6 @@ module:
   hdbt_hyphenopoly: 0
   helfi_api_base: 0
   helfi_base_config: 0
-  helfi_content: 0
   helfi_example_content: 0
   helfi_gdpr_compliance: 0
   helfi_languages: 0
@@ -64,7 +49,6 @@ module:
   image: 0
   image_style_quality: 0
   imagecache_external: 0
-  inline_entity_form: 0
   key: 0
   language: 0
   link: 0
@@ -73,7 +57,6 @@ module:
   media: 0
   media_entity_soundcloud: 0
   media_library: 0
-  menu_block: 0
   menu_block_current_language: 0
   menu_link_content: 0
   menu_ui: 0
@@ -89,15 +72,12 @@ module:
   paragraphs_type_permissions: 0
   path: 0
   path_alias: 0
-  rabbit_hole: 0
   redirect: 0
   redirect_404: 0
+  personal_id: 0
   responsive_image: 0
   rest: 0
-  restui: 0
-  route_condition: 0
   scheduler: 0
-  search_api: 0
   select2: 0
   select2_icon: 0
   serialization: 0
@@ -114,7 +94,6 @@ module:
   update: 0
   user: 0
   views_ui: 0
-  yearonly: 0
   pathauto: 1
   content_translation: 10
   views: 10
@@ -131,5 +110,3 @@ theme:
   asu_admin: 0
   asuntotuotanto: 0
 profile: minimal
-_core:
-  default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
