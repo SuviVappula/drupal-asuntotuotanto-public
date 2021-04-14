@@ -1,4 +1,4 @@
-uuid: 192ff86e-5623-4fc7-816a-6c4fce0b66ba
+uuid: 3b60a7ec-9b73-4292-a285-93eded38df0c
 langcode: en
 status: true
 dependencies:
@@ -13,7 +13,7 @@ dependencies:
   module:
     - user
 _core:
-  default_config_hash: Ov8pAiMS6A9VCIfdlfZstoyfMSAAMK7fwW8HXDLkdQA
+  default_config_hash: b_E2eJSSnD6aZSSFf56M0bvEnQ73DblumjJPBCaqSQs
 id: node.page.teaser
 targetEntityType: node
 bundle: page
@@ -35,4 +35,3 @@ hidden:
   field_metatags: true
   langcode: true
   links: true
-  search_api_excerpt: true

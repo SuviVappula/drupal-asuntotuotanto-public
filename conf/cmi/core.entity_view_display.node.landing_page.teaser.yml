@@ -1,4 +1,4 @@
-uuid: 2137aaa2-2527-4f73-a2af-31283ef3c8e0
+uuid: 11145a73-9dcc-4539-be2d-267fbba36d75
 langcode: en
 status: true
 dependencies:
@@ -13,7 +13,7 @@ dependencies:
   module:
     - user
 _core:
-  default_config_hash: aMxbDIBjJMAofqggRPR7-jA0yCwB5AMvjHRjaf__D3w
+  default_config_hash: RFefjJBQl6poRfg0xzeEciZDr5a8b93mTvBPo_c5vt8
 id: node.landing_page.teaser
 targetEntityType: node
 bundle: landing_page
@@ -35,4 +35,3 @@ hidden:
   field_metatags: true
   langcode: true
   links: true
-  search_api_excerpt: true

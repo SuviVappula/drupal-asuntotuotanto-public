@@ -1,4 +1,4 @@
-uuid: 00bc9d3f-802a-43d5-bc69-ae42f77f0325
+uuid: 599b5bed-b0d6-4191-89e5-654ace0104d1
 langcode: en
 status: true
 dependencies:
@@ -11,7 +11,7 @@ dependencies:
     - hdbt_admin_editorial
     - paragraphs
 _core:
-  default_config_hash: gVaSt1YY1jPLkVLna6p1vW1cViRVy6ukGHmVLrva0Z4
+  default_config_hash: LBbBIE1JvrmAnOImQR0rd-u3Nc3i-SRD2WicIGCCwqU
 id: paragraph.list_of_links.default
 targetEntityType: paragraph
 bundle: list_of_links

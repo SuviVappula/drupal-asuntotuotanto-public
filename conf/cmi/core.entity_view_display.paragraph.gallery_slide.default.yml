@@ -1,4 +1,4 @@
-uuid: 448dfbfe-1bbd-4f79-9bca-d7c53abcb34e
+uuid: 09f6fe9e-2605-4e01-8ccd-9f8c9b5bacc6
 langcode: en
 status: true
 dependencies:
@@ -7,7 +7,7 @@ dependencies:
     - field.field.paragraph.gallery_slide.field_gallery_slide_media
     - paragraphs.paragraphs_type.gallery_slide
 _core:
-  default_config_hash: WXGUrRzR8g-obOMMq5uDE81GkOYokcd5Y-X9oz95yqU
+  default_config_hash: 1gOPocP4wZc4p4xU8WlYTuVsVgW5JzjrNGdSPAB7PTw
 id: paragraph.gallery_slide.default
 targetEntityType: paragraph
 bundle: gallery_slide
@@ -29,5 +29,4 @@ content:
       link: false
     third_party_settings: {  }
     region: content
-hidden:
-  search_api_excerpt: true
+hidden: {  }

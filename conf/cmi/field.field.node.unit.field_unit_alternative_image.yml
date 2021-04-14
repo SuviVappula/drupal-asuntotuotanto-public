@@ -1,4 +1,4 @@
-uuid: bca822b6-9013-4995-887c-833277d553d6
+uuid: 3899fddb-0799-4db3-b891-1628d9c33e2c
 langcode: en
 status: true
 dependencies:
@@ -7,12 +7,12 @@ dependencies:
     - media.type.image
     - node.type.unit
 _core:
-  default_config_hash: E6DKDtR0jvFOXsaU4_hHSs9rrSqn2CL74Iv6QbKg0Ps
+  default_config_hash: '-oXhoBnczwHyzEKOStXUwOy5wdiFU2fqssxohHz98Rg'
 id: node.unit.field_unit_alternative_image
 field_name: field_unit_alternative_image
 entity_type: node
 bundle: unit
-label: 'Alternative image'
+label: 'Alternative main image'
 description: 'Alternative image for the main image if you wish to replace the set main image or if there is no image set for the main image field.'
 required: false
 translatable: true

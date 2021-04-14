@@ -1,4 +1,4 @@
-uuid: 267ef030-a5f8-4fcb-9d80-275f9314e095
+uuid: 11c04d84-9c2b-411c-9a00-b11a291e1997
 langcode: en
 status: true
 dependencies:
@@ -8,7 +8,7 @@ dependencies:
     - field.field.paragraph.image.field_original_aspect_ratio
     - paragraphs.paragraphs_type.image
 _core:
-  default_config_hash: 7O7uUyUjc6kAeySMwmmC8sRbveJCZmLf6w-cxwdMUho
+  default_config_hash: WOIjdvfdwRn0wIU-TyaRDV4PKTm77QLskpKljuLGk5Q
 id: paragraph.image.default
 targetEntityType: paragraph
 bundle: image
@@ -40,5 +40,4 @@ content:
       format_custom_true: ''
       format_custom_false: ''
     third_party_settings: {  }
-hidden:
-  search_api_excerpt: true
+hidden: {  }

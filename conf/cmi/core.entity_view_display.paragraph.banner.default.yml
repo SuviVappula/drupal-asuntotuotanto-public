@@ -1,4 +1,4 @@
-uuid: 9bd94b9b-7160-49f6-96e9-7d294e3a705d
+uuid: aa899a24-0c33-4f48-8d2b-529d2b6a4cdf
 langcode: en
 status: true
 dependencies:
@@ -16,7 +16,7 @@ dependencies:
     - select2_icon
     - text
 _core:
-  default_config_hash: OdCRcV75MyH8GcyDvhFVPoFlvSgQ6-ElU8Vp3uPhlyU
+  default_config_hash: 6sXm0gwP7Lq-5wEAkZWbRYwhvZsBBQASOR_gKjINHMU
 id: paragraph.banner.default
 targetEntityType: paragraph
 bundle: banner
@@ -70,5 +70,4 @@ content:
     third_party_settings: {  }
     type: select2_icon_formatter
     region: content
-hidden:
-  search_api_excerpt: true
+hidden: {  }

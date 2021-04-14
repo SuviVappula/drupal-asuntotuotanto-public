@@ -1,4 +1,4 @@
-uuid: a0e897d2-82ee-4e7c-a426-b0b91c760511
+uuid: bebae1f2-4ba0-4570-b192-8403fa7c80f7
 langcode: en
 status: true
 dependencies:
@@ -12,7 +12,7 @@ dependencies:
     - entity_reference_revisions
     - options
 _core:
-  default_config_hash: h_qbYNvjp25KbtQZGADavVYnOGw4Fd0EnetHwgcG4yI
+  default_config_hash: oQ9EzPJq8Rcj5hcS7lZMEIpr0l8pOXml5eyN7ZD2Zy4
 id: paragraph.columns.default
 targetEntityType: paragraph
 bundle: columns
@@ -51,5 +51,4 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-hidden:
-  search_api_excerpt: true
+hidden: {  }

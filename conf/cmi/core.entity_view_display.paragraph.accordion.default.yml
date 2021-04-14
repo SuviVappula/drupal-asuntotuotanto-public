@@ -1,4 +1,4 @@
-uuid: 54fb3ffb-251e-46bf-b942-652802fc4c19
+uuid: 35500bde-1eb6-48b0-92d3-474eb1f0d4fd
 langcode: en
 status: true
 dependencies:
@@ -11,7 +11,7 @@ dependencies:
     - entity_reference_revisions
     - options
 _core:
-  default_config_hash: Kf-lllXWYfMcNxfGxs6pz4f2EWTl77d_UsLTIL6rhNM
+  default_config_hash: qEkRAraBh43m5uf-XgNcLTMcQzKw-0B_zZtWyzgVMOk
 id: paragraph.accordion.default
 targetEntityType: paragraph
 bundle: accordion
@@ -40,5 +40,4 @@ content:
       link: ''
     third_party_settings: {  }
     region: content
-hidden:
-  search_api_excerpt: true
+hidden: {  }

@@ -1,4 +1,4 @@
-uuid: b5334746-ae32-4757-82c4-08704a07985b
+uuid: 401a3d4c-9268-4084-803e-246f952a1e92
 langcode: en
 status: true
 dependencies:
@@ -15,7 +15,7 @@ dependencies:
     - select2_icon
     - text
 _core:
-  default_config_hash: R2pq430qBreSf3vg7kSHiKoV-Af5nknExFjqALv_IxQ
+  default_config_hash: cUl5PG2elS-k5_0QkIjSKWmdrnqkv8IfEZC7PTqQWYc
 id: paragraph.banner.default
 targetEntityType: paragraph
 bundle: banner

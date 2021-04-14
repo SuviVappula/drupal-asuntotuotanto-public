@@ -1,4 +1,4 @@
-uuid: 198fe94a-b417-45ea-863d-9ff0a1217805
+uuid: 74da92ca-41fb-4608-84c0-ea567bb2ab02
 langcode: en
 status: true
 dependencies:
@@ -12,7 +12,7 @@ dependencies:
     - options
     - text
 _core:
-  default_config_hash: _4_uiqhvbMk-B5FJacrpOJ4XQH0I16G-VNfCtpamvq4
+  default_config_hash: ETMahHqS5T1Wd1HpuejBnFCFdbOLXP_U9kOS0CN6SZo
 id: paragraph.liftup_with_image.default
 targetEntityType: paragraph
 bundle: liftup_with_image
@@ -49,5 +49,4 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-hidden:
-  search_api_excerpt: true
+hidden: {  }

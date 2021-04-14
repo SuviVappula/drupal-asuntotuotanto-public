@@ -1,12 +1,10 @@
-uuid: 0be432e3-a341-4346-98f9-dc44757e8642
+uuid: 878ab821-6aba-4c91-9663-1412d2275374
 langcode: en
 status: true
 dependencies:
   config:
     - image.style.1_1_thumbnail
     - image.style.1_1_thumbnail_2x
-  theme:
-    - hdbt
 _core:
   default_config_hash: tRylWJSJK7hdRcmTxsffZOTS9BrButW2HHWXToXNxO0
 id: gallery_thumbnail

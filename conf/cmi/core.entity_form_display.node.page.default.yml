@@ -1,4 +1,4 @@
-uuid: e4731788-84d0-4f1d-b412-f25a9da16b6a
+uuid: e02a762e-a00d-4759-a263-61dc8d5360d3
 langcode: en
 status: true
 dependencies:
@@ -16,7 +16,7 @@ dependencies:
     - path
     - scheduler
 _core:
-  default_config_hash: w5-wlvA5D1grlc1wSGRvqGnME-pEk6uFPMtDKJHvYag
+  default_config_hash: uWCKvc6Qkbv4g-yJo8d9K8_nh63x2luB4wpQk1a8eHQ
 id: node.page.default
 targetEntityType: node
 bundle: page

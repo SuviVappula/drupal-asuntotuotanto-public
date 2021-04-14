@@ -1,4 +1,4 @@
-uuid: 71b176e7-65ff-4f29-ad42-9a2f5340bc17
+uuid: a4301bdb-d023-4169-a248-f559f95fcecf
 langcode: en
 status: true
 dependencies:
@@ -16,7 +16,7 @@ dependencies:
     - path
     - scheduler
 _core:
-  default_config_hash: 3NE7RTbvp62bswLY4fzyYm9iOCctoBUqCCRV2qUjenw
+  default_config_hash: EpKucMjH6qBboFur_x0R89tX9KYcPmS9ijWcfK2fQPA
 id: node.landing_page.default
 targetEntityType: node
 bundle: landing_page

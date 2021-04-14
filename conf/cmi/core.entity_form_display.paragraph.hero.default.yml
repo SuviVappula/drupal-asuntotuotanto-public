@@ -1,4 +1,4 @@
-uuid: 93fde169-8d67-48e8-b95e-5350934ed8bd
+uuid: d71e1796-1dfb-45de-8a93-a1075d297594
 langcode: en
 status: true
 dependencies:
@@ -16,7 +16,7 @@ dependencies:
     - media_library
     - text
 _core:
-  default_config_hash: 6VIA2r5jBZlCoC2cBKB3com9lCjgi1D0OwdsalLoiok
+  default_config_hash: a7HT1FL6Lj9NGy6KYZjyVqpngR4ANDSgnjRSQ15UHmQ
 id: paragraph.hero.default
 targetEntityType: paragraph
 bundle: hero
