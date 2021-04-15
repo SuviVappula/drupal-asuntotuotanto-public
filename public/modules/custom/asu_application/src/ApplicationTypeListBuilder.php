@@ -6,7 +6,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
 
 /**
- * ApplicationTypeListBuilder class.
+ * List builder ApplicationTypeListBuilder.
  */
 class ApplicationTypeListBuilder extends EntityListBuilder {
 

@@ -1,6 +1,7 @@
 parameters:
   asu_api.backend.base_url: 'localhost:8000/'
   asu_api.drupal.base_url: 'http://dev.asuntotuotanto.druidfi.wod.by/'
+  asu_api.elastic.base_url: 'http://dev.asuntomyynti-elastic.druidfi.wod.by/'
 
 services:
   asu_api.backendapi:
@@ -10,3 +11,7 @@ services:
   asu_api.drupalapi:
     class: Drupal\asu_api\Api\DrupalApi\DrupalApi
     arguments: ['%asu_api.drupal.base_url%']
+
+  asu_api.elasticapi:
+    class: Drupal\asu_api\Api\ElasticSearchApi\ElasticSearchApi
+    arguments: ['%asu_api.elastic.base_url%']
