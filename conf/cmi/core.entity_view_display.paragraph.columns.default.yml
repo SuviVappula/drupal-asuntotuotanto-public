@@ -1,4 +1,4 @@
-uuid: a0e897d2-82ee-4e7c-a426-b0b91c760511
+uuid: bebae1f2-4ba0-4570-b192-8403fa7c80f7
 langcode: en
 status: true
 dependencies:
@@ -12,7 +12,7 @@ dependencies:
     - entity_reference_revisions
     - options
 _core:
-  default_config_hash: h_qbYNvjp25KbtQZGADavVYnOGw4Fd0EnetHwgcG4yI
+  default_config_hash: oQ9EzPJq8Rcj5hcS7lZMEIpr0l8pOXml5eyN7ZD2Zy4
 id: paragraph.columns.default
 targetEntityType: paragraph
 bundle: columns
@@ -20,14 +20,14 @@ mode: default
 content:
   field_columns_design:
     type: list_key
-    weight: 3
+    weight: 1
     region: content
-    label: above
+    label: inline
     settings: {  }
     third_party_settings: {  }
   field_columns_left_column:
     type: entity_reference_revisions_entity_view
-    weight: 1
+    weight: 2
     label: hidden
     settings:
       view_mode: default
@@ -36,7 +36,7 @@ content:
     region: content
   field_columns_right_column:
     type: entity_reference_revisions_entity_view
-    weight: 2
+    weight: 3
     label: hidden
     settings:
       view_mode: default

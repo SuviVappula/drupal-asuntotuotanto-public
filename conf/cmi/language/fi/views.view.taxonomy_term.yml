@@ -1,4 +1,5 @@
 label: Luokittelutermi
+description: 'Sisältö, joka kuuluu tiettyyn taksonomiatermiin.'
 display:
   default:
     display_title: Isäntä
@@ -23,5 +24,7 @@ display:
         tid:
           exception:
             title: Kaikki
+  feed_1:
+    display_title: Syöte
   page_1:
     display_title: Sivu

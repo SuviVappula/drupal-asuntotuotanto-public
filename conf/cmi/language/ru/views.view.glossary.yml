@@ -1,3 +1,5 @@
+label: Глоссарий
+description: 'Все материалы, по алфавиту.'
 display:
   default:
     display_title: Основной
@@ -23,5 +25,12 @@ display:
           label: Заголовок
         name:
           label: Автор
+        changed:
+          label: 'Последнее обновление'
+  attachment_1:
+    display_title: Вложение
   page_1:
     display_title: Страница
+    display_options:
+      menu:
+        title: Глоссарий

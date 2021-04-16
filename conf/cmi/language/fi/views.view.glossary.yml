@@ -1,3 +1,4 @@
+label: Sanasto
 display:
   default:
     display_title: Isäntä
@@ -23,5 +24,12 @@ display:
           label: Otsikko
         name:
           label: Kirjoittaja
+        changed:
+          label: 'Viimeksi päivitetty'
+  attachment_1:
+    display_title: Liite
   page_1:
     display_title: Sivu
+    display_options:
+      menu:
+        title: Sanasto

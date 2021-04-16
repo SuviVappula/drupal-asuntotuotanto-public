@@ -1,11 +1,12 @@
-uuid: 60b1a3c5-089b-4fb8-829b-1ecd28dc0a9f
+uuid: 1e2410f1-3d00-4fdb-9a13-e3f5c20976ed
 langcode: en
 status: true
 dependencies:
   module:
     - linkit
+    - token_filter
 _core:
-  default_config_hash: xpLSr9WoVOW2SAHrxY02hUPmBUOf1TNQMcjZ7UqpfkU
+  default_config_hash: kAnW32pUe3wfz47POpRuUBWgnZ2i65lujy4tPAZN9GI
 name: HTML
 format: full_html
 weight: 0
@@ -45,3 +46,10 @@ filters:
     weight: 0
     settings:
       title: true
+  token_filter:
+    id: token_filter
+    provider: token_filter
+    status: true
+    weight: 0
+    settings:
+      replace_empty: '0'

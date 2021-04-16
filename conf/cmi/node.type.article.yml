@@ -1,15 +1,29 @@
-uuid: 3ca25acf-5f70-4d85-89e3-df211c96eed7
+uuid: 7991caf5-053e-4387-b35c-5dca04eeb509
 langcode: en
 status: true
 dependencies:
   module:
     - menu_ui
+    - scheduler
 third_party_settings:
   menu_ui:
     available_menus: {  }
     parent: ''
+  scheduler:
+    expand_fieldset: when_required
+    fields_display_mode: vertical_tab
+    publish_enable: true
+    publish_past_date: error
+    publish_past_date_created: false
+    publish_required: false
+    publish_revision: false
+    publish_touch: true
+    show_message_after_update: true
+    unpublish_enable: true
+    unpublish_required: false
+    unpublish_revision: false
 _core:
-  default_config_hash: lhxBxKc1b6XNQeNYJRSS8Xz_HUb-GB1QYZ1DBNqf9AQ
+  default_config_hash: 55S0TlpZeQGEnh_bhvpAW797f2LnTyORBp4AUhX2qwI
 name: Article
 type: article
 description: 'Content type for article-like content with rich editing capabilities.'

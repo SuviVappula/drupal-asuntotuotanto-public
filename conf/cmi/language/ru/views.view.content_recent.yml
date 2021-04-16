@@ -1,3 +1,5 @@
+label: 'Последние материалы'
+description: 'Последние материалы.'
 display:
   default:
     display_title: Основной
@@ -12,6 +14,10 @@ display:
       fields:
         changed:
           separator: ', '
+      title: 'Последние материалы'
       empty:
         area_text_custom:
           content: 'Нет доступных материалов.'
+      use_more_text: Ещё
+  block_1:
+    display_title: Блок

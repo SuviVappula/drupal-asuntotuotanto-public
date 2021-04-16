@@ -1,3 +1,5 @@
+label: Ordlista
+description: 'All innehåll, i bokstavsordning.'
 display:
   default:
     display_title: Huvud
@@ -23,5 +25,12 @@ display:
           label: Titel
         name:
           label: Författare
+        changed:
+          label: 'Senaste uppdatering'
+  attachment_1:
+    display_title: Bilaga
   page_1:
     display_title: Sida
+    display_options:
+      menu:
+        title: Ordlista

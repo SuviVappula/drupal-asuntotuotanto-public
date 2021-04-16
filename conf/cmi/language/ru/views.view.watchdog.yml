@@ -1,3 +1,5 @@
+label: Журнал
+description: 'Последние записи журнала'
 display:
   default:
     display_title: Основной
@@ -21,8 +23,18 @@ display:
       fields:
         nothing:
           admin_label: Иконка
+        wid:
+          label: WID
+        severity:
+          label: Важность
         type:
           label: Тип
+        timestamp:
+          label: Дата
+        message:
+          label: Сообщение
+          alter:
+            alt: сообщение
         name:
           label: Пользователь
           separator: ', '
@@ -32,5 +44,13 @@ display:
         type:
           expose:
             label: Тип
+        severity:
+          expose:
+            label: Важность
+      title: 'Последние записи журнала'
+      empty:
+        area:
+          admin_label: 'В системном журнале нет сообщений.'
+          content: 'В системном журнале нет сообщений.'
   page:
     display_title: Страница

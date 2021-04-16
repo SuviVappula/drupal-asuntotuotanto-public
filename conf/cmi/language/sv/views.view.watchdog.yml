@@ -1,3 +1,5 @@
+label: Övervakning
+description: 'Senaste loggmeddelanden'
 display:
   default:
     display_title: Huvud
@@ -21,8 +23,16 @@ display:
       fields:
         nothing:
           admin_label: Ikon
+        severity:
+          label: Grad
         type:
           label: Typ
+        timestamp:
+          label: Datum
+        message:
+          label: Meddelande
+          alter:
+            alt: '{{ meddelande }}'
         name:
           label: Användare
           separator: ', '
@@ -32,5 +42,13 @@ display:
         type:
           expose:
             label: Typ
+        severity:
+          expose:
+            label: Grad
+      title: 'Senaste loggmeddelanden'
+      empty:
+        area:
+          admin_label: 'Inga loggmeddelanden tillgängliga.'
+          content: 'Inga loggmeddelanden tillgängliga.'
   page:
     display_title: Sida

@@ -1,7 +1,10 @@
+label: Arkisto
+description: 'Kaikki sisältö, kuukausittain lajiteltuna.'
 display:
   default:
     display_title: Isäntä
     display_options:
+      title: Arkisto
       exposed_form:
         options:
           submit_button: Käytä
@@ -18,5 +21,7 @@ display:
           tags:
             previous: ‹‹
             next: ››
+  block_1:
+    display_title: Lohko
   page_1:
     display_title: Sivu

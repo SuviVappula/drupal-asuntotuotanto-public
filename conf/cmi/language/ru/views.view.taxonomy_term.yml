@@ -1,4 +1,5 @@
 label: 'Термин таксономии'
+description: 'Материалы, относящиеся к определённому термину таксономии.'
 display:
   default:
     display_title: Основной
@@ -23,5 +24,8 @@ display:
         tid:
           exception:
             title: Все
+          title: '{{ arguments.tid }}'
+  feed_1:
+    display_title: 'Поток данных'
   page_1:
     display_title: Страница
