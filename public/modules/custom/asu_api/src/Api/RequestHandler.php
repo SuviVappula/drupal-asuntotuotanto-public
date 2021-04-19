@@ -52,6 +52,22 @@ class RequestHandler {
   }
 
   /**
+   * Send http client post request.
+   *
+   * @param string $endpoint
+   *   Api endpoint.
+   * @param array $options
+   *   Request options.
+   *
+   * @return \Psr\Http\Message\ResponseInterface
+   *   Http response.
+   */
+  public function post(string $endpoint, array $options): ResponseInterface {
+    $url = $this->apiUrl . $endpoint;
+    return $this->client->post($url, $options);
+  }
+
+  /**
    * Build request to be sent.
    *
    * @param \Drupal\asu_api\Api\Request $request

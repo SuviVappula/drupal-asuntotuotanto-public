@@ -34,6 +34,7 @@ class ApplicationSubscriber implements EventSubscriberInterface {
    * Constructor.
    *
    * @param \Psr\Log\LoggerInterface $logger
+   *   Logger.
    * @param \Drupal\asu_api\Api\BackendApi\BackendApi $backendApi
    *   Backend api.
    */
@@ -45,7 +46,8 @@ class ApplicationSubscriber implements EventSubscriberInterface {
   /**
    * Get subscribed events.
    *
-   * @return array The event names to listen to
+   * @return array
+   *   The event names to listen to.
    */
   public static function getSubscribedEvents() {
     return [
@@ -55,6 +57,12 @@ class ApplicationSubscriber implements EventSubscriberInterface {
 
   /**
    * Sends application to backend.
+   *
+   * @param \Drupal\asu_application\Event\ApplicationEvent $applicationEvent
+   *   Application event.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function sendApplication(ApplicationEvent $applicationEvent) {
     $entity_type = 'asu_application';

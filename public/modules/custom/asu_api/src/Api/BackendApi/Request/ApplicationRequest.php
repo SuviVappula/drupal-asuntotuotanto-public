@@ -5,6 +5,7 @@ namespace Drupal\asu_api\Api\BackendApi\Request;
 use Drupal\asu_api\Api\Request;
 use Drupal\asu_application\Entity\Application;
 use Drupal\user\UserInterface;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * Application request.
@@ -23,6 +24,13 @@ class ApplicationRequest extends Request {
    * @var string
    */
   protected const METHOD = 'POST';
+
+  /**
+   * User object.
+   *
+   * @var \Drupal\user\Entity\UserInterface|UserInterface
+   */
+  private $user;
 
   /**
    * User id.
@@ -85,6 +93,7 @@ class ApplicationRequest extends Request {
     UserInterface $user,
     Application $application
   ) {
+    $this->user = $user;
     $this->setUserId($user->id());
     $this->setApplicationId($application->id());
     $this->setRightOfResidenceNumber($user->field_right_of_r->value);
@@ -166,6 +175,31 @@ class ApplicationRequest extends Request {
   }
 
   /**
+   * Calculates person's age from PID.
+   *
+   * @param string $pid
+   *   Personal identification number.
+   *
+   * @return int
+   *   Age.
+   */
+  private function calculateAgeFromPid(string $pid): Integer {
+    $century = substr($pid, 7, 1) === "-" ? 19 : 20;
+    $year = substr($pid, 5, 2);
+
+    $day = substr($pid, 1, 2);
+    $month = substr($pid, 3, 2);
+
+    $date = "{$day}-{$month}-{$century}{$year}";
+
+    $date = new DateTime($date);
+    $now = new DateTime();
+    $interval = $now->diff($date);
+
+    return $interval->y;
+  }
+
+  /**
    * Data to array.
    */
   public function toArray(): array {
@@ -176,6 +210,7 @@ class ApplicationRequest extends Request {
       'application_type' => $this->applicationType,
       'apartment_ids' => $this->apartmentIds,
       'has_children' => $this->hasChildren,
+      'age' => $this->calculateAgeFromPid($this->user->field_identification_number->value),
     ];
 
     if ($this->rightOfResidenceNumber) {
