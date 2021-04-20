@@ -7,7 +7,7 @@ use Drupal\asu_api\Api\ElasticSearchApi\Response\ApartmentResponse;
 use Drupal\asu_api\Api\ServiceBase;
 
 /**
- * Service ApartmentService.
+ * Endpoints for api's related to apartments.
  */
 class ApartmentService extends ServiceBase {
 

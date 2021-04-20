@@ -3,7 +3,7 @@
 namespace Drupal\asu_api\Api\DrupalApi;
 
 use Drupal\asu_api\Api\DrupalApi\Service\ApplicationService;
-use Drupal\asu_api\Api\DrupalApi\Service\FiltersService;
+use Drupal\asu_api\Api\DrupalApi\Service\FilterService;
 use Drupal\asu_api\Api\RequestHandler;
 
 /**
@@ -36,7 +36,7 @@ class DrupalApi {
   public function __construct(string $apiUrl) {
     $requestHandler = new RequestHandler($apiUrl);
     $this->applicationService = new ApplicationService($requestHandler);
-    $this->filtersService = new FiltersService($requestHandler);
+    $this->filtersService = new FilterService($requestHandler);
   }
 
   /**

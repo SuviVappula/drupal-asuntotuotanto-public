@@ -210,8 +210,10 @@ class ApplicationRequest extends Request {
       'application_type' => $this->applicationType,
       'apartment_ids' => $this->apartmentIds,
       'has_children' => $this->hasChildren,
-      'age' => $this->calculateAgeFromPid($this->user->field_identification_number->value),
     ];
+
+    $values['age'] = isset($this->user->field_identification_number->value) ?
+      $this->calculateAgeFromPid($this->user->field_identification_number->value) : NULL;
 
     if ($this->rightOfResidenceNumber) {
       $values['haso_number'] = $this->rightOfResidenceNumber;
