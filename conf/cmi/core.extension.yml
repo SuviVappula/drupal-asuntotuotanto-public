@@ -6,6 +6,7 @@ module:
   asu_apartment_search: 0
   asu_api: 0
   asu_application: 0
+  asu_rest: 0
   block: 0
   block_content: 0
   breakpoint: 0
@@ -70,6 +71,8 @@ module:
   personal_id: 0
   redirect: 0
   responsive_image: 0
+  rest: 0
+  restui: 0
   scheduler: 0
   select2: 0
   select2_icon: 0
