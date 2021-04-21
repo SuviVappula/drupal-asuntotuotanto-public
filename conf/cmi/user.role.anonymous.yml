@@ -5,11 +5,14 @@ dependencies: {  }
 _core:
   default_config_hash: EDyVdaROG6pYzyEct43c01Wq4gpATszrk-qR6gqnQ84
 id: anonymous
-label: 'Anonymous user'
+label: 'Anonyymi käyttäjä'
 weight: 0
 is_admin: false
 permissions:
   - 'access content'
   - 'display eu cookie compliance popup'
+  - 'restful get asu_applications'
+  - 'restful get asu_filters'
+  - 'restful get asu_initialize'
   - 'view media'
   - 'view remote entities'
