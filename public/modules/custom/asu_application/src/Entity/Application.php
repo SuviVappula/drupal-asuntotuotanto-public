@@ -96,6 +96,17 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
   }
 
   /**
+   * Get the ids of the apartments in application.
+   */
+  public function getApartmentIds(): array {
+    $apartments = [];
+    foreach ($this->getApartments() as $apartment) {
+      $apartments[] = (int) $apartment->id;
+    }
+    return $apartments;
+  }
+
+  /**
    * {@inheritDoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
