@@ -2,6 +2,7 @@
 
 namespace Drupal\asu_api\Api\DrupalApi;
 
+use Drupal\asu_api\Api\DrupalApi\Service\ApartmentService;
 use Drupal\asu_api\Api\DrupalApi\Service\ApplicationService;
 use Drupal\asu_api\Api\DrupalApi\Service\FiltersService;
 use Drupal\asu_api\Api\RequestHandler;
@@ -27,6 +28,8 @@ class DrupalApi {
    */
   private $filtersService;
 
+  private $apartmentService;
+
   /**
    * Constructor.
    *
@@ -37,6 +40,7 @@ class DrupalApi {
     $requestHandler = new RequestHandler($apiUrl);
     $this->applicationService = new ApplicationService($requestHandler);
     $this->filtersService = new FiltersService($requestHandler);
+    $this->apartmentService = new ApartmentService($requestHandler);
   }
 
   /**
@@ -49,8 +53,15 @@ class DrupalApi {
   /**
    * Get Filters service.
    */
-  public function getFiltersService() {
+  public function getFiltersService(): FiltersService\ {
     return $this->filtersService;
+  }
+
+  /**
+   * Get Apartment Service.
+   */
+  public function getApartmentService(): ApartmentService {
+    return $this->getApartmentService();
   }
 
 }

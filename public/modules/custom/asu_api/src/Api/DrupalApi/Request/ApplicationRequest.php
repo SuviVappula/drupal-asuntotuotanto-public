@@ -9,17 +9,4 @@ use Drupal\asu_api\Api\Request;
  */
 class ApplicationRequest extends Request {
 
-  /**
-   * Constructor.
-   */
-  public function __construct() {
-  }
-
-  /**
-   * Data to array.
-   */
-  public function toArray(): array {
-    // @todo Implement toArray() method.
-  }
-
 }

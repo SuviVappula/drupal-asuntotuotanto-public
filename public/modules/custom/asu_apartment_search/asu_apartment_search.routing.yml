@@ -5,3 +5,11 @@ asu_apartment_search.content:
     _title: 'Asuntohaku'
   requirements:
     _permission: 'access content'
+
+asu_apartment.content:
+  path: '/huoneisto/{id}'
+  defaults:
+    _controller: '\Drupal\asu_apartment_search\Controller\ApartmentController::content'
+    _title: ''
+  requirements:
+    _permission: 'access content'
