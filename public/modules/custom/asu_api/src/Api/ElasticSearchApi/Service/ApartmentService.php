@@ -2,8 +2,10 @@
 
 namespace Drupal\asu_api\Api\ElasticSearchApi\Service;
 
-use Drupal\asu_api\Api\ElasticSearchApi\Request\ApartmentRequest;
-use Drupal\asu_api\Api\ElasticSearchApi\Response\ApartmentResponse;
+use Drupal\asu_api\Api\ElasticSearchApi\Request\ProjectApartmentsRequest;
+use Drupal\asu_api\Api\ElasticSearchApi\Request\SingleApartmentRequest;
+use Drupal\asu_api\Api\ElasticSearchApi\Response\ProjectApartmentsResponse;
+use Drupal\asu_api\Api\ElasticSearchApi\Response\SingleApartmentResponse;
 use Drupal\asu_api\Api\ServiceBase;
 
 /**
@@ -14,15 +16,15 @@ class ApartmentService extends ServiceBase {
   /**
    * Get project apartments.
    *
-   * @param \Drupal\asu_api\Api\ElasticSearchApi\Request\ApartmentRequest $apartmentRequest
+   * @param \Drupal\asu_api\Api\ElasticSearchApi\Request\ProjectApartmentsRequest $apartmentRequest
    *   Apartment request.
    *
-   * @return \Drupal\asu_api\Api\ElasticSearchApi\Response\ApartmentResponse
+   * @return \Drupal\asu_api\Api\ElasticSearchApi\Response\ProjectApartmentsResponse
    *   Apartment response.
    *
    * @throws \Exception
    */
-  public function getProjectApartments(ApartmentRequest $apartmentRequest): ApartmentResponse {
+  public function getProjectApartments(ProjectApartmentsRequest $apartmentRequest): ProjectApartmentsResponse {
     $options = [
       'headers' => [
         'Content-Type' => 'application/json',
@@ -31,7 +33,20 @@ class ApartmentService extends ServiceBase {
       'json' => $apartmentRequest->toArray(),
     ];
     $response = $this->requestHandler->post($apartmentRequest->getPath(), $options);
-    return ApartmentResponse::createFromHttpResponse($response);
+    return ProjectApartmentsResponse::createFromHttpResponse($response);
+  }
+
+  public function getApartment($id): SingleApartmentResponse {
+    $request = new SingleApartmentRequest($id);
+    $options = [
+      'headers' => [
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+      ],
+      'json' => $request->toArray(),
+    ];
+    $response = $this->requestHandler->post($request->getPath(), $options);
+    return SingleApartmentResponse::createFromHttpResponse($response);
   }
 
 }

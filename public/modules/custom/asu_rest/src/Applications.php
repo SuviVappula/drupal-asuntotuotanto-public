@@ -116,10 +116,6 @@ class Applications {
       $apartmentIds = $application->getApartmentIds();
       $applications = array_merge($applications, $apartmentIds);
     }
-    foreach ($this->applications as $application) {
-      $apartmentIds = $application->getApartmentIds();
-      $applications = array_merge($applications, $apartmentIds);
-    }
 
     return $applications;
   }

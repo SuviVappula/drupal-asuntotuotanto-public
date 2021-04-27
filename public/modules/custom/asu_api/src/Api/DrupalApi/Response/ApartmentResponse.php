@@ -7,16 +7,16 @@ use Psr\Http\Message\ResponseInterface;
 
 class ApartmentResponse extends Response {
 
-  private array $content;
+  private string $content;
 
   /**
    * Constructor.
    */
-  public function __construct(array $content) {
+  public function __construct(string $content) {
     $this->content = $content;
   }
 
-  public function getContent(): array {
+  public function getContent(): string {
     return $this->content;
   }
 

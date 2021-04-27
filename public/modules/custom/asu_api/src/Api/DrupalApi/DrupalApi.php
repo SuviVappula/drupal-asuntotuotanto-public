@@ -62,7 +62,7 @@ class DrupalApi {
    * Get Apartment Service.
    */
   public function getApartmentService(): ApartmentService {
-    return $this->getApartmentService();
+    return $this->apartmentService;
   }
 
 }

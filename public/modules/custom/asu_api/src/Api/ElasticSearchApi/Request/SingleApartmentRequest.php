@@ -7,23 +7,23 @@ use Drupal\asu_api\Api\Request;
 /**
  * Application request.
  */
-class ApartmentRequest extends Request {
+class SingleApartmentRequest extends Request {
 
   protected const METHOD = 'POST';
   protected const PATH = 'elasticsearch_index_drupal_apartment/_search';
 
   /**
-   * Project id.
+   * Apartment id.
    *
    * @var string
    */
-  private String $projectId;
+  private String $apartmentId;
 
   /**
    * Constructor.
    */
-  public function __construct(string $projectId) {
-    $this->projectId = $projectId;
+  public function __construct(string $apartmentId) {
+    $this->apartmentId = $apartmentId;
   }
 
   /**
@@ -31,10 +31,10 @@ class ApartmentRequest extends Request {
    */
   public function toArray(): array {
     return [
-      "size" => 1000,
+      #"size" => 10000,
       "query" => [
         "match" => [
-          "project_id" => (int) $this->projectId,
+          "nid" => (int) $this->apartmentId,
         ],
       ],
     ];

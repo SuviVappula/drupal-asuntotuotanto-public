@@ -1,6 +1,7 @@
 parameters:
   asu_api.backend.base_url: 'localhost:8000/'
   asu_api.drupal.base_url: 'http://Asu:asunnot_2020@dev.asuntotuotanto.druidfi.wod.by/'
+  #asu_api.drupal.base_url: 'asuntotuotanto-app:8080'
   asu_api.elastic.base_url: 'http://dev.asuntomyynti-elastic.druidfi.wod.by/'
 
 services:

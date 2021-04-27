@@ -2,7 +2,7 @@
 
 namespace Drupal\asu_application\Form;
 
-use Drupal\asu_api\Api\ElasticSearchApi\Request\ApartmentRequest;
+use Drupal\asu_api\Api\ElasticSearchApi\Request\ProjectApartmentsRequest;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerTrait;
@@ -168,7 +168,7 @@ class ApplicationForm extends ContentEntityForm {
   private function getApartments($projectId): ?array {
     /** @var \Drupal\asu_api\Api\ElasticSearchApi\ElasticSearchApi $elastic */
     $elastic = \Drupal::service('asu_api.elasticapi');
-    $request = new ApartmentRequest($projectId);
+    $request = new ProjectApartmentsRequest($projectId);
     $apartmentResponse = $elastic->getApartmentService()
       ->getProjectApartments($request);
 
