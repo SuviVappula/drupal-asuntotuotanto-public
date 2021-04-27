@@ -6,7 +6,6 @@ dependencies:
     - core.entity_form_mode.user.register
     - field.field.user.user.field_address
     - field.field.user.user.field_city
-    - field.field.user.user.field_contact_methods
     - field.field.user.user.field_date_of_birth
     - field.field.user.user.field_first_name
     - field.field.user.user.field_last_name
@@ -14,6 +13,7 @@ dependencies:
     - field.field.user.user.field_postal_code
     - field.field.user.user.field_right_of_r
   module:
+    - datetime
     - user
 id: user.user.register
 targetEntityType: user
@@ -22,6 +22,28 @@ mode: register
 content:
   account:
     weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_address:
+    type: string_textfield
+    weight: 5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_city:
+    type: string_textfield
+    weight: 6
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_date_of_birth:
+    type: datetime_default
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -41,18 +63,28 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_phone_number:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_postal_code:
+    type: string_textfield
+    weight: 7
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   translation:
-    weight: 10
+    weight: 12
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
-  field_address: true
-  field_city: true
-  field_contact_methods: true
-  field_date_of_birth: true
-  field_phone_number: true
-  field_postal_code: true
   field_right_of_r: true
   langcode: true
   language: true

@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.field.user.user.field_address
     - field.field.user.user.field_city
-    - field.field.user.user.field_contact_methods
     - field.field.user.user.field_date_of_birth
     - field.field.user.user.field_first_name
     - field.field.user.user.field_last_name
@@ -26,7 +25,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_address:
-    weight: 5
+    weight: 4
     settings:
       size: 60
       placeholder: ''
@@ -34,21 +33,15 @@ content:
     type: string_textfield
     region: content
   field_city:
-    weight: 7
+    weight: 5
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_contact_methods:
-    type: options_select
-    weight: 10
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_date_of_birth:
-    weight: 13
+    weight: 9
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
@@ -79,7 +72,7 @@ content:
     region: content
   field_postal_code:
     type: string_textfield
-    weight: 8
+    weight: 6
     region: content
     settings:
       size: 60
@@ -87,21 +80,21 @@ content:
     third_party_settings: {  }
   field_right_of_r:
     type: number
-    weight: 9
+    weight: 7
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   language:
-    weight: 12
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
   translation:
-    weight: 10
+    weight: 11
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
   langcode: true
   path: true

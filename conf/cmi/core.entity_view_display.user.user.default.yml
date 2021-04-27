@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.field.user.user.field_address
     - field.field.user.user.field_city
-    - field.field.user.user.field_contact_methods
     - field.field.user.user.field_date_of_birth
     - field.field.user.user.field_first_name
     - field.field.user.user.field_last_name
@@ -75,7 +74,6 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
-  field_contact_methods: true
   field_postal_code: true
   field_right_of_r: true
   langcode: true
