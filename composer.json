@@ -21,6 +21,7 @@
         "drupal/helfi_platform_config": "^1.1",
         "drupal/helfi_tpr": "^1.0",
         "drupal/helfi_tunnistamo": "^1.0",
+        "drupal/mailsystem": "^4.3",
         "drupal/personal_id": "^2.0@beta",
         "drupal/registration_role": "^1.1",
         "drupal/restui": "^1.20",
