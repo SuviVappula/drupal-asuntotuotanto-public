@@ -28,12 +28,4 @@ class UserService extends ServiceBase {
     return CreateUserResponse::createFromHttpResponse($response);
   }
 
-  public function updateUser() {
-
-  }
-
-  public function getUser() {
-
-  }
-
 }

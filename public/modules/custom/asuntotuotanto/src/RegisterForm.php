@@ -4,7 +4,7 @@ namespace Drupal\asuntotuotanto;
 
 use Drupal\asu_api\Api\BackendApi\BackendApi;
 use Drupal\asu_api\Api\BackendApi\Request\CreateUserRequest;
-use Drupal\asu_api\Exception\ApplicationRequestException;
+use Drupal\asu_api\Exception\RequestException;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
@@ -16,10 +16,6 @@ use Drupal\user\RegisterForm as BaseForm;
 class RegisterForm extends BaseForm {
 
   private BackendApi $backendApi;
-
-  public function getFormId(){
-    return 'asu_register_form';
-  }
 
   public function __construct(EntityRepositoryInterface $entity_repository, LanguageManagerInterface $language_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL, BackendApi $backendApi)
   {
@@ -47,20 +43,24 @@ class RegisterForm extends BaseForm {
     }
   }
 
-  private function sendToBackend(){
+  private function sendToBackend() {
     /** @var \Drupal\user\UserInterface $account */
     $account = $this->entity;
 
-    try{
+    try {
       $request = new CreateUserRequest($account);
-      $this->backendApi->getUserService()->createUser($request);
+      $this->backendApi
+        ->getUserService()
+        ->createUser($request);
     }
-    catch(ApplicationRequestException $e){
+    catch(RequestException $e) {
+      // @todo: Proper logging and error handling.
       // Request failed
+      $this->messenger()->addError('Problem with the response:' . $e->getMessage());
     }
-    catch(\Exception $e){
+    catch(\Exception $e) {
       // Something unexpected happened.
+      $this->messenger()->addError('Unexpected exception: ' . $e->getMessage());
     }
   }
-
 }
