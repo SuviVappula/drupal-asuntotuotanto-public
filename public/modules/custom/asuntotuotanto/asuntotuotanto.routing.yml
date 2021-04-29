@@ -1,0 +1,15 @@
+asuntuotanto.user.register:
+  path: '/user/register'
+  defaults:
+    _controller: '\Drupal\asuntotuotanto\Controller\UsersController::register'
+    _title: 'Create new account'
+  requirements:
+    _access: 'TRUE'
+
+user.register:
+  path: '/user/register'
+  defaults:
+    _controller: '\Drupal\asuntotuotanto\Controller\UsersController::register'
+    _title: 'Create new account'
+  requirements:
+    _access: 'TRUE'
