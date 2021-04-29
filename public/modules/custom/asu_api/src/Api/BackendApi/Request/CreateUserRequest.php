@@ -28,12 +28,10 @@ class CreateUserRequest extends Request {
    */
   public function toArray(): array {
     return [
-      // 'id' => $this->user->id(),
-      'id' => $this->user->uuid(),
-      'username' => $this->user->getAccountName(),
-      'first_name' => $this->user->field_firstname->value,
-      'last_name' => $this->user->field_lastname->value,
-      // 'email' => $this->user->field_email->value, # same as username
+      'uuid' => $this->user->uuid(),
+      'username' => $this->user->getEmail(),
+      'first_name' => $this->user->field_first_name->value,
+      'last_name' => $this->user->field_last_name->value,
       'date_of_birth' => $this->user->field_date_of_birth->value,
       'city' => $this->user->field_city->value,
       'postal_code' => $this->user->field_postal_code->value,

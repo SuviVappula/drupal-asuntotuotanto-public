@@ -50,9 +50,8 @@ class RegisterForm extends BaseForm {
    * {@inheritDoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    if (SAVED_NEW === parent::save($form, $form_state)) {
-      $this->sendToBackend();
-    }
+    parent::save($form, $form_state);
+    $this->sendToBackend();
   }
 
   /**
