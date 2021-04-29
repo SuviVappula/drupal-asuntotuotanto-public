@@ -13,12 +13,22 @@ use Drupal\Core\Language\LanguageManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\user\RegisterForm as BaseForm;
 
+/**
+ * Customized registration form.
+ */
 class RegisterForm extends BaseForm {
 
+  /**
+   * Backend api class.
+   *
+   * @var \Drupal\asu_api\Api\BackendApi\BackendApi
+   */
   private BackendApi $backendApi;
 
-  public function __construct(EntityRepositoryInterface $entity_repository, LanguageManagerInterface $language_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL, BackendApi $backendApi)
-  {
+  /**
+   * Construct.
+   */
+  public function __construct(EntityRepositoryInterface $entity_repository, LanguageManagerInterface $language_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL, BackendApi $backendApi) {
     parent::__construct($entity_repository, $language_manager, $entity_type_bundle_info, $time);
     $this->backendApi = $backendApi;
   }
@@ -36,13 +46,18 @@ class RegisterForm extends BaseForm {
     );
   }
 
-  public function save(array $form, FormStateInterface $form_state)
-  {
-    if(SAVED_NEW === parent::save($form, $form_state)){
+  /**
+   * {@inheritDoc}
+   */
+  public function save(array $form, FormStateInterface $form_state) {
+    if (SAVED_NEW === parent::save($form, $form_state)) {
       $this->sendToBackend();
     }
   }
 
+  /**
+   * Send the user information to Django backend.
+   */
   private function sendToBackend() {
     /** @var \Drupal\user\UserInterface $account */
     $account = $this->entity;
@@ -53,14 +68,15 @@ class RegisterForm extends BaseForm {
         ->getUserService()
         ->createUser($request);
     }
-    catch(RequestException $e) {
-      // @todo: Proper logging and error handling.
-      // Request failed
+    catch (RequestException $e) {
+      // @todo Proper logging and error handling.
+      // Request failed.
       $this->messenger()->addError('Problem with the response:' . $e->getMessage());
     }
-    catch(\Exception $e) {
+    catch (\Exception $e) {
       // Something unexpected happened.
       $this->messenger()->addError('Unexpected exception: ' . $e->getMessage());
     }
   }
+
 }

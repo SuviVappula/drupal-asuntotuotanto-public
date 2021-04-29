@@ -17,6 +17,11 @@ class BackendApi {
    */
   private ApplicationService $applicationService;
 
+  /**
+   * User service.
+   *
+   * @var \Drupal\asu_api\Api\BackendApi\Service\UserService
+   */
   private UserService $userService;
 
   /**
@@ -35,6 +40,9 @@ class BackendApi {
     return $this->applicationService;
   }
 
+  /**
+   * Get user service.
+   */
   public function getUserService(): UserService {
     return $this->userService;
   }

@@ -6,7 +6,7 @@ use Drupal\asu_api\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Response for application request.
+ * Response for user creation request.
  */
 class CreateUserResponse {
 
@@ -36,17 +36,17 @@ class CreateUserResponse {
   }
 
   /**
-   * Create new application response from http response.
+   * Create new user response from http response.
    *
    * @param \Psr\Http\Message\ResponseInterface $response
    *   Guzzle response.
    *
-   * @return ApplicationResponse
-   *   ApplicationResponse.
+   * @return CreateUserResponse
+   *   CreateUserResponse.
    *
    * @throws \Exception
    */
-  public static function createFromHttpResponse(ResponseInterface $response) {
+  public static function createFromHttpResponse(ResponseInterface $response): self {
     if ($response->getStatusCode() <= 200 && $response->getStatusCode() > 300) {
       throw new RequestException('Bad status code: ' . $response->getStatusCode());
     }

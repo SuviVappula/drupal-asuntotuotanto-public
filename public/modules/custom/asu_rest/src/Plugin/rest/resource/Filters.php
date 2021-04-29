@@ -2,7 +2,6 @@
 
 namespace Drupal\asu_rest\Plugin\rest\resource;
 
-use Drupal\asu_rest\Applications;
 use Drupal\asu_rest\UserDto;
 use Drupal\asu_api\Api\DrupalApi\Request\FilterRequest;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -12,7 +11,7 @@ use Drupal\user\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * FOR TESTING PURPOSES
+ * FOR TESTING PURPOSES.
  *
  * @RestResource(
  *   id = "asu_filters",
@@ -75,7 +74,7 @@ final class Filters extends ResourceBase {
    *   Array of applications by user.
    */
   private function getUserApplications(User $user) {
-    return [20 => [5,7,9,12,15]];
+    return [20 => [5, 7, 9, 12, 15]];
   }
 
   /**
@@ -85,7 +84,7 @@ final class Filters extends ResourceBase {
    *   Array of application statuses by apartment.
    */
   private function getApartmentApplicationStatus(): array {
-    return [20 => [5 => 'LOW', 7 => 'MEDIUM',9 => 'HIGH', 12 => 'LOW' , 15 => 'HIGH']];
+    return [20 => [5 => 'LOW', 7 => 'MEDIUM', 9 => 'HIGH', 12 => 'LOW' , 15 => 'HIGH']];
   }
 
   /**
