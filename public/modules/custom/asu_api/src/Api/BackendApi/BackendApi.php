@@ -3,6 +3,7 @@
 namespace Drupal\asu_api\Api\BackendApi;
 
 use Drupal\asu_api\Api\BackendApi\Service\ApplicationService;
+use Drupal\asu_api\Api\BackendApi\Service\UserService;
 use Drupal\asu_api\Api\RequestHandler;
 
 /**
@@ -16,12 +17,15 @@ class BackendApi {
    */
   private ApplicationService $applicationService;
 
+  private UserService $userService;
+
   /**
    * Constructor.
    */
   public function __construct(string $backendBaseUrl) {
     $requestHandler = new RequestHandler($backendBaseUrl);
     $this->applicationService = new ApplicationService($requestHandler);
+    $this->userService = new UserService($requestHandler);
   }
 
   /**
@@ -29,6 +33,10 @@ class BackendApi {
    */
   public function getApplicationService(): ApplicationService {
     return $this->applicationService;
+  }
+
+  public function getUserService(): UserService {
+    return $this->userService;
   }
 
 }
