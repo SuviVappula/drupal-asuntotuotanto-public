@@ -1,0 +1,6 @@
+name: 'Asuntotuotanto public'
+type: module
+description: 'Contains generic functionality for asuntotuotanto public'
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: 'ASU'

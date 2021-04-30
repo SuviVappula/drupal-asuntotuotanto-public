@@ -7,7 +7,7 @@ module:
   asu_api: 0
   asu_application: 0
   asu_rest: 0
-  asuntotuotanto: 0
+  asuntotuotanto_public: 0
   better_passwords: 0
   block: 0
   block_content: 0
