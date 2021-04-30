@@ -9,16 +9,13 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Response for user creation request.
  */
-class CreateUserResponse extends Response {
-
+class UserResponse extends Response {
   /**
    * Constructor.
-   *
-   * @param object $content
-   *   Contents of the response.
+   * @param array $content
    */
   public function __construct(array $content) {
-    // @todo Set content as attributes and create setters.
-    $this->content = $content;
+    //@todo: Create setters and getters.
+    parent::__construct($content);
   }
 }

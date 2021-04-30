@@ -2,8 +2,12 @@
 
 namespace Drupal\asu_api\Api\BackendApi\Request;
 
+use Drupal\asu_api\Api\BackendApi\Response\UserResponse;
 use Drupal\asu_api\Api\Request;
+use Drupal\asu_api\Api\Response;
 use Drupal\user\UserInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Create user request.
@@ -39,4 +43,11 @@ class CreateUserRequest extends Request {
     ];
   }
 
+  public static function createResponse(ResponseInterface $response): Response {
+    if (!STATIC::requestOk($response)) {
+      throw new RequestException('Bad status code: ' . $response->getStatusCode());
+    }
+    $content = json_decode($response->getBody()->getContents(), TRUE);
+    return new UserResponse($content);
+  }
 }

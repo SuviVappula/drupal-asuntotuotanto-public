@@ -4,6 +4,9 @@ namespace Drupal\asu_api\Api\BackendApi\Service;
 
 use Drupal\asu_api\Api\BackendApi\Request\CreateUserRequest;
 use Drupal\asu_api\Api\BackendApi\Response\CreateUserResponse;
+use Drupal\asu_api\Api\BackendApi\Response\UserResponse;
+use Drupal\asu_api\Api\Request;
+use Drupal\asu_api\Api\Response;
 use Drupal\asu_api\Api\ServiceBase;
 
 /**
@@ -22,10 +25,16 @@ class UserService extends ServiceBase {
    *
    * @throws \Exception
    */
-  public function createUser(CreateUserRequest $request): CreateUserResponse {
+  public function createUser(Request $request): Response {
     $httpRequest = $this->requestHandler->buildRequest($request);
     $response = $this->requestHandler->send($httpRequest);
     return CreateUserResponse::createFromHttpResponse($response);
+  }
+
+  public function getUser(Request $request): Response {
+    $httpRequest = $this->requestHandler->buildRequest($request);
+    $response = $this->requestHandler->send($httpRequest);
+    return UserResponse::createFromHttpResponse($response);
   }
 
 }
