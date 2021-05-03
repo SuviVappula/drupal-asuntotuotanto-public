@@ -4,9 +4,84 @@
  * @file
  */
 
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\user\Entity\User;
+use Drupal\asu_api\Exception\RequestException;
+
 /**
  * Implements hook_entity_type_alter().
  */
-function asuntotuotanto_entity_type_alter(array &$entity_types) {
-  $entity_types['user']->setFormClass('register', 'Drupal\asuntotuotanto\RegisterForm');
+function asuntotuotanto_public_entity_type_alter(array &$entity_types) {
+  $entity_types['user']->setFormClass('register', 'Drupal\asuntotuotanto_public\RegisterForm');
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function asuntotuotanto_public_user_login(User $account) {
+  // Only for customers.
+  /** @var \Drupal\asu_api\Api\BackendApi\BackendApi $backendApi */
+  $backendApi = \Drupal::service('asu_api.backendapi');
+  $store = \Drupal::service('tempstore.private');
+  try {
+    // $request = new UserRequest($account);
+    // $userInformation = $backendApi
+    // ->getUserService()
+    // ->getUser($request);
+    $store->set('field_testfield', 'asd123');
+  }
+  catch (RequestException $e) {
+    // Something else than 200.
+    // @todo Handle error & logging.
+  }
+  catch (\Exception $e) {
+  }
+
+  // $store = \Drupal::service('asuntotuotanto_public.external_user_fields');
+  // foreach($userInformation as $field => $value){
+  // @todo check if field exists in configuration.
+  // $store->set($field, $value);
+  // }
+}
+
+/**
+ * Implements hook_entity_base_field_info().
+ */
+function asuntotuotanto_public_entity_base_field_info(EntityTypeInterface $entity_type) {
+  if ($entity_type->id() === 'user') {
+    $fields = [];
+    $config = \Drupal::config('asuntotuotanto_public.external_user_fields');
+
+    foreach ($config->get('external_data_map') as $fieldname => $field_data) {
+      $fields[$fieldname] = BaseFieldDefinition::create('asu_external_string')
+        ->setName($fieldname)
+        ->setTranslatable(FALSE)
+        ->setLabel(t($field_data['title']))
+        ->setComputed(TRUE)
+        ->setSetting('text source', 'value')
+        ->setClass('\Drupal\asuntotuotanto_public\ExternalData')
+        ->setDisplayConfigurable('view', TRUE)
+        ->setDisplayOptions('view', [
+          'label' => 'visible',
+          'weight' => -5,
+        ]);
+    }
+
+    return $fields;
+  }
+}
+
+/**
+ * Implements hook_field_formatter_info_alter().
+ */
+function asuntotuotanto_public_field_formatter_info_alter(array &$info) {
+  $info['string']['field_types'][] = 'asu_external_string';
+}
+
+/**
+ * Implements hook_field_widget_info_alter().
+ */
+function asuntotuotanto_public_field_widget_info_alter(array &$info) {
+  $info['string_textfield']['field_types'][] = 'asu_external_string';
 }

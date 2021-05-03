@@ -1,0 +1,4 @@
+services:
+  asuntotuotanto_public.tempstore:
+    class: Drupal\asuntotuotanto_public\Store
+
