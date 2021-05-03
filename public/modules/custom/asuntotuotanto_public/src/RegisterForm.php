@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\asuntotuotanto;
+namespace Drupal\asuntotuotanto_public;
 
 use Drupal\asu_api\Api\BackendApi\BackendApi;
 use Drupal\asu_api\Api\BackendApi\Request\CreateUserRequest;
