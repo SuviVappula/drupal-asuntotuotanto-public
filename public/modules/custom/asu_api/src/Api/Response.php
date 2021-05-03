@@ -11,27 +11,29 @@ class Response {
 
   protected array $content;
 
-  public function __construct(array $content)
-  {
+  /**
+   * Constructor.
+   */
+  public function __construct(array $content) {
     $this->content = $content;
   }
 
   /**
    * @return array
    */
-  public function getContent(): array
-  {
+  public function getContent(): array {
     return $this->content;
   }
 
   /**
    * Create response object from http response.
    *
-   * @param ResponseInterface $response
+   * @param \Psr\Http\Message\ResponseInterface $response
+   *
    * @return static
    */
   public static function createFromHttpResponse(ResponseInterface $response): self {
-    if (!STATIC::requestOk($response)) {
+    if (!static::requestOk($response)) {
       throw new RequestException('Bad status code: ' . $response->getStatusCode());
     }
     $content = json_decode($response->getBody()->getContents(), TRUE);
@@ -41,7 +43,8 @@ class Response {
   /**
    * Check that http status code is 200.
    *
-   * @param ResponseInterface $response
+   * @param \Psr\Http\Message\ResponseInterface $response
+   *
    * @return bool
    */
   public static function requestOk(ResponseInterface $response) {
