@@ -15,6 +15,8 @@ module:
   config: 0
   config_translation: 0
   config_update: 0
+  context: 0
+  context_ui: 0
   crop: 0
   ctools: 0
   datetime: 0
@@ -58,6 +60,7 @@ module:
   media: 0
   media_entity_soundcloud: 0
   media_library: 0
+  menu_block: 0
   menu_block_current_language: 0
   menu_link_content: 0
   menu_ui: 0
@@ -107,6 +110,8 @@ theme:
   hdbt: 0
   gin: 0
   hdbt_admin: 0
+  asuntotuotanto: 0
+  asu_admin: 0
 profile: minimal
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
