@@ -2,17 +2,7 @@ uuid: 09d78468-214d-49df-b93d-6b10ca822d92
 langcode: en
 status: true
 dependencies:
-  config:
-    - field.field.user.user.field_address
-    - field.field.user.user.field_city
-    - field.field.user.user.field_date_of_birth
-    - field.field.user.user.field_first_name
-    - field.field.user.user.field_last_name
-    - field.field.user.user.field_phone_number
-    - field.field.user.user.field_postal_code
-    - field.field.user.user.field_right_of_r
   module:
-    - datetime
     - user
 id: user.user.default
 targetEntityType: user
@@ -23,67 +13,6 @@ content:
     weight: 0
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_address:
-    weight: 4
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_city:
-    weight: 5
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_date_of_birth:
-    weight: 9
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_first_name:
-    weight: 1
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_last_name:
-    weight: 2
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_phone_number:
-    weight: 3
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_postal_code:
-    type: string_textfield
-    weight: 6
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_right_of_r:
-    type: number
-    weight: 7
-    region: content
-    settings:
-      placeholder: ''
     third_party_settings: {  }
   language:
     weight: 10
