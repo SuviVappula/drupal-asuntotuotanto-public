@@ -32,7 +32,7 @@ class Store {
    * @return string
    *   A value for the key.
    */
-  public function get(string $key): string {
+  public function get(string $key): ?string {
     return $this->store->get($key);
   }
 

@@ -25,12 +25,15 @@ class RegisterForm extends BaseForm {
    */
   private BackendApi $backendApi;
 
+  private Store $store;
+
   /**
    * Construct.
    */
-  public function __construct(EntityRepositoryInterface $entity_repository, LanguageManagerInterface $language_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL, BackendApi $backendApi) {
+  public function __construct(EntityRepositoryInterface $entity_repository, LanguageManagerInterface $language_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL, BackendApi $backendApi, Store $store) {
     parent::__construct($entity_repository, $language_manager, $entity_type_bundle_info, $time);
     $this->backendApi = $backendApi;
+    $this->store = $store;
   }
 
   /**
@@ -42,8 +45,39 @@ class RegisterForm extends BaseForm {
       $container->get('language_manager'),
       $container->get('entity_type.bundle.info'),
       $container->get('datetime.time'),
-      $container->get('asu_api.backendapi')
+      $container->get('asu_api.backendapi'),
+      $container->get('asuntotuotanto_public.tempstore')
     );
+  }
+
+  /**
+   *
+   */
+  public function form(array $form, FormStateInterface $form_state): array {
+    $form = parent::form($form, $form_state);
+    $config = \Drupal::config('asuntotuotanto_public.external_user_fields');
+    $fields = $config->get('external_data_map');
+
+    foreach ($fields as $field => $info) {
+      $form['account'][$field] = [
+        '#type' => $info['type'],
+        '#title' => $this->t($info['title']),
+        '#maxlength' => 255,
+        '#required' => TRUE,
+        '#attributes' => [
+          // 'class' => ['username'],
+          'autocorrect' => 'off',
+          'autocapitalize' => 'off',
+          'spellcheck' => 'false',
+        ],
+        // (!$register ? $account->getAccountName() : ''),
+        '#default_value' => '',
+        // '#default_value' => (!$register ? $account->getAccountName() : ''),
+        // '#access' => $account->name->access('edit'),
+      ];
+    }
+
+    return $form;
   }
 
   /**
@@ -51,18 +85,18 @@ class RegisterForm extends BaseForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     parent::save($form, $form_state);
-    $this->sendToBackend();
+    $this->sendToBackend($form_state);
   }
 
   /**
    * Send the user information to Django backend.
    */
-  private function sendToBackend() {
+  private function sendToBackend(FormStateInterface $form_state) {
     /** @var \Drupal\user\UserInterface $account */
     $account = $this->entity;
 
     try {
-      $request = new CreateUserRequest($account);
+      $request = new CreateUserRequest($account, $form_state);
       $this->backendApi
         ->getUserService()
         ->createUser($request);

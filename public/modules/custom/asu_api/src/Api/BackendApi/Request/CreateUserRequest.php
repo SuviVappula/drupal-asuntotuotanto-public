@@ -5,6 +5,7 @@ namespace Drupal\asu_api\Api\BackendApi\Request;
 use Drupal\asu_api\Api\BackendApi\Response\UserResponse;
 use Drupal\asu_api\Api\Request;
 use Drupal\asu_api\Api\Response;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\user\UserInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -19,27 +20,34 @@ class CreateUserRequest extends Request {
 
   private UserInterface $user;
 
+  private FormStateInterface $form_state;
+
   /**
    * Construct.
    */
-  public function __construct(UserInterface $user) {
+  public function __construct(UserInterface $user, FormStateInterface $form_state) {
     $this->user = $user;
+    $this->form_state = $form_state;
   }
 
   /**
    * Data to array.
    */
   public function toArray(): array {
-    return [
+    $config = \Drupal::config('asuntotuotanto_public.external_user_fields');
+    $fieldMap = $config->get('external_data_map');
+
+    $data = [
       'uuid' => $this->user->uuid(),
       'username' => $this->user->getEmail(),
-      'first_name' => $this->user->field_first_name->value,
-      'last_name' => $this->user->field_last_name->value,
-      'date_of_birth' => $this->user->field_date_of_birth->value,
-      'city' => $this->user->field_city->value,
-      'postal_code' => $this->user->field_postal_code->value,
-      'address' => $this->user->field_address->value,
     ];
+
+    // @todo: Make sure field is always up to date.
+    foreach ($fieldMap as $field => $information) {
+      $data[$information['external_field']] = $this->form_state->getValue($field);
+    }
+
+    return $data;
   }
 
   /**

@@ -7,9 +7,9 @@ use Drupal\asu_api\Exception\ApplicationRequestException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Response for application request.
+ * Response for update user request.
  */
-class ApplicationResponse extends Response {
+class UpdateUserResponse extends Response {
 
   /**
    * Content.

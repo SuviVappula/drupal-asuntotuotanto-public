@@ -3,27 +3,27 @@
 namespace Drupal\asu_api\Api\BackendApi\Request;
 
 use Drupal\asu_api\Api\Request;
-use Drupal\user\UserInterface;
+use Drupal\user\Entity\User;
 
 /**
- *
+ * Request user information from backend.
  */
 class UserRequest extends Request {
 
-  protected const METHOD = '';
-  protected const PATH = '';
+  protected const METHOD = 'POST';
+  protected const PATH = 'api/v1/user';
 
-  private UserInterface $user;
+  private User $user;
 
   /**
-   *
+   * Constructor.
    */
-  public function __construct(UserInterface $user) {
+  public function __construct(User $user) {
     $this->user = $user;
   }
 
   /**
-   *
+   * User request data to array.
    */
   public function toArray(): array {
     return ['id' => $this->user->uuid()];
