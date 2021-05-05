@@ -1,4 +1,5 @@
 const path = require("path");
+
 const isDev = process.env.NODE_ENV !== "production";
 
 const CleanWebpackPlugin = require("clean-webpack-plugin");
@@ -12,6 +13,8 @@ module.exports = {
   entry: {
     styles: ["./src/scss/styles.scss"],
     bundle: ["./src/js/common.js"],
+    stickyNavigation: ["./src/js/sticky-navigation.js"],
+    apartmentsListItemToggle: ["./src/js/apartments-list-item-toggle.js"],
   },
   output: {
     devtoolLineToLine: true,
@@ -103,8 +106,8 @@ module.exports = {
           {
             loader: "postcss-loader",
             options: {
-              "postcssOptions": {
-                "config": path.join(__dirname, "postcss.config.js"),
+              postcssOptions: {
+                config: path.join(__dirname, "postcss.config.js"),
               },
               sourceMap: isDev,
             },
@@ -123,9 +126,7 @@ module.exports = {
     ],
   },
   resolve: {
-    modules: [
-      path.join(__dirname, "node_modules")
-    ],
+    modules: [path.join(__dirname, "node_modules")],
     extensions: [".js", ".json"],
   },
   plugins: [
@@ -134,14 +135,12 @@ module.exports = {
     new CleanWebpackPlugin(["dist"], {
       root: path.resolve(__dirname),
     }),
-    new SVGSpritemapPlugin([
-      path.resolve(__dirname, "src/icons/**/*.svg"),
-    ], {
+    new SVGSpritemapPlugin([path.resolve(__dirname, "src/icons/**/*.svg")], {
       output: {
         filename: "./icons/sprite.svg",
         svg: {
-          sizes: false
-        }
+          sizes: false,
+        },
       },
       sprite: {
         prefix: false,
@@ -150,8 +149,8 @@ module.exports = {
           title: false,
           symbol: true,
           use: true,
-          view: "-view"
-        }
+          view: "-view",
+        },
       },
     }),
     new MiniCssExtractPlugin({
