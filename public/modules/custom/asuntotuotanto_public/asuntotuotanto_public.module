@@ -8,6 +8,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user\Entity\User;
 use Drupal\asu_api\Exception\RequestException;
+use Drupal\asu_api\Api\BackendApi\Request\UpdateUserRequest;
 
 /**
  * Implements hook_entity_type_alter().
@@ -18,27 +19,41 @@ function asuntotuotanto_public_entity_type_alter(array &$entity_types) {
 
 /**
  * Implements hook_user_login().
+ *
+ * On login, get field values from external source and store them.
  */
 function asuntotuotanto_public_user_login(User $account) {
-  // Only for customers.
+  if (!in_array('customer', $account->getRoles())) {
+    return;
+  }
+
   /** @var \Drupal\asu_api\Api\BackendApi\BackendApi $backendApi */
   $backendApi = \Drupal::service('asu_api.backendapi');
-  $store = \Drupal::service('tempstore.private');
+  $store = \Drupal::service('asuntotuotanto_public.tempstore');
+
   try {
+    // @todo Waiting for the API
     // $request = new UserRequest($account);
     // $userInformation = $backendApi
     // ->getUserService()
     // ->getUser($request);
-    $store->set('field_testfield', 'asd123');
+    $store->set('first_name', 'hard');
+    $store->set('last_name', 'code');
+    $store->set('phone_number', '0401234567');
+    $store->set('date_of_birth', '2000-05-05');
+    $store->set('postal_code', '041234');
+    $store->set('city', 'hardcoded city');
+    $store->set('address', 'Hardcode street 3');
   }
   catch (RequestException $e) {
     // Something else than 200.
     // @todo Handle error & logging.
   }
   catch (\Exception $e) {
+    // Something unexpected.
   }
 
-  // $store = \Drupal::service('asuntotuotanto_public.external_user_fields');
+  // $config = \Drupal::config('asuntotuotanto_public.external_user_fields');
   // foreach($userInformation as $field => $value){
   // @todo check if field exists in configuration.
   // $store->set($field, $value);
@@ -47,6 +62,8 @@ function asuntotuotanto_public_user_login(User $account) {
 
 /**
  * Implements hook_entity_base_field_info().
+ *
+ * Create computed fields dynamically for user entity.
  */
 function asuntotuotanto_public_entity_base_field_info(EntityTypeInterface $entity_type) {
   if ($entity_type->id() === 'user') {
@@ -59,7 +76,7 @@ function asuntotuotanto_public_entity_base_field_info(EntityTypeInterface $entit
         ->setTranslatable(FALSE)
         ->setLabel(t($field_data['title']))
         ->setComputed(TRUE)
-        ->setSetting('text source', 'value')
+        // ->setSetting('text source', 'value')
         ->setClass('\Drupal\asuntotuotanto_public\ExternalData')
         ->setDisplayConfigurable('view', TRUE)
         ->setDisplayOptions('view', [
@@ -69,6 +86,57 @@ function asuntotuotanto_public_entity_base_field_info(EntityTypeInterface $entit
     }
 
     return $fields;
+  }
+}
+
+/**
+ * Implements hook_form_user_form_alter().
+ */
+function asuntotuotanto_public_form_user_form_alter(&$form, $form_state, $form_id) {
+  $fields = [];
+  $config = \Drupal::config('asuntotuotanto_public.external_user_fields');
+  $store = \Drupal::service('asuntotuotanto_public.tempstore');
+
+  foreach ($config->get('external_data_map') as $field => $field_data) {
+    $default_value = $store->get($field) ? $store->get($field) : '';
+    $form[$field] = [
+      '#type' => $field_data['type'],
+      '#title' => $field_data['title'],
+      '#default_value' => $default_value,
+      '#weight' => 4,
+    ];
+    $form['#submit'][] = 'update_user_to_backend';
+  }
+}
+
+/**
+ * Submit handler for user form.
+ */
+function update_user_to_backend(&$form, $form_state, $form_id) {
+  $config = \Drupal::config('asuntotuotanto_public.external_user_fields');
+  $fields = $config->get('external_data_map');
+  $store = \Drupal::service('asuntotuotanto_public.tempstore');
+
+  /** @var \Drupal\asu_api\Api\BackendApi\BackendApi $backendApi */
+  $backendApi = \Drupal::service('asu_api.backendapi');
+
+  try {
+    $request = new UpdateUserRequest($form_state, $fields);
+    $backendApi
+      ->getUserService()
+      ->updateUser($request);
+
+    foreach ($fields as $field => $field_information) {
+      if (isset($formState->{$field})) {
+        $store->set($field, $formState->{$field});
+      }
+    }
+  }
+  catch (RequestException $e) {
+    // Other than 200.
+  }
+  catch (\Exception $e) {
+    // Unexpected.
   }
 }
 

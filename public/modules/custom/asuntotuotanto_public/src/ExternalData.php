@@ -15,8 +15,6 @@ class ExternalData extends FieldItemList {
    * Compute the value.
    */
   protected function computeValue() {
-    $store = \Drupal::service('asuntotuotanto_public.tempstore');
-    $this->setValue(['value' => $this->getName()]);
   }
 
   /**
