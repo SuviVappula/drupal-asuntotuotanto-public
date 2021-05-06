@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e78d559c62d8faf3958055c631fa742f",
+    "content-hash": "db3eb55a253b1fc1c53d97f1fa81ce7a",
     "packages": [
         {
             "name": "City-of-Helsinki/php-hauki-client",
@@ -3507,20 +3507,20 @@
         },
         {
             "name": "drupal/hdbt",
-            "version": "1.2.15",
+            "version": "1.2.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-hdbt.git",
-                "reference": "53ac109d50c3f139fbefa0d3bd360b58b1b1ba75"
+                "reference": "f7ec63728888fa9a30694090a01c27ea2f3f1f08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/53ac109d50c3f139fbefa0d3bd360b58b1b1ba75",
-                "reference": "53ac109d50c3f139fbefa0d3bd360b58b1b1ba75",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/f7ec63728888fa9a30694090a01c27ea2f3f1f08",
+                "reference": "f7ec63728888fa9a30694090a01c27ea2f3f1f08",
                 "shasum": ""
             },
             "require": {
-                "drupal/twig_tweak": "^2.8"
+                "drupal/twig_tweak": "^2.0 || ^3.0"
             },
             "type": "drupal-custom-theme",
             "license": [
@@ -3531,10 +3531,10 @@
                 "Drupal"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/1.2.15",
+                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/latest",
                 "issues": "https://github.com/City-of-Helsinki/drupal-hdbt/issues"
             },
-            "time": "2021-04-20T08:08:26+00:00"
+            "time": "2021-05-06T08:34:17+00:00"
         },
         {
             "name": "drupal/hdbt_admin",
@@ -14231,5 +14231,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
