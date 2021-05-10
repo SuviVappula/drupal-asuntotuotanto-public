@@ -1,0 +1,20 @@
+uuid: 103dad9f-12a8-481b-b803-dbcb3ca2053a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_site_owner
+  module:
+    - external_entities
+id: apartment.apartment.field_site_owner
+field_name: field_site_owner
+entity_type: apartment
+bundle: apartment
+label: 'Site owner'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

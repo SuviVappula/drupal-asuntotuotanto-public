@@ -1,0 +1,55 @@
+uuid: c3205be1-8d32-45a0-82cc-297344124629
+langcode: en
+status: true
+dependencies: {  }
+id: project
+label: Project
+label_plural: Projects
+description: ''
+read_only: false
+field_mappings:
+  id:
+    value: id
+  uuid:
+    value: uuid
+  title:
+    value: title
+  field_apartment_living_areas:
+    value: apartment_living_area_sizes_m2
+  field_apartment_sales_prices:
+    value: apartment_sales_prices
+  field_apartment_structures:
+    value: apartment_structures
+  field_apartments_count:
+    value: apartments_count
+  field_application_end_time:
+    value: application_end_time
+  field_application_start_time:
+    value: application_start_time
+  field_debt_free_sales_prices:
+    value: apartment_debt_free_sales_prices
+  field_estimated_completion_date:
+    value: estimated_completion_date
+  field_is_application_period:
+    value: is_application_period_active
+storage_client_id: rest
+storage_client_config:
+  endpoint: 'http://Asu:asunnot_2020@dev.asuntotuotanto.druidfi.wod.by/fi/content/project'
+  response_format: json
+  pager:
+    default_limit: '50'
+    page_parameter: ''
+    page_parameter_type: null
+    page_size_parameter: ''
+    page_size_parameter_type: null
+  api_key:
+    header_name: ''
+    key: ''
+  parameters:
+    list: {  }
+    single: {  }
+persistent_cache_max_age: 0
+annotation_entity_type_id: null
+annotation_bundle_id: null
+annotation_field_name: null
+inherits_annotation_fields: false

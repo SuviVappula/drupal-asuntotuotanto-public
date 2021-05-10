@@ -1,0 +1,18 @@
+uuid: f1d62558-8929-4cef-b479-f700bedf59f4
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: apartment.field_debt_free_sales_price
+field_name: field_debt_free_sales_price
+entity_type: apartment
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

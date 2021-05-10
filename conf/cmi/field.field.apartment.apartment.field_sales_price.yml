@@ -1,0 +1,24 @@
+uuid: ee3ff394-93af-4f3e-8115-66b151f8514b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_sales_price
+  module:
+    - external_entities
+id: apartment.apartment.field_sales_price
+field_name: field_sales_price
+entity_type: apartment
+bundle: apartment
+label: 'Sales price'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

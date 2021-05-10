@@ -1,0 +1,19 @@
+uuid: 92fbec16-73c9-4ba3-8d59-c3268b4ac567
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+    - link
+id: apartment.field_services_url
+field_name: field_services_url
+entity_type: apartment
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,24 @@
+uuid: 1c69914b-22a6-450b-8c7f-aa69640dfb8b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_debt_free_sales_price
+  module:
+    - external_entities
+id: apartment.apartment.field_debt_free_sales_price
+field_name: field_debt_free_sales_price
+entity_type: apartment
+bundle: apartment
+label: 'Debt free sales price'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

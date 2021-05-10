@@ -1,0 +1,23 @@
+uuid: f792145f-27e6-404c-8621-d7cefbbf2752
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_cta_image
+  module:
+    - external_entities
+    - link
+id: apartment.apartment.field_cta_image
+field_name: field_cta_image
+entity_type: apartment
+bundle: apartment
+label: 'Cta image'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

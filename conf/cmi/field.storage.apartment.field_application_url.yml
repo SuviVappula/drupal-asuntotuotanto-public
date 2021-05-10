@@ -1,0 +1,21 @@
+uuid: 43c4f410-208e-4c80-a6ae-5e756c43edc9
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: apartment.field_application_url
+field_name: field_application_url
+entity_type: apartment
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

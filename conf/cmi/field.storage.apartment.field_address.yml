@@ -1,0 +1,21 @@
+uuid: 836877d7-4168-4164-a045-431dba054dc6
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: apartment.field_address
+field_name: field_address
+entity_type: apartment
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

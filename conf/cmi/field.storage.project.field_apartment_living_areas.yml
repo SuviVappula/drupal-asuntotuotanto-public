@@ -1,0 +1,21 @@
+uuid: ef7e3f8f-9ca5-4989-8d91-de5c64bcfeef
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: project.field_apartment_living_areas
+field_name: field_apartment_living_areas
+entity_type: project
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
