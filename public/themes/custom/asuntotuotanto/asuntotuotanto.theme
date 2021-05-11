@@ -45,3 +45,32 @@ function asuntotuotanto_theme_suggestions_alter(array &$suggestions, array $vari
     $suggestions[] = 'form__' . str_replace('-', '_', $variables['element']['#id']);
   }
 }
+
+/**
+ * Implements hook_preprocess_external_entity().
+ */
+function asuntotuotanto_preprocess_external_entity(&$variables) {
+  $entity = $variables['entity'];
+  $entity_type = $entity['#entity_type'];
+
+  switch ($entity_type) {
+    case 'apartment':
+      if ($services = $entity['field_services']) {
+        $services = $services['#items']->getValue();
+        $services_stack = [];
+
+        foreach ($services as $key => $service) {
+          $service_name = $service['value']['name'];
+          $service_distance = $service['value']['distance'];
+
+          $services_stack[] = [
+            'name' => $service_name,
+            'distance' => $service_distance,
+          ];
+        }
+
+        $variables['services'] = $services_stack ?? NULL;
+      }
+      break;
+  }
+}

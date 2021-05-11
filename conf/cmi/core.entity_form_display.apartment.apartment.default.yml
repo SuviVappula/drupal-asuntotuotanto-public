@@ -22,6 +22,7 @@ dependencies:
     - field.field.apartment.apartment.field_project_area_description
     - field.field.apartment.apartment.field_project_description
     - field.field.apartment.apartment.field_sales_price
+    - field.field.apartment.apartment.field_services
     - field.field.apartment.apartment.field_services_url
     - field.field.apartment.apartment.field_site_owner
     - field.field.apartment.apartment.field_site_renter
@@ -178,6 +179,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: number
+    region: content
+  field_services:
+    weight: 19
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   field_services_url:
     weight: 10

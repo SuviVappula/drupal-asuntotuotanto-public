@@ -52,6 +52,8 @@ field_mappings:
     value: project_description
   field_sales_price:
     value: field_sales_price
+  field_services:
+    value: 'services/*'
   field_services_url:
     uri: services_url
   field_site_owner:
