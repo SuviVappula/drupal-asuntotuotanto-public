@@ -4,19 +4,15 @@ status: true
 dependencies:
   config:
     - field.field.user.user.field_address
-    - field.field.user.user.field_bank_account_number
     - field.field.user.user.field_city
-    - field.field.user.user.field_contact_methods
+    - field.field.user.user.field_date_of_birth
     - field.field.user.user.field_first_name
-    - field.field.user.user.field_identification_number
     - field.field.user.user.field_last_name
     - field.field.user.user.field_phone_number
     - field.field.user.user.field_postal_code
     - field.field.user.user.field_right_of_r
-    - field.field.user.user.field_wealth_report
   module:
-    - file
-    - personal_id
+    - datetime
     - user
 id: user.user.default
 targetEntityType: user
@@ -29,14 +25,6 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_address:
-    weight: 5
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_bank_account_number:
     weight: 4
     settings:
       size: 60
@@ -45,19 +33,19 @@ content:
     type: string_textfield
     region: content
   field_city:
-    weight: 7
+    weight: 5
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_contact_methods:
-    type: options_select
-    weight: 10
-    region: content
+  field_date_of_birth:
+    weight: 9
     settings: {  }
     third_party_settings: {  }
+    type: datetime_default
+    region: content
   field_first_name:
     weight: 1
     settings:
@@ -65,14 +53,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
-    region: content
-  field_identification_number:
-    weight: 6
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: personal_id_plain_widget
     region: content
   field_last_name:
     weight: 2
@@ -92,7 +72,7 @@ content:
     region: content
   field_postal_code:
     type: string_textfield
-    weight: 8
+    weight: 6
     region: content
     settings:
       size: 60
@@ -100,20 +80,18 @@ content:
     third_party_settings: {  }
   field_right_of_r:
     type: number
-    weight: 9
+    weight: 7
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_wealth_report:
-    type: file_generic
-    weight: 11
-    region: content
-    settings:
-      progress_indicator: throbber
-    third_party_settings: {  }
   language:
-    weight: 12
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  translation:
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
