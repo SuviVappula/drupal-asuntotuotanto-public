@@ -40,6 +40,7 @@
 {% set accessibility = entity.field_accessibility.0['#context']['value'] %}
 {% set site_owner = entity.field_site_owner.0['#context']['value'] %}
 {% set site_renter = entity.field_site_renter.0['#context']['value'] %}
+{% set estimated_completion_date = entity.field_estimated_completion_date.0['#context']['value'] %}
 
 <article{{ attributes.addClass(classes) }}>
   <div class="sticky-navigation is-hidden" aria-hidden="true" id="sticky_navigation">
