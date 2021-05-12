@@ -7,7 +7,6 @@ module:
   asu_api: 0
   asu_application: 0
   asu_rest: 0
-  blazy: 0
   better_passwords: 0
   block: 0
   block_content: 0
@@ -88,7 +87,6 @@ module:
   select2_icon: 0
   serialization: 0
   simple_sitemap: 0
-  slick: 0
   social_media: 0
   syslog: 0
   system: 0

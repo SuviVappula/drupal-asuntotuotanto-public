@@ -12,7 +12,6 @@
         "druidfi/omen": "^0.2.0",
         "drupal/api_tools": "^1.0",
         "drupal/better_passwords": "^2.0",
-        "drupal/blazy": "^2.2",
         "drupal/context": "^4.0@beta",
         "drupal/core-composer-scaffold": "^9.1",
         "drupal/core-recommended": "^9.1",
@@ -32,9 +31,9 @@
         "drupal/personal_id": "^2.0@beta",
         "drupal/registration_role": "^1.1",
         "drupal/restui": "^1.20",
-        "drupal/slick": "^2.3",
         "drupal/views_infinite_scroll": "^1.8",
-        "drush/drush": "^10.4"
+        "drush/drush": "^10.4",
+        "kenwheeler/slick": "^1.8"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
@@ -99,6 +98,19 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "kenwheeler/slick",
+                "version": "1.8.1",
+                "type": "drupal-library",
+                "source": {
+                    "url": "https://github.com/kenwheeler/slick",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
         }
     ],
     "scripts": {

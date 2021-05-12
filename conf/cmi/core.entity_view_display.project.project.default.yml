@@ -17,6 +17,7 @@ dependencies:
     - field.field.project.project.field_energy_class
     - field.field.project.project.field_estimated_completion_date
     - field.field.project.project.field_housing_company
+    - field.field.project.project.field_images
     - field.field.project.project.field_is_application_period
     - field.field.project.project.field_ownership_type
     - field.field.project.project.field_postal_code
@@ -28,6 +29,7 @@ dependencies:
     - field.field.project.project.field_street_address
   module:
     - external_entities
+    - imagecache_external
     - options
 id: project.project.default
 targetEntityType: project
@@ -146,6 +148,15 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_images:
+    weight: 26
+    label: hidden
+    settings:
+      imagecache_external_responsive_style: showcase_gallery
+      imagecache_external_link: ''
+    third_party_settings: {  }
+    type: imagecache_external_responsive_image
     region: content
   field_is_application_period:
     weight: 10

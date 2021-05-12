@@ -1,3 +1,14 @@
+showcase-gallery:
+  js:
+    dist/js/showcaseGallery.min.js: {}
+    /libraries/slick/slick/slick.min.js: { minified: true }
+  css:
+    base:
+      /libraries/slick/slick/slick.css: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+
 apartments-list-item-toggle:
   js:
     dist/js/apartmentsListItemToggle.min.js: {}

@@ -42,6 +42,8 @@ field_mappings:
     value: estimated_completion_date
   field_housing_company:
     value: field_housing_company
+  field_images:
+    uri: images
   field_is_application_period:
     value: is_application_period_active
   field_ownership_type:
