@@ -19,6 +19,7 @@ dependencies:
     - field.field.apartment.apartment.field_energy_class
     - field.field.apartment.apartment.field_estimated_completion_date
     - field.field.apartment.apartment.field_floor
+    - field.field.apartment.apartment.field_images
     - field.field.apartment.apartment.field_living_area
     - field.field.apartment.apartment.field_ownership_type
     - field.field.apartment.apartment.field_project_area_description
@@ -159,6 +160,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: number
+    region: content
+  field_images:
+    weight: 22
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
     region: content
   field_living_area:
     weight: 14
