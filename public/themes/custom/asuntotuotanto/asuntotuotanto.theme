@@ -54,6 +54,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
   $entity_type = $entity['#entity_type'];
 
   switch ($entity_type) {
+    case 'project':
     case 'apartment':
       if ($services = $entity['field_services']) {
         $services = $services['#items']->getValue();

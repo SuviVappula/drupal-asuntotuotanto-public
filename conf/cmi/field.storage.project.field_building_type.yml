@@ -1,11 +1,11 @@
-uuid: 450945b6-beb0-4e56-9e32-06a927a57f9c
+uuid: b75226c3-e590-451b-ab99-cf6aa6b79275
 langcode: en
 status: true
 dependencies:
   module:
     - external_entities
-id: project.field_apartment_sales_prices
-field_name: field_apartment_sales_prices
+id: project.field_building_type
+field_name: field_building_type
 entity_type: project
 type: string
 settings:

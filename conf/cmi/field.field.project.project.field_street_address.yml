@@ -1,16 +1,16 @@
-uuid: 08e285fc-0792-4507-8959-7f44cd00896a
+uuid: f056fcea-465a-46cc-ac51-5898ec1b3043
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.project.field_apartment_sales_prices
+    - field.storage.project.field_street_address
   module:
     - external_entities
-id: project.project.field_apartment_sales_prices
-field_name: field_apartment_sales_prices
+id: project.project.field_street_address
+field_name: field_street_address
 entity_type: project
 bundle: project
-label: 'Apartment sales prices'
+label: 'Street address'
 description: ''
 required: false
 translatable: false

@@ -1,16 +1,16 @@
-uuid: 08e285fc-0792-4507-8959-7f44cd00896a
+uuid: 8c447e8f-76c2-4afe-8b0a-8e6bb92af3a6
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.project.field_apartment_sales_prices
+    - field.storage.project.field_district
   module:
     - external_entities
-id: project.project.field_apartment_sales_prices
-field_name: field_apartment_sales_prices
+id: project.project.field_district
+field_name: field_district
 entity_type: project
 bundle: project
-label: 'Apartment sales prices'
+label: District
 description: ''
 required: false
 translatable: false
