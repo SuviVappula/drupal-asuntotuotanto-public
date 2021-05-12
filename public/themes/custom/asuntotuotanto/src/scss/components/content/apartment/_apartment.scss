@@ -186,6 +186,14 @@
   }
 }
 
+.apartment__project-description {
+  @include font-size($fontsize-body-m, $lineheight-l);
+
+  @media screen and (min-width: $breakpoint-m) {
+    @include font-size($fontsize-body-l, 27px);
+  }
+}
+
 .apartment__details {
   margin-bottom: $spacing-m;
 
