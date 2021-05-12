@@ -46,6 +46,8 @@ field_mappings:
     value: estimated_completion_date
   field_floor:
     value: field_floor
+  field_images:
+    uri: images
   field_living_area:
     value: field_living_area
   field_ownership_type:
