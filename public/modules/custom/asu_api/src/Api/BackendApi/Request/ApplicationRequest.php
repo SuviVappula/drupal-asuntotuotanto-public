@@ -96,7 +96,7 @@ class ApplicationRequest extends Request {
     $this->user = $user;
     $this->setUserId($user->id());
     $this->setApplicationId($application->id());
-    $this->setRightOfResidenceNumber($user->field_right_of_r->value);
+    $this->setRightOfResidenceNumber($application->field_right_of_residence_number->value);
     $this->setApplicationType($application->bundle());
 
     $apartments = [];
@@ -160,7 +160,7 @@ class ApplicationRequest extends Request {
    * @param string $value
    *   Application type.
    */
-  public function setRightOfResidenceNumber($value) {
+  public function setRightOfResidenceNumber(string $value) {
     $this->rightOfResidenceNumber = $value;
   }
 
@@ -192,10 +192,22 @@ class ApplicationRequest extends Request {
 
     $date = "{$day}-{$month}-{$century}{$year}";
 
-    $date = new DateTime($date);
-    $now = new DateTime();
-    $interval = $now->diff($date);
+    return $this->dateDifferenceYears($date);
+  }
 
+  /**
+   * Get difference between two dates in years
+   *
+   * @param string $date
+   *    Date to compare to this date.
+   *
+   * @return int
+   *    Difference between now and the given date in years.
+   */
+  private function dateDifferenceYears(string $date) {
+    $date = new \DateTime($date);
+    $now = new \DateTime();
+    $interval = $now->diff($date);
     return $interval->y;
   }
 
@@ -212,11 +224,11 @@ class ApplicationRequest extends Request {
       'has_children' => $this->hasChildren,
     ];
 
-    $values['age'] = isset($this->user->field_identification_number->value) ?
-      $this->calculateAgeFromPid($this->user->field_identification_number->value) : NULL;
+    $values['date_of_birth'] = isset($this->user->field_date_of_birth->value) ?
+      $this->user->field_date_of_birth->value : NULL;
 
     if ($this->rightOfResidenceNumber) {
-      $values['haso_number'] = $this->rightOfResidenceNumber;
+      $values['right_of_residence_number'] = $this->rightOfResidenceNumber;
     }
 
     return $values;
