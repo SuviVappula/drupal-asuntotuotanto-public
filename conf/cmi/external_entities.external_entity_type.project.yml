@@ -22,6 +22,8 @@ field_mappings:
     value: apartment_sales_prices
   field_apartment_structures:
     value: apartment_structures
+  field_apartments:
+    value: 'apartments/*'
   field_apartments_count:
     value: apartments_count
   field_application_end_time:

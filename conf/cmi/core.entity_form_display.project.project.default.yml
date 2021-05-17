@@ -7,6 +7,7 @@ dependencies:
     - field.field.project.project.field_apartment_living_areas
     - field.field.project.project.field_apartment_sales_prices
     - field.field.project.project.field_apartment_structures
+    - field.field.project.project.field_apartments
     - field.field.project.project.field_apartments_count
     - field.field.project.project.field_application_end_time
     - field.field.project.project.field_application_start_time
@@ -66,6 +67,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_apartments:
+    weight: 22
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   field_apartments_count:
     weight: -2
