@@ -196,13 +196,13 @@ class ApplicationRequest extends Request {
   }
 
   /**
-   * Get difference between two dates in years
+   * Get difference between two dates in years.
    *
    * @param string $date
-   *    Date to compare to this date.
+   *   Date to compare to this date.
    *
    * @return int
-   *    Difference between now and the given date in years.
+   *   Difference between now and the given date in years.
    */
   private function dateDifferenceYears(string $date) {
     $date = new \DateTime($date);
@@ -213,6 +213,9 @@ class ApplicationRequest extends Request {
 
   /**
    * Data to array.
+   *
+   * @return array
+   *   Array which is sent to API.
    */
   public function toArray(): array {
     $values = [
