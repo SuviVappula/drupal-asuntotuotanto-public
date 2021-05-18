@@ -11,18 +11,19 @@
   ]
 %}
 
-<div{{ create_attribute({'class': page_classes} ) }}>
-  {% if page.header_top or page.header_bottom %}
-    <header role="banner">
-      {% if page.header_top %}
-        {{ page.header_top }}
-      {% endif %}
+{% if page.header_top or page.header_bottom %}
+  <header role="banner" class="page-header">
+    {% if page.header_top %}
+      {{ page.header_top }}
+    {% endif %}
 
-      {% if page.header_bottom %}
-        {{ page.header_bottom }}
-      {% endif %}
-    </header>
-  {% endif %}
+    {% if page.header_bottom %}
+      {{ page.header_bottom }}
+    {% endif %}
+  </header>
+{% endif %}
+
+<div{{ create_attribute({'class': page_classes} ) }}>
 
   {% if page.messages %}
     {{ page.messages }}

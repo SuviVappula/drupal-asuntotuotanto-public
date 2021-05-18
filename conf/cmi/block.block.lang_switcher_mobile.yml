@@ -1,0 +1,20 @@
+uuid: 225e1c89-81f8-4092-9116-2a75d2bcdfdb
+langcode: en
+status: true
+dependencies:
+  module:
+    - language
+  theme:
+    - asuntotuotanto
+id: lang_switcher_mobile
+theme: asuntotuotanto
+region: header_bottom
+weight: 0
+provider: null
+plugin: 'language_block:language_content'
+settings:
+  id: 'language_block:language_content'
+  label: 'Language switcher (Mobile)'
+  provider: language
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,39 @@
+.lang-switcher {
+  padding: $spacing-s $spacing-l;
+}
+
+.lang-switcher__links {
+  align-items: center;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lang-switcher__links-item {
+  & + & {
+    margin-left: $spacing-m;
+  }
+
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.lang-switcher__link {
+  @include font-size($fontsize-body-s);
+  color: var(--color-black);
+  text-decoration: none;
+
+  &.is-active {
+    font-weight: $font-weight-bold;
+    box-shadow: 0 1px 0 0 var(--color-black);
+  }
+
+  &.is-disabled {
+    color: var(--color-black-40);
+    cursor: default;
+  }
+}
