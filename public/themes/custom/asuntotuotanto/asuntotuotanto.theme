@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\asu_rest\Applications;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -59,9 +60,18 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
         $apartments = $apartments['#items']->getValue();
         $apartments_stack = [];
 
+        try {
+          $project_id = $entity['#project']->id();
+          $applications = Applications::create()
+            ->getApartmentApplicationStatuses($project_id);
+          #dump($variables['applications']);die();
+        } catch(\Exception $e){
+          $variables['applications'] = [];
+        }
+
         foreach ($apartments as $key => $apartment) {
           $apartment = $apartment['value'];
-
+          $apartment['applications'] = isset($applications[$apartment['id']]) ? $applications[$apartment['id']] : null;
           $apartments_stack[] = $apartment;
         }
       }

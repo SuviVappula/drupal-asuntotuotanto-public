@@ -83,7 +83,7 @@ class Applications {
   }
 
   /**
-   * Get applications.
+   * Get applications for all projects.
    *
    * @return array
    *   Array of apartment ids by project.
@@ -100,6 +100,32 @@ class Applications {
       $applicationsByProject[$application->getProjectId()] = $apartmentIds;
     }
     return $applicationsByProject;
+  }
+
+  /**
+   * Get applications for single project.
+   *
+   * @param int|string
+   *   Id of the project.
+   *
+   * @return array
+   *   Array of apartment ids by project.
+   */
+  public function getApartmentApplicationStatusesForProject($id): array {
+    if (empty($this->applications)) {
+      return [];
+    }
+    $applicationsForProject = [];
+
+    /** @var \Drupal\asu_application\Entity\Application $application */
+    foreach ($this->applications as $application) {
+      if($application->getProjectId() == $id){
+        $applicationsForProject[] = $application;
+      }
+    }
+    $this->applications = $applicationsForProject;
+
+    return $this->getApartmentApplicationStatuses();
   }
 
   /**
