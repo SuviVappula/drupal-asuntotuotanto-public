@@ -1,0 +1,20 @@
+uuid: eccf89e4-325b-4255-a0b7-c76a64600a94
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_site_renter
+  module:
+    - external_entities
+id: project.project.field_site_renter
+field_name: field_site_renter
+entity_type: project
+bundle: project
+label: 'Site renter'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

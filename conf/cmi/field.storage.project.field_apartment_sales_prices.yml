@@ -1,4 +1,4 @@
-uuid: f77eb27c-2453-47b7-a922-d5927375197f
+uuid: 450945b6-beb0-4e56-9e32-06a927a57f9c
 langcode: en
 status: true
 dependencies:
@@ -7,10 +7,11 @@ dependencies:
 id: project.field_apartment_sales_prices
 field_name: field_apartment_sales_prices
 entity_type: project
-type: integer
+type: string
 settings:
-  unsigned: false
-  size: normal
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
 module: core
 locked: false
 cardinality: 1

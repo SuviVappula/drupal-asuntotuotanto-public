@@ -4,18 +4,15 @@ status: true
 dependencies:
   config:
     - field.field.user.user.field_address
-    - field.field.user.user.field_bank_account_number
     - field.field.user.user.field_city
-    - field.field.user.user.field_contact_methods
+    - field.field.user.user.field_date_of_birth
     - field.field.user.user.field_first_name
-    - field.field.user.user.field_identification_number
     - field.field.user.user.field_last_name
     - field.field.user.user.field_phone_number
     - field.field.user.user.field_postal_code
     - field.field.user.user.field_right_of_r
-    - field.field.user.user.field_wealth_report
   module:
-    - personal_id
+    - datetime
     - user
 id: user.user.default
 targetEntityType: user
@@ -30,14 +27,6 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_bank_account_number:
-    weight: 9
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   field_city:
     weight: 13
     label: above
@@ -46,6 +35,15 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_date_of_birth:
+    weight: 14
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
   field_first_name:
     weight: 6
     label: above
@@ -53,13 +51,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
-    region: content
-  field_identification_number:
-    weight: 11
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_personal_id_string
     region: content
   field_last_name:
     weight: 7
@@ -83,8 +74,6 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
-  field_contact_methods: true
   field_postal_code: true
   field_right_of_r: true
-  field_wealth_report: true
   langcode: true

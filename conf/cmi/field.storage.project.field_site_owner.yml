@@ -1,0 +1,21 @@
+uuid: 76957c62-0c9e-4520-9d8e-2aea01768e4b
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: project.field_site_owner
+field_name: field_site_owner
+entity_type: project
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

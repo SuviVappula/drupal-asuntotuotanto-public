@@ -1,0 +1,21 @@
+uuid: b7741d88-f254-4ab5-9965-5a112225484f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_services
+  module:
+    - external_entities
+    - options
+id: project.project.field_services
+field_name: field_services
+entity_type: project
+bundle: project
+label: Services
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

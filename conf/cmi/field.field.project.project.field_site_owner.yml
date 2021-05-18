@@ -1,0 +1,20 @@
+uuid: 19ee07ae-b944-4fac-bd88-007a9a3c8812
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_site_owner
+  module:
+    - external_entities
+id: project.project.field_site_owner
+field_name: field_site_owner
+entity_type: project
+bundle: project
+label: 'Site owner'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

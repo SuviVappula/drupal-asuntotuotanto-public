@@ -14,24 +14,56 @@ field_mappings:
     value: uuid
   title:
     value: title
+  field_accessibility:
+    value: field_project_accessibility
   field_apartment_living_areas:
     value: apartment_living_area_sizes_m2
   field_apartment_sales_prices:
     value: apartment_sales_prices
   field_apartment_structures:
     value: apartment_structures
+  field_apartments:
+    value: 'apartments/*'
   field_apartments_count:
     value: apartments_count
   field_application_end_time:
     value: application_end_time
   field_application_start_time:
     value: application_start_time
+  field_building_type:
+    value: field_building_type
+  field_city:
+    value: field_city
   field_debt_free_sales_prices:
     value: apartment_debt_free_sales_prices
+  field_district:
+    value: field_district
+  field_energy_class:
+    value: field_energy_class
   field_estimated_completion_date:
     value: estimated_completion_date
+  field_housing_company:
+    value: field_housing_company
+  field_images:
+    uri: images
   field_is_application_period:
     value: is_application_period_active
+  field_ownership_type:
+    value: field_ownership_type
+  field_postal_code:
+    value: field_postal_code
+  field_project_area_description:
+    value: field_project_area_description
+  field_project_description:
+    value: field_project_description
+  field_services:
+    value: 'services/*'
+  field_site_owner:
+    value: field_site_owner
+  field_site_renter:
+    value: field_site_renter
+  field_street_address:
+    value: field_street_address
 storage_client_id: rest
 storage_client_config:
   endpoint: 'http://Asu:asunnot_2020@dev.asuntotuotanto.druidfi.wod.by/fi/content/project'

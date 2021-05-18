@@ -10,7 +10,7 @@ id: project.project.field_debt_free_sales_prices
 field_name: field_debt_free_sales_prices
 entity_type: project
 bundle: project
-label: 'debt free sales prices'
+label: 'Debt free sales prices'
 description: ''
 required: false
 translatable: false

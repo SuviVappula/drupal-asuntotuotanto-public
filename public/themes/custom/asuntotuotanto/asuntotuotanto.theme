@@ -1,12 +1,11 @@
 <?php
 
+use Drupal\Core\Form\FormStateInterface;
+
 /**
  * @file
- * Functions to support theming in the City of Helsinki - Asuntotuotanto theme.
+ * Functions to support theming in the HDBT Subtheme.
  */
-
-use Drupal\node\Entity\Node;
-use Drupal\user\Entity\User;
 
 /**
  * Helper function to get the icons path.
@@ -17,11 +16,11 @@ use Drupal\user\Entity\User;
 function asuntotuotanto_get_icons_path() {
   static $icon_path;
   if (!isset($icon_path)) {
-    global $base_secure_url;
-    $icon_path = $base_secure_url . '/' . drupal_get_path('theme', 'asuntotuotanto') . '/dist/icons/sprite.svg';
+    $theme_handler = \Drupal::service('theme_handler');
+    $icon_path = '/' . $theme_handler->getTheme('asuntotuotanto')->getPath() . '/dist/icons/sprite.svg';
 
+    // Add icons path as a global variable.
     if (!empty($icon_path)) {
-      // Add icons path as a global variable.
       return $icon_path;
     }
   }
@@ -32,102 +31,62 @@ function asuntotuotanto_get_icons_path() {
  * Implements hook_preprocess().
  */
 function asuntotuotanto_preprocess(&$variables) {
-  $variables['icons_path'] = asuntotuotanto_get_icons_path();
-  $variables['current_language'] = Drupal::languageManager()
-    ->getCurrentLanguage()
-    ->getId();
-  $variables['#attached']['drupalSettings']['iconsPath'] = $variables['icons_path'];
+  $variables['asuntotuotanto_icons_path'] = asuntotuotanto_get_icons_path();
+  $variables['#attached']['drupalSettings']['asuntotuotanto_icons_path'] = $variables['asuntotuotanto_icons_path'];
 }
 
 /**
- * Implements hook_preprocess_html() for HTML document templates.
- *
- * Create path to default theme for mobile icons (favicon, apple touch icon,
- * Android icons, ... defined in html tpl.
+ * Implements hook_theme_suggestions_alter().
  *
  * {@inheritdoc}
  */
-function asuntotuotanto_preprocess_html(&$variables) {
-  global $base_secure_url;
-  $variables['theme_path'] = file_create_url($base_secure_url . '/' . drupal_get_path('theme', 'asuntotuotanto'));
-}
-
-/**
- * Implements hook_theme_suggestions_HOOK_alter().
- */
-function asuntotuotanto_theme_suggestions_page_alter(array &$suggestions, array $variables) {
-  if ($node = \Drupal::routeMatch()->getParameter('node')) {
-    // Retrieve the node object for revisions.
-    $node = (is_numeric($node) && !$node instanceof Node) ? Node::load($node) : $node;
-    $suggestions[] = 'page__' . $node->bundle();
-  }
-
-  if ($taxonomy_term = \Drupal::routeMatch()->getParameter('taxonomy_term')) {
-    $suggestions[] = 'page__taxonomy__term__' . $taxonomy_term->bundle();
-  }
-
-  $request = \Drupal::request();
-
-  if ($exception = $request->attributes->get('exception')) {
-    $status_code = $exception->getStatusCode();
-    if (in_array($status_code, [401, 403, 404])) {
-      $suggestions[] = 'page__' . $status_code;
-    }
+function asuntotuotanto_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {
+  if ($hook == 'form' & !empty($variables['element']['#id'])) {
+    $suggestions[] = 'form__' . str_replace('-', '_', $variables['element']['#id']);
   }
 }
 
 /**
- * Implements hook_preprocess_HOOK().
- *
- * {@inheritdoc}
+ * Implements hook_preprocess_external_entity().
  */
-function asuntotuotanto_preprocess_links__language_block(&$variables) {
-  foreach ($variables['links'] as $langCode => &$link) {
-    switch ($langCode) {
-      case 'en':
-        $link['text'] = 'English';
-        break;
+function asuntotuotanto_preprocess_external_entity(&$variables) {
+  $entity = $variables['entity'];
+  $entity_type = $entity['#entity_type'];
 
-      case 'sv':
-        $link['text'] = 'Svenska';
-        break;
+  switch ($entity_type) {
+    case 'project':
+      if ($apartments = $entity['field_apartments']) {
+        $apartments = $apartments['#items']->getValue();
+        $apartments_stack = [];
 
-      case 'fi':
-        $link['text'] = 'Suomi';
-        break;
-    }
-  }
-}
+        foreach ($apartments as $key => $apartment) {
+          $apartment = $apartment['value'];
 
-/**
- * Implements hook_preprocess_region().
- *
- * {@inheritdoc}
- */
-function asuntotuotanto_preprocess_region(&$variables) {
-  $user = User::load(\Drupal::currentUser()->id());
-  $variables['username'] = $user->getAccountName();
-  $variables['logged_in'] = \Drupal::currentUser()->isAuthenticated();
-}
+          $apartments_stack[] = $apartment;
+        }
+      }
 
-/**
- * Implements hook_theme_suggestions_menu_alter().
- *
- * {@inheritdoc}
- */
-function asuntotuotanto_theme_suggestions_menu_alter(&$suggestions, $variables) {
-  if (!empty($variables['menu_block_configuration']['custom_suggestion']) && $variables['menu_block_configuration']['custom_suggestion'] === 'block__menu_block__main__desktop') {
-    $suggestions[] = 'menu__main__desktop';
-  }
-}
+      $variables['apartments'] = $apartments_stack ?? NULL;
+      break;
 
-/**
- * Implements hook_theme_suggestions_HOOK().
- */
-function asuntotuotanto_theme_suggestions_block_alter(&$suggestions, $variables) {
-  $element = $variables['elements'];
+    case 'project':
+    case 'apartment':
+      if ($services = $entity['field_services']) {
+        $services = $services['#items']->getValue();
+        $services_stack = [];
 
-  if (isset($element['#configuration']['custom_suggestion'])) {
-    $suggestions[] = $element['#configuration']['custom_suggestion'];
+        foreach ($services as $key => $service) {
+          $service_name = $service['value']['name'];
+          $service_distance = $service['value']['distance'];
+
+          $services_stack[] = [
+            'name' => $service_name,
+            'distance' => $service_distance,
+          ];
+        }
+
+        $variables['services'] = $services_stack ?? NULL;
+      }
+      break;
   }
 }

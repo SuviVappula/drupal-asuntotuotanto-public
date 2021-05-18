@@ -1,0 +1,21 @@
+uuid: c8cd7a0a-9c1f-4888-9588-be321b8b1b2b
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: project.field_housing_company
+field_name: field_housing_company
+entity_type: project
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

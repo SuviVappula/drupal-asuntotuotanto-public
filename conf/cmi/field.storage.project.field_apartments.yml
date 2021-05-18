@@ -1,0 +1,21 @@
+uuid: 2b09e504-af8d-4a58-b1d7-307bfb1e9532
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+    - options
+id: project.field_apartments
+field_name: field_apartments
+entity_type: project
+type: list_string
+settings:
+  allowed_values: {  }
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
