@@ -38,18 +38,20 @@
       <ul class="sub-menu is-level--{{ menu_level }} is-hidden" aria-hidden="true">
     {% endif %}
     {% for item in items %}
-
       {% set item_classes = [
         menu_level == 0 ? 'menu__item' : 'sub-menu__item',
         item.is_nolink ? 'is-nolink',
         item.is_external ? 'is-external',
+        item.is_login_link ? 'is-login-link',
       ]%}
 
       {% set item_container_classes = [
         menu_level == 0 ? 'menu__item-actions-container' : 'sub-menu__item-actions-container',
       ]%}
 
-      <li{{ item.attributes.addClass(item_classes) }}>
+      {% set item_attributes = item.attributes ?: create_attribute() %}
+
+      <li{{ item_attributes.addClass(item_classes) }}>
         <div class="{{ item_container_classes|join(' ') }}">
           {{ link(item.title, item.url, {'class': item.in_active_trail ? 'is-active'}) }}
           {% if item.below and menu_level == 0 %}

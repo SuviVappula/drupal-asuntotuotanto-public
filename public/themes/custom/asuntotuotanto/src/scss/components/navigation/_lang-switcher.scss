@@ -29,7 +29,17 @@
 
   &.is-active {
     font-weight: $font-weight-bold;
-    box-shadow: 0 1px 0 0 var(--color-black);
+    position: relative;
+
+    &:after {
+      background-color: var(--color-black);
+      bottom: -2px;
+      content: "";
+      height: 1px;
+      left: 0;
+      position: absolute;
+      right: 0;
+    }
   }
 
   &.is-disabled {

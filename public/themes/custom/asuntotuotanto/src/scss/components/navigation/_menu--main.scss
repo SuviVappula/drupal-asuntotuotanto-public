@@ -39,6 +39,10 @@
         width: 64px;
         border-left: 1px solid var(--color-black-20);
 
+        &:hover {
+          cursor: pointer;
+        }
+
         &:after {
           background-size: 100%;
           content: "";
@@ -57,6 +61,23 @@
           &:after {
             background-image: url('../icons/angle-down.svg');
           }
+        }
+      }
+    }
+
+    &.is-login-link {
+      a {
+        align-items: center;
+        display: inline-flex;
+
+        &:before {
+          background-image: url('../icons/signin.svg');
+          background-size: 100%;
+          content: "";
+          display: inline-block;
+          height: 24px;
+          margin-right: $spacing-xs;
+          width: 24px;
         }
       }
     }

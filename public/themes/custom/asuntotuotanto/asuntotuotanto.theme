@@ -1,11 +1,11 @@
 <?php
 
-use Drupal\Core\Form\FormStateInterface;
-
 /**
  * @file
  * Functions to support theming in the HDBT Subtheme.
  */
+
+use Drupal\Core\Url;
 
 /**
  * Helper function to get the icons path.
@@ -43,5 +43,32 @@ function asuntotuotanto_preprocess(&$variables) {
 function asuntotuotanto_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {
   if ($hook == 'form' & !empty($variables['element']['#id'])) {
     $suggestions[] = 'form__' . str_replace('-', '_', $variables['element']['#id']);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function asuntotuotanto_preprocess_menu(&$variables) {
+  $menu_name = $variables['menu_name'];
+
+  switch ($menu_name) {
+    case 'main':
+      $items = $variables['items'];
+      $menu_block_configuration_suggestion = $variables['menu_block_configuration']['suggestion'];
+
+      if ($menu_block_configuration_suggestion === 'main__mobile') {
+        $login_link = [
+          'title' => t('Log in'),
+          'url' => Url::fromRoute('user.login'),
+          'is_login_link' => TRUE,
+        ];
+
+        // Check if user is logged in.
+        if (!\Drupal::currentUser()->isAuthenticated()) {
+          $variables['items'][count($items)] = $login_link;
+        }
+      }
+      break;
   }
 }
