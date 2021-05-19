@@ -13,7 +13,8 @@
       display: flex;
       border-top: 1px solid var(--color-black-20);
 
-      > a {
+      > a,
+      > span {
         @include font-size($fontsize-body-xl);
         font-weight: $font-weight-regular;
         flex-grow: 1;
@@ -72,6 +73,23 @@
 
         &:before {
           background-image: url('../icons/signin.svg');
+          background-size: 100%;
+          content: "";
+          display: inline-block;
+          height: 24px;
+          margin-right: $spacing-xs;
+          width: 24px;
+        }
+      }
+    }
+
+    &.is-user-tools {
+      .menu__item-actions-container > span {
+        align-items: center;
+        display: inline-flex;
+
+        &:before {
+          background-image: url('../icons/user.svg');
           background-size: 100%;
           content: "";
           display: inline-block;

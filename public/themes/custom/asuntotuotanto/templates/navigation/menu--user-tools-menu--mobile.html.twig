@@ -24,7 +24,7 @@
   We call a macro which calls itself to render the full tree.
   @see https://twig.symfony.com/doc/1.x/tags/macro.html
 #}
-{{ menus.menu_links(items, attributes, 0, 'main-menu') }}
+{{ menus.menu_links(items, attributes, 0, 'user-tools') }}
 
 {% macro menu_links(items, attributes, menu_level, menu_type) %}
   {% import _self as menus %}
@@ -35,7 +35,7 @@
     {% if menu_level == 0 %}
       <ul{{ attributes.addClass(menu_classes) }}>
     {% else %}
-      <ul class="sub-menu is-level--{{ menu_level }} is-hidden" aria-hidden="true">
+      <ul class="sub-menu is-level--{{ menu_level }}" aria-hidden="true">
     {% endif %}
     {% for item in items %}
       {% set item_classes = [
@@ -55,11 +55,6 @@
       <li{{ item_attributes.addClass(item_classes) }}>
         <div class="{{ item_container_classes|join(' ') }}">
           {{ link(item.title, item.url, {'class': item.in_active_trail ? 'is-active'}) }}
-          {% if item.below and menu_level == 0 and not item.is_user_tools %}
-            <button class="sub-menu__button" aria-expanded="false">
-              <span class="visually-hidden">{% trans %}Toggle '{{ item.title }}' submenu{% endtrans %}</span>
-            </button>
-          {% endif %}
         </div>
         {% if item.below %}
           {{ menus.menu_links(item.below, attributes, menu_level + 1) }}

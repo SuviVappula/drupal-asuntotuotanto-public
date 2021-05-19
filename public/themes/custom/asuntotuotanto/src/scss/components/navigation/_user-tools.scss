@@ -1,0 +1,7 @@
+.sub-menu__item {
+  .navigation--user-tools .is-mobile & {
+    &:last-child {
+      border-top: 1px solid var(--color-black-10);
+    }
+  }
+}

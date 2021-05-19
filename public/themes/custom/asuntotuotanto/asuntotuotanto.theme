@@ -54,7 +54,6 @@ function asuntotuotanto_preprocess_menu(&$variables) {
 
   switch ($menu_name) {
     case 'main':
-      $items = $variables['items'];
       $menu_block_configuration_suggestion = $variables['menu_block_configuration']['suggestion'];
 
       if ($menu_block_configuration_suggestion === 'main__mobile') {
@@ -66,7 +65,7 @@ function asuntotuotanto_preprocess_menu(&$variables) {
 
         // Check if user is logged in.
         if (!\Drupal::currentUser()->isAuthenticated()) {
-          $variables['items'][count($items)] = $login_link;
+          $variables['items']['login_link'] = $login_link;
         }
       }
       break;
