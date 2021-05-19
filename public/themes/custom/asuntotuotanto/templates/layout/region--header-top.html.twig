@@ -15,9 +15,8 @@
 {% if content %}
   <div{{ create_attribute({'class': ['page-header__top', 'wrapper', 'wrapper--mw-1200']}) }}>
     {{ content }}
-    <button type="button" class="page-header__mobile-navigation-button page-header__mobile-navigation-button--open" id="mobile_navigation_open_button" aria-hidden="false" aria-expanded="false">
+    <button type="button" class="page-header__mobile-navigation-toggle-button" id="mobile_navigation_toggle_button" aria-hidden="false" aria-expanded="false">
       <span class="visually-hidden">{{ 'Open navigation'|t }}</span>
-      {% include "@hdbt/misc/icon.twig" with {icon: 'menu-hamburger', label: ''} %}
     </button>
   </div>
 {% endif %}

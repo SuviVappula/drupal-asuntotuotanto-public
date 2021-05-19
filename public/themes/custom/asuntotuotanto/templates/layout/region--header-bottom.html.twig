@@ -13,7 +13,7 @@
  */
 #}
 {% if content %}
-  <div{{ create_attribute({'class': ['page-header__bottom']}) }}>
+  <div{{ create_attribute({'class': ['page-header__bottom', 'is-hidden']}) }} aria-hidden="true">
     {{ content }}
   </div>
 {% endif %}
