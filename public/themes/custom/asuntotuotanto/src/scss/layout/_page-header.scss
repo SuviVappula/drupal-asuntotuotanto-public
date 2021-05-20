@@ -14,7 +14,7 @@
   }
 }
 
-.page-header__bottom {
+.page-header__bottom-content {
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-black-20);
   border-top: 1px solid var(--color-black-20);
@@ -27,14 +27,28 @@
   .toolbar-vertical & {
     top: calc(39px + 72px);
   }
+
+  .toolbar-horizontal & {
+    top: calc(53px + 72px);
+  }
 }
 
-// @TODO: Add background shadow when mobile menu is open.
 .page-header__background-shadow {
   background-color: rgba(0, 0, 0, .75);
-  inset: 0;
-  position: fixed;
-  z-index: 1;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 72px;
+  z-index: 10;
+
+  .toolbar-vertical & {
+    top: calc(39px + 72px);
+  }
+
+  .toolbar-horizontal & {
+    top: calc(53px + 72px);
+  }
 
   .page-header__bottom[aria-hidden="true"] + & {
     visibility: hidden;

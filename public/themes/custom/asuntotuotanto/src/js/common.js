@@ -1,6 +1,11 @@
 ((Drupal) => {
   Drupal.behaviors.mobileMenuToggle = {
     attach: function attach() {
+      const bodyElement = document.getElementsByTagName("body")[0];
+      const headerBackgroundShadowElement = document.getElementsByClassName(
+        "page-header__background-shadow"
+      )[0];
+
       const mobileNavigationToggleButtonElement = document.getElementById(
         "mobile_navigation_toggle_button"
       );
@@ -13,13 +18,25 @@
         "sub-menu__button"
       );
 
+      const handleMobileNavigationClose = () => {
+        mobileNavigationElement.setAttribute("aria-hidden", true);
+        mobileNavigationToggleButtonElement.setAttribute(
+          "aria-expanded",
+          false
+        );
+        bodyElement.style.overflow = "visible";
+        mobileNavigationElement.classList.add("is-hidden");
+      };
+
       const handleMobileNavigationToggleClick = ({ target }) => {
         if (mobileNavigationElement.classList.contains("is-hidden")) {
           mobileNavigationElement.setAttribute("aria-hidden", false);
           target.setAttribute("aria-expanded", true);
+          bodyElement.style.overflow = "hidden";
         } else {
           mobileNavigationElement.setAttribute("aria-hidden", true);
           target.setAttribute("aria-expanded", false);
+          bodyElement.style.overflow = "visible";
         }
 
         mobileNavigationElement.classList.toggle("is-hidden");
@@ -53,6 +70,11 @@
       mobileNavigationToggleButtonElement.addEventListener(
         "click",
         handleMobileNavigationToggleClick
+      );
+
+      headerBackgroundShadowElement.addEventListener(
+        "click",
+        handleMobileNavigationClose
       );
 
       if (mobileSubmenuButtonElements) {
