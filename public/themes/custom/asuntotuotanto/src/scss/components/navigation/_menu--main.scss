@@ -19,7 +19,11 @@
         font-weight: $font-weight-regular;
         flex-grow: 1;
         text-decoration: none;
-        padding: $spacing-s $spacing-l;
+        padding: $spacing-xs $spacing-s;
+
+        @media screen and (min-width: $breakpoint-xs) {
+          padding: $spacing-s $spacing-l;
+        }
 
         &.is-active {
           font-weight: $font-weight-medium;
@@ -33,12 +37,15 @@
         border: 0;
         display: inline-flex;
         flex-shrink: 0;
-        height: 64px;
         justify-content: center;
         margin: 0;
         padding: 0;
-        width: 64px;
+        width: 56px;
         border-left: 1px solid var(--color-black-20);
+
+        @media screen and (min-width: $breakpoint-xs) {
+          width: 64px;
+        }
 
         &:hover {
           cursor: pointer;
@@ -119,10 +126,14 @@
       > a {
         @include font-size($fontsize-body-m);
         font-weight: $font-weight-regular;
-        padding: $spacing-s $spacing-2-xl;
+        padding: $spacing-xs $spacing-l;
         color: var(--color-black);
         text-decoration: none;
         display: flex;
+
+        @media screen and (min-width: $breakpoint-xs) {
+          padding: $spacing-s $spacing-2-xl;
+        }
 
         &.is-active {
           font-weight: $font-weight-bold;

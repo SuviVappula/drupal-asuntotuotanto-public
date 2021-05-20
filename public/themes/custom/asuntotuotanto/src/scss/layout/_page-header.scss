@@ -6,8 +6,12 @@
   align-items: center;
   display: flex;
   justify-content: space-between;
-  padding: $spacing-2-xs $spacing-l;
+  padding: $spacing-2-xs $spacing-s;
   z-index: 100;
+
+  @media screen and (min-width: $breakpoint-xs) {
+    padding: $spacing-2-xs $spacing-l;
+  }
 }
 
 .page-header__bottom {

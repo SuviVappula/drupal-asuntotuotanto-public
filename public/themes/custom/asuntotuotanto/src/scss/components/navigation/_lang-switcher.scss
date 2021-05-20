@@ -1,5 +1,10 @@
 .lang-switcher {
-  padding: $spacing-s $spacing-l;
+  padding: $spacing-s $spacing-s;
+  overflow: auto;
+
+  @media screen and (min-width: $breakpoint-xs) {
+    padding: $spacing-s $spacing-l;
+  }
 }
 
 .lang-switcher__links {
