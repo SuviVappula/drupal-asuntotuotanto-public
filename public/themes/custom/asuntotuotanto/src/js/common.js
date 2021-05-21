@@ -1,4 +1,4 @@
-((Drupal) => {
+((Drupal, $) => {
   Drupal.behaviors.mobileMenuToggle = {
     attach: function attach() {
       const bodyElement = document.getElementsByTagName("body")[0];
@@ -106,4 +106,79 @@
       }
     },
   };
-})(Drupal);
+
+  Drupal.behaviors.languageSwitcher = {
+    attach: function attach(context) {
+      const languageSwitcherToggleButton = $(".lang-switcher__button", context);
+      const languageSwitcherWrapper = $(".lang-switcher__dropdown", context);
+
+      let currentWindowWidth = window.innerWidth;
+
+      if (currentWindowWidth > 992) {
+        languageSwitcherWrapper.attr("aria-hidden", "true");
+        languageSwitcherToggleButton.attr("aria-expanded", "false");
+        languageSwitcherToggleButton.attr("aria-hidden", "false");
+      } else {
+        languageSwitcherWrapper.attr("aria-hidden", "false");
+        languageSwitcherToggleButton.attr("aria-hidden", "true");
+      }
+
+      window.addEventListener("resize", () => {
+        currentWindowWidth = window.innerWidth;
+
+        if (currentWindowWidth > 992) {
+          languageSwitcherWrapper.attr("aria-hidden", "true");
+          languageSwitcherToggleButton.attr("aria-expanded", "false");
+          languageSwitcherToggleButton.attr("aria-hidden", "false");
+        } else {
+          languageSwitcherWrapper.attr("aria-hidden", "false");
+          languageSwitcherToggleButton.attr("aria-hidden", "true");
+        }
+      });
+
+      const outsideClickListener = function outsideClickListener(event) {
+        const target = $(event.target);
+
+        if (
+          !target.closest(".lang-switcher__dropdown").length &&
+          $(".lang-switcher__dropdown").is(":visible")
+        ) {
+          // eslint-disable-next-line no-use-before-define
+          handleInteraction(event);
+          // eslint-disable-next-line no-use-before-define
+          removeClickListener();
+        }
+      };
+
+      const removeClickListener = function removeClickListener() {
+        document.removeEventListener("click", outsideClickListener);
+      };
+
+      function handleInteraction(e) {
+        e.stopImmediatePropagation();
+
+        if (languageSwitcherWrapper.attr("aria-hidden") === "false") {
+          languageSwitcherWrapper.attr("aria-hidden", "true");
+          languageSwitcherToggleButton.attr("aria-expanded", "false");
+        } else {
+          languageSwitcherWrapper.attr("aria-hidden", "false");
+          languageSwitcherToggleButton.attr("aria-expanded", "true");
+          document.addEventListener("click", outsideClickListener);
+        }
+      }
+
+      languageSwitcherToggleButton.on({
+        click: function touchstartclick(e) {
+          handleInteraction(e);
+        },
+        keydown: function keydown(e) {
+          if (e.which === 27) {
+            languageSwitcherWrapper.attr("aria-hidden", "true");
+            languageSwitcherToggleButton.attr("aria-expanded", "false");
+            removeClickListener();
+          }
+        },
+      });
+    },
+  };
+})(Drupal, jQuery);

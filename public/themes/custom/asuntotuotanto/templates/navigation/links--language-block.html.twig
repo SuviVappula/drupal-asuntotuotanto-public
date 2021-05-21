@@ -34,6 +34,11 @@
 
 {% if links %}
   <div {{ attributes.addClass('lang-switcher') }}>
+    <button id="lang-switcher-toggle" class="lang-switcher__button" aria-hidden="true" aria-controls="lang-switcher-dropdown" aria-expanded="false" aria-haspopup="true" aria-label="{{ 'Select language'|t }}">
+      {% if current_language and current_langcode %}
+        <span class="label" aria-label="{{ 'Current language is'|t }} {{ current_language|capitalize }}">{{ current_langcode|upper }}</span>
+      {% endif %}
+    </button>
     <div id="lang-switcher-dropdown" class="lang-switcher__dropdown">
       <ul class="lang-switcher__links">
         {% for item in links %}

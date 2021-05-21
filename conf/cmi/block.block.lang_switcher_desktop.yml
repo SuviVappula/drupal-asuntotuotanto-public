@@ -1,4 +1,4 @@
-uuid: 225e1c89-81f8-4092-9116-2a75d2bcdfdb
+uuid: f5be263a-9458-42f3-b1b9-3098ef8368bc
 langcode: en
 status: true
 dependencies:
@@ -6,10 +6,10 @@ dependencies:
     - language
   theme:
     - asuntotuotanto
-id: lang_switcher_mobile
+id: lang_switcher_desktop
 theme: asuntotuotanto
-region: header_bottom
-weight: 0
+region: header_top
+weight: -4
 provider: null
 plugin: 'language_block:language_content'
 settings:
