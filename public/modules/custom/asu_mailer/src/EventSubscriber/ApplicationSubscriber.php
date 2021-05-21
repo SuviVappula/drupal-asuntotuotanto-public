@@ -41,7 +41,7 @@ class ApplicationSubscriber implements EventSubscriberInterface {
   public function sendApplicationCreatedEmailToCustomer(ApplicationEvent $applicationEvent) {
     /** @var \Drupal\Core\Mail\MailManager $mailManager */
     $mailManager = \Drupal::service('plugin.manager.mail');
-    $config = $this->config('asu_mailer.email_content_settings');
+    $config = \Drupal::config('asu_mailer.email_content_settings');
 
     /** @var \Drupal\asu_application\Entity\Application $application */
     $application = \Drupal::entityTypeManager()->getStorage('asu_application')->load($applicationEvent->getApplicationId());
