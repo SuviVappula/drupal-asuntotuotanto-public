@@ -68,6 +68,11 @@
   width: 32px;
   border: 0;
 
+  @media screen and (min-width: $breakpoint-l) {
+    display: none;
+    visibility: hidden;
+  }
+
   &:after {
     background-size: 100%;
     content: "";

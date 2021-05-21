@@ -67,6 +67,28 @@
         }
       };
 
+      let currentWindowWidth = window.innerWidth;
+
+      if (currentWindowWidth > 992) {
+        mobileNavigationToggleButtonElement.setAttribute("aria-hidden", true);
+      } else {
+        mobileNavigationToggleButtonElement.setAttribute("aria-hidden", false);
+      }
+
+      window.addEventListener("resize", () => {
+        currentWindowWidth = window.innerWidth;
+
+        if (currentWindowWidth > 992) {
+          mobileNavigationToggleButtonElement.setAttribute("aria-hidden", true);
+          handleMobileNavigationClose();
+        } else {
+          mobileNavigationToggleButtonElement.setAttribute(
+            "aria-hidden",
+            false
+          );
+        }
+      });
+
       mobileNavigationToggleButtonElement.addEventListener(
         "click",
         handleMobileNavigationToggleClick
