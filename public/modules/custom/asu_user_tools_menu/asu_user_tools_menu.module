@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @file
+ * Functions to support theming.
+ */
+
+use Drupal\Core\Url;
 use Drupal\user\Entity\User;
 
 /**
@@ -13,6 +19,8 @@ function asu_user_tools_menu_preprocess_menu(&$variables) {
       $current_user = User::load(\Drupal::currentUser()->id());
       $variables['items']['asu_user_tools_menu.user_name']['title'] = $current_user->get('field_first_name')->value;
       $variables['items']['asu_user_tools_menu.user_name']['is_user_tools'] = TRUE;
+      $variables['items']['asu_user_tools_menu.user_name']['below']['asu_user_tools_menu.user_information']['url'] = Url::fromRoute('entity.user.canonical', ['user' => \Drupal::currentUser()->id()]);
+
       break;
   }
 }

@@ -69,5 +69,16 @@ function asuntotuotanto_preprocess_menu(&$variables) {
         }
       }
       break;
+
+    case 'user-tools-menu':
+      $items = $variables['items']['asu_user_tools_menu.user_name']['below'];
+
+      foreach ($items as $key => $item) {
+        $url = '/' . $item['url']->getInternalPath();
+        $current_path = \Drupal::service('path.current')->getPath();
+        $is_active = $current_path === $url;
+        $variables['items']['asu_user_tools_menu.user_name']['below'][$key]['is_link_active'] = $is_active;
+      }
+      break;
   }
 }

@@ -54,7 +54,7 @@
 
       <li{{ item_attributes.addClass(item_classes) }}>
         <div class="{{ item_container_classes|join(' ') }}">
-          {{ link(item.title, item.url, {'class': item.in_active_trail ? 'is-active'}) }}
+          {{ link(item.title, item.url, {'class': item.is_link_active ? 'is-active'}) }}
         </div>
         {% if item.below %}
           {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
