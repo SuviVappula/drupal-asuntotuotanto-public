@@ -44,9 +44,9 @@ class ApartmentSearchController extends ControllerBase {
     // @todo Should be replaced with block when frontend theme is available.
     $build = [
       '#markup' => '<div id="asu_react_search"></div>',
-      #'#attached' => [
-        #'library' => 'asu_apartment_search/haso-apartment-search',
-      #],
+      '#attached' => [
+        'library' => 'asu_apartment_search/haso-apartment-search',
+      ],
     ];
     return $build;
   }

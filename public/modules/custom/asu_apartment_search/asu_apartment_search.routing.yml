@@ -1,11 +1,3 @@
-#asu_apartment_search.default:
-  #path: '/asuntohaku/hitas'
-  #defaults:
-    #_controller: '\Drupal\asu_apartment_search\Controller\ApartmentSearchController::hitas'
-    #_title: 'Asuntohaku'
-  #requirements:
-    #_permission: 'access content'
-
 asu_apartment_search.hitas_content:
   path: '/asuntohaku/hitas'
   defaults:
