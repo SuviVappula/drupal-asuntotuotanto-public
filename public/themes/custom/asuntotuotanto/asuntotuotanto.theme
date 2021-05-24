@@ -68,6 +68,37 @@ function asuntotuotanto_preprocess_menu(&$variables) {
           $variables['items']['login_link'] = $login_link;
         }
       }
+
+      if ($menu_block_configuration_suggestion === 'main__desktop') {
+        $items = $variables['items'];
+        $current_path = \Drupal::service('path.current')->getPath();
+
+        foreach ($items as $key => $item) {
+          $is_active = FALSE;
+          $is_below_item_active = FALSE;
+          $below = $item['below'];
+          $url = '/' . $item['url']->getInternalPath();
+
+          if ($current_path === $url) {
+            $is_active = TRUE;
+          }
+
+          if ($below) {
+            foreach ($below as $below_item) {
+              $below_url = '/' . $below_item['url']->getInternalPath();
+
+              if ($current_path === $below_url) {
+                $is_below_item_active = TRUE;
+              }
+            }
+
+            if ($is_active || $is_below_item_active) {
+              $variables['items'][$key]['attributes']->addClass('is-active');
+            }
+          }
+        }
+      }
+
       break;
 
     case 'user-tools-menu':

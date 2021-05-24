@@ -1,4 +1,24 @@
 ((Drupal, $) => {
+  Drupal.behaviors.headerDesktopSubmenu = {
+    attach: function attach() {
+      const headerElement = document.getElementsByClassName("page-header")[0];
+      const mainMenuDesktopItemElements = document
+        .getElementsByClassName("menu--main-menu is-desktop")[0]
+        .getElementsByClassName("menu__item");
+      const currentWindowWidth = window.innerWidth;
+
+      if (mainMenuDesktopItemElements) {
+        const hasActiveHeaderSubmenu = [
+          ...mainMenuDesktopItemElements,
+        ].some((item) => item.classList.contains("is-active"));
+
+        if (hasActiveHeaderSubmenu && currentWindowWidth >= 992) {
+          headerElement.classList.add("has-submenu");
+        }
+      }
+    },
+  };
+
   Drupal.behaviors.mobileMenuToggle = {
     attach: function attach() {
       const bodyElement = document.getElementsByTagName("body")[0];
