@@ -8,6 +8,7 @@ module:
   asu_application: 0
   asu_mailer: 0
   asu_rest: 0
+  asu_user_tools_menu: 0
   better_passwords: 0
   block: 0
   block_content: 0
