@@ -24,6 +24,7 @@
         "drupal/helfi_platform_config": "^1.1",
         "drupal/helfi_tpr": "^1.0",
         "drupal/helfi_tunnistamo": "^1.0",
+        "drupal/honeypot": "^2.0",
         "drupal/mailsystem": "^4.3",
         "drupal/menu_block": "^1.7",
         "drupal/personal_id": "^2.0@beta",
