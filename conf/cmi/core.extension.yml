@@ -54,6 +54,7 @@ module:
   helfi_media: 0
   helfi_platform_config: 0
   helfi_units: 0
+  honeypot: 0
   image: 0
   image_style_quality: 0
   imagecache_external: 0

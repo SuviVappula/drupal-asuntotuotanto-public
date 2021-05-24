@@ -73,7 +73,7 @@ class ApplicationForm extends ContentEntityForm {
     if ($application_type_id == 'haso') {
       if ($this->entity->isNew()) {
         if (!$user->field_right_of_r->value) {
-          $this->messenger()->addMessage("Your user account is missing the right of residence number. You must add a valid right of residence number in order to apply.");
+          // $this->messenger()->addMessage("Your user account is missing the right of residence number. You must add a valid right of residence number in order to apply.");
         }
       }
     }

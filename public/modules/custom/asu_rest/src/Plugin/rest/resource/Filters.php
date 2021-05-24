@@ -73,7 +73,7 @@ final class Filters extends ResourceBase {
    * @return array
    *   Array of applications by user.
    */
-  private function getUserApplications(User $user): array {
+  private function getUserApplications(User $user) {
     return [20 => [5, 7, 9, 12, 15]];
   }
 
@@ -84,10 +84,7 @@ final class Filters extends ResourceBase {
    *   Array of application statuses by apartment.
    */
   private function getApartmentApplicationStatus(): array {
-    return [
-      20 =>
-      [5 => 'LOW', 7 => 'MEDIUM', 9 => 'HIGH', 12 => 'LOW' , 15 => 'HIGH'],
-    ];
+    return [20 => [5 => 'LOW', 7 => 'MEDIUM', 9 => 'HIGH', 12 => 'LOW' , 15 => 'HIGH']];
   }
 
   /**
