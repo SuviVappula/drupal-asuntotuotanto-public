@@ -15,7 +15,7 @@ class ApartmentSearchController extends ControllerBase {
   public function content() {
     // @todo Should be replaced with block when frontend theme is available.
     $build = [
-      '#markup' => '<div id="search"></div>',
+      '#markup' => '<div id="asu_react_search"></div>',
       '#attached' => [
         'library' => 'asu_apartment_search/apartment-search',
       ],
