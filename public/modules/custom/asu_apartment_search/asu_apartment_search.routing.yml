@@ -1,7 +1,40 @@
-asu_apartment_search.content:
-  path: '/asuntohaku'
+#asu_apartment_search.default:
+  #path: '/asuntohaku/hitas'
+  #defaults:
+    #_controller: '\Drupal\asu_apartment_search\Controller\ApartmentSearchController::hitas'
+    #_title: 'Asuntohaku'
+  #requirements:
+    #_permission: 'access content'
+
+asu_apartment_search.hitas_content:
+  path: '/asuntohaku/hitas'
   defaults:
-    _controller: '\Drupal\asu_apartment_search\Controller\ApartmentSearchController::content'
+    _controller: '\Drupal\asu_apartment_search\Controller\ApartmentSearchController::hitas'
     _title: 'Asuntohaku'
   requirements:
     _permission: 'access content'
+
+asu_apartment_search.hitas_upcoming:
+  path: '/asuntohaku/hitas/tulevat'
+  defaults:
+    _controller: '\Drupal\asu_apartment_search\Controller\ApartmentSearchController::hitas_upcoming'
+    _title: 'Asuntohaku'
+  requirements:
+    _permission: 'access content'
+
+asu_apartment_search.haso_content:
+  path: '/asuntohaku/haso'
+  default:
+    _controller: '\Drupal\asu_apartment_search\Controller\ApartmentSearchController::haso'
+    _title: 'Asuntohaku'
+  requirements:
+    _permission: 'access content'
+
+asu_apartment_search.haso_upcoming:
+  path: '/asuntohaku/haso/tulevat'
+  default:
+    _controller: '\Drupal\asu_apartment_search\Controller\ApartmentSearchController::haso_upcoming'
+    _title: 'Asuntohaku'
+  requirements:
+    _permission: 'access content'
+
