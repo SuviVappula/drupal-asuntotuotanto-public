@@ -40,8 +40,7 @@ class ApartmentSearchController extends ControllerBase {
   /**
    * Returns a renderable array for a asuntohaku page.
    */
-  public function haso(): array {
-    // @todo Should be replaced with block when frontend theme is available.
+  public function haso(){
     $build = [
       '#markup' => '<div id="asu_react_search"></div>',
       '#attached' => [
@@ -54,8 +53,7 @@ class ApartmentSearchController extends ControllerBase {
   /**
    * Returns a renderable array for a asuntohaku page.
    */
-  public function haso_upcoming(): array {
-    // @todo Should be replaced with block when frontend theme is available.
+  public function haso_upcoming(){
     $build = [
       '#markup' => '<div id="asu_react_search"></div>',
       '#attached' => [
