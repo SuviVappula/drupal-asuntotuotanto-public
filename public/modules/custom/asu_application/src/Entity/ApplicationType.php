@@ -45,10 +45,4 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  * )
  */
 class ApplicationType extends ConfigEntityBundleBase {
-
-  /*
-   *  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
-   *     "list_builder" = "Drupal\asu_application\ApplicationTypeListBuilder",
-   *
-   */
 }

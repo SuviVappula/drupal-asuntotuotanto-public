@@ -35,7 +35,7 @@ final class Filters extends ResourceBase {
    * @return \Symfony\Component\HttpFoundation\Response
    *   The HTTP response object.
    */
-  public function get(Request $request) {
+  public function get(Request $request): ModifiedResourceResponse {
     $response = [];
 
     $response['filters'] = $this->getFilters();
