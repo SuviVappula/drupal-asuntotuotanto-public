@@ -12,10 +12,3 @@ apartment-search:
   css:
     theme:
       assets/react/main.css: { }
-
-apartments-projects:
-  css:
-    dist/slick/slick.css: { }
-  js:
-    dist/blazy/blazy.js: { }
-    dist/slick/slick.min.js: { }
