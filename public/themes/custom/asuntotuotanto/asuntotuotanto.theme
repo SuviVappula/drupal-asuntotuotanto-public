@@ -56,6 +56,21 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
 
   switch ($entity_type) {
     case 'project':
+      $is_application_period_active = FALSE;
+      $application_start_time = $entity['field_application_start_time'][0]['#context']['value'];
+      $application_end_time = $entity['field_application_end_time'][0]['#context']['value'];
+      $current_timestamp = time();
+
+      $application_start_time = explode('-', $application_start_time);
+      $application_end_time = explode('-', $application_end_time);
+
+      $application_start_time_timestamp = format_date_to_unix_timestamp("$application_start_time[0] $application_start_time[1]");
+      $application_end_time_timestamp = format_date_to_unix_timestamp("$application_end_time[0] $application_end_time[1]");
+
+      if ($current_timestamp >= $application_start_time_timestamp && $current_timestamp <= $application_end_time_timestamp) {
+        $is_application_period_active = TRUE;
+      }
+
       if ($apartments = $entity['field_apartments']) {
         $apartments = $apartments['#items']->getValue();
         $apartments_stack = [];
@@ -64,14 +79,17 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
           $project_id = $entity['#project']->id();
           $applications = Applications::create()
             ->getApartmentApplicationStatuses($project_id);
-          #dump($variables['applications']);die();
         } catch(\Exception $e){
           $variables['applications'] = [];
         }
 
-        foreach ($apartments as $key => $apartment) {
+        foreach ($apartments as $apartment) {
           $apartment = $apartment['value'];
-          $apartment['applications'] = isset($applications[$apartment['id']]) ? $applications[$apartment['id']] : null;
+          $apartment_id = $apartment['id'];
+          $application_status = $applications[$apartment_id] ?? 'NONE';
+          $apartment['applications'] = get_apartment_application_status($application_status);
+          $apartment['is_application_period_active'] = $is_application_period_active;
+
           $apartments_stack[] = $apartment;
         }
       }
@@ -85,7 +103,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
         $services = $services['#items']->getValue();
         $services_stack = [];
 
-        foreach ($services as $key => $service) {
+        foreach ($services as $service) {
           $service_name = $service['value']['name'];
           $service_distance = $service['value']['distance'];
 
@@ -168,3 +186,32 @@ function asuntotuotanto_preprocess_menu(&$variables) {
       break;
   }
 }
+
+/**
+ * Custom function format_date_to_unix_timestamp().
+ */
+function format_date_to_unix_timestamp($string) {
+  $value = $string;
+  $date = new DateTime($value);
+  $timestamp = $date->format('U');
+
+  return $timestamp;
+}
+
+/**
+ * Custom get_apartment_application_status().
+ */
+function get_apartment_application_status($application_status) {
+  $application_status_mapping = [
+    "NONE" => t('No applicants'),
+    "LOW" => t('Few applicants'),
+    "MEDIUM" => t('A little applicants'),
+    "HIGH" => t('A lot of applicants'),
+  ];
+
+  return [
+    "status" => strtolower($application_status),
+    "label" => $application_status_mapping[$application_status],
+  ];
+}
+

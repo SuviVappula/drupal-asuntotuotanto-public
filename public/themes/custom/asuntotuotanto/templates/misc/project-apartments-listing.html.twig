@@ -25,8 +25,8 @@
           {% set living_area_size = apartment.living_area_size|striptags|trim %}
           {% set nid = apartment.id|striptags|trim %}
 
-          {% set application_status = row.application_status %}
-          {% set is_application_period_active = row.is_application_period_active %}
+          {% set application_status = apartment.applications %}
+          {% set is_application_period_active = apartment.is_application_period_active %}
 
           <li class="project__apartments-item">
             <button
@@ -161,8 +161,8 @@
             {% set living_area_size = apartment.living_area_size|striptags|trim %}
             {% set nid = apartment.id|striptags|trim %}
 
-            {% set application_status = row.application_status %}
-            {% set is_application_period_active = row.is_application_period_active %}
+            {% set application_status = apartment.applications %}
+            {% set is_application_period_active = apartment.is_application_period_active %}
 
             <tr{{ row.attributes }}>
               <td>

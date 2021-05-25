@@ -115,14 +115,16 @@ class Applications {
     if (empty($this->applications)) {
       return [];
     }
+
     $applicationsForProject = [];
 
     /** @var \Drupal\asu_application\Entity\Application $application */
     foreach ($this->applications as $application) {
-      if($application->getProjectId() == $id){
+      if ($application->getProjectId() == $id) {
         $applicationsForProject[] = $application;
       }
     }
+
     $this->applications = $applicationsForProject;
 
     return $this->getApartmentApplicationStatuses();
@@ -158,9 +160,11 @@ class Applications {
     $counts = array_count_values($applications);
 
     $applicationStatuses = [];
+
     foreach ($counts as $key => $count) {
       $applicationStatuses[$key] = $this->resolveCount($count);
     }
+
     return $applicationStatuses;
   }
 
