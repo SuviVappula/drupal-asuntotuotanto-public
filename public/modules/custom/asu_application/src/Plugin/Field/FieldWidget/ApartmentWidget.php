@@ -44,7 +44,7 @@ class ApartmentWidget extends WidgetBase {
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state): array {
     $values = parent::massageFormValues($values, $form, $form_state);
     foreach ($values as $key => $value) {
-      $values[$key]['information'] = $form['apartment']['widget'][$key]['id']['#options']['apartments'][$value['id']];
+      $values[$key]['information'] = $form['apartment']['widget'][$key]['id']['#options'][$value['id']];
     }
     return $values;
   }

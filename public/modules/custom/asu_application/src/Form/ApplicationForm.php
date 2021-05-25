@@ -52,32 +52,32 @@ class ApplicationForm extends ContentEntityForm {
       // @todo Redirect to correct form.
     }
 
-    $startDate = $project_data['start_date'];
-    $endDate = $project_data['end_date'];
+    $startDate = $project_data['application_start_date'];
+    $endDate = $project_data['application_end_date'];
 
     if (!$this->isFormActive($startDate, $endDate)) {
       // @todo Add redirect to proper place, outside of application time.
       $this->messenger()->addMessage($this->t('You are trying to fill an application which is not active.'));
     }
 
-    $projectTitle = $project_data['project'];
+    $projectName = $project_data['project_name'];
     $apartments = $project_data['apartments'];
     // Set the apartments as a value to the form array.
     $form['apartment_values'] = $apartments;
+    $form['project_name'] = $projectName;
+
     $form = parent::buildForm($form, $form_state);
 
-    $form['#title'] = $this->t('Application for') . ' ' . $projectTitle;
+    $form['#title'] = $this->t('Application for') . ' ' . $projectName;
 
     if ($application_type_id == 'haso') {
       if ($this->entity->isNew()) {
         if (!$user->field_right_of_r->value) {
-          $this->messenger()->addMessage("Your user account is missing the right of residence number. You must add a valid right of residence number in order to apply.");
+          // $this->messenger()->addMessage("Your user account is missing the right of residence number. You must add a valid right of residence number in order to apply.");
         }
       }
-
     }
     elseif ($application_type_id == 'hitas') {
-
     }
 
     return $form;
@@ -87,7 +87,6 @@ class ApplicationForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-
     $entity = &$this->entity;
     $message_params = [
       '%entity_label' => $entity->id(),
@@ -99,7 +98,8 @@ class ApplicationForm extends ContentEntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        $event = new ApplicationEvent($entity->id());
+        $project_name = $form['project_name'];
+        $event = new ApplicationEvent($entity->id(), $project_name);
         /** @var \Symfony\Component\EventDispatcher\EventDispatcher $event_dispatcher */
         $event_dispatcher = \Drupal::service('event_dispatcher');
         $event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
@@ -182,10 +182,10 @@ class ApplicationForm extends ContentEntityForm {
     ksort($apartments, SORT_NUMERIC);
 
     return [
-      'project' => $projectName,
+      'project_name' => $projectName,
       'ownership_type' => $apartmentResponse->getOwnershipType(),
-      'start_date' => $apartmentResponse->getStartTime(),
-      'end_date' => $apartmentResponse->getEndTime(),
+      'application_start_date' => $apartmentResponse->getStartTime(),
+      'application_end_date' => $apartmentResponse->getEndTime(),
       'apartments' => $apartments,
     ];
   }

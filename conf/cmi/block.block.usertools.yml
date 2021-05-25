@@ -1,0 +1,31 @@
+uuid: 388bb807-eb3d-4dc6-aa57-f596c7d29a73
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.user-tools-menu
+  module:
+    - menu_block
+  theme:
+    - asuntotuotanto
+id: usertools
+theme: asuntotuotanto
+region: header_bottom
+weight: 0
+provider: null
+plugin: 'menu_block:user-tools-menu'
+settings:
+  id: 'menu_block:user-tools-menu'
+  label: 'User tools (mobile)'
+  provider: menu_block
+  label_display: '0'
+  follow: false
+  follow_parent: child
+  level: 1
+  depth: 2
+  expand_all_items: true
+  parent: 'user-tools-menu:'
+  suggestion: user_tools_menu__mobile
+  label_type: block
+  label_link: false
+visibility: {  }

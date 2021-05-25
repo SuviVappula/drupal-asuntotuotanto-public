@@ -34,14 +34,13 @@
 
 {% set classes = [
   'navigation',
-  'navigation--main-header',
+  'navigation--main',
   'is-desktop',
   ]
 %}
 
 {% set heading_id = attributes.id ~ '-menu'|clean_id %}
 <nav role="navigation" aria-labelledby="{{ heading_id }}"{{ attributes.addClass(classes)|without('role', 'aria-labelledby') }} aria-hidden="true">
-  {# Menu. #}
   {% block content %}
     {{ content }}
   {% endblock %}

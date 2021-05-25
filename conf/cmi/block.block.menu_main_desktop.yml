@@ -1,0 +1,31 @@
+uuid: 6620c409-8cf7-4ba5-b449-a8ce923e2668
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - menu_block
+  theme:
+    - asuntotuotanto
+id: menu_main_desktop
+theme: asuntotuotanto
+region: header_top
+weight: -6
+provider: null
+plugin: 'menu_block:main'
+settings:
+  id: 'menu_block:main'
+  label: 'Päävalikko (desktop)'
+  provider: menu_block
+  label_display: '0'
+  follow: false
+  follow_parent: child
+  level: 1
+  depth: 2
+  expand_all_items: true
+  parent: 'main:'
+  suggestion: main__desktop
+  label_type: block
+  label_link: false
+visibility: {  }

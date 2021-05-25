@@ -1,3 +1,11 @@
+.page-footer__container {
+  padding: 0 $spacing-s;
+
+  @media screen and (min-width: $breakpoint-xs) {
+    padding: 0 $spacing-l;
+  }
+}
+
 .page-footer__item {
   &.page-footer__item--top {
     padding-bottom: $spacing-m;
