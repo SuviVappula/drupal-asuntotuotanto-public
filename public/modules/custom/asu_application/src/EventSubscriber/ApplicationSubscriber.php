@@ -83,7 +83,7 @@ class ApplicationSubscriber implements EventSubscriberInterface {
     }
     catch (ApplicationRequestException $e) {
       // Backend returned non 2xx response.
-      // Queue worker maybe.
+      // Use Queue maybe.
       $this->logger->critical('Unexpected ApplicationRequestException while sending application to backend: application id ' . $entity->id() . ' ' . $e->getMessage());
     }
     catch (\Exception $e) {

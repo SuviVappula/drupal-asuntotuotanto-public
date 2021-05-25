@@ -17,6 +17,12 @@ sticky-navigation:
   js:
     dist/js/stickyNavigation.min.js: {}
 
+user-tools:
+  js:
+    dist/js/userToolsNavigation.min.js: {}
+  dependencies:
+    - core/jquery
+
 global-styling:
   version: 1.x
   css:
@@ -29,3 +35,4 @@ global-scripting:
     dist/js/bundle.min.js: {}
   dependencies:
     - core/drupal
+    - core/jquery

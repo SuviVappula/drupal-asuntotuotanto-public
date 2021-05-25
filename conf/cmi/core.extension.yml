@@ -6,13 +6,17 @@ module:
   asu_apartment_search: 0
   asu_api: 0
   asu_application: 0
+  asu_mailer: 0
   asu_rest: 0
+  asu_user_tools_menu: 0
   better_passwords: 0
   block: 0
   block_content: 0
   breakpoint: 0
   ckeditor: 0
   config: 0
+  config_filter: 0
+  config_ignore: 0
   config_translation: 0
   config_update: 0
   context: 0
@@ -43,6 +47,7 @@ module:
   hdbt_content: 0
   hdbt_hyphenopoly: 0
   helfi_api_base: 0
+  helfi_azure_fs: 0
   helfi_base_config: 0
   helfi_content: 0
   helfi_example_content: 0
@@ -51,6 +56,7 @@ module:
   helfi_media: 0
   helfi_platform_config: 0
   helfi_units: 0
+  honeypot: 0
   image: 0
   image_style_quality: 0
   imagecache_external: 0
@@ -88,6 +94,7 @@ module:
   serialization: 0
   simple_sitemap: 0
   social_media: 0
+  swiftmailer: 0
   syslog: 0
   system: 0
   taxonomy: 0

@@ -18,10 +18,18 @@ class ApplicationEvent extends Event {
   protected $applicationId;
 
   /**
+   * Name of the project.
+   *
+   * @var string
+   */
+  protected string $projectName;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct($applicationId) {
+  public function __construct($applicationId, string $projectName) {
     $this->applicationId = $applicationId;
+    $this->projectName = $projectName;
   }
 
   /**
@@ -29,6 +37,15 @@ class ApplicationEvent extends Event {
    */
   public function getApplicationId(): string {
     return $this->applicationId;
+  }
+
+  /**
+   * Get the name of the project.
+   *
+   * @return string
+   */
+  public function getProjectName(): string {
+    return $this->projectName;
   }
 
 }
