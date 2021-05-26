@@ -85,6 +85,9 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
 
         foreach ($apartments as $apartment) {
           $apartment = $apartment['value'];
+          $apartment['debt_free_sales_price'] = number_format($apartment['debt_free_sales_price'], 2, ',', '.');
+          $apartment['sales_price'] = number_format($apartment['sales_price'], 2, ',', '.');
+          $apartment['living_area_size'] = number_format($apartment['living_area_size'], 1, ',', '');
           $apartment_id = $apartment['id'];
           $application_status = $applications[$apartment_id] ?? 'NONE';
           $apartment['applications'] = get_apartment_application_status($application_status);
@@ -141,6 +144,14 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       break;
 
     case 'apartment':
+      $living_area_size = $entity['field_living_area']['#items']->getValue()[0]['value'];
+      $sales_price = $entity['field_sales_price']['#items']->getValue()[0]['value'];
+      $debt_free_sales_price = $entity['field_debt_free_sales_price']['#items']->getValue()[0]['value'];
+
+      $variables['living_area_size_m2'] = number_format($living_area_size, 1, ',', '') ?? NULL;
+      $variables['debt_free_sales_price'] = number_format($debt_free_sales_price, 2, ',', '.') ?? NULL;
+      $variables['sales_price'] = number_format($sales_price, 2, ',', '.') ?? NULL;
+
       if ($services = $entity['field_services']) {
         $services = $services['#items']->getValue();
         $services_stack = [];
