@@ -30,6 +30,8 @@ field_mappings:
     value: application_end_time
   field_application_start_time:
     value: application_start_time
+  field_attachments:
+    value: attachments
   field_building_type:
     value: field_building_type
   field_city:

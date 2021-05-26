@@ -12,6 +12,7 @@ dependencies:
     - field.field.apartment.apartment.field_application_period_ended
     - field.field.apartment.apartment.field_application_start_time
     - field.field.apartment.apartment.field_application_url
+    - field.field.apartment.apartment.field_attachments
     - field.field.apartment.apartment.field_building_type
     - field.field.apartment.apartment.field_cta_image
     - field.field.apartment.apartment.field_debt_free_sales_price
@@ -106,6 +107,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_attachments:
+    weight: 23
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   field_building_type:
     weight: 8

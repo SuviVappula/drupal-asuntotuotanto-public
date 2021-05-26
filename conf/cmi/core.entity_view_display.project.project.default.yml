@@ -11,6 +11,7 @@ dependencies:
     - field.field.project.project.field_apartments_count
     - field.field.project.project.field_application_end_time
     - field.field.project.project.field_application_start_time
+    - field.field.project.project.field_attachments
     - field.field.project.project.field_building_type
     - field.field.project.project.field_city
     - field.field.project.project.field_debt_free_sales_prices
@@ -100,6 +101,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_attachments:
+    weight: 28
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   field_building_type:
     weight: 20

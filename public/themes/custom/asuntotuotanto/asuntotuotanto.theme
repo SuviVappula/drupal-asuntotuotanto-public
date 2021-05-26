@@ -95,9 +95,46 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       }
 
       $variables['apartments'] = $apartments_stack ?? NULL;
+
+      if ($services = $entity['field_services']) {
+        $services = $services['#items']->getValue();
+        $services_stack = [];
+
+        foreach ($services as $service) {
+          $service_name = $service['value']['name'];
+          $service_distance = $service['value']['distance'];
+
+          $services_stack[] = [
+            'name' => $service_name,
+            'distance' => $service_distance,
+          ];
+        }
+
+        $variables['services'] = $services_stack ?? NULL;
+      }
+
+      if ($attachments = $entity['field_attachments']) {
+        $attachments = $attachments['#items']->getValue();
+        $attachments_stack = [];
+
+        foreach ($attachments as $attachment) {
+          $description = $attachment['value']['description'];
+          $file_name = $attachment['value']['name'];
+          $file_size = $attachment['value']['size'];
+          $file_uri = $attachment['value']['uri'];
+
+          $attachments_stack[] = [
+            'description' => $description,
+            'name' => $file_name,
+            'size' => $file_size,
+            'uri' => $file_uri,
+          ];
+        }
+
+        $variables['attachments'] = $attachments_stack ?? NULL;
+      }
       break;
 
-    case 'project':
     case 'apartment':
       if ($services = $entity['field_services']) {
         $services = $services['#items']->getValue();
@@ -114,6 +151,27 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
         }
 
         $variables['services'] = $services_stack ?? NULL;
+      }
+
+      if ($attachments = $entity['field_attachments']) {
+        $attachments = $attachments['#items']->getValue();
+        $attachments_stack = [];
+
+        foreach ($attachments as $attachment) {
+          $description = $attachment['value']['description'];
+          $file_name = $attachment['value']['name'];
+          $file_size = $attachment['value']['size'];
+          $file_uri = $attachment['value']['uri'];
+
+          $attachments_stack[] = [
+            'description' => $description,
+            'name' => $file_name,
+            'size' => $file_size,
+            'uri' => $file_uri,
+          ];
+        }
+
+        $variables['attachments'] = $attachments_stack ?? NULL;
       }
       break;
   }
