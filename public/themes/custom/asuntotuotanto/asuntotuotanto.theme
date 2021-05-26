@@ -5,7 +5,7 @@
  * Functions to support theming in the HDBT Subtheme.
  */
 
-use Drupal\asu_rest\Applications;
+use Drupal\asu_application\Applications;
 use Drupal\Core\Url;
 
 /**

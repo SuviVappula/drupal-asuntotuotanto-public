@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\asu_rest;
+namespace Drupal\asu_application;
 
 /**
  * Handles applications.
