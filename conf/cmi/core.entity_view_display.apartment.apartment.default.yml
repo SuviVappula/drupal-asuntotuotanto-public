@@ -117,7 +117,7 @@ content:
     region: content
   field_attachments:
     weight: 27
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
@@ -247,7 +247,7 @@ content:
     third_party_settings: {  }
   field_services_url:
     weight: 28
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
