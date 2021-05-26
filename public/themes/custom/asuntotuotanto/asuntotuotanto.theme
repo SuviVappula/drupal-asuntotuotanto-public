@@ -133,6 +133,11 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
 
         $variables['attachments'] = $attachments_stack ?? NULL;
       }
+
+      if ($services_url = $entity['field_services_url']) {
+        $services_url = $services_url['#items']->getValue()[0]['value'];
+        $variables['services_url'] = $services_url ?? NULL;
+      }
       break;
 
     case 'apartment':
@@ -172,6 +177,11 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
         }
 
         $variables['attachments'] = $attachments_stack ?? NULL;
+      }
+
+      if ($services_url = $entity['field_services_url']) {
+        $services_url = $services_url['#items']->getValue()[0]['value'];
+        $variables['services_url'] = $services_url ?? NULL;
       }
       break;
   }

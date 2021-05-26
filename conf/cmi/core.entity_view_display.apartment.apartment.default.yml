@@ -33,7 +33,6 @@ dependencies:
   module:
     - external_entities
     - imagecache_external
-    - link
     - options
 id: apartment.apartment.default
 targetEntityType: apartment
@@ -247,16 +246,11 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_services_url:
-    weight: 14
-    label: hidden
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
+    weight: 28
+    label: above
+    settings: {  }
     third_party_settings: {  }
-    type: link
+    type: list_default
     region: content
   field_site_owner:
     weight: 2

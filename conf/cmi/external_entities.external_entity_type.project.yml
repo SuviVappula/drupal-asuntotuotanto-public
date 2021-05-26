@@ -16,16 +16,16 @@ field_mappings:
     value: title
   field_accessibility:
     value: field_project_accessibility
+  field_apartments:
+    value: 'apartments/*'
+  field_apartments_count:
+    value: apartments_count
   field_apartment_living_areas:
     value: apartment_living_area_sizes_m2
   field_apartment_sales_prices:
     value: apartment_sales_prices
   field_apartment_structures:
     value: apartment_structures
-  field_apartments:
-    value: 'apartments/*'
-  field_apartments_count:
-    value: apartments_count
   field_application_end_time:
     value: application_end_time
   field_application_start_time:
@@ -60,6 +60,8 @@ field_mappings:
     value: field_project_description
   field_services:
     value: 'services/*'
+  field_services_url:
+    value: 'services_url/*'
   field_site_owner:
     value: field_site_owner
   field_site_renter:

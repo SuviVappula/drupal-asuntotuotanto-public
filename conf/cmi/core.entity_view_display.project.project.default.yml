@@ -26,6 +26,7 @@ dependencies:
     - field.field.project.project.field_project_area_description
     - field.field.project.project.field_project_description
     - field.field.project.project.field_services
+    - field.field.project.project.field_services_url
     - field.field.project.project.field_site_owner
     - field.field.project.project.field_site_renter
     - field.field.project.project.field_street_address
@@ -219,6 +220,13 @@ content:
   field_services:
     weight: 18
     label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_services_url:
+    weight: 29
+    label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
