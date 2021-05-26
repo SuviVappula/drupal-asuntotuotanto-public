@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 final class Applications extends ResourceBase {
 
-  private const REQUIRED = [
+  private const REQUIRED_FIELDS = [
     'uuid',
   ];
 
@@ -47,7 +47,7 @@ final class Applications extends ResourceBase {
     /** @var \Symfony\Component\HttpFoundation\ParameterBag $parameters */
     $parameters = new ParameterBag($request);
 
-    foreach (REQUIRED_FIELDS as $field) {
+    foreach (self::REQUIRED_FIELDS as $field) {
       if ($parameters->get($field)) {
         continue;
       }
