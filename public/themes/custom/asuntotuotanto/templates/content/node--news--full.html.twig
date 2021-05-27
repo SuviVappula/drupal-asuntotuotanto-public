@@ -79,7 +79,9 @@
   not node.isPublished() ? 'node--unpublished',
   view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
   first_paragraph_grey ? 'has-first-gray-bg-block',
-  'news'
+  'news',
+  'wrapper',
+  'wrapper--mw-1000',
 ]
 %}
 
@@ -87,15 +89,25 @@
 {% set paragraphs = content.field_content %}
 
 <article{{ attributes.addClass(classes) }}>
-  {{ node.created.value|date('d.m.Y') }}
+
+  <p class="news__publish-date">
+    <span class="visually-hidden">{{ 'Published at'|t }}</span>
+    {{ node.created.value|date('d.m.Y') }}
+  </p>
+
   <h1{{ title_attributes.addClass('news__label') }}>
     {{ label }}
   </h1>
 
-  {{ image }}
+  <div class="news__image">
+    {{ image }}
+    {% include '@hdbt/misc/koro.twig' with {koro: koro, flip: false } %}
+  </div>
 
   <div{{ content_attributes.addClass('news__content') }}>
-    {{ paragraphs }}
+    <div class="news__paragraphs">
+      {{ paragraphs }}
+    </div>
   </div>
 
 </article>
