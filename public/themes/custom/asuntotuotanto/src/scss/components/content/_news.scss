@@ -4,7 +4,7 @@
   margin: 0 0 $spacing-2-xs;
   color: var(--color-black-90);
 
-  @media screen and (min-width: $breakpoint-m) {
+  @media screen and (min-width: $breakpoint-m) and (max-width: $breakpoint-l - 1px) {
     @include font-size($fontsize-body-m, 26px);
     margin: 0 0 $spacing-3-xs;
   }
@@ -51,6 +51,23 @@
     position: absolute;
     transform: scale(2);
     z-index: 2;
+  }
+}
+
+.news__content {
+  .social-sharing-buttons {
+    margin-top: $spacing-4-xl;
+
+    @media screen and (min-width: $breakpoint-l) {
+      margin-top: 0;
+      flex-shrink: 0;
+      margin-left: $spacing-4-xl;
+      padding-right: $spacing-s;
+    }
+  }
+
+  @media screen and (min-width: $breakpoint-l) {
+    display: flex;
   }
 }
 
