@@ -1,18 +1,18 @@
-uuid: bbc1fc6d-d91e-48af-aadd-4e767a22e2bf
+uuid: cfc1f2f7-f251-4ece-a232-aa8b755168d1
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_liftup_image
+    - field.storage.node.field_image
     - media.type.image
     - node.type.news
-id: node.news.field_liftup_image
-field_name: field_liftup_image
+id: node.news.field_image
+field_name: field_image
 entity_type: node
 bundle: news
-label: 'Liftup image'
+label: Image
 description: ''
-required: false
+required: true
 translatable: true
 default_value: {  }
 default_value_callback: ''
