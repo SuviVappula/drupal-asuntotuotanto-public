@@ -354,6 +354,7 @@ display:
         use_more_text: false
         link_display: false
         link_url: false
+        header: false
       filter_groups:
         operator: AND
         groups:
@@ -371,6 +372,20 @@ display:
       displays:
         news_page_main: news_page_main
       attachment_position: after
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content:
+            value: '<h2>Common news</h2>'
+            format: full_html
+          plugin_id: text
     cache_metadata:
       max-age: -1
       contexts:
@@ -513,6 +528,7 @@ display:
         use_more_text: false
         link_display: false
         link_url: false
+        header: false
       filter_groups:
         operator: AND
         groups:
@@ -530,6 +546,20 @@ display:
       displays:
         news_page_main: news_page_main
       attachment_position: after
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content:
+            value: '<h2>Right-of-occupancy apartments</h2>'
+            format: full_html
+          plugin_id: text
     cache_metadata:
       max-age: -1
       contexts:
@@ -672,6 +702,7 @@ display:
         use_more_text: false
         link_display: false
         link_url: false
+        header: false
       filter_groups:
         operator: AND
         groups:
@@ -689,6 +720,20 @@ display:
       displays:
         news_page_main: news_page_main
       attachment_position: after
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content:
+            value: '<h2>Owned apartments</h2>'
+            format: full_html
+          plugin_id: text
     cache_metadata:
       max-age: -1
       contexts:
