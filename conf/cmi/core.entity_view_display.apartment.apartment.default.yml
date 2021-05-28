@@ -12,6 +12,7 @@ dependencies:
     - field.field.apartment.apartment.field_application_period_ended
     - field.field.apartment.apartment.field_application_start_time
     - field.field.apartment.apartment.field_application_url
+    - field.field.apartment.apartment.field_attachments
     - field.field.apartment.apartment.field_building_type
     - field.field.apartment.apartment.field_cta_image
     - field.field.apartment.apartment.field_debt_free_sales_price
@@ -32,7 +33,6 @@ dependencies:
   module:
     - external_entities
     - imagecache_external
-    - link
     - options
 id: apartment.apartment.default
 targetEntityType: apartment
@@ -114,6 +114,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_attachments:
+    weight: 27
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   field_building_type:
     weight: 12
@@ -239,16 +246,11 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_services_url:
-    weight: 14
+    weight: 28
     label: hidden
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
+    settings: {  }
     third_party_settings: {  }
-    type: link
+    type: list_default
     region: content
   field_site_owner:
     weight: 2

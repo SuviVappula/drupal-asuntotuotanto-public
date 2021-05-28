@@ -1,0 +1,31 @@
+uuid: bd94ec81-0395-4fee-b1db-4189955ee5b4
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.user-tools-menu
+  module:
+    - menu_block
+  theme:
+    - asuntotuotanto
+id: usertools_desktop
+theme: asuntotuotanto
+region: header_top
+weight: -5
+provider: null
+plugin: 'menu_block:user-tools-menu'
+settings:
+  id: 'menu_block:user-tools-menu'
+  label: 'User tools (desktop)'
+  provider: menu_block
+  label_display: '0'
+  follow: false
+  follow_parent: child
+  level: 1
+  depth: 0
+  expand_all_items: true
+  parent: 'user-tools-menu:'
+  suggestion: user_tools_menu__desktop
+  label_type: block
+  label_link: false
+visibility: {  }

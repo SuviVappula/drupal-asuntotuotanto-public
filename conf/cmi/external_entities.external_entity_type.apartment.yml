@@ -32,6 +32,8 @@ field_mappings:
     value: application_start_time
   field_application_url:
     value: application_url
+  field_attachments:
+    value: attachments
   field_building_type:
     value: building_type
   field_cta_image:
@@ -61,7 +63,7 @@ field_mappings:
   field_services:
     value: 'services/*'
   field_services_url:
-    uri: services_url
+    value: 'services_url/*'
   field_site_owner:
     value: site_owner
   field_site_renter:

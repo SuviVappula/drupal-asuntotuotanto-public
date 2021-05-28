@@ -1,17 +1,16 @@
 <?php
 
-namespace Drupal\asu_rest;
+namespace Drupal\asu_application;
 
 /**
  * Handles applications.
  */
 class Applications {
 
-  const HIGH = 50;
   const HIGH_ENUM = 'HIGH';
-  const MEDIUM = 25;
+  const MEDIUM = 10;
   const MEDIUM_ENUM = 'MEDIUM';
-  const LOW = 10;
+  const LOW = 5;
   const LOW_ENUM = 'LOW';
 
   /**
@@ -20,13 +19,6 @@ class Applications {
    * @var array|\Drupal\Core\Entity\EntityInterface[]
    */
   private array $applications;
-
-  /**
-   * Count of applications by apartment.
-   *
-   * @var array
-   */
-  private array $apartmentApplicationCounts = [];
 
   /**
    * Applications constructor.
@@ -115,14 +107,16 @@ class Applications {
     if (empty($this->applications)) {
       return [];
     }
+
     $applicationsForProject = [];
 
     /** @var \Drupal\asu_application\Entity\Application $application */
     foreach ($this->applications as $application) {
-      if($application->getProjectId() == $id){
+      if ($application->getProjectId() == $id) {
         $applicationsForProject[] = $application;
       }
     }
+
     $this->applications = $applicationsForProject;
 
     return $this->getApartmentApplicationStatuses();
@@ -158,9 +152,11 @@ class Applications {
     $counts = array_count_values($applications);
 
     $applicationStatuses = [];
+
     foreach ($counts as $key => $count) {
-      $applicationStatuses[$key] = $this->resolveCount($count);
+      $applicationStatuses[$key] = $this::resolveApplicationCountEnum($count);
     }
+
     return $applicationStatuses;
   }
 
@@ -173,7 +169,7 @@ class Applications {
    * @return string
    *   Application count as enum.
    */
-  private function resolveCount(int $count): string {
+  public static function resolveApplicationCountEnum(int $count): string {
     if ($count === 0) {
       return self::LOW_ENUM;
     }

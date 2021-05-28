@@ -1,12 +1,12 @@
 <?php
 
-use Drupal\asu_rest\Applications;
-use Drupal\Core\Form\FormStateInterface;
-
 /**
  * @file
  * Functions to support theming in the HDBT Subtheme.
  */
+
+use Drupal\asu_application\Applications;
+use Drupal\Core\Url;
 
 /**
  * Helper function to get the icons path.
@@ -56,6 +56,21 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
 
   switch ($entity_type) {
     case 'project':
+      $is_application_period_active = FALSE;
+      $application_start_time = $entity['field_application_start_time'][0]['#context']['value'];
+      $application_end_time = $entity['field_application_end_time'][0]['#context']['value'];
+      $current_timestamp = time();
+
+      $application_start_time = explode('-', $application_start_time);
+      $application_end_time = explode('-', $application_end_time);
+
+      $application_start_time_timestamp = format_date_to_unix_timestamp("$application_start_time[0] $application_start_time[1]");
+      $application_end_time_timestamp = format_date_to_unix_timestamp("$application_end_time[0] $application_end_time[1]");
+
+      if ($current_timestamp >= $application_start_time_timestamp && $current_timestamp <= $application_end_time_timestamp) {
+        $is_application_period_active = TRUE;
+      }
+
       if ($apartments = $entity['field_apartments']) {
         $apartments = $apartments['#items']->getValue();
         $apartments_stack = [];
@@ -64,28 +79,31 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
           $project_id = $entity['#project']->id();
           $applications = Applications::create()
             ->getApartmentApplicationStatuses($project_id);
-          #dump($variables['applications']);die();
         } catch(\Exception $e){
           $variables['applications'] = [];
         }
 
-        foreach ($apartments as $key => $apartment) {
+        foreach ($apartments as $apartment) {
           $apartment = $apartment['value'];
-          $apartment['applications'] = isset($applications[$apartment['id']]) ? $applications[$apartment['id']] : null;
+          $apartment['debt_free_sales_price'] = number_format($apartment['debt_free_sales_price'], 2, ',', '.');
+          $apartment['sales_price'] = number_format($apartment['sales_price'], 2, ',', '.');
+          $apartment['living_area_size'] = number_format($apartment['living_area_size'], 1, ',', '');
+          $apartment_id = $apartment['id'];
+          $application_status = $applications[$apartment_id] ?? 'NONE';
+          $apartment['applications'] = get_apartment_application_status($application_status);
+          $apartment['is_application_period_active'] = $is_application_period_active;
+
           $apartments_stack[] = $apartment;
         }
       }
 
       $variables['apartments'] = $apartments_stack ?? NULL;
-      break;
 
-    case 'project':
-    case 'apartment':
       if ($services = $entity['field_services']) {
         $services = $services['#items']->getValue();
         $services_stack = [];
 
-        foreach ($services as $key => $service) {
+        foreach ($services as $service) {
           $service_name = $service['value']['name'];
           $service_distance = $service['value']['distance'];
 
@@ -97,6 +115,182 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
 
         $variables['services'] = $services_stack ?? NULL;
       }
+
+      if ($attachments = $entity['field_attachments']) {
+        $attachments = $attachments['#items']->getValue();
+        $attachments_stack = [];
+
+        foreach ($attachments as $attachment) {
+          $description = $attachment['value']['description'];
+          $file_name = $attachment['value']['name'];
+          $file_size = $attachment['value']['size'];
+          $file_uri = $attachment['value']['uri'];
+
+          $attachments_stack[] = [
+            'description' => $description,
+            'name' => $file_name,
+            'size' => $file_size,
+            'uri' => $file_uri,
+          ];
+        }
+
+        $variables['attachments'] = $attachments_stack ?? NULL;
+      }
+
+      if ($services_url = $entity['field_services_url']) {
+        $services_url = $services_url['#items']->getValue()[0]['value'];
+        $variables['services_url'] = $services_url ?? NULL;
+      }
+      break;
+
+    case 'apartment':
+      $living_area_size = $entity['field_living_area']['#items']->getValue()[0]['value'];
+      $sales_price = $entity['field_sales_price']['#items']->getValue()[0]['value'];
+      $debt_free_sales_price = $entity['field_debt_free_sales_price']['#items']->getValue()[0]['value'];
+
+      $variables['living_area_size_m2'] = number_format($living_area_size, 1, ',', '') ?? NULL;
+      $variables['debt_free_sales_price'] = number_format($debt_free_sales_price, 2, ',', '.') ?? NULL;
+      $variables['sales_price'] = number_format($sales_price, 2, ',', '.') ?? NULL;
+
+      if ($services = $entity['field_services']) {
+        $services = $services['#items']->getValue();
+        $services_stack = [];
+
+        foreach ($services as $service) {
+          $service_name = $service['value']['name'];
+          $service_distance = $service['value']['distance'];
+
+          $services_stack[] = [
+            'name' => $service_name,
+            'distance' => $service_distance,
+          ];
+        }
+
+        $variables['services'] = $services_stack ?? NULL;
+      }
+
+      if ($attachments = $entity['field_attachments']) {
+        $attachments = $attachments['#items']->getValue();
+        $attachments_stack = [];
+
+        foreach ($attachments as $attachment) {
+          $description = $attachment['value']['description'];
+          $file_name = $attachment['value']['name'];
+          $file_size = $attachment['value']['size'];
+          $file_uri = $attachment['value']['uri'];
+
+          $attachments_stack[] = [
+            'description' => $description,
+            'name' => $file_name,
+            'size' => $file_size,
+            'uri' => $file_uri,
+          ];
+        }
+
+        $variables['attachments'] = $attachments_stack ?? NULL;
+      }
+
+      if ($services_url = $entity['field_services_url']) {
+        $services_url = $services_url['#items']->getValue()[0]['value'];
+        $variables['services_url'] = $services_url ?? NULL;
+      }
       break;
   }
 }
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function asuntotuotanto_preprocess_menu(&$variables) {
+  $menu_name = $variables['menu_name'];
+
+  switch ($menu_name) {
+    case 'main':
+      $menu_block_configuration_suggestion = $variables['menu_block_configuration']['suggestion'];
+
+      if ($menu_block_configuration_suggestion === 'main__mobile') {
+        $login_link = [
+          'title' => t('Log in'),
+          'url' => Url::fromRoute('user.login'),
+          'is_login_link' => TRUE,
+        ];
+
+        // Check if user is logged in.
+        if (!\Drupal::currentUser()->isAuthenticated()) {
+          $variables['items']['login_link'] = $login_link;
+        }
+      }
+
+      if ($menu_block_configuration_suggestion === 'main__desktop') {
+        $items = $variables['items'];
+        $current_path =  Url::fromRoute('<current>')->toString();
+
+        foreach ($items as $key => $item) {
+          $is_active = FALSE;
+          $is_below_item_active = FALSE;
+          $below = $item['below'];
+          $url = $item['url']->toString();
+
+          if ($current_path === $url) {
+            $is_active = TRUE;
+          }
+
+          if ($below) {
+            foreach ($below as $below_item) {
+              $below_url = $below_item['url']->toString();
+
+              if ($current_path === $below_url) {
+                $is_below_item_active = TRUE;
+              }
+            }
+
+            if ($is_active || $is_below_item_active) {
+              $variables['items'][$key]['attributes']->addClass('is-active');
+            }
+          }
+        }
+      }
+
+      break;
+
+    case 'user-tools-menu':
+      $items = $variables['items']['asu_user_tools_menu.user_name']['below'];
+
+      foreach ($items as $key => $item) {
+        $url = $item['url']->toString();
+        $current_path =  Url::fromRoute('<current>')->toString();
+        $is_active = $current_path === $url;
+        $variables['items']['asu_user_tools_menu.user_name']['below'][$key]['is_link_active'] = $is_active;
+      }
+      break;
+  }
+}
+
+/**
+ * Custom function format_date_to_unix_timestamp().
+ */
+function format_date_to_unix_timestamp($string) {
+  $value = $string;
+  $date = new DateTime($value);
+  $timestamp = $date->format('U');
+
+  return $timestamp;
+}
+
+/**
+ * Custom get_apartment_application_status().
+ */
+function get_apartment_application_status($application_status) {
+  $application_status_mapping = [
+    "NONE" => t('No applicants'),
+    "LOW" => t('Few applicants'),
+    "MEDIUM" => t('A little applicants'),
+    "HIGH" => t('A lot of applicants'),
+  ];
+
+  return [
+    "status" => strtolower($application_status),
+    "label" => $application_status_mapping[$application_status],
+  ];
+}
+

@@ -11,6 +11,7 @@ dependencies:
     - field.field.project.project.field_apartments_count
     - field.field.project.project.field_application_end_time
     - field.field.project.project.field_application_start_time
+    - field.field.project.project.field_attachments
     - field.field.project.project.field_building_type
     - field.field.project.project.field_city
     - field.field.project.project.field_debt_free_sales_prices
@@ -25,6 +26,7 @@ dependencies:
     - field.field.project.project.field_project_area_description
     - field.field.project.project.field_project_description
     - field.field.project.project.field_services
+    - field.field.project.project.field_services_url
     - field.field.project.project.field_site_owner
     - field.field.project.project.field_site_renter
     - field.field.project.project.field_street_address
@@ -100,6 +102,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_attachments:
+    weight: 28
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   field_building_type:
     weight: 20
@@ -211,6 +220,13 @@ content:
   field_services:
     weight: 18
     label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_services_url:
+    weight: 29
+    label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
