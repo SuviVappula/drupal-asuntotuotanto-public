@@ -1,0 +1,20 @@
+uuid: 2e500cb1-3411-45d8-8f35-6d89c3b35a42
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: apartment.field_floor
+field_name: field_floor
+entity_type: apartment
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

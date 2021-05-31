@@ -1,0 +1,21 @@
+uuid: 05dd75b5-da76-434a-9cc9-e02ee4f65e8a
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: project.field_debt_free_sales_prices
+field_name: field_debt_free_sales_prices
+entity_type: project
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

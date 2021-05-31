@@ -1,0 +1,21 @@
+uuid: 5e38a55d-c2fe-4330-a245-db1368325993
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+    - options
+id: apartment.field_attachments
+field_name: field_attachments
+entity_type: apartment
+type: list_string
+settings:
+  allowed_values: {  }
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

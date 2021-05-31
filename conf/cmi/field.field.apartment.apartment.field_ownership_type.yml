@@ -1,0 +1,20 @@
+uuid: 3857a93f-9c6e-4657-b340-3aed20abb12a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_ownership_type
+  module:
+    - external_entities
+id: apartment.apartment.field_ownership_type
+field_name: field_ownership_type
+entity_type: apartment
+bundle: apartment
+label: 'Ownership type'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

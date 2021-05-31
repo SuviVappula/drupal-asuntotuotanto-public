@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Response for application request.
  */
-class ApartmentResponse {
+class ProjectApartmentsResponse {
 
   /**
    * Aparments array.
@@ -119,13 +119,13 @@ class ApartmentResponse {
    * @param \Psr\Http\Message\ResponseInterface $response
    *   HttpResponse.
    *
-   * @return ApartmentResponse
+   * @return ProjectApartmentsResponse
    *   Apartment response.
    *
    * @throws \Exception
    *    Apartments not found.
    */
-  public static function createFromHttpResponse(ResponseInterface $response): ApartmentResponse {
+  public static function createFromHttpResponse(ResponseInterface $response): ProjectApartmentsResponse {
     $responseContent = json_decode($response->getBody()->getContents(), TRUE);
     $content = $responseContent['hits']['hits'];
     if (empty($content)) {

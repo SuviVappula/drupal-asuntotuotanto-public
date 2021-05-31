@@ -1,0 +1,21 @@
+uuid: 137b1361-4c70-4ee4-b7af-19e34098751e
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: project.field_application_end_time
+field_name: field_application_end_time
+entity_type: project
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

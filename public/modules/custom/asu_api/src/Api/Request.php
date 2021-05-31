@@ -41,6 +41,8 @@ abstract class Request {
    * @return array
    *   The request.
    */
-  abstract public function toArray(): array;
+  public function toArray(): array {
+    return [];
+  }
 
 }

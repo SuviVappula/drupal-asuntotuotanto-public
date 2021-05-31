@@ -1,0 +1,21 @@
+uuid: 450945b6-beb0-4e56-9e32-06a927a57f9c
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: project.field_apartment_sales_prices
+field_name: field_apartment_sales_prices
+entity_type: project
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,24 @@
+uuid: 6e4d468a-17bc-4bb4-aa3f-842d71746092
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_living_area
+  module:
+    - external_entities
+id: apartment.apartment.field_living_area
+field_name: field_living_area
+entity_type: apartment
+bundle: apartment
+label: 'Living area'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float
