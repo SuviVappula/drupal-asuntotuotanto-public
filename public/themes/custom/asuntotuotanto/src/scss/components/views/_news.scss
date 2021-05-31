@@ -1,13 +1,14 @@
 .views__hero {
   .views--news-page-main & {
     background-color: var(--color-black-5);
-    margin: 0 -#{$spacing-l};
+    margin: 0 -#{$spacing-l} $spacing-xl;
     position: relative;
     padding: $spacing-5-xl 0 $spacing-5-xl + $spacing-m;
     overflow: hidden;
 
     @media screen and (min-width: $breakpoint-l) {
       padding: $spacing-5-xl + $spacing-m 0 $spacing-5-xl + $spacing-xl;
+      margin: 0 -#{$spacing-l} $spacing-4-xl;
     }
 
     > h1 {
@@ -31,6 +32,55 @@
       position: absolute;
       transform: scale(2.5);
       z-index: 2;
+    }
+  }
+}
+
+.views--news-attachment {
+  & + & {
+    margin-top: $spacing-xl;
+  }
+
+  > h2 {
+    @include font-size($fontsize-heading-m, 29px);
+    font-weight: $font-weight-bold;
+    color: var(--color-black-90);
+    margin-top: 0;
+    margin-bottom: $spacing-m;
+
+    @media screen and (min-width: $breakpoint-l) {
+      @include font-size($fontsize-heading-l, 43px);
+      margin-bottom: $spacing-l;
+    }
+  }
+
+  .hds-button {
+    margin-top: $spacing-l;
+
+    @media screen and (min-width: $breakpoint-l) {
+      margin-bottom: $spacing-xl;
+    }
+  }
+}
+
+.news-listing {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  @media screen and (min-width: $breakpoint-l) {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 20px;
+  }
+}
+
+.news-listing__item {
+  & + & {
+    margin-top: $spacing-l;
+
+    @media screen and (min-width: $breakpoint-l) {
+      margin-top: 0;
     }
   }
 }

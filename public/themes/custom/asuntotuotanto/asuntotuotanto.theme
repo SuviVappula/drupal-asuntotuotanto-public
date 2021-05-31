@@ -125,9 +125,29 @@ function asuntotuotanto_preprocess_views_view(&$variables) {
 
   switch ($view_id) {
     case 'news':
+      if ($more_link = $variables['more']) {
+        $variables['more_link'] = ['url' => $more_link['#url'], 'title' => $more_link['#title']];
+      }
+
       if ($view->current_display === 'news_page_main') {
         $variables['page_title'] = $view->getTitle();
       }
       break;
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_container_alter().
+ */
+function asuntotuotanto_theme_suggestions_container_alter(&$suggestions, array $variables) {
+  $element = $variables['element'];
+
+  if (isset($element['#type']) && $element['#type'] == 'view') {
+    $suggestions[] = 'container__' . $element['#name'];
+    $suggestions[] = 'container__' . $element['#name'] . '__' . $element['#display_id'];
+  }
+
+  if (isset($element['#type']) && $element['#type'] == 'container' && isset($element['children']['#type'])) {
+    $suggestions[] = 'container__' . $element['children']['#type'];
   }
 }
