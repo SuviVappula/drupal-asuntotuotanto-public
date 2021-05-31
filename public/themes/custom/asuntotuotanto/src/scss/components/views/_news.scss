@@ -1,5 +1,8 @@
 .views__hero {
-  .views--news-page-main & {
+  .views--news-page-main &,
+  .views--news-page-haso &,
+  .views--news-page-hitas &,
+  .views--news-page-common & {
     background-color: var(--color-black-5);
     margin: 0 -#{$spacing-l} $spacing-xl;
     position: relative;
@@ -72,6 +75,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 20px;
+    grid-row-gap: $spacing-l;
   }
 }
 

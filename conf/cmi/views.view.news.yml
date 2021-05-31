@@ -8,9 +8,9 @@ dependencies:
     - node.type.news
     - taxonomy.vocabulary.news_category
   content:
-    - 'taxonomy_term:news_category:1926a9bf-0262-4e51-b3e3-ee0379288ad8'
-    - 'taxonomy_term:news_category:7e172cf5-2d7a-42fb-bfe9-bc3a31ff1c6c'
-    - 'taxonomy_term:news_category:97bb9d26-116f-4661-a7e5-86bf0e7c9586'
+    - 'taxonomy_term:news_category:4e8a51e7-cf71-4d2e-9ab0-20fcb47ad0a8'
+    - 'taxonomy_term:news_category:dc48df98-6805-482a-9ee3-9adf86b1b555'
+    - 'taxonomy_term:news_category:f35fe819-f0bb-4b2c-8461-1762ee462ac7'
   module:
     - node
     - taxonomy
@@ -870,15 +870,55 @@ display:
       defaults:
         filters: false
         filter_groups: false
+        title: false
+        empty: false
+        pager: false
       filter_groups:
         operator: AND
         groups:
           1: AND
+      title: 'Common news'
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content:
+            value: '<p>No news content available.</p>'
+            format: full_html
+          plugin_id: text
+      pager:
+        type: full
+        options:
+          items_per_page: 12
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: '‹ Previous'
+            next: 'Next ›'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url.query_args
         - user
         - 'user.node_grants:view'
         - user.permissions
@@ -1011,15 +1051,55 @@ display:
       defaults:
         filters: false
         filter_groups: false
+        title: false
+        empty: false
+        pager: false
       filter_groups:
         operator: AND
         groups:
           1: AND
+      title: 'HASO news'
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content:
+            value: '<p>No news content available.</p>'
+            format: full_html
+          plugin_id: text
+      pager:
+        type: full
+        options:
+          items_per_page: 12
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: '‹ Previous'
+            next: 'Next ›'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url.query_args
         - user
         - 'user.node_grants:view'
         - user.permissions
@@ -1151,15 +1231,55 @@ display:
       defaults:
         filters: false
         filter_groups: false
+        title: false
+        empty: false
+        pager: false
       filter_groups:
         operator: AND
         groups:
           1: AND
+      title: 'HITAS news'
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content:
+            value: '<p>No news content available.</p>'
+            format: full_html
+          plugin_id: text
+      pager:
+        type: full
+        options:
+          items_per_page: 12
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: '‹ Previous'
+            next: 'Next ›'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url.query_args
         - user
         - 'user.node_grants:view'
         - user.permissions
@@ -1290,6 +1410,7 @@ display:
         title: false
         style: false
         row: false
+        empty: false
       filter_groups:
         operator: AND
         groups:
@@ -1312,6 +1433,7 @@ display:
         options:
           relationship: none
           view_mode: teaser_prominent
+      empty: {  }
     cache_metadata:
       max-age: -1
       contexts:
