@@ -29,6 +29,10 @@
   }
 }
 
+.news-teaser__summary {
+  margin-bottom: $spacing-s;
+}
+
 .news-teaser__more-link {
   @include font-size($fontsize-body-m, 26px);
   font-weight: $font-weight-bold;

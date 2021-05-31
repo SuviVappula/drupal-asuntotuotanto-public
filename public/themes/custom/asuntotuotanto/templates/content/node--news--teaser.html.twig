@@ -100,6 +100,10 @@
     <a href="{{ url }}" rel="bookmark">{{ label }}</a>
   </h2>
 
+  <div class="news-teaser__summary">
+    {{ summary|striptags }}
+  </div>
+
   {{ link('Read more'|t , 'internal:' ~ url, {'class': 'news-teaser__more-link'}) }}
 
 </article>

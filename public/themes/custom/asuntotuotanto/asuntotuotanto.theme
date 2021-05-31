@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Url;
+use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Helper function to get the icons path.
@@ -149,5 +150,39 @@ function asuntotuotanto_theme_suggestions_container_alter(&$suggestions, array $
 
   if (isset($element['#type']) && $element['#type'] == 'container' && isset($element['children']['#type'])) {
     $suggestions[] = 'container__' . $element['children']['#type'];
+  }
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function asuntotuotanto_preprocess_node(&$variables) {
+  $node  = \Drupal\node\Entity\Node::load($variables['node']->id());
+
+  if ($node->field_content && !empty($node->field_content->getValue())) {
+
+    foreach ($node->field_content->getValue() as $value) {
+      $paragraph = FALSE;
+
+      if (!empty($value['entity'])) {
+        $paragraph = $value['entity'];
+      } elseif (!empty($value['target_id'])) {
+        $paragraph = Paragraph::load($value['target_id']);
+      }
+
+      if (!empty($paragraph) && $paragraph instanceof Paragraph) {
+        if ($paragraph->type->getValue()[0]["target_id"] === "text") {
+          $text = strip_tags($paragraph->get('field_text')->value);
+          $text = str_replace(array("\r", "\n"), ' ', $text);
+
+          if (strlen($text) > 80) {
+            $text = rtrim(substr($text, 0, 80)) . "...";
+          }
+
+          $variables['summary'] = $text;
+          break;
+        }
+      }
+    }
   }
 }
