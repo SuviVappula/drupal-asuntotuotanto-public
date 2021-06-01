@@ -30,12 +30,12 @@ class ApplicantWidget extends WidgetBase {
     $element['has_additional_applicant'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Add additional applicant'),
-      '#attributes' => ['id' => 'has-additional-applicant']
+      '#attributes' => ['id' => 'has-additional-applicant'],
     ];
 
     $element['applicant_prefix'] = [
       '#type' => 'markup',
-      '#markup' => '<div id="applicant-wrapper">'
+      '#markup' => '<div id="applicant-wrapper">',
     ];
 
     $element['first_name'] = [
@@ -74,15 +74,15 @@ class ApplicantWidget extends WidgetBase {
     ];
 
     $element['City'] = [
-      '#type' => 'email',
-      '#title' => $this->t('city'),
+      '#type' => 'textfield',
+      '#title' => $this->t('City'),
       '#size' => 50,
       '#default_value' => isset($items->getValue()[$delta]['city']) ? $items->getValue()[$delta]['city'] : '',
     ];
 
     $element['Phone number'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('phone_number'),
+      '#title' => $this->t('Phone number'),
       '#size' => 20,
       '#default_value' => isset($items->getValue()[$delta]['phone_number']) ? $items->getValue()[$delta]['phone_number'] : '',
     ];
@@ -96,7 +96,7 @@ class ApplicantWidget extends WidgetBase {
 
     $element['applicant_suffix'] = [
       '#type' => 'markup',
-      '#markup' => '</div>'
+      '#markup' => '</div>',
     ];
 
     return $element;
