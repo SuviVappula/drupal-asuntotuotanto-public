@@ -173,7 +173,7 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
     $fields['applicant'] = BaseFieldDefinition::create('asu_applicant')
       ->setLabel(t('Applicants'))
       ->setDescription(t('Basic information of the people who are part of the application'))
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setCardinality(1)
       ->setDisplayOptions('form', [
         'type' => 'asu_applicant_widget',
         'weight' => 5,

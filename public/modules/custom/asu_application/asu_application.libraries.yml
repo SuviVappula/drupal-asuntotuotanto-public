@@ -1,0 +1,8 @@
+additional-applicant:
+  version: 1.0
+  js:
+    js/additional_applicant.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
