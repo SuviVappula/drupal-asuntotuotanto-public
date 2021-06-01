@@ -329,7 +329,13 @@ function asuntotuotanto_preprocess_node(&$variables) {
           $text = str_replace(array("\r", "\n"), ' ', $text);
 
           if (strlen($text) > 80) {
-            $text = rtrim(substr($text, 0, 80)) . "...";
+            if ($variables['view_mode'] === 'teaser_prominent') {
+              if (strlen($text) > 230) {
+                $text = rtrim(substr($text, 0, 230)) . "...";
+              }
+            } else {
+              $text = rtrim(substr($text, 0, 80)) . "...";
+            }
           }
 
           $variables['summary'] = $text;

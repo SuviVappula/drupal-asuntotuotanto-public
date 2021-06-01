@@ -1,3 +1,11 @@
+.news-liftup {
+  margin-bottom: $spacing-xl;
+
+  @media screen and (min-width: $breakpoint-l) {
+    margin-bottom: $spacing-4-xl;
+  }
+}
+
 .views__hero {
   .views--news-page-main &,
   .views--news-page-haso &,
