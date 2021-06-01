@@ -1,0 +1,20 @@
+uuid: e620e273-403d-4ea6-a752-bed286d6a860
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_project_area_description
+  module:
+    - external_entities
+id: apartment.apartment.field_project_area_description
+field_name: field_project_area_description
+entity_type: apartment
+bundle: apartment
+label: 'Project area description'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

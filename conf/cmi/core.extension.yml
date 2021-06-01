@@ -1,6 +1,7 @@
 module:
   address: 0
   admin_toolbar: 0
+  admin_toolbar_tools: 0
   aet: 0
   api_tools: 0
   asu_apartment_search: 0
@@ -18,6 +19,7 @@ module:
   config: 0
   config_filter: 0
   config_ignore: 0
+  config_replace: 0
   config_translation: 0
   config_update: 0
   context: 0
@@ -33,12 +35,15 @@ module:
   email_registration: 0
   entity: 0
   entity_reference_revisions: 0
+  external_entities: 0
   features: 0
   field: 0
+  field_group: 0
   field_ui: 0
   file: 0
   filter: 0
   focal_point: 0
+  gdpr_compliance: 0
   gin_toolbar: 0
   hal: 0
   hdbt_admin_editorial: 0

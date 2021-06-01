@@ -1,0 +1,20 @@
+uuid: f5338038-ff53-4c0b-8a6c-f9d5635adba4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_estimated_completion_date
+  module:
+    - external_entities
+id: project.project.field_estimated_completion_date
+field_name: field_estimated_completion_date
+entity_type: project
+bundle: project
+label: 'Estimated completion date'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,21 @@
+uuid: ddbc60d6-7a04-45f6-8376-4e48e32dc383
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_services_url
+  module:
+    - external_entities
+    - options
+id: apartment.apartment.field_services_url
+field_name: field_services_url
+entity_type: apartment
+bundle: apartment
+label: 'Services url'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

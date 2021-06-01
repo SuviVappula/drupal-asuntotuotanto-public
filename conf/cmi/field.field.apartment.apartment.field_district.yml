@@ -1,0 +1,20 @@
+uuid: a1afe626-208e-4b70-978b-d7b7e42261f8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_district
+  module:
+    - external_entities
+id: apartment.apartment.field_district
+field_name: field_district
+entity_type: apartment
+bundle: apartment
+label: District
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

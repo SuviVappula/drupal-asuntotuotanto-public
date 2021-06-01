@@ -1,0 +1,18 @@
+uuid: d2a1ac95-eb6b-476f-a777-be270393de05
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: apartment.field_living_area
+field_name: field_living_area
+entity_type: apartment
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

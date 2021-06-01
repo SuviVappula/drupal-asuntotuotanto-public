@@ -1,0 +1,20 @@
+uuid: 0f1a5a28-726e-47e8-88ce-38a7ecd062a6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_ownership_type
+  module:
+    - external_entities
+id: project.project.field_ownership_type
+field_name: field_ownership_type
+entity_type: project
+bundle: project
+label: 'Ownership type'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

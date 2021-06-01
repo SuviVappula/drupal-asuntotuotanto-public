@@ -1,0 +1,20 @@
+uuid: 02d9cd8a-c5ce-481f-afe2-ad1ffcc58a5a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_building_type
+  module:
+    - external_entities
+id: project.project.field_building_type
+field_name: field_building_type
+entity_type: project
+bundle: project
+label: 'Building type'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

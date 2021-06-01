@@ -1,0 +1,20 @@
+uuid: 7f82bfe9-dedd-4ac4-9c3f-a8eba92d66cd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_energy_class
+  module:
+    - external_entities
+id: apartment.apartment.field_energy_class
+field_name: field_energy_class
+entity_type: apartment
+bundle: apartment
+label: 'Energy class'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

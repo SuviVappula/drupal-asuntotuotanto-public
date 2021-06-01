@@ -1,0 +1,20 @@
+uuid: 4d5e3d8e-e424-49ba-bd67-0923c90d121a
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: project.field_apartments_count
+field_name: field_apartments_count
+entity_type: project
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

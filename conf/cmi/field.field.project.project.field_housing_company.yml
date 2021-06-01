@@ -1,0 +1,20 @@
+uuid: 4de51263-4045-4ce5-9f73-43e61d0dc9e4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_housing_company
+  module:
+    - external_entities
+id: project.project.field_housing_company
+field_name: field_housing_company
+entity_type: project
+bundle: project
+label: 'Housing company'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

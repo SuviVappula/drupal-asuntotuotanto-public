@@ -1,0 +1,20 @@
+uuid: 33bf5242-0551-4186-bb2b-f5551d85627d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_accessibility
+  module:
+    - external_entities
+id: project.project.field_accessibility
+field_name: field_accessibility
+entity_type: project
+bundle: project
+label: Accessibility
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,20 @@
+uuid: 08e285fc-0792-4507-8959-7f44cd00896a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_apartment_sales_prices
+  module:
+    - external_entities
+id: project.project.field_apartment_sales_prices
+field_name: field_apartment_sales_prices
+entity_type: project
+bundle: project
+label: 'Apartment sales prices'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

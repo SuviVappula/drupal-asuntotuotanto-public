@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\asu_rest;
+namespace Drupal\asu_application;
 
 /**
  * Handles applications.
@@ -75,7 +75,7 @@ class Applications {
   }
 
   /**
-   * Get applications.
+   * Get applications for all projects.
    *
    * @return array
    *   Array of apartment ids by project.
@@ -95,6 +95,34 @@ class Applications {
   }
 
   /**
+   * Get applications for single project.
+   *
+   * @param int|string
+   *   Id of the project.
+   *
+   * @return array
+   *   Array of apartment ids by project.
+   */
+  public function getApartmentApplicationStatusesForProject($id): array {
+    if (empty($this->applications)) {
+      return [];
+    }
+
+    $applicationsForProject = [];
+
+    /** @var \Drupal\asu_application\Entity\Application $application */
+    foreach ($this->applications as $application) {
+      if ($application->getProjectId() == $id) {
+        $applicationsForProject[] = $application;
+      }
+    }
+
+    $this->applications = $applicationsForProject;
+
+    return $this->getApartmentApplicationStatuses();
+  }
+
+  /**
    * Get apartment applications.
    */
   public function getApartmentApplications() {
@@ -104,10 +132,6 @@ class Applications {
     $applications = [];
 
     /** @var \Drupal\asu_application\Entity\Application $application */
-    foreach ($this->applications as $application) {
-      $apartmentIds = $application->getApartmentIds();
-      $applications = array_merge($applications, $apartmentIds);
-    }
     foreach ($this->applications as $application) {
       $apartmentIds = $application->getApartmentIds();
       $applications = array_merge($applications, $apartmentIds);
@@ -128,9 +152,11 @@ class Applications {
     $counts = array_count_values($applications);
 
     $applicationStatuses = [];
+
     foreach ($counts as $key => $count) {
       $applicationStatuses[$key] = $this::resolveApplicationCountEnum($count);
     }
+
     return $applicationStatuses;
   }
 

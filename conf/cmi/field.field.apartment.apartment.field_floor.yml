@@ -1,0 +1,24 @@
+uuid: dd7a6457-fb04-4f10-9ca5-fe70eac3d42a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_floor
+  module:
+    - external_entities
+id: apartment.apartment.field_floor
+field_name: field_floor
+entity_type: apartment
+bundle: apartment
+label: Floor
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

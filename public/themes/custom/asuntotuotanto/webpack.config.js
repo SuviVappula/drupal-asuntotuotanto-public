@@ -14,8 +14,16 @@ module.exports = {
   entry: {
     styles: ["./src/scss/styles.scss"],
     bundle: glob.sync("./src/js/**/*.js", {
-      ignore: ["./src/js/user-tools.js"],
+      ignore: [
+        "./src/js/sticky-navigation.js",
+        "./src/js/apartments-list-item-toggle.j",
+        "./src/js/showcase-gallery.js",
+        "./src/js/user-tools.js",
+      ],
     }),
+    stickyNavigation: ["./src/js/sticky-navigation.js"],
+    apartmentsListItemToggle: ["./src/js/apartments-list-item-toggle.js"],
+    showcaseGallery: ["./src/js/showcase-gallery.js"],
     userToolsNavigation: ["./src/js/user-tools.js"],
   },
   output: {
