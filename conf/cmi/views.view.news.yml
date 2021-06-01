@@ -8,9 +8,9 @@ dependencies:
     - node.type.news
     - taxonomy.vocabulary.news_category
   content:
-    - 'taxonomy_term:news_category:4e8a51e7-cf71-4d2e-9ab0-20fcb47ad0a8'
-    - 'taxonomy_term:news_category:dc48df98-6805-482a-9ee3-9adf86b1b555'
-    - 'taxonomy_term:news_category:f35fe819-f0bb-4b2c-8461-1762ee462ac7'
+    - 'taxonomy_term:news_category:a288e575-4bdb-49a9-acd0-2b8139c3796b'
+    - 'taxonomy_term:news_category:e00bfdaa-ad8c-4e8e-a245-9857aa377b8d'
+    - 'taxonomy_term:news_category:f129e3de-c0d4-47db-ab60-ce11e9d5ed1a'
   module:
     - node
     - taxonomy
@@ -365,7 +365,7 @@ display:
           items_per_page: 4
           offset: 0
       use_more: true
-      use_more_always: true
+      use_more_always: false
       use_more_text: 'Show more'
       link_display: news_page_common
       link_url: ''
@@ -539,7 +539,7 @@ display:
           items_per_page: 4
           offset: 0
       use_more: true
-      use_more_always: true
+      use_more_always: false
       use_more_text: 'Show more'
       link_display: news_page_haso
       link_url: ''
@@ -713,7 +713,7 @@ display:
           items_per_page: 4
           offset: 0
       use_more: true
-      use_more_always: true
+      use_more_always: false
       use_more_text: 'Show more'
       link_display: news_page_hitas
       link_url: ''
