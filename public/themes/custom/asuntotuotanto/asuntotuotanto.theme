@@ -341,6 +341,27 @@ function asuntotuotanto_preprocess_node(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_HOOK().
+ */
+function asuntotuotanto_preprocess_pager(&$variables) {
+  // Cast current to be INT instead of FLOAT.
+  $variables['current'] = isset($variables['current']) ? (int) $variables['current'] : 1;
+
+  // Check for last pager item href link.
+  if (!empty($variables['items']['last']['href'])) {
+    $splittedLink = explode("page=", $variables['items']['last']['href'])[1];
+    $variables['pager_total_amount'] = (int) $splittedLink + 1;
+  }
+  else {
+    if (!empty($variables['items']['pages'])) {
+      $lastArrayItem = end($variables['items']['pages'])['href'];
+      $splittedLink = explode("page=", $lastArrayItem)[1];
+      $variables['pager_total_amount'] = (int) $splittedLink + 1;
+    }
+  }
+}
+
+/**
  * Custom function format_date_to_unix_timestamp().
  */
 function format_date_to_unix_timestamp($string) {
