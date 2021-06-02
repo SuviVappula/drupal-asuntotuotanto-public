@@ -7,7 +7,6 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\user\EntityOwnerInterface;
 use Drupal\user\EntityOwnerTrait;
 
@@ -173,7 +172,7 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
     $fields['applicant'] = BaseFieldDefinition::create('asu_applicant')
       ->setLabel(t('Applicants'))
       ->setDescription(t('Basic information of the people who are part of the application'))
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setCardinality(1)
       ->setDisplayOptions('form', [
         'type' => 'asu_applicant_widget',
         'weight' => 5,

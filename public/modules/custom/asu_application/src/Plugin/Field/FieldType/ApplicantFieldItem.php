@@ -26,20 +26,49 @@ class ApplicantFieldItem extends FieldItemBase implements FieldItemInterface {
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
     return [
       'columns' => [
-        'name' => [
+        'first_name' => [
           'type' => 'varchar',
-          'length' => 255,
+          'length' => 100,
           'default' => '',
-          // 'not_null' => FALSE,
+        ],
+        'last_name' => [
+          'type' => 'varchar',
+          'length' => 100,
+          'default' => '',
+        ],
+        'date_of_birth' => [
+          'type' => 'varchar',
+          'length' => 30,
+          'default' => '',
+        ],
+        'address' => [
+          'type' => 'varchar',
+          'length' => 100,
+          'default' => '',
+        ],
+        'postal_code' => [
+          'type' => 'varchar',
+          'length' => 10,
+          'default' => '',
+        ],
+        'city' => [
+          'type' => 'varchar',
+          'length' => 100,
+          'default' => '',
+        ],
+        'phone' => [
+          'type' => 'varchar',
+          'length' => 20,
+          'default' => '',
         ],
         'email' => [
           'type' => 'varchar',
           'length' => 255,
           'default' => '',
-          // 'not_null' => FALSE,
         ],
       ],
     ];
+
   }
 
   /**
@@ -47,8 +76,27 @@ class ApplicantFieldItem extends FieldItemBase implements FieldItemInterface {
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $properties = [];
-    $properties['name'] = DataDefinition::create('string')
-      ->setLabel(t('Name'));
+    $properties['first_name'] = DataDefinition::create('string')
+      ->setLabel(t('First name'));
+
+    $properties['last_name'] = DataDefinition::create('string')
+      ->setLabel(t('Last name'));
+
+    $properties['date_of_birth'] = DataDefinition::create('datetime_iso8601')
+      ->setLabel(t('Date value'));
+
+    $properties['street_address'] = DataDefinition::create('string')
+      ->setLabel(t('Street address'));
+
+    $properties['postal_code'] = DataDefinition::create('string')
+      ->setLabel(t('postal_code'));
+
+    $properties['city'] = DataDefinition::create('string')
+      ->setLabel(t('city'));
+
+    $properties['phone_number'] = DataDefinition::create('string')
+      ->setLabel(t('Phone number'));
+
     $properties['email'] = DataDefinition::create('email')
       ->setLabel(t('Email address'));
     return $properties;
