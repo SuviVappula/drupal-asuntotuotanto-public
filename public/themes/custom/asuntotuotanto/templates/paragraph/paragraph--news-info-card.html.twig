@@ -41,7 +41,7 @@
 {%
   set classes = [
   'news-info-card',
-  view_mode ? 'text--' ~ view_mode|clean_class,
+  view_mode ? 'news-info-card--' ~ view_mode|clean_class,
   not paragraph.isPublished() ? 'news-info-card--unpublished'
 ]
 %}
@@ -57,13 +57,24 @@
 
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-    <div class="news-info-card__image">
+    <figure class="news-info-card__image">
       {{ image }}
-    </div>
+    </figure>
     <div class="news-info-card__content">
       <h2 class="news-info-card__title">{{ title }}</h2>
       <p class="news-info-card__description">{{ text }}</p>
-      {{ link(link_title, link_url, { 'target': link_target, 'class': ['news-info-card__link', is_link_external ? 'is-external'] } ) }}
+      {% if link_url|render %}
+        {% include '@asuntotuotanto/button/button.html.twig' with {
+          type: 'secondary',
+          disabled: false,
+          label: link_title,
+          href: link_url,
+          target: link_target,
+          is_external: is_link_external,
+          size: 'small'
+          }
+        %}
+      {% endif %}
     </div>
   </div>
 {% endblock paragraph %}
