@@ -1,0 +1,20 @@
+uuid: d14d65ea-56fc-48e6-9cbb-f6b8feb87c9e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_address
+  module:
+    - external_entities
+id: apartment.apartment.field_address
+field_name: field_address
+entity_type: apartment
+bundle: apartment
+label: Address
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

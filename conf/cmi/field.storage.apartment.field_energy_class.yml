@@ -1,0 +1,21 @@
+uuid: deb6a673-e5a9-4248-a5cb-d2b31b7b8b90
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: apartment.field_energy_class
+field_name: field_energy_class
+entity_type: apartment
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

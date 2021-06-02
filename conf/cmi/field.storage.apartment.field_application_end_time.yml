@@ -1,0 +1,21 @@
+uuid: 003b5c47-fe41-45fd-b895-99545c6fe529
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: apartment.field_application_end_time
+field_name: field_application_end_time
+entity_type: apartment
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

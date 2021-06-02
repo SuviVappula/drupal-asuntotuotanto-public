@@ -1,0 +1,20 @@
+uuid: fb2a2cb1-fc96-4888-b580-2ff5889fcb96
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_site_renter
+  module:
+    - external_entities
+id: apartment.apartment.field_site_renter
+field_name: field_site_renter
+entity_type: apartment
+bundle: apartment
+label: 'Site renter'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

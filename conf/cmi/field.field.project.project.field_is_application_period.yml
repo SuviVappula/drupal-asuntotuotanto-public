@@ -1,0 +1,24 @@
+uuid: 644d9055-9fe5-4f81-835a-f88a933ce235
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_is_application_period
+  module:
+    - external_entities
+id: project.project.field_is_application_period
+field_name: field_is_application_period
+entity_type: project
+bundle: project
+label: 'Is application period'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

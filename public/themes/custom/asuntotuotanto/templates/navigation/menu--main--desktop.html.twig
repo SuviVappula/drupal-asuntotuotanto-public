@@ -24,36 +24,43 @@
   We call a macro which calls itself to render the full tree.
   @see https://twig.symfony.com/doc/1.x/tags/macro.html
 #}
-{{ menus.menu_links(items, attributes, 0) }}
+{{ menus.menu_links(items, attributes, 0, 'main-menu') }}
 
-{% macro menu_links(items, attributes, menu_level) %}
+{% macro menu_links(items, attributes, menu_level, menu_type) %}
   {% import _self as menus %}
+
+  {% set menu_classes = ['menu', 'menu--' ~ menu_type ,'is-desktop'] %}
+
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes.addClass('menu', 'menu--main') }}>
+      <ul{{ attributes.addClass(menu_classes) }}>
     {% else %}
-      <ul class="sub-menu is-level--{{ menu_level }}">
+      <div class="sub-menu-container">
+        <ul class="sub-menu is-level--{{ menu_level }} wrapper wrapper--mw-1200" aria-hidden="true">
     {% endif %}
     {% for item in items %}
-      <li{{ item.attributes.addClass(menu_level == 0 ? 'menu__item' : 'sub-menu__item', item.in_active_trail ? 'is-active') }}>
-        {%
-          set menuLinkClasses = [
-            menu_level == 0 ? 'menu__link' : 'sub-menu__link',
-            item.in_active_trail ? 'is-active',
-          ]
-        %}
-        {{ link(item.title, item.url, { 'class': menuLinkClasses }) }}
+      {% set item_classes = [
+        menu_level == 0 ? 'menu__item' : 'sub-menu__item',
+        item.is_nolink ? 'is-nolink',
+        item.is_external ? 'is-external',
+        item.is_login_link ? 'is-login-link',
+        item.is_user_tools ? 'is-user-tools',
+      ]%}
+
+      {% set item_attributes = item.attributes ?: create_attribute() %}
+
+      <li{{ item_attributes.addClass(item_classes) }}>
+        {{ link(item.title, item.url, {'class': item.in_active_trail ? 'is-active'}) }}
         {% if item.below %}
-          {% if menu_level == 0 %}
-            <div class="menu__dropdown js-menu__dropdown is-hidden" aria-hidden="true">
-          {% endif %}
-            {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
-          {% if menu_level == 0 %}
-            </div>
-          {% endif %}
+          {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
         {% endif %}
       </li>
     {% endfor %}
-    </ul>
+    {% if menu_level == 0 %}
+      </ul>
+    {% else %}
+        </ul>
+      </div>
+    {% endif %}
   {% endif %}
 {% endmacro %}

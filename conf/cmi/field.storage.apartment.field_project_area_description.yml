@@ -1,0 +1,21 @@
+uuid: 4179abdd-9f13-4234-b60e-cd3e5ded0de4
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: apartment.field_project_area_description
+field_name: field_project_area_description
+entity_type: apartment
+type: string
+settings:
+  max_length: 999
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

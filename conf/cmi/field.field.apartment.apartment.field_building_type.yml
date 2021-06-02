@@ -1,0 +1,20 @@
+uuid: e6186b7f-dfeb-4832-ad40-bc1e810e7ed5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_building_type
+  module:
+    - external_entities
+id: apartment.apartment.field_building_type
+field_name: field_building_type
+entity_type: apartment
+bundle: apartment
+label: 'Building type'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

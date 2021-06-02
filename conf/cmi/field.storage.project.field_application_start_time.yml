@@ -1,0 +1,21 @@
+uuid: 23cf3281-0dd7-4c9f-85c3-1d5f5ad60a58
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: project.field_application_start_time
+field_name: field_application_start_time
+entity_type: project
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

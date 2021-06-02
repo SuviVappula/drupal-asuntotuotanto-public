@@ -36,7 +36,7 @@ class FilterService {
    * @throws \Drupal\asu_api\Exception\ApplicationRequestException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function getFilters(FilterRequest $filterRequest) {
+  public function getFilters(FilterRequest $filterRequest): FilterResponse {
     $httpRequest = $this->requestHandler->buildRequest($filterRequest);
     $response = $this->requestHandler->send($httpRequest);
     return FilterResponse::createFromHttpResponse($response);

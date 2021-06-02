@@ -1,0 +1,23 @@
+uuid: aafd29b7-2d59-42a5-a2a1-bafcb17d72c9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_images
+  module:
+    - external_entities
+    - link
+id: apartment.apartment.field_images
+field_name: field_images
+entity_type: apartment
+bundle: apartment
+label: Images
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 0
+field_type: link

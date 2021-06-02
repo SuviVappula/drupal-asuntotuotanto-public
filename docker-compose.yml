@@ -11,6 +11,7 @@ services:
       - ssh:/tmp/druid_ssh-agent:ro
     environment:
       APP_ENV: "${APP_ENV:-dev}"
+      ASKO_ADDRESS: "test@test.fi"
       DRUPAL_ROUTES: "https://varnish-${DRUPAL_HOSTNAME}"
       DRUSH_OPTIONS_URI: "https://${DRUPAL_HOSTNAME}"
       #XDEBUG_ENABLE: "true"

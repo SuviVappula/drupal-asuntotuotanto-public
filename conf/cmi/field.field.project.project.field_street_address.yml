@@ -1,0 +1,20 @@
+uuid: f056fcea-465a-46cc-ac51-5898ec1b3043
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_street_address
+  module:
+    - external_entities
+id: project.project.field_street_address
+field_name: field_street_address
+entity_type: project
+bundle: project
+label: 'Street address'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

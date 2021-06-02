@@ -1,0 +1,20 @@
+uuid: 448c9c24-c9d6-4e1a-895d-434e41cac3f9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_accessibility
+  module:
+    - external_entities
+id: apartment.apartment.field_accessibility
+field_name: field_accessibility
+entity_type: apartment
+bundle: apartment
+label: Accessibility
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

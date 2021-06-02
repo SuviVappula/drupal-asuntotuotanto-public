@@ -1,0 +1,21 @@
+uuid: 8a295c85-5dda-4c3a-b73b-ec5e5f100f31
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: apartment.field_application_start_time
+field_name: field_application_start_time
+entity_type: apartment
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

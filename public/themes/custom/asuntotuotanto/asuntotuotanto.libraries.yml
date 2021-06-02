@@ -1,3 +1,28 @@
+showcase-gallery:
+  js:
+    dist/js/showcaseGallery.min.js: {}
+    /libraries/slick/slick/slick.min.js: { minified: true }
+  css:
+    base:
+      /libraries/slick/slick/slick.css: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+
+apartments-list-item-toggle:
+  js:
+    dist/js/apartmentsListItemToggle.min.js: {}
+
+sticky-navigation:
+  js:
+    dist/js/stickyNavigation.min.js: {}
+
+user-tools:
+  js:
+    dist/js/userToolsNavigation.min.js: {}
+  dependencies:
+    - core/jquery
+
 global-styling:
   version: 1.x
   css:
@@ -5,9 +30,9 @@ global-styling:
       dist/css/styles.min.css: {}
 
 global-scripting:
+  version: 1.x
   js:
     dist/js/bundle.min.js: {}
-  version: 1.x
   dependencies:
     - core/drupal
     - core/jquery

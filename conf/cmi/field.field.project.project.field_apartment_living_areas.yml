@@ -1,0 +1,20 @@
+uuid: 69a98794-8b23-4c64-99be-c6dbde73bdd0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_apartment_living_areas
+  module:
+    - external_entities
+id: project.project.field_apartment_living_areas
+field_name: field_apartment_living_areas
+entity_type: project
+bundle: project
+label: 'Apartment living areas'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
