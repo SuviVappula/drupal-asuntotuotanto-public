@@ -3,7 +3,9 @@
 namespace Drupal\asu_api\Api\BackendApi\Service;
 
 use Drupal\asu_api\Api\BackendApi\Request\CreateUserRequest;
+use Drupal\asu_api\Api\BackendApi\Request\UpdateUserRequest;
 use Drupal\asu_api\Api\BackendApi\Response\CreateUserResponse;
+use Drupal\asu_api\Api\BackendApi\Response\UpdateUserResponse;
 use Drupal\asu_api\Api\ServiceBase;
 
 /**
@@ -26,6 +28,12 @@ class UserService extends ServiceBase {
     $httpRequest = $this->requestHandler->buildRequest($request);
     $response = $this->requestHandler->send($httpRequest);
     return CreateUserResponse::createFromHttpResponse($response);
+  }
+
+  public function updateUser(UpdateUserRequest $request): UpdateUserResponse {
+    $httpRequest = $this->requestHandler->buildRequest($request);
+    $response = $this->requestHandler->send($httpRequest);
+    return UpdateUserResponse::createFromHttpResponse($response);
   }
 
 }
