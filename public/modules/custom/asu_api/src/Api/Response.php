@@ -11,7 +11,7 @@ abstract class Response {
 
   abstract static function createFromHttpResponse(ResponseInterface $response): Response;
 
-  public function requestOk(ResponseInterface $response): bool {
+  public static function requestOk(ResponseInterface $response): bool {
     if ($response->getStatusCode() < 200 && $response->getStatusCode() > 299) {
       throw new \Exception('Bad status code: ' . $response->getStatusCode());
     }
