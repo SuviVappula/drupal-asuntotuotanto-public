@@ -90,6 +90,8 @@
 
 <article{{ attributes.addClass(classes) }}>
 
+  {{ link('Go back to current news'|t , 'internal:/news', {'class': 'news__back-link'}) }}
+
   <p class="news__publish-date">
     <span class="visually-hidden">{{ 'Published at'|t }}</span>
     {{ node.created.value|date('d.m.Y') }}

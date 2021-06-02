@@ -1,3 +1,27 @@
+.news__back-link {
+  @include font-size($fontsize-body-m, 26px);
+  align-items: center;
+  color: var(--color-black-90);
+  display: inline-flex;
+  font-weight: $font-weight-bold;
+  margin: $spacing-m 0 $spacing-xl;
+  text-decoration: none;
+
+  @media screen and (min-width: $breakpoint-l) {
+    margin: $spacing-2-xl 0;
+  }
+
+  &:before {
+    background-image: url('../icons/angle-left.svg');
+    background-position: right;
+    background-size: 24px;
+    content: "";
+    display: inline-block;
+    height: 24px;
+    width: 18px;
+  }
+}
+
 .news__publish-date {
   @include font-size($fontsize-body-s, 26px);
   font-weight: $font-weight-regular;

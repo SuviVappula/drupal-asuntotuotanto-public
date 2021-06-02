@@ -278,10 +278,6 @@ function asuntotuotanto_preprocess_views_view(&$variables) {
 
   switch ($view_id) {
     case 'news':
-      if ($more_link = $variables['more']) {
-        $variables['more_link'] = ['url' => $more_link['#url'], 'title' => $more_link['#title']];
-      }
-
       if ($view->getTitle()) {
         $variables['page_title'] = $view->getTitle();
       }

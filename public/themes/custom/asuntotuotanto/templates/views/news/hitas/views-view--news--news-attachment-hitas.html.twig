@@ -59,12 +59,13 @@
   {{ pager }}
 
   {{ attachment_after }}
-  {% if more_link %}
+
+  {% if more %}
     {% include '@asuntotuotanto/button/button.html.twig' with {
       type: 'secondary',
       disabled: false,
-      label: more_link.title,
-      href: more_link.url,
+      label: more['#title'],
+      href: more['#url'],
       size: 'small'
       }
     %}
