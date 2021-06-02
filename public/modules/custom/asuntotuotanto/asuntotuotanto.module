@@ -4,9 +4,29 @@
  * @file
  */
 
+use Drupal\asu_api\Api\BackendApi\Request\UpdateUserRequest;
+use \Drupal\user\Entity\User;
+
 /**
  * Implements hook_entity_type_alter().
  */
 function asuntotuotanto_entity_type_alter(array &$entity_types) {
   $entity_types['user']->setFormClass('register', 'Drupal\asuntotuotanto\RegisterForm');
+}
+
+/**
+ *
+ */
+function asuntotuotanto_form_alter(&$form, &$form_state, $form_id){
+  if ($form_id == 'user_form') {
+    $form['actions']['submit']['#submit'][] = 'user_edit_submit';
+  }
+}
+
+function user_edit_submit($form, &$form_state) {
+  /** @var \Drupal\asu_api\Api\BackendApi\BackendApi $bakendApi */
+  $backendApi = \Drupal::service('asu_api.backendapi');
+  $user = User::load(\Drupal::currentUser()->id());
+  $updateRequest = new UpdateUserRequest($user);
+  $updateUserResponse = $backendApi->getUserService()->updateUser($updateRequest);
 }
