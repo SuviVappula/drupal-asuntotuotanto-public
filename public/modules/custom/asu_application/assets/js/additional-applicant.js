@@ -4,11 +4,10 @@
 
   applicantWrapper.hide();
 
-  button.click(function(){
-    if((button.prop('checked'))){
+  button.click(function() {
+    if ((button.prop('checked'))) {
       applicantWrapper.show();
-    }
-    else {
+    } else {
       applicantWrapper.hide();
     }
   });
