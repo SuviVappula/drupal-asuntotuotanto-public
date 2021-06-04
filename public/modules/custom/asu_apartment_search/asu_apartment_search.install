@@ -2,7 +2,12 @@
 
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 
-function asu_apartment_search_update_8001() {
+/**
+ * Add menu links to react application automatically.
+ *
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function asu_apartment_search_update_8003() {
   $menu_name = 'main';
 
   $hitas = MenuLinkContent::create([
@@ -22,6 +27,23 @@ function asu_apartment_search_update_8001() {
   );
 
   $hitas->save();
+
+  $hitas_second_level_main_link = MenuLinkContent::create([
+    'title' => 'Etsi asuntoa',
+    'link' => ['uri' => 'route:asu_apartment_search.hitas_content'],
+    'parent' => $hitas->getPluginId(),
+    'expanded' => TRUE,
+  ]);
+
+  $hitas_second_level_main_link->addTranslation('en', [
+      'title' => t('Search for apartment')]
+  );
+
+  $hitas_second_level_main_link->addTranslation('sv', [
+      'title' => t('Sök efter lägenhet')]
+  );
+
+  $hitas_second_level_main_link->save();
 
   $hitas_second_level = MenuLinkContent::create([
     'title' => 'Tulevia kohteita',
@@ -57,6 +79,23 @@ function asu_apartment_search_update_8001() {
   );
 
   $haso->save();
+
+  $haso_second_level_main_link = MenuLinkContent::create([
+    'title' => 'Etsi asuntoa',
+    'link' => ['uri' => 'route:asu_apartment_search.haso'],
+    'parent' => $haso->getPluginId(),
+    'expanded' => TRUE,
+  ]);
+
+  $haso_second_level_main_link->addTranslation('en', [
+      'title' => t('Search for apartment')]
+  );
+
+  $haso_second_level_main_link->addTranslation('sv', [
+      'title' => t('Sök efter lägenhet')]
+  );
+
+  $haso_second_level_main_link->save();
 
   $haso_second_level = MenuLinkContent::create([
     'title' => 'Tulevia kohteita',
