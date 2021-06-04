@@ -1,0 +1,53 @@
+label: Uutiset
+display:
+  news_attachment_common:
+    display_options:
+      use_more_text: 'Näytä lisää'
+      header:
+        area:
+          content:
+            value: "<h2>Yleiset uutiset</h2>\r\n"
+            format: full_html
+  news_attachment_haso:
+    display_options:
+      use_more_text: 'Näytä lisää'
+      header:
+        area:
+          content:
+            value: "<h2>Asumisoikeusasunnot</h2>\r\n"
+            format: full_html
+  news_attachment_hitas:
+    display_options:
+      use_more_text: 'Näytä lisää'
+      header:
+        area:
+          content:
+            value: "<h2>Omistusasunnot</h2>\r\n"
+            format: full_html
+  news_page_common:
+    display_options:
+      title: 'Yleiset uutiset'
+      empty:
+        area:
+          content:
+            value: "<p>No news content available.</p>\r\n"
+            format: full_html
+  news_page_haso:
+    display_options:
+      title: 'HASO uutiset'
+      empty:
+        area:
+          content:
+            value: "<p>No news content available.</p>\r\n"
+            format: full_html
+  news_page_hitas:
+    display_options:
+      title: 'HITAS uutiset'
+      empty:
+        area:
+          content:
+            value: "<p>No news content available.</p>\r\n"
+            format: full_html
+  news_page_main:
+    display_options:
+      title: 'Ajankohtaiset uutiset'

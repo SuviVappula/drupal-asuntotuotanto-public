@@ -12,6 +12,7 @@
         "druidfi/omen": "^0.2.0",
         "drupal/api_tools": "^1.0",
         "drupal/better_passwords": "^2.0",
+        "drupal/better_social_sharing_buttons": "^3.2",
         "drupal/config_ignore": "^2.3",
         "drupal/context": "^4.0@beta",
         "drupal/core-composer-scaffold": "^9.1",
@@ -94,6 +95,11 @@
             "drush/{$name}": [
                 "type:drupal-drush"
             ]
+        },
+        "patches": {
+            "drupal/core": {
+                "Views attachments are not rendered in the specified order [https://www.drupal.org/project/drupal/issues/2943293]": "https://www.drupal.org/files/issues/2019-05-25/2943293-17.patch"
+            }
         }
     },
     "repositories": [
