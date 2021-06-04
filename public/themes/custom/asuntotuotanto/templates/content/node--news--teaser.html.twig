@@ -97,13 +97,18 @@
   </p>
 
   <h2{{ title_attributes.addClass('news-teaser__label') }}>
-    <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+    {{ label }}
   </h2>
 
   <div class="news-teaser__summary">
     {{ summary|striptags }}
   </div>
 
-  {{ link('Read more'|t , 'internal:' ~ url, {'class': 'news-teaser__more-link'}) }}
+  <a href="{{ url }}" class="news-teaser__more-link">
+    {{ 'Read more'|t }}
+    <span class="visually-hidden">
+      {{ 'about'|t }}{{ ' ' }}{{ label.0 }}
+    </span>
+  </a>
 
 </article>
