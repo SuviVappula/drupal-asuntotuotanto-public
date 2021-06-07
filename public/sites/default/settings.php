@@ -92,12 +92,21 @@ if ($env = getenv('APP_ENV')) {
 }
 
 if ($env = getenv('APP_ENV')) {
+  // Default settings for most environments.
+  $settings['backend_url'] = getenv('DJANGO_BACKEND_URL');
+  $settings['elastic_url'] = getenv('ELASTICSEARCH_URL');
+  $config['mailsystem.settings']['defaults']['sender'] = 'swiftmailer';
+  $config['mailsystem.settings']['defaults']['formatter'] = 'swiftmailer';
+  $config['swiftmailer.transport']['smtp_host'] = getenv('MAILSERVER_ADDRESS');
+  $config['swiftmailer.transport']['smtp_port'] = getenv('MAILSERVER_PORT') ?? '25';
+  $config['swiftmailer.transport']['transport'] = getenv('MAILSERVER_TRANSPORT') ?? 'smtp';
+  $config['swiftmailer.transport']['smtp_encryption'] = '0';
+
+  $settings['asuntotuotanto_url'] = getenv('ASUNTOTUOTANTO_URL');
+  $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = getenv('ELASTICSEARCH_URL');
+
   if ($env === 'dev') {
     // Local development environment.
-    $settings['asuntotuotanto_url'] = 'https://asuntotuotanto.docker.sh';
-    $settings['backend_url'] = null;
-    $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = 'http://elastic:9200';
-
     $config['mailsystem.settings']['defaults']['sender'] = 'swiftmailer';
     $config['mailsystem.settings']['defaults']['formatter'] = 'swiftmailer';
     $config['swiftmailer.transport']['transport'] = 'smtp';
@@ -105,25 +114,20 @@ if ($env = getenv('APP_ENV')) {
     $config['swiftmailer.transport']['smtp_port'] = '1025';
     $config['swiftmailer.transport']['smtp_encryption'] = '0';
 
+    $settings['asuntotuotanto_url'] = 'https://asuntotuotanto.docker.sh';
+    $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = 'http://elastic:9200';
+
   }
   else if ($env === 'development') {
     // Azure development environment.
-    $settings['asuntotuotanto_url'] = null;
-    $settings['backend_url'] = null;
-    $settings['elastic_url'] = null;
-    $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = 'https://elastic:9200';
-  }
-  else if ($env === 'prod'){
-    // Azure prod environment.
-    $settings['asuntotuotanto_url'] = null;
-    $settings['backend_url'] = null;
-    $settings['elastic_url'] = null;
-    $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = 'https://elastic:9200';
-  } else {
-    // Old development environment.
-    $settings['asuntotuotanto_url'] = 'http://dev.asuntotuotanto-public.druidfi.wod.by';
-    $settings['backend_url'] = null;
-    $settings['elastic_url'] = null;
-    $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = 'http://dev.asuntomyynti-elastic.druidfi.wod.by';
+    $config['mailsystem.settings']['defaults']['sender'] = 'swiftmailer';
+    $config['mailsystem.settings']['defaults']['formatter'] = 'swiftmailer';
+    $config['swiftmailer.transport']['transport'] = 'smtp';
+    $config['swiftmailer.transport']['smtp_host'] = 'mailhog';
+    $config['swiftmailer.transport']['smtp_port'] = '1025';
+    $config['swiftmailer.transport']['smtp_encryption'] = '0';
+
+    $settings['asuntotuotanto_url'] = getenv('ASUNTOTUOTANTO_URL');
+    $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = getenv('ELASTICSEARCH_URL');
   }
 }
