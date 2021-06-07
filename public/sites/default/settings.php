@@ -93,17 +93,17 @@ if ($env = getenv('APP_ENV')) {
 
 if ($env = getenv('APP_ENV')) {
   // Default settings for most environments.
-  $settings['backend_url'] = getenv('DJANGO_BACKEND_URL');
-  $settings['elastic_url'] = getenv('ELASTICSEARCH_URL');
+  $settings['backend_url'] = getenv('ASU_DJANGO_BACKEND_URL');
+  $settings['elastic_url'] = getenv('ASU_ELASTICSEARCH_URL');
   $config['mailsystem.settings']['defaults']['sender'] = 'swiftmailer';
   $config['mailsystem.settings']['defaults']['formatter'] = 'swiftmailer';
-  $config['swiftmailer.transport']['smtp_host'] = getenv('MAILSERVER_ADDRESS');
-  $config['swiftmailer.transport']['smtp_port'] = getenv('MAILSERVER_PORT') ?? '25';
-  $config['swiftmailer.transport']['transport'] = getenv('MAILSERVER_TRANSPORT') ?? 'smtp';
+  $config['swiftmailer.transport']['smtp_host'] = getenv('ASU_MAILSERVER_ADDRESS');
+  $config['swiftmailer.transport']['smtp_port'] = getenv('ASU_MAILSERVER_PORT') ?? '25';
+  $config['swiftmailer.transport']['transport'] = getenv('ASU_MAILSERVER_TRANSPORT') ?? 'smtp';
   $config['swiftmailer.transport']['smtp_encryption'] = '0';
 
-  $settings['asuntotuotanto_url'] = getenv('ASUNTOTUOTANTO_URL');
-  $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = getenv('ELASTICSEARCH_URL');
+  $settings['asuntotuotanto_url'] = getenv('ASU_ASUNTOTUOTANTO_URL');
+  $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = getenv('ASU_ELASTICSEARCH_URL');
 
   if ($env === 'dev') {
     // Local development environment.
@@ -127,7 +127,7 @@ if ($env = getenv('APP_ENV')) {
     $config['swiftmailer.transport']['smtp_port'] = '1025';
     $config['swiftmailer.transport']['smtp_encryption'] = '0';
 
-    $settings['asuntotuotanto_url'] = getenv('ASUNTOTUOTANTO_URL');
-    $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = getenv('ELASTICSEARCH_URL');
+    $settings['asuntotuotanto_url'] = getenv('ASU_ASUNTOTUOTANTO_URL');
+    $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = getenv('ASU_ELASTICSEARCH_URL');
   }
 }
