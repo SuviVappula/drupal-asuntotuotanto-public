@@ -7,7 +7,7 @@ use Drupal\menu_link_content\Entity\MenuLinkContent;
  *
  * @throws \Drupal\Core\Entity\EntityStorageException
  */
-function asu_apartment_search_update_8003() {
+function asu_apartment_search_update_8001() {
   $menu_name = 'main';
 
   $hitas = MenuLinkContent::create([

@@ -229,11 +229,11 @@ function asuntotuotanto_preprocess_menu(&$variables) {
 
         foreach ($items as $key => $item) {
           $is_active = FALSE;
-          $is_below_item_active = FALSE;
           $below = $item['below'];
           $url = $item['url'];
           $url = $url->setRouteParameter('lang', $current_langcode);
           $url_string = $url->toString();
+          $variables['items'][$key]['is_active'] = $is_active;
           $variables['items'][$key]['url'] = $url;
 
           if ($current_path === $url_string) {
@@ -242,6 +242,7 @@ function asuntotuotanto_preprocess_menu(&$variables) {
 
           if ($below) {
             foreach ($below as $below_key => $below_item) {
+              $is_below_item_active = FALSE;
               $below_url = $below_item['url'];
               $below_url = $below_url->setRouteParameter('lang', $current_langcode);
               $below_url_string = $below_url->toString();
@@ -249,6 +250,8 @@ function asuntotuotanto_preprocess_menu(&$variables) {
               if ($current_path === $below_url_string) {
                 $is_below_item_active = TRUE;
               }
+
+              $variables['items'][$key]['below'][$below_key]['is_active'] = $is_below_item_active;
             }
 
             if ($is_active || $is_below_item_active) {
