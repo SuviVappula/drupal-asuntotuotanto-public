@@ -253,13 +253,13 @@ function asuntotuotanto_preprocess_menu(&$variables) {
               }
 
               $variables['items'][$key]['below'][$below_key]['is_active'] = $is_below_item_active;
-            }
 
-            if ($is_active || $is_below_item_active) {
-              $variables['items'][$key]['attributes']->addClass('is-active');
-            }
+              if ($is_active || $is_below_item_active) {
+                $variables['items'][$key]['attributes']->addClass('is-active');
+              }
 
-            $variables['items'][$key]['below'][$below_key]['url'] = $below_url;
+              $variables['items'][$key]['below'][$below_key]['url'] = $below_url;
+            }
           }
         }
       }
