@@ -7,6 +7,7 @@
 
 use Drupal\asu_application\Applications;
 use Drupal\Core\Url;
+use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Helper function to get the icons path.
@@ -275,6 +276,102 @@ function asuntotuotanto_preprocess_menu(&$variables) {
         $variables['items']['asu_user_tools_menu.user_name']['below'][$key]['is_link_active'] = $is_active;
       }
       break;
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ *
+ * {@inheritdoc}
+ */
+function asuntotuotanto_preprocess_views_view(&$variables) {
+  $view = $variables['view'];
+  $view_id = $view->id();
+
+  switch ($view_id) {
+    case 'news':
+      if ($view->getTitle()) {
+        $variables['page_title'] = $view->getTitle();
+      }
+
+      break;
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_container_alter().
+ */
+function asuntotuotanto_theme_suggestions_container_alter(&$suggestions, array $variables) {
+  $element = $variables['element'];
+
+  if (isset($element['#type']) && $element['#type'] == 'view') {
+    $suggestions[] = 'container__' . $element['#name'];
+    $suggestions[] = 'container__' . $element['#name'] . '__' . $element['#display_id'];
+  }
+
+  if (isset($element['#type']) && $element['#type'] == 'container' && isset($element['children']['#type'])) {
+    $suggestions[] = 'container__' . $element['children']['#type'];
+  }
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function asuntotuotanto_preprocess_node(&$variables) {
+  $node  = \Drupal\node\Entity\Node::load($variables['node']->id());
+
+  if ($node->field_content && !empty($node->field_content->getValue())) {
+
+    foreach ($node->field_content->getValue() as $value) {
+      $paragraph = FALSE;
+
+      if (!empty($value['entity'])) {
+        $paragraph = $value['entity'];
+      } elseif (!empty($value['target_id'])) {
+        $paragraph = Paragraph::load($value['target_id']);
+      }
+
+      if (!empty($paragraph) && $paragraph instanceof Paragraph) {
+        if ($paragraph->type->getValue()[0]["target_id"] === "text") {
+          $text = strip_tags($paragraph->get('field_text')->value);
+          $text = str_replace(array("\r", "\n"), ' ', $text);
+
+          if (strlen($text) > 80) {
+            if ($variables['view_mode'] === 'teaser_prominent') {
+              if (strlen($text) > 230) {
+                $text = rtrim(substr($text, 0, 230)) . "...";
+              }
+            } else {
+              $text = rtrim(substr($text, 0, 80)) . "...";
+            }
+          }
+
+          $variables['summary'] = $text;
+          break;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function asuntotuotanto_preprocess_pager(&$variables) {
+  // Cast current to be INT instead of FLOAT.
+  $variables['current'] = isset($variables['current']) ? (int) $variables['current'] : 1;
+
+  // Check for last pager item href link.
+  if (!empty($variables['items']['last']['href'])) {
+    $splittedLink = explode("page=", $variables['items']['last']['href'])[1];
+    $variables['pager_total_amount'] = (int) $splittedLink + 1;
+  }
+  else {
+    if (!empty($variables['items']['pages'])) {
+      $lastArrayItem = end($variables['items']['pages'])['href'];
+      $splittedLink = explode("page=", $lastArrayItem)[1];
+      $variables['pager_total_amount'] = (int) $splittedLink + 1;
+    }
   }
 }
 

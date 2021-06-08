@@ -10,7 +10,6 @@ dependencies:
     - field.field.user.user.field_last_name
     - field.field.user.user.field_phone_number
     - field.field.user.user.field_postal_code
-    - field.field.user.user.field_right_of_r
   module:
     - datetime
     - user
@@ -75,5 +74,4 @@ content:
     region: content
 hidden:
   field_postal_code: true
-  field_right_of_r: true
   langcode: true
