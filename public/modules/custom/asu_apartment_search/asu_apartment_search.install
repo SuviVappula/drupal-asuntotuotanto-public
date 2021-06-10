@@ -1,0 +1,116 @@
+<?php
+
+use Drupal\menu_link_content\Entity\MenuLinkContent;
+
+/**
+ * Add menu links to react application automatically.
+ *
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function asu_apartment_search_update_8001() {
+  $menu_name = 'main';
+
+  $hitas = MenuLinkContent::create([
+      'title' => 'Omistusasunnot',
+      'link' => ['uri' => 'route:asu_apartment_search.hitas_content'],
+      'menu_name' => $menu_name,
+      'expanded' => TRUE,
+      'weight' => 1,
+  ]);
+
+  $hitas->addTranslation('en', [
+    'title' => t('Owner-occupied housing')]
+  );
+
+  $hitas->addTranslation('sv', [
+    'title' => t('Ägarboende')]
+  );
+
+  $hitas->save();
+
+  $hitas_second_level_main_link = MenuLinkContent::create([
+    'title' => 'Etsi asuntoa',
+    'link' => ['uri' => 'route:asu_apartment_search.hitas_content'],
+    'parent' => $hitas->getPluginId(),
+    'expanded' => TRUE,
+  ]);
+
+  $hitas_second_level_main_link->addTranslation('en', [
+      'title' => t('Search for apartment')]
+  );
+
+  $hitas_second_level_main_link->addTranslation('sv', [
+      'title' => t('Sök efter lägenhet')]
+  );
+
+  $hitas_second_level_main_link->save();
+
+  $hitas_second_level = MenuLinkContent::create([
+    'title' => 'Tulevia kohteita',
+    'link' => ['uri' => 'route:asu_apartment_search.hitas_upcoming'],
+    'parent' => $hitas->getPluginId(),
+    'expanded' => TRUE,
+  ]);
+
+  $hitas_second_level->addTranslation('en', [
+    'title' => t('Upcoming projects')]
+  );
+
+  $hitas_second_level->addTranslation('sv', [
+    'title' => t('Kommande projekt')]
+  );
+
+  $hitas_second_level->save();
+
+  $haso = MenuLinkContent::create([
+      'title' => 'Asumisoikeusasunnot',
+      'link' => ['uri' => 'route:asu_apartment_search.haso'],
+      'menu_name' => $menu_name,
+      'expanded' => TRUE,
+      'weight' => 2,
+  ]);
+
+  $haso->addTranslation('en', [
+    'title' => t('Right-of-occupancy apartments')]
+  );
+
+  $haso->addTranslation('sv', [
+    'title' => t('Bostadsrätter')]
+  );
+
+  $haso->save();
+
+  $haso_second_level_main_link = MenuLinkContent::create([
+    'title' => 'Etsi asuntoa',
+    'link' => ['uri' => 'route:asu_apartment_search.haso'],
+    'parent' => $haso->getPluginId(),
+    'expanded' => TRUE,
+  ]);
+
+  $haso_second_level_main_link->addTranslation('en', [
+      'title' => t('Search for apartment')]
+  );
+
+  $haso_second_level_main_link->addTranslation('sv', [
+      'title' => t('Sök efter lägenhet')]
+  );
+
+  $haso_second_level_main_link->save();
+
+  $haso_second_level = MenuLinkContent::create([
+    'title' => 'Tulevia kohteita',
+    'link' => ['uri' => 'route:asu_apartment_search.haso_upcoming'],
+    'parent' => $haso->getPluginId(),
+    'expanded' => TRUE,
+  ]);
+
+  $haso_second_level->addTranslation('en', [
+    'title' => t('Upcoming projects')]
+  );
+
+  $haso_second_level->addTranslation('sv', [
+    'title' => t('Kommande projekt')]
+  );
+
+  $haso_second_level->save();
+}
