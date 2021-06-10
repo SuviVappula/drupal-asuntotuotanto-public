@@ -3,7 +3,8 @@
   margin-right: auto;
   margin-top: $spacing-2-xl;
 
-  &.user-form--login {
+  &.user-form--login,
+  &.user-form--password {
     max-width: 330px;
   }
 
@@ -29,7 +30,8 @@
     text-align: center;
   }
 
-  .user-form--login & {
+  .user-form--login &,
+  .user-form--password & {
     &:first-of-type {
       padding-bottom: $spacing-2-xl;
       margin-bottom: $spacing-l;
