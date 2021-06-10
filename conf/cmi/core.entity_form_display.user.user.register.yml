@@ -7,6 +7,7 @@ dependencies:
     - field.field.user.user.field_address
     - field.field.user.user.field_city
     - field.field.user.user.field_date_of_birth
+    - field.field.user.user.field_email_is_valid
     - field.field.user.user.field_first_name
     - field.field.user.user.field_last_name
     - field.field.user.user.field_phone_number
@@ -84,6 +85,7 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_email_is_valid: true
   langcode: true
   language: true
   path: true

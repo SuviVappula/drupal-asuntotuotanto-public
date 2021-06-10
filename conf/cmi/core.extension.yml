@@ -7,6 +7,7 @@ module:
   asu_apartment_search: 0
   asu_api: 0
   asu_rest: 0
+  asu_user: 0
   asu_user_tools_menu: 0
   better_passwords: 0
   better_social_sharing_buttons: 0
@@ -111,6 +112,7 @@ module:
   twig_tweak: 0
   update: 0
   user: 0
+  user_registrationpassword: 0
   views_infinite_scroll: 0
   views_ui: 0
   pathauto: 1
