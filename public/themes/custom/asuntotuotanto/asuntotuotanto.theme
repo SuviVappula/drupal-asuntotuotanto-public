@@ -287,6 +287,17 @@ function asuntotuotanto_preprocess_views_view(&$variables) {
 }
 
 /**
+ * Implements hook_theme_suggestions_input_alter().
+ */
+function asuntotuotanto_theme_suggestions_input_alter(&$suggestions, array $variables) {
+  $element = $variables['element'];
+
+  if (isset($element['#attributes']['data-twig-suggestion'])) {
+    $suggestions[] = 'input__' . $element['#type'] . '__' . $element['#attributes']['data-twig-suggestion'];
+  }
+}
+
+/**
  * Implements hook_theme_suggestions_container_alter().
  */
 function asuntotuotanto_theme_suggestions_container_alter(&$suggestions, array $variables) {
@@ -317,6 +328,7 @@ function asuntotuotanto_form_alter(&$form, &$form_state, $form_id) {
 
   if ($form['#id'] == 'user-register-form') {
     $form['account']['pass']['#description'] = FALSE;
+    $form['actions']['submit']['#attributes']['data-twig-suggestion'] = 'register_form_submit_button';
   }
 }
 
