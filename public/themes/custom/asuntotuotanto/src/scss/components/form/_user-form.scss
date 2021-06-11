@@ -8,6 +8,10 @@
     max-width: 330px;
   }
 
+  &.user-form--register {
+    max-width: 545px;
+  }
+
   .form-actions {
     margin-top: $spacing-m;
   }
