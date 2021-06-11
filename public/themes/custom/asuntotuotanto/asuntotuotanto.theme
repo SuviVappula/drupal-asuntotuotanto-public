@@ -314,6 +314,10 @@ function asuntotuotanto_form_alter(&$form, &$form_state, $form_id) {
   if ($form['#id'] == 'user-pass') {
     unset($form['mail']);
   }
+
+  if ($form['#id'] == 'user-register-form') {
+    $form['account']['pass']['#description'] = FALSE;
+  }
 }
 
 /**
