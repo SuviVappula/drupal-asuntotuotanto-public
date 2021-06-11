@@ -7,6 +7,7 @@
 
 use Drupal\asu_application\Applications;
 use Drupal\Core\Url;
+use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Helper function to get the icons path.
@@ -79,7 +80,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
           $project_id = $entity['#project']->id();
           $applications = Applications::create()
             ->getApartmentApplicationStatuses($project_id);
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
           $variables['applications'] = [];
         }
 
@@ -222,30 +223,42 @@ function asuntotuotanto_preprocess_menu(&$variables) {
       }
 
       if ($menu_block_configuration_suggestion === 'main__desktop') {
+        $language = Drupal::languageManager()->getCurrentLanguage();
+        $current_langcode = $language->getId();
         $items = $variables['items'];
-        $current_path =  Url::fromRoute('<current>')->toString();
+        $current_path = Url::fromRoute('<current>')->setRouteParameter('lang', $current_langcode)->toString();
 
         foreach ($items as $key => $item) {
           $is_active = FALSE;
-          $is_below_item_active = FALSE;
           $below = $item['below'];
-          $url = $item['url']->toString();
+          $url = $item['url'];
+          $url = $url->setRouteParameter('lang', $current_langcode);
+          $url_string = $url->toString();
+          $variables['items'][$key]['is_active'] = $is_active;
+          $variables['items'][$key]['url'] = $url;
 
-          if ($current_path === $url) {
+          if ($current_path === $url_string) {
             $is_active = TRUE;
           }
 
           if ($below) {
-            foreach ($below as $below_item) {
-              $below_url = $below_item['url']->toString();
+            foreach ($below as $below_key => $below_item) {
+              $is_below_item_active = FALSE;
+              $below_url = $below_item['url'];
+              $below_url = $below_url->setRouteParameter('lang', $current_langcode);
+              $below_url_string = $below_url->toString();
 
-              if ($current_path === $below_url) {
+              if ($current_path === $below_url_string) {
                 $is_below_item_active = TRUE;
               }
-            }
 
-            if ($is_active || $is_below_item_active) {
-              $variables['items'][$key]['attributes']->addClass('is-active');
+              $variables['items'][$key]['below'][$below_key]['is_active'] = $is_below_item_active;
+
+              if ($is_active || $is_below_item_active) {
+                $variables['items'][$key]['attributes']->addClass('is-active');
+              }
+
+              $variables['items'][$key]['below'][$below_key]['url'] = $below_url;
             }
           }
         }
@@ -258,11 +271,107 @@ function asuntotuotanto_preprocess_menu(&$variables) {
 
       foreach ($items as $key => $item) {
         $url = $item['url']->toString();
-        $current_path =  Url::fromRoute('<current>')->toString();
+        $current_path = Url::fromRoute('<current>')->toString();
         $is_active = $current_path === $url;
         $variables['items']['asu_user_tools_menu.user_name']['below'][$key]['is_link_active'] = $is_active;
       }
       break;
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ *
+ * {@inheritdoc}
+ */
+function asuntotuotanto_preprocess_views_view(&$variables) {
+  $view = $variables['view'];
+  $view_id = $view->id();
+
+  switch ($view_id) {
+    case 'news':
+      if ($view->getTitle()) {
+        $variables['page_title'] = $view->getTitle();
+      }
+
+      break;
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_container_alter().
+ */
+function asuntotuotanto_theme_suggestions_container_alter(&$suggestions, array $variables) {
+  $element = $variables['element'];
+
+  if (isset($element['#type']) && $element['#type'] == 'view') {
+    $suggestions[] = 'container__' . $element['#name'];
+    $suggestions[] = 'container__' . $element['#name'] . '__' . $element['#display_id'];
+  }
+
+  if (isset($element['#type']) && $element['#type'] == 'container' && isset($element['children']['#type'])) {
+    $suggestions[] = 'container__' . $element['children']['#type'];
+  }
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function asuntotuotanto_preprocess_node(&$variables) {
+  $node  = \Drupal\node\Entity\Node::load($variables['node']->id());
+
+  if ($node->field_content && !empty($node->field_content->getValue())) {
+
+    foreach ($node->field_content->getValue() as $value) {
+      $paragraph = FALSE;
+
+      if (!empty($value['entity'])) {
+        $paragraph = $value['entity'];
+      } elseif (!empty($value['target_id'])) {
+        $paragraph = Paragraph::load($value['target_id']);
+      }
+
+      if (!empty($paragraph) && $paragraph instanceof Paragraph) {
+        if ($paragraph->type->getValue()[0]["target_id"] === "text") {
+          $text = strip_tags($paragraph->get('field_text')->value);
+          $text = str_replace(array("\r", "\n"), ' ', $text);
+
+          if (strlen($text) > 80) {
+            if ($variables['view_mode'] === 'teaser_prominent') {
+              if (strlen($text) > 230) {
+                $text = rtrim(substr($text, 0, 230)) . "...";
+              }
+            } else {
+              $text = rtrim(substr($text, 0, 80)) . "...";
+            }
+          }
+
+          $variables['summary'] = $text;
+          break;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function asuntotuotanto_preprocess_pager(&$variables) {
+  // Cast current to be INT instead of FLOAT.
+  $variables['current'] = isset($variables['current']) ? (int) $variables['current'] : 1;
+
+  // Check for last pager item href link.
+  if (!empty($variables['items']['last']['href'])) {
+    $splittedLink = explode("page=", $variables['items']['last']['href'])[1];
+    $variables['pager_total_amount'] = (int) $splittedLink + 1;
+  }
+  else {
+    if (!empty($variables['items']['pages'])) {
+      $lastArrayItem = end($variables['items']['pages'])['href'];
+      $splittedLink = explode("page=", $lastArrayItem)[1];
+      $variables['pager_total_amount'] = (int) $splittedLink + 1;
+    }
   }
 }
 
@@ -293,4 +402,3 @@ function get_apartment_application_status($application_status) {
     "label" => $application_status_mapping[$application_status],
   ];
 }
-

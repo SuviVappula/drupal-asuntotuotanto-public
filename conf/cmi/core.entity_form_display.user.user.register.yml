@@ -7,11 +7,11 @@ dependencies:
     - field.field.user.user.field_address
     - field.field.user.user.field_city
     - field.field.user.user.field_date_of_birth
+    - field.field.user.user.field_email_is_valid
     - field.field.user.user.field_first_name
     - field.field.user.user.field_last_name
     - field.field.user.user.field_phone_number
     - field.field.user.user.field_postal_code
-    - field.field.user.user.field_right_of_r
   module:
     - datetime
     - user
@@ -85,7 +85,7 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
-  field_right_of_r: true
+  field_email_is_valid: true
   langcode: true
   language: true
   path: true

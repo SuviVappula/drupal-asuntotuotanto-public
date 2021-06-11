@@ -16,16 +16,16 @@ field_mappings:
     value: title
   field_accessibility:
     value: field_project_accessibility
-  field_apartments:
-    value: 'apartments/*'
-  field_apartments_count:
-    value: apartments_count
   field_apartment_living_areas:
     value: apartment_living_area_sizes_m2
   field_apartment_sales_prices:
     value: apartment_sales_prices
   field_apartment_structures:
     value: apartment_structures
+  field_apartments:
+    value: 'apartments/*'
+  field_apartments_count:
+    value: apartments_count
   field_application_end_time:
     value: application_end_time
   field_application_start_time:
@@ -84,7 +84,7 @@ storage_client_config:
   parameters:
     list: {  }
     single: {  }
-persistent_cache_max_age: 0
+persistent_cache_max_age: 10800
 annotation_entity_type_id: null
 annotation_bundle_id: null
 annotation_field_name: null

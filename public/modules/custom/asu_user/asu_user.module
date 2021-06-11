@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_user_login().
+ */
+
+use Drupal\user\UserInterface;
+
+/**
+ *
+ */
+function asu_user_user_login(UserInterface $account) {
+  if ($account->field_email_is_valid->value == 0) {
+    asu_send_user_password_email($account);
+  }
+
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  $routes = ['user.login.http', 'user.reset.login'];
+  // Set is_valid_email to true.
+  if (in_array($route_name, $routes)) {
+    if ($account->hasField('field_email_is_valid')) {
+      $account->field_email_is_valid = 1;
+      $account->save();
+    }
+  }
+}
+
+/**
+ *
+ */
+function asu_send_user_password_email($account) {
+  _user_mail_notify('password_reset', $account);
+}

@@ -1,0 +1,6 @@
+additional-applicant:
+  version: 1.x
+  js:
+    assets/js/additional-applicant.js: { }
+  dependencies:
+    - core/jquery
