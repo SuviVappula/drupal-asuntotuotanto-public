@@ -52,7 +52,7 @@
           {% set classes = classes|merge([alternative_language ? 'is-alternative' : '']) %}
 
           {% if not untranslated and lang != current_langcode %}
-            {% set language_link = path('<current>', {}, {'language': item.link['#options']['language']}) %}
+            {% set language_link = path('<current>', {'lang': item.link['#options']['language'].id}, {'language': item.link['#options']['language']}) %}
             {% set element = 'a' %}
           {% elseif lang == current_langcode %}
             {% set element = 'span' %}
