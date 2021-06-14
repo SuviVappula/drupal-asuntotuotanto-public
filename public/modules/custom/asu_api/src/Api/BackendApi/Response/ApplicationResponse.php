@@ -14,9 +14,9 @@ class ApplicationResponse extends Response {
   /**
    * Content.
    *
-   * @var \StdClass
+   * @var array
    */
-  private \StdClass $content;
+  protected array $content;
 
   /**
    * Constructor.
@@ -24,7 +24,7 @@ class ApplicationResponse extends Response {
    * @param object $content
    *   Contents of the response.
    */
-  public function __construct(\stdClass $content) {
+  public function __construct(array $content) {
     // @todo Set content as attributes and create setters.
     $this->content = $content;
   }
@@ -32,7 +32,7 @@ class ApplicationResponse extends Response {
   /**
    * Get request content.
    */
-  public function getContent() {
+  public function getContent(): array {
     return $this->content;
   }
 
@@ -51,7 +51,7 @@ class ApplicationResponse extends Response {
     if (self::requestOk($response)) {
       throw new ApplicationRequestException('Bad status code: ' . $response->getStatusCode());
     }
-    $content = json_decode($response->getBody()->getContents(), FALSE);
+    $content = json_decode($response->getBody()->getContents(), TRUE);
     return new self($content);
   }
 

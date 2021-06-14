@@ -3,14 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.user.user.field_address
-    - field.field.user.user.field_city
-    - field.field.user.user.field_date_of_birth
     - field.field.user.user.field_email_is_valid
-    - field.field.user.user.field_first_name
-    - field.field.user.user.field_last_name
-    - field.field.user.user.field_phone_number
-    - field.field.user.user.field_postal_code
   module:
     - datetime
     - user
@@ -19,54 +12,57 @@ targetEntityType: user
 bundle: user
 mode: default
 content:
-  field_address:
-    weight: 4
-    label: above
+  address:
+    label: visible
+    weight: -5
+    region: content
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+  city:
+    label: visible
+    weight: -5
     region: content
-  field_city:
-    weight: 5
-    label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+  date_of_birth:
+    label: visible
+    weight: -5
     region: content
-  field_date_of_birth:
-    weight: 6
-    label: above
-    settings:
-      format_type: medium
-      timezone_override: ''
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_first_name:
-    weight: 1
-    label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+  first_name:
+    label: visible
+    weight: -5
     region: content
-  field_last_name:
-    weight: 2
-    label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+  last_name:
+    label: visible
+    weight: -5
     region: content
-  field_phone_number:
-    weight: 3
-    label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+  phone_number:
+    label: visible
+    weight: -5
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  postal_code:
+    label: visible
+    weight: -5
     region: content
   member_for:
     weight: 0
@@ -75,5 +71,4 @@ content:
     third_party_settings: {  }
 hidden:
   field_email_is_valid: true
-  field_postal_code: true
   langcode: true

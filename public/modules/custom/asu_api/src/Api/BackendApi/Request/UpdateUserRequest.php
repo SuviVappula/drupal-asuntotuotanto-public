@@ -3,10 +3,10 @@
 namespace Drupal\asu_api\Api\BackendApi\Request;
 
 use Drupal\asu_api\Api\Request;
-use Drupal\user\UserInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Create user request.
+ * Update user information in backend.
  */
 class UpdateUserRequest extends Request {
 
@@ -14,28 +14,29 @@ class UpdateUserRequest extends Request {
 
   protected const PATH = 'api/v1/update_user';
 
-  private UserInterface $user;
+  private FormStateInterface $formState;
+
+  private array $fields;
 
   /**
-   * Construct.
+   * Constructor.
    */
-  public function __construct(UserInterface $user) {
-    $this->user = $user;
+  public function __construct(FormStateInterface $formState, array $fields) {
+    $this->formState = $formState;
+    $this->fields = $fields;
   }
 
   /**
-   * Data to array.
+   * Update user request data to array.
    */
   public function toArray(): array {
-    return [
-      'username' => $this->user->getEmail(),
-      'first_name' => $this->user->field_first_name->value,
-      'last_name' => $this->user->field_last_name->value,
-      'date_of_birth' => $this->user->field_date_of_birth->value,
-      'city' => $this->user->field_city->value,
-      'postal_code' => $this->user->field_postal_code->value,
-      'address' => $this->user->field_address->value,
-    ];
+    $data = [];
+    foreach ($this->fields as $field => $field_information) {
+      if (isset($this->formState->{$field})) {
+        $data['field_information']['external_field'] = $this->formState->{$field};
+      }
+    }
+    return $data;
   }
 
 }

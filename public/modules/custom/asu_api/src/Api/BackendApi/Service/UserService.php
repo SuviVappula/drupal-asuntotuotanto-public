@@ -6,6 +6,9 @@ use Drupal\asu_api\Api\BackendApi\Request\CreateUserRequest;
 use Drupal\asu_api\Api\BackendApi\Request\UpdateUserRequest;
 use Drupal\asu_api\Api\BackendApi\Response\CreateUserResponse;
 use Drupal\asu_api\Api\BackendApi\Response\UpdateUserResponse;
+use Drupal\asu_api\Api\BackendApi\Response\UserResponse;
+use Drupal\asu_api\Api\Request;
+use Drupal\asu_api\Api\Response;
 use Drupal\asu_api\Api\ServiceBase;
 use Drupal\asu_api\Exception\RequestException;
 use Drupal\asu_api\Exception\ResponseParameterException;
@@ -16,7 +19,7 @@ use Drupal\asu_api\Exception\ResponseParameterException;
 class UserService extends ServiceBase {
 
   /**
-   * Send newly created application to backend.
+   * Send newly created user to backend.
    *
    * @param \Drupal\asu_api\BackendApi\Request\CreateUserRequest $request
    *   CreateUserRequest.
@@ -45,9 +48,29 @@ class UserService extends ServiceBase {
   }
 
   /**
-   * Send updated user data to backend.
+   * Get user information from backend.
+   *
+   * @param \Drupal\asu_api\Api\Request $request
+   *
+   * @return \Drupal\asu_api\Api\Response
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function updateUser(UpdateUserRequest $request): UpdateUserResponse {
+  public function getUser(Request $request): Response {
+    $httpRequest = $this->requestHandler->buildRequest($request);
+    $response = $this->requestHandler->send($httpRequest);
+    return UserResponse::createFromHttpResponse($response);
+  }
+
+  /**
+   * Send updated user data to backend.
+   *
+   * @param \Drupal\asu_api\Api\Request $request
+   *
+   * @return \Drupal\asu_api\Api\Response
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+  public function updateUser(Request $request): UpdateUserResponse {
     $httpRequest = $this->requestHandler->buildRequest($request);
     $response = $this->requestHandler->send($httpRequest);
     return UpdateUserResponse::createFromHttpResponse($response);
