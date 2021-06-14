@@ -3,6 +3,7 @@
 namespace Drupal\asu_api\Api\BackendApi;
 
 use Drupal\asu_api\Api\BackendApi\Service\ApplicationService;
+use Drupal\asu_api\Api\BackendApi\Service\AuthenticationService;
 use Drupal\asu_api\Api\BackendApi\Service\UserService;
 use Drupal\asu_api\Api\RequestHandler;
 
@@ -10,6 +11,14 @@ use Drupal\asu_api\Api\RequestHandler;
  * Integration to django.
  */
 class BackendApi {
+
+  /**
+   * Authentication service.
+   *
+   * @var \Drupal\asu_api\Api\BackendApi\Service\AuthenticationService
+   */
+  private AuthenticationService $authenticationService;
+
   /**
    * Application service.
    *
@@ -27,10 +36,19 @@ class BackendApi {
   /**
    * Constructor.
    */
-  public function __construct(string $backendBaseUrl) {
-    $requestHandler = new RequestHandler($backendBaseUrl);
+  public function __construct(string $backendUrlVariable) {
+    $url = getenv($backendUrlVariable);
+    $requestHandler = new RequestHandler($url);
+    $this->authenticationService = new AuthenticationService($requestHandler, \Drupal::request()->getSession());
     $this->applicationService = new ApplicationService($requestHandler);
     $this->userService = new UserService($requestHandler);
+  }
+
+  /**
+   * Get authentication service.
+   */
+  public function getAuthenticationService(): AuthenticationService {
+    return $this->authenticationService;
   }
 
   /**

@@ -5,6 +5,7 @@ namespace Drupal\asuntotuotanto;
 use Drupal\asu_api\Api\BackendApi\BackendApi;
 use Drupal\asu_api\Api\BackendApi\Request\CreateUserRequest;
 use Drupal\asu_api\Exception\RequestException;
+use Drupal\asu_api\Exception\ResponseParameterException;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
@@ -63,14 +64,23 @@ class RegisterForm extends BaseForm {
 
     try {
       $request = new CreateUserRequest($account);
-      $this->backendApi
+      /** @var \Drupal\asu_api\Api\BackendApi\Response\CreateUserResponse $response */
+
+      $response = $this->backendApi
         ->getUserService()
         ->createUser($request);
+
+      $account->field_backend_profile_id = $response->getProfileId();
+      $account->field_backend_password = $response->getPassword();
+      $account->save();
     }
-    catch (RequestException $e) {
+    catch (ResponseParameterException $e) {
       // @todo Proper logging and error handling.
       // Request failed.
-      $this->messenger()->addError('Problem with the response:' . $e->getMessage());
+      $this->messenger()->addError('Backend returned unsatisfactory parameters.' . $e->getMessage());
+    }
+    catch (RequestException $e) {
+      $this->messenger()->addError('Backend returned non-200 response:' . $e->getMessage());
     }
     catch (\Exception $e) {
       // Something unexpected happened.

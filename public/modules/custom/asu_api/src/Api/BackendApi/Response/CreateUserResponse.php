@@ -4,6 +4,7 @@ namespace Drupal\asu_api\Api\BackendApi\Response;
 
 use Drupal\asu_api\Api\Response;
 use Drupal\asu_api\Exception\RequestException;
+use Drupal\asu_api\Exception\ResponseParameterException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -12,11 +13,20 @@ use Psr\Http\Message\ResponseInterface;
 class CreateUserResponse extends Response {
 
   /**
-   * Content.
+   * Backend api profile id.
    *
-   * @var \StdClass
+   * @var string
+   *   Backend profile id.
    */
-  private \StdClass $content;
+  private string $profileId;
+
+  /**
+   * Backend api password.
+   *
+   * @var string
+   *   Backend password.
+   */
+  private string $password;
 
   /**
    * Constructor.
@@ -25,15 +35,34 @@ class CreateUserResponse extends Response {
    *   Contents of the response.
    */
   public function __construct(\stdClass $content) {
-    // @todo Set content as attributes and create setters.
-    $this->content = $content;
+    if (!$content->profile_id) {
+      throw new ResponseParameterException('No profile id returned on user creation');
+    }
+    if (!$content->password) {
+      throw new ResponseParameterException('No password returned on user creation');
+    }
+    $this->profileId = $content->profile_id;
+    $this->password = $content->password;
   }
 
   /**
-   * Get request content.
+   * Get profile id returned by create user request.
+   *
+   * @return string
+   *   Profile id in authentication request.
    */
-  public function getContent() {
-    return $this->content;
+  public function getProfileId(): string {
+    return $this->profileId;
+  }
+
+  /**
+   * Get password returned by create user request.
+   *
+   * @return string
+   *   Password used in authentication request.
+   */
+  public function getPassword(): string {
+    return $this->password;
   }
 
   /**
@@ -47,8 +76,8 @@ class CreateUserResponse extends Response {
    *
    * @throws \Exception
    */
-  public static function createFromHttpResponse(ResponseInterface $response): self {
-    if (self::requestOk($response)) {
+  public static function createFromHttpResponse(ResponseInterface $response): CreateUserResponse {
+    if (!self::requestOk($response)) {
       throw new RequestException('Bad status code: ' . $response->getStatusCode());
     }
     $content = json_decode($response->getBody()->getContents(), FALSE);
