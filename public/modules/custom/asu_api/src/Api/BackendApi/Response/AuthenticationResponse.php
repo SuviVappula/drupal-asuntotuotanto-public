@@ -7,45 +7,33 @@ use Drupal\asu_api\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Response for application request.
+ * Authentication response class.
  */
-class UpdateUserResponse extends Response {
+class AuthenticationResponse extends Response {
 
   /**
-   * Content.
+   * Token used in authenticated backend requests.
    *
-   * @var \StdClass
+   * @var string
    */
-  private \StdClass $content;
+  private string $token;
 
   /**
    * Constructor.
-   *
-   * @param object $content
-   *   Contents of the response.
    */
   public function __construct(\stdClass $content) {
-    // @todo Set content as attributes and create setters.
-    $this->content = $content;
+    $this->token = $content->token;
   }
 
   /**
-   * Get request content.
+   * Get the token.
    */
-  public function getContent() {
-    return $this->content;
+  public function getToken() {
+    return $this->token;
   }
 
   /**
-   * Create new application response from http response.
-   *
-   * @param \Psr\Http\Message\ResponseInterface $response
-   *   Guzzle response.
-   *
-   * @return ApplicationResponse
-   *   ApplicationResponse.
-   *
-   * @throws \Exception
+   * {@inheritDoc}
    */
   public static function createFromHttpResponse(ResponseInterface $response): self {
     if (self::requestOk($response)) {
