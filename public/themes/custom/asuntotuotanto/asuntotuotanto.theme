@@ -5,9 +5,9 @@
  * Functions to support theming in the HDBT Subtheme.
  */
 
-use Drupal\asu_application\Applications;
 use Drupal\Core\Url;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\asu_application\Applications;
 
 /**
  * Helper function to get the icons path.
@@ -35,6 +35,7 @@ function asuntotuotanto_get_icons_path() {
 function asuntotuotanto_preprocess(&$variables) {
   $variables['asuntotuotanto_icons_path'] = asuntotuotanto_get_icons_path();
   $variables['#attached']['drupalSettings']['asuntotuotanto_icons_path'] = $variables['asuntotuotanto_icons_path'];
+  $variables['current_user_id'] = \Drupal::currentUser()->id() ?? NULL;
 }
 
 /**
@@ -311,6 +312,30 @@ function asuntotuotanto_theme_suggestions_container_alter(&$suggestions, array $
 
   if (isset($element['#type']) && $element['#type'] == 'container' && isset($element['children']['#type'])) {
     $suggestions[] = 'container__' . $element['children']['#type'];
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function asuntotuotanto_form_alter(&$form, &$form_state, $form_id) {
+  if ($form['#id'] == 'user-login-form') {
+    $form['name']['#description'] = FALSE;
+    $form['pass']['#description'] = FALSE;
+  }
+
+  if ($form['#id'] == 'user-pass') {
+    unset($form['mail']);
+  }
+
+  if ($form['#id'] == 'user-register-form') {
+    $form['account']['pass']['#description'] = FALSE;
+    $form['actions']['submit']['#attributes']['data-twig-suggestion'] = 'register_form_submit_button';
+  }
+
+  if ($form['#id'] == 'user-form') {
+    $form['account']['mail']['#description'] = FALSE;
+    $form['account']['pass']['#description'] = FALSE;
   }
 }
 
