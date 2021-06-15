@@ -5,11 +5,12 @@ dependencies: {  }
 _core:
   default_config_hash: EDyVdaROG6pYzyEct43c01Wq4gpATszrk-qR6gqnQ84
 id: anonymous
-label: 'Anonymous user'
+label: 'Anonyymi käyttäjä'
 weight: 0
 is_admin: false
 permissions:
   - 'access content'
+  - 'create application'
   - 'display eu cookie compliance popup'
   - 'view media'
   - 'view remote entities'
