@@ -40,8 +40,8 @@ class AskoApplicationRequest {
    */
   public function toArray(): array {
     $data = [
-      'etunimi' => $this->user->field_first_name->value,
-      'sukunimi' => $this->user->field_last_name->value,
+      'etunimi' => $this->user->first_name->value,
+      'sukunimi' => $this->user->last_name->value,
       'email' => $this->user->getEmail(),
       'kohde' => $this->projectName,
       'huoneistonumero' => $this->getApartmentNumbers(),

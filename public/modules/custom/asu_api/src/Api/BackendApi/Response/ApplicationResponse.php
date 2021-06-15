@@ -48,7 +48,7 @@ class ApplicationResponse extends Response {
    * @throws \Exception
    */
   public static function createFromHttpResponse(ResponseInterface $response): self {
-    if (self::requestOk($response)) {
+    if (!self::requestOk($response)) {
       throw new ApplicationRequestException('Bad status code: ' . $response->getStatusCode());
     }
     $content = json_decode($response->getBody()->getContents(), TRUE);

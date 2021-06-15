@@ -4,6 +4,8 @@ status: true
 dependencies:
   config:
     - core.entity_form_mode.user.register
+    - field.field.user.user.field_backend_password
+    - field.field.user.user.field_backend_profile
     - field.field.user.user.field_email_is_valid
   module:
     - user
@@ -23,6 +25,8 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_backend_password: true
+  field_backend_profile: true
   field_email_is_valid: true
   langcode: true
   language: true

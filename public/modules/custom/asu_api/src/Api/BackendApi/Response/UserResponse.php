@@ -34,12 +34,12 @@ class UserResponse extends Response {
   /**
    * {@inheritDoc}
    */
-  public static function createFromHttpResponse(ResponseInterface $response): Response
-  {
+  public static function createFromHttpResponse(ResponseInterface $response): Response {
     if (!self::requestOk($response)) {
       throw new RequestException('Bad status code: ' . $response->getStatusCode());
     }
     $content = json_decode($response->getBody()->getContents(), TRUE);
     return new self($content);
   }
+
 }

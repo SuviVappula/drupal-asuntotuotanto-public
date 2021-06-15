@@ -4,7 +4,11 @@
  * @file
  */
 
-
+use Drupal\asu_api\Api\BackendApi\Request\UpdateUserRequest;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\user\Entity\User;
+use Drupal\asu_api\Exception\RequestException;
 use Drupal\user\UserInterface;
 use Drupal\asu_api\Api\BackendApi\Request\UserRequest;
 
@@ -29,7 +33,7 @@ function asu_send_user_password_email($account) {
 /**
  * Set email valid if user uses emailed login link.
  */
-function asu_validate_email($account){
+function asu_validate_email($account) {
   $route_name = \Drupal::routeMatch()->getRouteName();
   $routes = ['user.login.http', 'user.reset.login'];
   // Set is_valid_email to true.
@@ -53,25 +57,26 @@ function asu_get_external_user_field_data(UserInterface $account) {
   $backendApi = \Drupal::service('asu_api.backendapi');
   /** @var \Drupal\asu_user\Store $store */
   $store = \Drupal::service('asu_user.tempstore');
-
   try {
-    $isAuthenticated = $backendApi
+    $token = $backendApi
       ->getAuthenticationService()
       ->handleAuthentication($account);
-    if ($isAuthenticated) {
+
+    if ($token) {
       $request = new UserRequest($account);
-      $userInformation = $backendApi
+      $userInformationResponse = $backendApi
         ->getUserService()
-        ->getUser($request);
-      $store->setMultipleByConfiguration($userInformation);
+        ->getUser($request, $account->field_backend_profile->value, $token);
+      $store->setMultipleByConfiguration($userInformationResponse->getUserInformation());
     }
   }
-  catch (\Drupal\asu_api\Exception\RequestException $e) {
-
+  catch (RequestException $e) {
+    die('req');
     // Something else than 200.
     // @todo Handle error & logging.
   }
   catch (\Exception $e) {
+    die('eles: ' . $e->getMessage());
     // Something unexpected.
   }
 }
@@ -86,8 +91,27 @@ function asu_user_entity_type_alter(array &$entity_types) {
 /**
  * Implements hook_form_alter().
  */
-function asu_user_form_alter(&$form, &$form_state, $form_id){
+function asu_user_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'user_form') {
+    $user = User::load(\Drupal::currentUser()->id());
+    /** @var \Drupal\asu_user\Store $store */
+    $store = \Drupal::service('asu_user.tempstore');
+
+    $fields = [];
+    $config = \Drupal::config('asu_user.external_user_fields');
+    $store = \Drupal::service('asu_user.tempstore');
+
+    foreach ($config->get('external_data_map') as $field => $field_data) {
+      $default_value = $store->get($field) ? $store->get($field) : '';
+      $form[$field] = [
+        '#type' => $field_data['type'],
+        '#title' => $field_data['title'],
+        '#default_value' => $default_value,
+        '#weight' => 4,
+      ];
+    }
+    $form['#submit'][] = 'update_user_to_backend';
+
     $form['actions']['submit']['#submit'][] = 'user_edit_submit';
   }
 }
@@ -107,7 +131,7 @@ function user_edit_submit($form, &$form_state) {
     ->getAuthenticationService()
     ->handleAuthentication($user);
 
-  if ($isAuthenticated){
+  if ($isAuthenticated) {
     $updateRequest = new UpdateUserRequest($user);
     $updateUserResponse = $backendApi
       ->getUserService()
@@ -121,12 +145,12 @@ function user_edit_submit($form, &$form_state) {
  *
  * Create computed fields dynamically for user entity.
  */
-function asu_user_entity_base_field_info(\Drupal\Core\Entity\EntityTypeInterface $entity_type) {
+function asu_user_entity_base_field_info(EntityTypeInterface $entity_type) {
   if ($entity_type->id() === 'user') {
     $fields = [];
-    if($config = \Drupal::config('asu_user.external_user_fields')){
+    if ($config = \Drupal::config('asu_user.external_user_fields')) {
       foreach ($config->get('external_data_map') as $fieldname => $field_data) {
-        $fields[$fieldname] = \Drupal\Core\Field\BaseFieldDefinition::create('asu_external_string')
+        $fields[$fieldname] = BaseFieldDefinition::create('asu_external_string')
           ->setName($fieldname)
           ->setTranslatable(FALSE)
           ->setLabel(t($field_data['title']))
@@ -144,47 +168,27 @@ function asu_user_entity_base_field_info(\Drupal\Core\Entity\EntityTypeInterface
 }
 
 /**
- * Implements hook_form_user_form_alter().
- */
-function asu_user_form_user_form_alter(&$form, $form_state, $form_id) {
-  $fields = [];
-  $config = \Drupal::config('asu_user.external_user_fields');
-  $store = \Drupal::service('asu_user.tempstore');
-
-  foreach ($config->get('external_data_map') as $field => $field_data) {
-    $default_value = $store->get($field) ? $store->get($field) : '';
-    $form[$field] = [
-      '#type' => $field_data['type'],
-      '#title' => $field_data['title'],
-      '#default_value' => $default_value,
-      '#weight' => 4,
-    ];
-  }
-  $form['#submit'][] = 'update_user_to_backend';
-}
-
-/**
  * Submit handler for user form.
  */
 function update_user_to_backend(&$form, $form_state, $form_id) {
+
   $config = \Drupal::config('asu_user.external_user_fields');
   $fields = $config->get('external_data_map');
   $store = \Drupal::service('asu_user.tempstore');
-  $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+  $user = User::load(\Drupal::currentUser()->id());
 
-  /** @var \Drupal\asu_api\Api\BackendApi\BackendApi $backendApi */
   $backendApi = \Drupal::service('asu_api.backendapi');
 
   try {
     if ($backendApi->getAuthenticationService()->handleAuthentication($user)) {
-      $request = new \Drupal\asu_api\Api\BackendApi\Request\UpdateUserRequest($form_state, $fields);
+      $request = new UpdateUserRequest($form_state, $fields);
       $backendApi
         ->getUserService()
         ->updateUser($request);
-    } else {
-      // authentication failed.
     }
-
+    else {
+      // Authentication failed.
+    }
 
     foreach ($fields as $field => $field_information) {
       if (isset($formState->{$field})) {
@@ -192,7 +196,7 @@ function update_user_to_backend(&$form, $form_state, $form_id) {
       }
     }
   }
-  catch (\Drupal\asu_api\Exception\RequestException $e) {
+  catch (RequestException $e) {
     // Other than 200.
   }
   catch (\Exception $e) {

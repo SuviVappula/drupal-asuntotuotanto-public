@@ -10,8 +10,8 @@ use Drupal\user\Entity\User;
  */
 class UserRequest extends Request {
 
-  protected const METHOD = 'POST';
-  protected const PATH = 'api/v1/user';
+  protected const METHOD = 'GET';
+  protected const PATH = 'v1/profiles/';
 
   private User $user;
 

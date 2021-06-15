@@ -36,6 +36,9 @@ class ApartmentService extends ServiceBase {
     return ProjectApartmentsResponse::createFromHttpResponse($response);
   }
 
+  /**
+   *
+   */
   public function getApartment($id): SingleApartmentResponse {
     $request = new SingleApartmentRequest($id);
     $options = [

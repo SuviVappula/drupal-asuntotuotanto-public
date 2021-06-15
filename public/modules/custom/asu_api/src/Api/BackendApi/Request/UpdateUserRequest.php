@@ -10,9 +10,9 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class UpdateUserRequest extends Request {
 
-  protected const METHOD = 'POST';
+  protected const METHOD = 'PUT';
 
-  protected const PATH = 'api/v1/update_user';
+  protected const PATH = 'v1/profiles/';
 
   private FormStateInterface $formState;
 
@@ -33,7 +33,6 @@ class UpdateUserRequest extends Request {
     $data = [];
     foreach ($this->fields as $fieldName => $field_information) {
       if (isset($this->formState->{$fieldName})) {
-        #$data['field_information']['external_field'] = $this->formState->{$field};
         $data[] = $this->formState->{$fieldName};
       }
     }

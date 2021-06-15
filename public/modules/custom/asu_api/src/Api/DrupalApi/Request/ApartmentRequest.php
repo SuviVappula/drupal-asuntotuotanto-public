@@ -27,17 +27,21 @@ class ApartmentRequest extends Request {
 
   /**
    * Constructor.
+   *
    * @param int $contentId
    */
   public function __construct(int $contentId) {
     $this->contentId = $contentId;
   }
 
-  public function getPath(): string
-  {
+  /**
+   *
+   */
+  public function getPath(): string {
     $language = \Drupal::languageManager()->getCurrentLanguage();
     $languageCode = $language->getId();
     $path = parent::getPath();
     return "$languageCode/$path/{$this->contentId}";
   }
+
 }

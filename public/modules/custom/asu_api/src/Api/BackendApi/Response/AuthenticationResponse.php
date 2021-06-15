@@ -18,11 +18,14 @@ class AuthenticationResponse extends Response {
    */
   private string $token;
 
+  private string $access;
+
   /**
    * Constructor.
    */
   public function __construct(\stdClass $content) {
-    $this->token = $content->token;
+    $this->token = $content->access;
+    $this->access = $content->refresh;
   }
 
   /**
@@ -36,7 +39,7 @@ class AuthenticationResponse extends Response {
    * {@inheritDoc}
    */
   public static function createFromHttpResponse(ResponseInterface $response): self {
-    if (self::requestOk($response)) {
+    if (!self::requestOk($response)) {
       throw new RequestException('Bad status code: ' . $response->getStatusCode());
     }
     $content = json_decode($response->getBody()->getContents(), FALSE);

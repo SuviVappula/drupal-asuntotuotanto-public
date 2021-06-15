@@ -44,11 +44,11 @@ class CreateUserRequest extends Request {
    * Data to array.
    */
   public function toArray(): array {
-    $config = \Drupal::config('asuntotuotanto_public.external_user_fields');
+    $config = \Drupal::config('asu_user.external_user_fields');
     $fieldMap = $config->get('external_data_map');
 
     $data = [
-      'uuid' => $this->user->uuid(),
+      'id' => $this->user->uuid(),
       'email' => $this->user->getEmail(),
     ];
 
@@ -58,20 +58,10 @@ class CreateUserRequest extends Request {
 
     $dateOfBirth = (new \DateTime($this->user->field_date_of_birth->value))->format('Y-m-d');
     $data['date_of_birth'] = $dateOfBirth;
+    // @todo Remove right of residence.
+    $data['right_of_residence'] = '1000';
     $data['contact_language'] = $this->user->getPreferredLangcode();
 
     return $data;
   }
-
-  /**
-   *
-   */
-  public static function createResponse(ResponseInterface $response): Response {
-    if (!static::requestOk($response)) {
-      throw new RequestException('Bad status code: ' . $response->getStatusCode());
-    }
-    $content = json_decode($response->getBody()->getContents(), TRUE);
-    return new UserResponse($content);
-  }
-
 }

@@ -31,7 +31,7 @@ class SingleApartmentRequest extends Request {
    */
   public function toArray(): array {
     return [
-      #"size" => 10000,
+      // "size" => 10000,
       "query" => [
         "match" => [
           "nid" => (int) $this->apartmentId,

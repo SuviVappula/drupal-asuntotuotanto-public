@@ -30,7 +30,7 @@ class AsuExternalString extends StringItem {
   /**
    * Private tempstore.
    *
-   * @var \Drupal\Asuntotuotanto_public\Store
+   * @var \Drupal\asu_user\Store
    */
   private Store $store;
 
@@ -39,7 +39,7 @@ class AsuExternalString extends StringItem {
    */
   public function __construct(DataDefinitionInterface $definition, $name = NULL, TypedDataInterface $parent = NULL) {
     parent::__construct($definition, $name, $parent);
-    $this->store = \Drupal::service('asuntotuotanto_public.tempstore');
+    $this->store = \Drupal::service('asu_user.tempstore');
   }
 
   /**
@@ -80,7 +80,7 @@ class AsuExternalString extends StringItem {
   protected function ensureCalculated() {
     if (!$this->isCalculated) {
       $name = $this->getFieldDefinition()->getFieldStorageDefinition()->getName();
-      $dataMap = \Drupal::config('asuntotuotanto_public.external_user_fields')->get('external_data_map');
+      $dataMap = \Drupal::config('asu_public.external_user_fields')->get('external_data_map');
 
       if (isset($dataMap[$name])) {
         $this->setValue([

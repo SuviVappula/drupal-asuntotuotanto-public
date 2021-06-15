@@ -51,19 +51,20 @@ class AuthenticationService {
    * @return bool
    *   Is authentication handled properly.
    */
-  public function handleAuthentication(UserInterface $user): bool {
+  public function handleAuthentication(UserInterface $user): ?string {
     if (!$this->isApiAuthenticated($user)) {
       try {
         $authenticationResponse = $this->authenticate($user);
         $this->session->set('token', $authenticationResponse->getToken());
-        return TRUE;
+        return $authenticationResponse->getToken();
       }
       catch (\Exception $e) {
+        \Drupal::messenger()->addMessage('exception: ' . $e->getMessage());
         // Token is not set and authentication failed. Emergency.
-        return FALSE;
+        return NULL;
       }
     }
-    return FALSE;
+    return NULL;
   }
 
   /**
@@ -77,9 +78,8 @@ class AuthenticationService {
    */
   private function isApiAuthenticated(UserInterface $user): bool {
     if ($token = $this->session->get('token')) {
-      // if($this->isTokenAlive($token)){
+      // Return $this->isTokenAlive($token);
       return TRUE;
-      // }
     }
     return FALSE;
   }
@@ -94,12 +94,10 @@ class AuthenticationService {
    *   Is token still usable.
    */
   private function isTokenAlive(string $token): bool {
-    $tokenTTL = 1770;
     $token = json_decode(base64_decode($token));
-    // @todo Get the created date from token.
-    // $tokenCreated = (new \DateTime($token['asd']))->getTimestamp();
-    $tokenCreated = $token['asd'];
-    return ((strtotime('now') - strtotime($tokenCreated)) < $tokenTTL);
+    // @todo Get the "exp" from token.
+    $tokenCreated = $token['exp'];
+    return strtotime('now') < $tokenCreated;
   }
 
   /**
@@ -117,6 +115,13 @@ class AuthenticationService {
     $request = new AuthenticationRequest($user);
     $response = $this->requestHandler->post($request->getPath(), $request->toArray());
     return AuthenticationResponse::createFromHttpResponse($response);
+  }
+
+  /**
+   *
+   */
+  public function getUserToken(): string {
+    $this->session->get('token');
   }
 
 }

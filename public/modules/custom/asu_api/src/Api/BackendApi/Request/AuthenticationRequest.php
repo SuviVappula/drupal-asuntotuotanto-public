@@ -9,9 +9,10 @@ use Drupal\user\UserInterface;
  * Authentication request class.
  */
 class AuthenticationRequest extends Request {
-
   protected const METHOD = 'POST';
+
   protected const PATH = 'v1/token/';
+
   protected const AUTHENTICATED = FALSE;
 
   /**
@@ -36,8 +37,8 @@ class AuthenticationRequest extends Request {
    */
   public function toArray(): array {
     return [
-      'body' => [
-        'profile_id' => $this->user->field_backend_profile_id->value,
+      'form_params' => [
+        'profile_id' => $this->user->field_backend_profile->value,
         'password' => $this->user->field_backend_password->value,
       ],
     ];

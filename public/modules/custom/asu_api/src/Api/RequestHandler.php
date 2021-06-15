@@ -5,26 +5,25 @@ namespace Drupal\asu_api\Api;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Drupal\asu_api\Api\Request as AppRequest;
+use GuzzleHttp\Client;
 
 /**
  * Handles requests.
  */
 class RequestHandler {
-
   /**
    * Guzzle http-client.
    *
    * @var \GuzzleHttp\Client
    */
-  private $client;
+  private Client $client;
 
   /**
    * Api url.
    *
    * @var string
    */
-  private $apiUrl;
+  private string $apiUrl;
 
   /**
    * Constructor.
@@ -76,7 +75,7 @@ class RequestHandler {
    * @return \GuzzleHttp\Psr7\RequestInterface
    *   Request to send.
    */
-  public function buildRequest(AppRequest $request): RequestInterface {
+  public function buildRequest(\Drupal\asu_api\Api\Request $request): RequestInterface {
     $method = $request->getMethod();
     $uri = "{$this->apiUrl}{$request->getPath()}";
     $payload = $request->toArray();
@@ -84,6 +83,25 @@ class RequestHandler {
       $method,
       $uri,
       ['Content-Type' => 'application/json'],
+      json_encode($payload)
+    );
+  }
+
+  /**
+   *
+   */
+  public function buildAuthenticatedRequest(\Drupal\asu_api\Api\Request $request, string $profileId, string $token): RequestInterface {
+    $method = $request->getMethod();
+    $uri = "{$this->apiUrl}{$request->getPath()}$profileId/";
+    $payload = $request->toArray();
+    $headers = [
+      'Content-Type' => 'application/json',
+      'Authorization' => 'Bearer ' . $token,
+    ];
+    return new Request(
+      $method,
+      $uri,
+      $headers,
       json_encode($payload)
     );
   }

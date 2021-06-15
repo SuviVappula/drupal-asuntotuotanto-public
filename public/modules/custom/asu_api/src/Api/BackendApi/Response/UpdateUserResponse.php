@@ -49,7 +49,7 @@ class UpdateUserResponse extends Response {
    * @throws \Exception
    */
   public static function createFromHttpResponse(ResponseInterface $response): self {
-    if ($response->getStatusCode() < 200 && $response->getStatusCode() > 299) {
+    if (!self::requestOk($response)) {
       throw new ApplicationRequestException('Bad status code: ' . $response->getStatusCode());
     }
     $content = json_decode($response->getBody()->getContents(), TRUE);
