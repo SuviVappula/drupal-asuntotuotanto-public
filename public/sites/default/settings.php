@@ -107,8 +107,8 @@ if ($env = getenv('APP_ENV')) {
   $settings['asuntotuotanto_url'] = getenv('ASU_ASUNTOTUOTANTO_URL');
   $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = getenv('ASU_ELASTICSEARCH_URL');
 
-  $config['external_entities.external_entity_type.project']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_URL') ? getenv('ASU_ASUNTOTUOTANTO_URL') . '/fi/content/project' : 'https://nginx-asuntotuotanto-public-test.agw.arodevtest.hel.fi/fi/content/project';
-  $config['external_entities.external_entity_type.apartment']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_URL') ?  getenv('ASU_ASUNTOTUOTANTO_URL') . '/fi/content/apartment' : 'https://nginx-asuntotuotanto-public-test.agw.arodevtest.hel.fi/fi/content/apartment';
+  $config['external_entities.external_entity_type.project']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_URL') ? getenv('ASU_ASUNTOTUOTANTO_URL') . '/fi/content/project' : 'https://nginx-asuntotuotanto-test.agw.arodevtest.hel.fi/fi/content/project';
+  $config['external_entities.external_entity_type.apartment']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_URL') ?  getenv('ASU_ASUNTOTUOTANTO_URL') . '/fi/content/apartment' : 'https://nginx-asuntotuotanto-test.agw.arodevtest.hel.fi/fi/content/apartment';
 
   if ($env === 'dev') {
     // Local development environment.
