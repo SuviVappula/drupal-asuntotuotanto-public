@@ -3,6 +3,7 @@
 namespace Drupal\asu_user;
 
 use Drupal\asu_api\Api\BackendApi\BackendApi;
+use Drupal\asu_api\Api\BackendApi\Request\CreateUserRequest;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
@@ -94,15 +95,8 @@ class RegisterForm extends BaseForm {
     $account = $this->entity;
 
     try {
-<<<<<<< HEAD:public/modules/custom/asuntotuotanto/src/RegisterForm.php
-      $request = new CreateUserRequest($account);
-      /** @var \Drupal\asu_api\Api\BackendApi\Response\CreateUserResponse $response */
-
-      $response = $this->backendApi
-=======
       $request = new CreateUserRequest($account, $form_state);
-      $this->backendApi
->>>>>>> ASU-663_get_user_information:public/modules/custom/asuntotuotanto_public/src/RegisterForm.php
+      $response = $this->backendApi
         ->getUserService()
         ->createUser($request);
 
