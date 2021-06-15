@@ -1,3 +1,7 @@
+.page--user {
+  background-color: #FAFAFA;
+}
+
 .user-profile {
   padding-top: 6rem;
 
@@ -71,10 +75,20 @@
   &:not(:first-of-type) {
     border-top: 1px solid var(--color-black-20);
   }
+
+  .hds-button {
+    width: 100%;
+
+    @media screen and (min-width: $breakpoint-m) {
+      width: auto;
+    }
+  }
 }
 
 .user-profile__user-information {
-  max-width: 550px;
+  @media screen and (min-width: $breakpoint-m) {
+    max-width: 550px;
+  }
 
   .hds-text-input {
     &:not(:first-of-type) {
