@@ -5,9 +5,9 @@
  * Functions to support theming in the HDBT Subtheme.
  */
 
-use Drupal\asu_application\Applications;
 use Drupal\Core\Url;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\asu_application\Applications;
 
 /**
  * Helper function to get the icons path.
