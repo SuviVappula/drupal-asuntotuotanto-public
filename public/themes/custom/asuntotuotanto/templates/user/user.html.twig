@@ -60,7 +60,7 @@
     <li class="user-profile__tab">
       {{ link(
         'Applications'|t,
-        'internal:' ~ path('entity.user.canonical', {'user': user.id}),
+        "internal:/user/#{user.id}/applications",
         { 'class':['']} )
       }}
     </li>

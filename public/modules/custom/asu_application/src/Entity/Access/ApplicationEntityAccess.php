@@ -10,7 +10,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 
 /**
- * Defines the access control handler for remote entities.
+ * Defines the access control handler for application entities.
  */
 class ApplicationEntityAccess extends EntityAccessControlHandler {
 
@@ -21,13 +21,7 @@ class ApplicationEntityAccess extends EntityAccessControlHandler {
 
     switch ($operation) {
       case 'view':
-        return AccessResult::allowedIfHasPermission($account, 'view remote entities');
-
-      case 'update':
-        return AccessResult::allowedIfHasPermissions($account, [
-          'edit remote entities',
-          'administer remote entities',
-        ], 'OR');
+        return AccessResult::allowedIf($account->id() === $entity->getOwnerId());
     }
 
     return AccessResult::neutral();
