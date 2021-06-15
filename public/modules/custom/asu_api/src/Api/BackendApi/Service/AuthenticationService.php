@@ -52,7 +52,7 @@ class AuthenticationService {
    *   Is authentication handled properly.
    */
   public function handleAuthentication(UserInterface $user): bool {
-    if (!$this->isAuthenticated($user)) {
+    if (!$this->isApiAuthenticated($user)) {
       try {
         $authenticationResponse = $this->authenticate($user);
         $this->session->set('token', $authenticationResponse->getToken());
@@ -67,7 +67,7 @@ class AuthenticationService {
   }
 
   /**
-   * Check if user has a valid token.
+   * Check if user has a valid token for backend api.
    *
    * @param \Drupal\user\UserInterface $user
    *   Current user.
@@ -75,7 +75,7 @@ class AuthenticationService {
    * @return bool
    *   Is user able to send authenticated requests to backend.
    */
-  private function isAuthenticated(UserInterface $user): bool {
+  private function isApiAuthenticated(UserInterface $user): bool {
     if ($token = $this->session->get('token')) {
       // if($this->isTokenAlive($token)){
       return TRUE;

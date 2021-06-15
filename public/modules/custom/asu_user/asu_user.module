@@ -4,20 +4,32 @@
  * @file
  */
 
+
+use Drupal\user\UserInterface;
+use Drupal\asu_api\Api\BackendApi\Request\UserRequest;
+
 /**
  * Implements hook_user_login().
  */
-
-use Drupal\user\UserInterface;
+function asu_user_user_login(UserInterface $account) {
+  asu_send_user_password_email($account);
+  asu_validate_email($account);
+  asu_get_external_user_field_data($account);
+}
 
 /**
- *
+ * Send user an email if email is not validated.
  */
-function asu_user_user_login(UserInterface $account) {
+function asu_send_user_password_email($account) {
   if ($account->field_email_is_valid->value == 0) {
-    asu_send_user_password_email($account);
+    _user_mail_notify('password_reset', $account);
   }
+}
 
+/**
+ * Set email valid if user uses emailed login link.
+ */
+function asu_validate_email($account){
   $route_name = \Drupal::routeMatch()->getRouteName();
   $routes = ['user.login.http', 'user.reset.login'];
   // Set is_valid_email to true.
@@ -30,8 +42,174 @@ function asu_user_user_login(UserInterface $account) {
 }
 
 /**
- *
+ * Get the user data from django backend.
  */
-function asu_send_user_password_email($account) {
-  _user_mail_notify('password_reset', $account);
+function asu_get_external_user_field_data(UserInterface $account) {
+  if (!in_array('customer', $account->getRoles())) {
+    return;
+  }
+
+  /** @var \Drupal\asu_api\Api\BackendApi\BackendApi $backendApi */
+  $backendApi = \Drupal::service('asu_api.backendapi');
+  /** @var \Drupal\asu_user\Store $store */
+  $store = \Drupal::service('asu_user.tempstore');
+
+  try {
+    $isAuthenticated = $backendApi
+      ->getAuthenticationService()
+      ->handleAuthentication($account);
+    if ($isAuthenticated) {
+      $request = new UserRequest($account);
+      $userInformation = $backendApi
+        ->getUserService()
+        ->getUser($request);
+      $store->setMultipleByConfiguration($userInformation);
+    }
+  }
+  catch (\Drupal\asu_api\Exception\RequestException $e) {
+
+    // Something else than 200.
+    // @todo Handle error & logging.
+  }
+  catch (\Exception $e) {
+    // Something unexpected.
+  }
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function asu_user_entity_type_alter(array &$entity_types) {
+  $entity_types['user']->setFormClass('register', 'Drupal\asu_user\RegisterForm');
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function asu_user_form_alter(&$form, &$form_state, $form_id){
+  if ($form_id == 'user_form') {
+    $form['actions']['submit']['#submit'][] = 'user_edit_submit';
+  }
+}
+
+/**
+ * Additional submit handler for user_form.
+ *
+ * @param $form
+ * @param $form_state
+ */
+function user_edit_submit($form, &$form_state) {
+  /** @var \Drupal\asu_api\Api\BackendApi\BackendApi $bakendApi */
+  $backendApi = \Drupal::service('asu_api.backendapi');
+  $user = User::load(\Drupal::currentUser()->id());
+
+  $isAuthenticated = $backendApi
+    ->getAuthenticationService()
+    ->handleAuthentication($user);
+
+  if ($isAuthenticated){
+    $updateRequest = new UpdateUserRequest($user);
+    $updateUserResponse = $backendApi
+      ->getUserService()
+      ->updateUser($updateRequest);
+  }
+
+}
+
+/**
+ * Implements hook_entity_base_field_info().
+ *
+ * Create computed fields dynamically for user entity.
+ */
+function asu_user_entity_base_field_info(\Drupal\Core\Entity\EntityTypeInterface $entity_type) {
+  if ($entity_type->id() === 'user') {
+    $fields = [];
+    if($config = \Drupal::config('asu_user.external_user_fields')){
+      foreach ($config->get('external_data_map') as $fieldname => $field_data) {
+        $fields[$fieldname] = \Drupal\Core\Field\BaseFieldDefinition::create('asu_external_string')
+          ->setName($fieldname)
+          ->setTranslatable(FALSE)
+          ->setLabel(t($field_data['title']))
+          ->setComputed(TRUE)
+          ->setClass('\Drupal\asu_user\ExternalData')
+          ->setDisplayConfigurable('view', TRUE)
+          ->setDisplayOptions('view', [
+            'label' => 'visible',
+            'weight' => -5,
+          ]);
+      }
+    }
+    return $fields;
+  }
+}
+
+/**
+ * Implements hook_form_user_form_alter().
+ */
+function asu_user_form_user_form_alter(&$form, $form_state, $form_id) {
+  $fields = [];
+  $config = \Drupal::config('asu_user.external_user_fields');
+  $store = \Drupal::service('asu_user.tempstore');
+
+  foreach ($config->get('external_data_map') as $field => $field_data) {
+    $default_value = $store->get($field) ? $store->get($field) : '';
+    $form[$field] = [
+      '#type' => $field_data['type'],
+      '#title' => $field_data['title'],
+      '#default_value' => $default_value,
+      '#weight' => 4,
+    ];
+  }
+  $form['#submit'][] = 'update_user_to_backend';
+}
+
+/**
+ * Submit handler for user form.
+ */
+function update_user_to_backend(&$form, $form_state, $form_id) {
+  $config = \Drupal::config('asu_user.external_user_fields');
+  $fields = $config->get('external_data_map');
+  $store = \Drupal::service('asu_user.tempstore');
+  $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+
+  /** @var \Drupal\asu_api\Api\BackendApi\BackendApi $backendApi */
+  $backendApi = \Drupal::service('asu_api.backendapi');
+
+  try {
+    if ($backendApi->getAuthenticationService()->handleAuthentication($user)) {
+      $request = new \Drupal\asu_api\Api\BackendApi\Request\UpdateUserRequest($form_state, $fields);
+      $backendApi
+        ->getUserService()
+        ->updateUser($request);
+    } else {
+      // authentication failed.
+    }
+
+
+    foreach ($fields as $field => $field_information) {
+      if (isset($formState->{$field})) {
+        $store->set($field, $formState->{$field});
+      }
+    }
+  }
+  catch (\Drupal\asu_api\Exception\RequestException $e) {
+    // Other than 200.
+  }
+  catch (\Exception $e) {
+    // Unexpected.
+  }
+}
+
+/**
+ * Implements hook_field_formatter_info_alter().
+ */
+function asu_user_field_formatter_info_alter(array &$info) {
+  $info['string']['field_types'][] = 'asu_external_string';
+}
+
+/**
+ * Implements hook_field_widget_info_alter().
+ */
+function asu_user_field_widget_info_alter(array &$info) {
+  $info['string_textfield']['field_types'][] = 'asu_external_string';
 }

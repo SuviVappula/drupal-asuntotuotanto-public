@@ -3,7 +3,6 @@
 namespace Drupal\asu_api\Api\BackendApi\Service;
 
 use Drupal\asu_api\Api\BackendApi\Request\CreateUserRequest;
-use Drupal\asu_api\Api\BackendApi\Request\UpdateUserRequest;
 use Drupal\asu_api\Api\BackendApi\Response\CreateUserResponse;
 use Drupal\asu_api\Api\BackendApi\Response\UpdateUserResponse;
 use Drupal\asu_api\Api\BackendApi\Response\UserResponse;
@@ -37,12 +36,10 @@ class UserService extends ServiceBase {
     }
     catch (ResponseParameterException $exception) {
       \Drupal::messenger()->addMessage('Response parameters are not correct: ' . $exception->getMessage());
-      die('parameters are wrong.');
       // Response parameters are not what we expect.
     }
     catch (RequestException $exception) {
       \Drupal::messenger()->addMessage('non-200 status code.: ' . $exception->getMessage());
-      die('non 200' . $exception->getMessage());
       // Status code is not 200.
     }
   }

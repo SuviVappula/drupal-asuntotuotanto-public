@@ -31,9 +31,10 @@ class UpdateUserRequest extends Request {
    */
   public function toArray(): array {
     $data = [];
-    foreach ($this->fields as $field => $field_information) {
-      if (isset($this->formState->{$field})) {
-        $data['field_information']['external_field'] = $this->formState->{$field};
+    foreach ($this->fields as $fieldName => $field_information) {
+      if (isset($this->formState->{$fieldName})) {
+        #$data['field_information']['external_field'] = $this->formState->{$field};
+        $data[] = $this->formState->{$fieldName};
       }
     }
     return $data;
