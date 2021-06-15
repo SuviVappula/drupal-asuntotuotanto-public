@@ -299,6 +299,17 @@ function asuntotuotanto_preprocess_views_view(&$variables) {
 }
 
 /**
+ * Implements hook_theme_suggestions_input_alter().
+ */
+function asuntotuotanto_theme_suggestions_input_alter(&$suggestions, array $variables) {
+  $element = $variables['element'];
+
+  if (isset($element['#attributes']['data-twig-suggestion'])) {
+    $suggestions[] = 'input__' . $element['#type'] . '__' . $element['#attributes']['data-twig-suggestion'];
+  }
+}
+
+/**
  * Implements hook_theme_suggestions_container_alter().
  */
 function asuntotuotanto_theme_suggestions_container_alter(&$suggestions, array $variables) {
@@ -311,6 +322,25 @@ function asuntotuotanto_theme_suggestions_container_alter(&$suggestions, array $
 
   if (isset($element['#type']) && $element['#type'] == 'container' && isset($element['children']['#type'])) {
     $suggestions[] = 'container__' . $element['children']['#type'];
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function asuntotuotanto_form_alter(&$form, &$form_state, $form_id) {
+  if ($form['#id'] == 'user-login-form') {
+    $form['name']['#description'] = FALSE;
+    $form['pass']['#description'] = FALSE;
+  }
+
+  if ($form['#id'] == 'user-pass') {
+    unset($form['mail']);
+  }
+
+  if ($form['#id'] == 'user-register-form') {
+    $form['account']['pass']['#description'] = FALSE;
+    $form['actions']['submit']['#attributes']['data-twig-suggestion'] = 'register_form_submit_button';
   }
 }
 
