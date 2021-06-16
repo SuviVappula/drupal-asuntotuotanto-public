@@ -64,11 +64,12 @@ class Store {
    */
   public function setMultipleByConfiguration($data) {
     if ($this->config) {
+
       foreach ($data as $key => $value) {
         // Get the index number of configuration by external field name.
-        // Only set values by configuration no matter what API returns.
+        // Only set store-values if they are configured no matter what API returns.
         $fieldNumber = array_search($key, array_column($this->config, 'external_field'));
-        if (isset(array_keys($this->config)[$fieldNumber])) {
+        if (!is_bool($fieldNumber) && isset(array_keys($this->config)[$fieldNumber])) {
           // Set the value to store by internal filed name.
           $this->store->set(array_keys($this->config)[$fieldNumber], $value);
         }
