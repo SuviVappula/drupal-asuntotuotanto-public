@@ -56,8 +56,8 @@ class UserService extends ServiceBase {
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function updateUser(Request $request): UpdateUserResponse {
-    $httpRequest = $this->requestHandler->buildRequest($request);
+  public function updateUser(Request $request, string $profile, $token): UpdateUserResponse {
+    $httpRequest = $this->requestHandler->buildAuthenticatedRequest($request, $profile, $token);
     $response = $this->requestHandler->send($httpRequest);
     return UpdateUserResponse::createFromHttpResponse($response);
   }

@@ -32,8 +32,7 @@ class UpdateUserResponse extends Response {
   /**
    * Get request content.
    */
-  public function getContent(): array {
-
+  public function getContent(): \stdClass {
     return $this->content;
   }
 
@@ -52,8 +51,7 @@ class UpdateUserResponse extends Response {
     if (!self::requestOk($response)) {
       throw new ApplicationRequestException('Bad status code: ' . $response->getStatusCode());
     }
-    $content = json_decode($response->getBody()->getContents(), TRUE);
-
+    $content = json_decode($response->getBody()->getContents(), FALSE);
     return new self($content);
   }
 

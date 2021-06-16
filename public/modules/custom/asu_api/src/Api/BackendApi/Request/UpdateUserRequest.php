@@ -4,6 +4,7 @@ namespace Drupal\asu_api\Api\BackendApi\Request;
 
 use Drupal\asu_api\Api\Request;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\user\UserInterface;
 
 /**
  * Update user information in backend.
@@ -21,9 +22,10 @@ class UpdateUserRequest extends Request {
   /**
    * Constructor.
    */
-  public function __construct(FormStateInterface $formState, array $fields) {
+  public function __construct(UserInterface $user, FormStateInterface $formState, array $fields) {
     $this->formState = $formState;
     $this->fields = $fields;
+    $this->user = $user;
   }
 
   /**
@@ -31,11 +33,14 @@ class UpdateUserRequest extends Request {
    */
   public function toArray(): array {
     $data = [];
-    foreach ($this->fields as $fieldName => $field_information) {
-      if (isset($this->formState->{$fieldName})) {
-        $data[] = $this->formState->{$fieldName};
-      }
+    foreach ($this->fields as $fieldName => $fieldInformation) {
+      $data[$fieldInformation['external_field']] = $this->formState->getValue($fieldName);
     }
+
+    $data['id'] = $this->user->uuid();
+    $data['email'] = $this->user->getEmail();
+    $data['contact_language'] = $this->user->getPreferredLangcode();
+
     return $data;
   }
 

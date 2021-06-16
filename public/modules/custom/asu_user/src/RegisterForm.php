@@ -4,6 +4,8 @@ namespace Drupal\asu_user;
 
 use Drupal\asu_api\Api\BackendApi\BackendApi;
 use Drupal\asu_api\Api\BackendApi\Request\CreateUserRequest;
+use Drupal\asu_api\Exception\RequestException;
+use Drupal\asu_api\Exception\ResponseParameterException;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;

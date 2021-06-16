@@ -63,6 +63,8 @@ class AuthenticationService {
         // Token is not set and authentication failed. Emergency.
         return NULL;
       }
+    } else {
+      return $this->session->get('token');
     }
     return NULL;
   }
@@ -95,6 +97,7 @@ class AuthenticationService {
    */
   private function isTokenAlive(string $token): bool {
     $token = json_decode(base64_decode($token));
+    #$tokenArray = explode($);
     // @todo Get the "exp" from token.
     $tokenCreated = $token['exp'];
     return strtotime('now') < $tokenCreated;

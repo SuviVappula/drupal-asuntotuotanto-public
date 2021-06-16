@@ -18,14 +18,15 @@ use Drupal\asu_api\Api\BackendApi\Request\UserRequest;
 function asu_user_user_login(UserInterface $account) {
   asu_send_user_password_email($account);
   asu_validate_email($account);
+  asu_authenticate_user($account);
   asu_get_external_user_field_data($account);
 }
 
 /**
  * Send user an email if email is not validated.
  */
-function asu_send_user_password_email($account) {
-  if ($account->field_email_is_valid->value == 0) {
+function asu_send_user_password_email(UserInterface $account) {
+  if ($account->hasRole('customer') && $account->field_email_is_valid->value == 0) {
     _user_mail_notify('password_reset', $account);
   }
 }
@@ -33,15 +34,36 @@ function asu_send_user_password_email($account) {
 /**
  * Set email valid if user uses emailed login link.
  */
-function asu_validate_email($account) {
+function asu_validate_email(UserInterface $account) {
+  if(!$account->hasRole('customer')){
+    return;
+  }
+
   $route_name = \Drupal::routeMatch()->getRouteName();
   $routes = ['user.login.http', 'user.reset.login'];
-  // Set is_valid_email to true.
+  // Set email_is_valid to true.
   if (in_array($route_name, $routes)) {
     if ($account->hasField('field_email_is_valid')) {
       $account->field_email_is_valid = 1;
       $account->save();
     }
+  }
+}
+
+/**
+ * Get auth token from backend.
+ */
+function asu_authenticate_user(UserInterface $account) {
+  // @todo User cannot request token if logged in right after registering.
+  // User entity hasn't been updated yet most likely.
+  /** @var \Drupal\asu_api\Api\BackendApi\BackendApi $backendApi */
+  $backendApi = \Drupal::service('asu_api.backendapi');
+  $user = User::load($account->id());
+  try {
+    asu_get_user_fields($account);
+  }
+  catch(\Exception $e){
+    \Drupal::messenger()->addMessage('Unable to authenticate with backend.');
   }
 }
 
@@ -63,6 +85,7 @@ function asu_get_external_user_field_data(UserInterface $account) {
       ->handleAuthentication($account);
 
     if ($token) {
+      asu_get_user_fields();
       $request = new UserRequest($account);
       $userInformationResponse = $backendApi
         ->getUserService()
@@ -93,16 +116,23 @@ function asu_user_entity_type_alter(array &$entity_types) {
  */
 function asu_user_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'user_form') {
+    $backendApi = \Drupal::service('asu_api.backendapi');
     $user = User::load(\Drupal::currentUser()->id());
     /** @var \Drupal\asu_user\Store $store */
     $store = \Drupal::service('asu_user.tempstore');
 
-    $fields = [];
-    $config = \Drupal::config('asu_user.external_user_fields');
+    $fieldMap = \Drupal::config('asu_user.external_user_fields')->get('external_data_map');
     $store = \Drupal::service('asu_user.tempstore');
 
-    foreach ($config->get('external_data_map') as $field => $field_data) {
-      $default_value = $store->get($field) ? $store->get($field) : '';
+    // @todo abstraction
+
+    // If a field value is missing, fetch user information.
+    if(!$store->get(array_keys($fieldMap)[0])){
+      asu_get_user_fields($user);
+    }
+
+    foreach ($fieldMap as $field => $field_data) {
+      $default_value = $store->get($field) ?? '';
       $form[$field] = [
         '#type' => $field_data['type'],
         '#title' => $field_data['title'],
@@ -110,7 +140,8 @@ function asu_user_form_alter(&$form, &$form_state, $form_id) {
         '#weight' => 4,
       ];
     }
-    $form['#submit'][] = 'update_user_to_backend';
+    #$form['#submit'][] = 'update_user_to_backend';
+    $form['#submit'][] = 'user_edit_submit';
 
     $form['actions']['submit']['#submit'][] = 'user_edit_submit';
   }
@@ -126,18 +157,21 @@ function user_edit_submit($form, &$form_state) {
   /** @var \Drupal\asu_api\Api\BackendApi\BackendApi $bakendApi */
   $backendApi = \Drupal::service('asu_api.backendapi');
   $user = User::load(\Drupal::currentUser()->id());
-
-  $isAuthenticated = $backendApi
-    ->getAuthenticationService()
-    ->handleAuthentication($user);
-
-  if ($isAuthenticated) {
-    $updateRequest = new UpdateUserRequest($user);
-    $updateUserResponse = $backendApi
-      ->getUserService()
-      ->updateUser($updateRequest);
+  try{
+    $token = $backendApi
+      ->getAuthenticationService()
+      ->handleAuthentication($user);
+  }
+  catch(\Exception $e){
+    dump($e->getMessage());die('asdasd');
   }
 
+  if ($token) {
+    $updateRequest = new UpdateUserRequest($user, $form_state, \Drupal::config('asu_user.external_user_fields')->get('external_data_map'));
+    $updateUserResponse = $backendApi
+      ->getUserService()
+      ->updateUser($updateRequest, $user->field_backend_profile->value, $token);
+  }
 }
 
 /**
@@ -152,6 +186,7 @@ function asu_user_entity_base_field_info(EntityTypeInterface $entity_type) {
       foreach ($config->get('external_data_map') as $fieldname => $field_data) {
         $fields[$fieldname] = BaseFieldDefinition::create('asu_external_string')
           ->setName($fieldname)
+          ->setRequired(TRUE)
           ->setTranslatable(FALSE)
           ->setLabel(t($field_data['title']))
           ->setComputed(TRUE)
@@ -171,7 +206,7 @@ function asu_user_entity_base_field_info(EntityTypeInterface $entity_type) {
  * Submit handler for user form.
  */
 function update_user_to_backend(&$form, $form_state, $form_id) {
-
+  /*
   $config = \Drupal::config('asu_user.external_user_fields');
   $fields = $config->get('external_data_map');
   $store = \Drupal::service('asu_user.tempstore');
@@ -202,6 +237,7 @@ function update_user_to_backend(&$form, $form_state, $form_id) {
   catch (\Exception $e) {
     // Unexpected.
   }
+  */
 }
 
 /**
@@ -216,4 +252,22 @@ function asu_user_field_formatter_info_alter(array &$info) {
  */
 function asu_user_field_widget_info_alter(array &$info) {
   $info['string_textfield']['field_types'][] = 'asu_external_string';
+}
+
+function asu_get_user_fields($account) {
+  $backendApi = \Drupal::service('asu_api.backendapi');
+  /** @var \Drupal\asu_user\Store $store */
+  $store = \Drupal::service('asu_user.tempstore');
+
+  $token = $backendApi
+    ->getAuthenticationService()
+    ->handleAuthentication($account);
+
+  if ($token) {
+    $request = new UserRequest($account);
+    $userInformationResponse = $backendApi
+      ->getUserService()
+      ->getUser($request, $account->field_backend_profile->value, $token);
+    $store->setMultipleByConfiguration($userInformationResponse->getUserInformation());
+  }
 }
