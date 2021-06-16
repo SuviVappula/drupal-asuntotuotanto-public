@@ -60,7 +60,7 @@
   padding-top: $spacing-2-xl;
   padding-bottom: $spacing-l;
 
-  h2 {
+  > h2 {
     @include font-size($fontsize-heading-m, 43px);
     font-weight: $font-weight-bold;
     color: var(--color-black-90);

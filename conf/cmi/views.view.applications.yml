@@ -30,7 +30,7 @@ display:
         type: views_query
         options:
           disable_sql_rewrite: false
-          distinct: false
+          distinct: true
           replica: false
           query_comment: ''
           query_tags: {  }
@@ -228,6 +228,188 @@ display:
         - user
         - user.permissions
       tags: {  }
+  applications_attachment_drafts:
+    display_plugin: attachment
+    id: applications_attachment_drafts
+    display_title: 'Attachment - Drafts'
+    position: 2
+    display_options:
+      display_extenders:
+        metatag_display_extender: {  }
+      displays:
+        applications_page: applications_page
+      attachment_position: after
+      pager:
+        type: none
+        options:
+          offset: 0
+      display_description: ''
+      filters:
+        uid_current:
+          id: uid_current
+          table: users
+          field: uid_current
+          relationship: uid
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: user
+          plugin_id: user_current
+      defaults:
+        filters: false
+        filter_groups: false
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+        - user
+        - user.permissions
+      tags: {  }
+  applications_attachment_submitted:
+    display_plugin: attachment
+    id: applications_attachment_submitted
+    display_title: 'Attachment - Submitted'
+    position: 2
+    display_options:
+      display_extenders:
+        metatag_display_extender: {  }
+      displays:
+        applications_page: applications_page
+      attachment_position: after
+      pager:
+        type: none
+        options:
+          offset: 0
+      display_description: ''
+      filters:
+        field_locked:
+          id: field_locked
+          table: asu_application
+          field: field_locked
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: asu_application
+          entity_field: field_locked
+          plugin_id: boolean
+        uid_current:
+          id: uid_current
+          table: users
+          field: uid_current
+          relationship: uid
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: user
+          plugin_id: user_current
+      defaults:
+        filters: false
+        filter_groups: false
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+        - user
+        - user.permissions
+      tags: {  }
   applications_page:
     display_plugin: page
     id: applications_page
@@ -238,6 +420,30 @@ display:
         metatag_display_extender: {  }
       path: user/%/applications
       display_description: ''
+      pager:
+        type: none
+        options:
+          offset: 0
+      defaults:
+        pager: false
+        style: false
+        row: false
+        fields: false
+        title: false
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          uses_fields: false
+      row:
+        type: 'entity:asu_application'
+        options:
+          relationship: none
+          view_mode: default
+      fields: {  }
+      title: Applications
     cache_metadata:
       max-age: -1
       contexts:
