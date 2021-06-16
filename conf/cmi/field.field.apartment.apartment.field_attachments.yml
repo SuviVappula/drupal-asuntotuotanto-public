@@ -1,4 +1,4 @@
-uuid: ce2c1305-6043-4274-9cd6-f7274f5ec95c
+uuid: cf4ac86a-9fa9-40b0-ad77-c7791f746291
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,6 @@ dependencies:
     - field.storage.apartment.field_attachments
   module:
     - external_entities
-    - options
 id: apartment.apartment.field_attachments
 field_name: field_attachments
 entity_type: apartment
@@ -18,4 +17,4 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: list_string
+field_type: string

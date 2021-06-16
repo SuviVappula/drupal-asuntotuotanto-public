@@ -73,7 +73,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       }
 
       if ($apartments = $entity['field_apartments']) {
-        $apartments = $apartments['#items']->getValue();
+        $apartments = isset($apartments['#items']) ? $apartments['#items']->getValue() : NULL;
         $apartments_stack = [];
 
         try {
@@ -101,7 +101,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       $variables['apartments'] = $apartments_stack ?? NULL;
 
       if ($services = $entity['field_services']) {
-        $services = $services['#items']->getValue();
+        $services = isset($services['#items']) ? $services['#items']->getValue() : NULL;
         $services_stack = [];
 
         foreach ($services as $service) {
@@ -118,7 +118,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       }
 
       if ($attachments = $entity['field_attachments']) {
-        $attachments = $attachments['#items']->getValue();
+        $attachments = isset($attachments['#items']) ? $attachments['#items']->getValue() : NULL;
         $attachments_stack = [];
 
         foreach ($attachments as $attachment) {
@@ -139,7 +139,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       }
 
       if ($services_url = $entity['field_services_url']) {
-        $services_url = $services_url['#items']->getValue()[0]['value'];
+        $services_url = isset($services_url['#items']) ? $services_url['#items']->getValue()[0]['value'] : NULL;
         $variables['services_url'] = $services_url ?? NULL;
       }
       break;
@@ -154,7 +154,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       $variables['sales_price'] = number_format($sales_price, 2, ',', '.') ?? NULL;
 
       if ($services = $entity['field_services']) {
-        $services = $services['#items']->getValue();
+        $services = isset($services['#items']) ? $services['#items']->getValue() : NULL;
         $services_stack = [];
 
         foreach ($services as $service) {
@@ -171,7 +171,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       }
 
       if ($attachments = $entity['field_attachments']) {
-        $attachments = $attachments['#items']->getValue();
+        $attachments = isset($attachments['#items']) ? $attachments['#items']->getValue() : NULL;
         $attachments_stack = [];
 
         foreach ($attachments as $attachment) {
@@ -192,8 +192,8 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       }
 
       if ($services_url = $entity['field_services_url']) {
-        $services_url = $services_url['#items']->getValue()[0]['value'];
-        $variables['services_url'] = $services_url ?? NULL;
+        $services_url = isset($services_url['#items']) ? $services_url['#items']->getValue()[0]['value'] : NULL;
+        $variables['services_url'] = $services_url;
       }
       break;
   }

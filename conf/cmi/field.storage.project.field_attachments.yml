@@ -1,18 +1,18 @@
-uuid: a4870f5a-5e3d-460e-be36-9b9526bf7586
+uuid: 6264ee68-8695-4d79-a8bd-92fb296f7bdb
 langcode: en
 status: true
 dependencies:
   module:
     - external_entities
-    - options
 id: project.field_attachments
 field_name: field_attachments
 entity_type: project
-type: list_string
+type: string
 settings:
-  allowed_values: {  }
-  allowed_values_function: ''
-module: options
+  max_length: 9999
+  is_ascii: false
+  case_sensitive: false
+module: core
 locked: false
 cardinality: -1
 translatable: true
