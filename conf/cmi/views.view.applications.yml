@@ -2,6 +2,8 @@ uuid: b1230605-2585-48fa-b43f-9f9600fafff0
 langcode: en
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.asu_application.teaser
   module:
     - asu_application
     - user
@@ -59,7 +61,7 @@ display:
         type: 'entity:asu_application'
         options:
           relationship: none
-          view_mode: default
+          view_mode: teaser
       fields:
         operations:
           table: asu_application
@@ -441,7 +443,7 @@ display:
         type: 'entity:asu_application'
         options:
           relationship: none
-          view_mode: default
+          view_mode: teaser
       fields: {  }
       title: Applications
     cache_metadata:
