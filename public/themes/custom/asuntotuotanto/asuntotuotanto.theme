@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Url;
+use Drupal\user\Entity\User;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\asu_application\Applications;
 
@@ -295,6 +296,11 @@ function asuntotuotanto_preprocess_views_view(&$variables) {
         $variables['page_title'] = $view->getTitle();
       }
 
+      break;
+
+    case 'applications':
+      $current_user = User::load(\Drupal::currentUser()->id());
+      $variables['is_email_valid'] = $current_user->get('field_email_is_valid')->getValue()[0]['value'];
       break;
   }
 }
