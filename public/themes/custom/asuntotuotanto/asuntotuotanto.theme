@@ -300,6 +300,17 @@ function asuntotuotanto_preprocess_views_view(&$variables) {
 }
 
 /**
+ * Implements hook_theme_suggestions_input_alter().
+ */
+function asuntotuotanto_theme_suggestions_input_alter(&$suggestions, array $variables) {
+  $element = $variables['element'];
+
+  if (isset($element['#attributes']['data-twig-suggestion'])) {
+    $suggestions[] = 'input__' . $element['#type'] . '__' . $element['#attributes']['data-twig-suggestion'];
+  }
+}
+
+/**
  * Implements hook_theme_suggestions_container_alter().
  */
 function asuntotuotanto_theme_suggestions_container_alter(&$suggestions, array $variables) {

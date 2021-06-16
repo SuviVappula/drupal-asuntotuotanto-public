@@ -11,7 +11,11 @@ is_admin: false
 permissions:
   - 'access content'
   - 'create application'
+  - 'administer rest resources'
   - 'display eu cookie compliance popup'
+  - 'restful get asu_applications'
+  - 'restful get asu_filters'
+  - 'restful get asu_initialize'
   - 'use text format full_html'
   - 'view media'
   - 'view remote entities'
