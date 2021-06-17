@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Url;
+use Drupal\user\Entity\User;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\asu_application\Applications;
 
@@ -35,6 +36,7 @@ function asuntotuotanto_get_icons_path() {
 function asuntotuotanto_preprocess(&$variables) {
   $variables['asuntotuotanto_icons_path'] = asuntotuotanto_get_icons_path();
   $variables['#attached']['drupalSettings']['asuntotuotanto_icons_path'] = $variables['asuntotuotanto_icons_path'];
+  $variables['current_user_id'] = \Drupal::currentUser()->id() ?? NULL;
 }
 
 /**
@@ -295,6 +297,11 @@ function asuntotuotanto_preprocess_views_view(&$variables) {
       }
 
       break;
+
+    case 'applications':
+      $current_user = User::load(\Drupal::currentUser()->id());
+      $variables['is_email_valid'] = $current_user->get('field_email_is_valid')->getValue()[0]['value'];
+      break;
   }
 }
 
@@ -341,6 +348,11 @@ function asuntotuotanto_form_alter(&$form, &$form_state, $form_id) {
   if ($form['#id'] == 'user-register-form') {
     $form['account']['pass']['#description'] = FALSE;
     $form['actions']['submit']['#attributes']['data-twig-suggestion'] = 'register_form_submit_button';
+  }
+
+  if ($form['#id'] == 'user-form') {
+    $form['account']['mail']['#description'] = FALSE;
+    $form['account']['pass']['#description'] = FALSE;
   }
 }
 

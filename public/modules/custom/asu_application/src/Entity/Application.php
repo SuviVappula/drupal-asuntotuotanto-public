@@ -33,7 +33,7 @@ use Drupal\user\EntityOwnerTrait;
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\Core\Entity\EntityListBuilder",
- *     "access" = "Drupal\Core\Entity\EntityAccessControlHandler",
+ *     "access" = "Drupal\asu_application\Entity\Access\ApplicationEntityAccess",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "form" = {
  *       "default" = "Drupal\asu_application\Form\ApplicationForm",

@@ -35,3 +35,19 @@ function asu_user_user_login(UserInterface $account) {
 function asu_send_user_password_email($account) {
   _user_mail_notify('password_reset', $account);
 }
+
+/**
+ * Redirect user to user profile after they have submitted user edit form.
+ */
+function asu_user_form_alter(&$form, $form_state, $form_id) {
+  if ($form_id === 'user_form') {
+    $form['actions']['submit']['#submit'][] = '_asu_user_user_edit_form_submit';
+  }
+}
+
+/**
+ *
+ */
+function _asu_user_user_edit_form_submit($form, &$form_state) {
+  $form_state->setRedirect('entity.user.canonical', ['user' => \Drupal::currentUser()->id()]);
+}

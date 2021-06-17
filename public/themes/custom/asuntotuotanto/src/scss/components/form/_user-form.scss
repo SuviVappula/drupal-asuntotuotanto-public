@@ -125,10 +125,34 @@
 
 .user-form__submit {
   margin-top: $spacing-2-xl;
+
+  .user-form--edit & {
+    margin-top: 0;
+  }
 }
 
-// Register form custom styles.
-.user-form--register {
+.user-form--edit {
+  .hds-button {
+    width: 100%;
+
+    @media screen and (min-width: $breakpoint-m) {
+      width: auto;
+    }
+
+    + .hds-button {
+      margin-top: $spacing-2-xs;
+
+      @media screen and (min-width: $breakpoint-m) {
+        margin-left: $spacing-s;
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+// Register and user edit form custom styles.
+.user-form--register,
+.user-profile--edit {
   .form-item-pass {
     .password-parent,
     .confirm-parent {
@@ -208,7 +232,6 @@
 
   .form-item-gdpr-warning {
     @include font-size($fontsize-body-m, 24px);
-    // font-weight: $font-weight-bold;
     margin-top: $spacing-l;
     flex-direction: column;
     align-items: baseline;

@@ -15,13 +15,6 @@
  * @see template_preprocess_views_view_unformatted()
  */
 #}
-<div class="news-liftup wrapper wrapper--mw-1264">
-  {% for row in rows %}
-    {%
-      set row_classes = [
-        default_row_class ? 'views-row',
-      ]
-    %}
-    {{- row.content -}}
-  {% endfor %}
-</div>
+{% for row in rows %}
+  {{- row.content -}}
+{% endfor %}

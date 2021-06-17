@@ -1,0 +1,93 @@
+.application {
+  &.application--teaser {
+    border: 1px solid var(--color-black-10);
+
+    @media screen and (min-width: $breakpoint-l) {
+      display: flex;
+    }
+
+    &:not(:first-of-type) {
+      margin-top: $spacing-m;
+    }
+  }
+}
+
+.application__image {
+  margin: 0;
+  display: flex;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .application--teaser & {
+    @media screen and (min-width: $breakpoint-l) {
+      width: 30%;
+    }
+  }
+}
+
+.application__content {
+  .application--teaser & {
+    background-color: var(--color-white);
+    padding: $spacing-m $spacing-s;
+
+    @media screen and (min-width: $breakpoint-l) {
+      width: 70%;
+      flex-direction: column;
+      display: flex;
+      align-items: baseline;
+    }
+  }
+}
+
+.application__project-name {
+  .application--teaser & {
+    @include font-size($fontsize-heading-m, 29px);
+    font-weight: $font-weight-bold;
+    margin: 0 0 $spacing-3-xs;
+  }
+}
+
+.application__project-address {
+  .application--teaser & {
+    @include font-size($fontsize-body-m, 24px);
+    margin: 0 0 $spacing-3-xs;
+  }
+}
+
+.application__project-ownership-type {
+  .application--teaser & {
+    @include font-size($fontsize-body-s, 26px);
+    background-color: var(--color-engel);
+    color: var(--color-black-90);
+    margin: 0 0 $spacing-m;
+    padding: $spacing-3-xs $spacing-2-xs;
+    display: inline-block;
+  }
+}
+
+.application__date-information {
+  .application--teaser & {
+    list-style: none;
+    margin: auto 0 0;
+    padding: 0;
+
+    li {
+      @include font-size($fontsize-body-m, 24px);
+      align-items: center;
+      display: flex;
+      margin: 0;
+
+      svg {
+        margin-right: $spacing-xs;
+      }
+
+      &:not(:first-child) {
+        margin-top: $spacing-2-xs;
+      }
+    }
+  }
+}

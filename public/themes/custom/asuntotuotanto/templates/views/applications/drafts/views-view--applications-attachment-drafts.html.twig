@@ -5,7 +5,7 @@
  *
  * Available variables:
  * - attributes: Remaining HTML attributes for the element.
- * - css_name: A css-safe version of the view name.
+ * - css_name: A CSS-safe version of the view name.
  * - css_class: The user-specified classes names, if any.
  * - header: The optional header.
  * - footer: The optional footer.
@@ -30,48 +30,26 @@
  * @see template_preprocess_views_view()
  */
 #}
-{%
-  set classes = [
-    'views',
-    'views--' ~ id|clean_class,
-    'views--' ~ display_id|clean_class,
-    dom_id ? 'js-view-dom-id-' ~ dom_id,
-  ]
-%}
-<div{{attributes.addClass(classes)}}>
-  {{ title_prefix }}
-  {{ title }}
-  {{ title_suffix }}
-
-  <div class="views__hero">
-    <h1 class="wrapper wrapper--mw-1264">{{ page_title }}</h1>
-    {% include '@hdbt/misc/koro.twig' with {koro: koro, flip: false } %}
-  </div>
-
-  {% if header %}
-    <header>
-      {{ header }}
-    </header>
-  {% endif %}
-
-  {{ exposed }}
-  {{ attachment_before }}
-
-  <div class="wrapper wrapper--mw-1264">
+<section class="user-profile__section">
+  <h2>
+    {% trans %}
+      Application drafts
+    {% endtrans %}
+  </h2>
+  {% if rows -%}
     {{ rows }}
-  </div>
-
-  {{ empty }}
-  {{ pager }}
-
-  {{ attachment_after }}
-  {{ more }}
-
-  {% if footer %}
-    <footer>
-      {{ footer }}
-    </footer>
+  {% else -%}
+    <div class="application-status-message">
+      <h2>
+        {% trans %}
+          No applications have been drafted yet
+        {% endtrans %}
+      </h2>
+      <p>
+        {% trans %}
+          You can see the applications you have in draft mode here.
+        {% endtrans %}
+      </p>
+    </div>
   {% endif %}
-
-  {{ feed_icons }}
-</div>
+</section>
