@@ -1,5 +1,5 @@
 <div class="project-apartments-listing">
-  <div class="project-apartments-listing__header wrapper wrapper--mw-1200">
+  <div class="project-apartments-listing__header wrapper wrapper--mw-1264">
     <h2>
       {% trans %}
         Project apartments
@@ -15,7 +15,7 @@
   </div>
   <div class="project-apartments-listing__content">
     <div class="project__apartments project__apartments--mobile" aria-hidden="true">
-      <ul class="project__apartments-list wrapper wrapper--mw-1200">
+      <ul class="project__apartments-list wrapper wrapper--mw-1264">
         {% for apartment in apartments %}
           {% set apartment_number = apartment.number|striptags|trim %}
           {% set apartment_structure = apartment.structure|striptags|trim	 %}
@@ -113,7 +113,7 @@
       </ul>
     </div>
 
-    <div class="project__apartments project__apartments--desktop wrapper wrapper--mw-1200" aria-hidden="true">
+    <div class="project__apartments project__apartments--desktop wrapper wrapper--mw-1264" aria-hidden="true">
       <table{{ attributes.addClass(classes, 'project__apartments-table') }}>
         <thead>
           <tr>

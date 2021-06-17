@@ -109,10 +109,12 @@ content:
     type: string_textfield
     region: content
   field_attachments:
-    weight: 23
-    settings: {  }
+    weight: 25
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: options_select
+    type: string_textfield
     region: content
   field_building_type:
     weight: 8
@@ -215,16 +217,20 @@ content:
     type: number
     region: content
   field_services:
-    weight: 19
-    settings: {  }
+    weight: 23
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: options_select
+    type: string_textfield
     region: content
   field_services_url:
     weight: 24
-    settings: {  }
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: options_select
+    type: string_textfield
     region: content
   field_site_owner:
     weight: -2

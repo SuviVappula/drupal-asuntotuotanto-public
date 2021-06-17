@@ -33,7 +33,6 @@ dependencies:
   module:
     - external_entities
     - imagecache_external
-    - options
 id: project.project.default
 targetEntityType: project
 bundle: project
@@ -72,11 +71,12 @@ content:
     type: string
     region: content
   field_apartments:
-    weight: 27
+    weight: 30
     label: above
-    settings: {  }
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
-    type: list_default
+    type: string
     region: content
   field_apartments_count:
     weight: 3
@@ -104,11 +104,12 @@ content:
     type: string
     region: content
   field_attachments:
-    weight: 28
+    weight: 31
     label: above
-    settings: {  }
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
-    type: list_default
+    type: string
     region: content
   field_building_type:
     weight: 20
@@ -218,18 +219,20 @@ content:
     type: string
     region: content
   field_services:
-    weight: 18
-    label: hidden
-    settings: {  }
+    weight: 32
+    label: above
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
-    type: list_default
+    type: string
     region: content
   field_services_url:
-    weight: 29
+    weight: 33
     label: above
-    settings: {  }
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
-    type: list_default
+    type: string
     region: content
   field_site_owner:
     weight: 22

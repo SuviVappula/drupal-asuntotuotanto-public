@@ -1,4 +1,4 @@
-uuid: 684e58ca-5e03-49e9-bdca-968ded3b9204
+uuid: 2932dade-713a-4eab-84a0-f7f862af2523
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,6 @@ dependencies:
     - field.storage.project.field_attachments
   module:
     - external_entities
-    - options
 id: project.project.field_attachments
 field_name: field_attachments
 entity_type: project
@@ -18,4 +17,4 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: list_string
+field_type: string

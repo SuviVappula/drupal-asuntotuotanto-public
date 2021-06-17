@@ -71,10 +71,12 @@ content:
     type: string_textfield
     region: content
   field_apartments:
-    weight: 22
-    settings: {  }
+    weight: 25
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: options_select
+    type: string_textfield
     region: content
   field_apartments_count:
     weight: -2
@@ -100,10 +102,12 @@ content:
     type: string_textfield
     region: content
   field_attachments:
-    weight: 23
-    settings: {  }
+    weight: 26
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: options_select
+    type: string_textfield
     region: content
   field_building_type:
     weight: 15
@@ -209,16 +213,20 @@ content:
     type: string_textfield
     region: content
   field_services:
-    weight: 13
-    settings: {  }
+    weight: 27
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: options_select
+    type: string_textfield
     region: content
   field_services_url:
-    weight: 24
-    settings: {  }
+    weight: 28
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: options_select
+    type: string_textfield
     region: content
   field_site_owner:
     weight: 17

@@ -271,3 +271,19 @@ function asu_get_user_fields($account) {
     $store->setMultipleByConfiguration($userInformationResponse->getUserInformation());
   }
 }
+
+/**
+ * Redirect user to user profile after they have submitted user edit form.
+ */
+function asu_user_form_alter(&$form, $form_state, $form_id) {
+  if ($form_id === 'user_form') {
+    $form['actions']['submit']['#submit'][] = '_asu_user_user_edit_form_submit';
+  }
+}
+
+/**
+ *
+ */
+function _asu_user_user_edit_form_submit($form, &$form_state) {
+  $form_state->setRedirect('entity.user.canonical', ['user' => \Drupal::currentUser()->id()]);
+}

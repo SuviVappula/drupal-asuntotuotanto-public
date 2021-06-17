@@ -5,9 +5,10 @@
  * Functions to support theming in the HDBT Subtheme.
  */
 
-use Drupal\asu_application\Applications;
 use Drupal\Core\Url;
+use Drupal\user\Entity\User;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\asu_application\Applications;
 
 /**
  * Helper function to get the icons path.
@@ -35,6 +36,7 @@ function asuntotuotanto_get_icons_path() {
 function asuntotuotanto_preprocess(&$variables) {
   $variables['asuntotuotanto_icons_path'] = asuntotuotanto_get_icons_path();
   $variables['#attached']['drupalSettings']['asuntotuotanto_icons_path'] = $variables['asuntotuotanto_icons_path'];
+  $variables['current_user_id'] = \Drupal::currentUser()->id() ?? NULL;
 }
 
 /**
@@ -73,7 +75,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       }
 
       if ($apartments = $entity['field_apartments']) {
-        $apartments = $apartments['#items']->getValue();
+        $apartments = isset($apartments['#items']) ? $apartments['#items']->getValue() : NULL;
         $apartments_stack = [];
 
         try {
@@ -101,7 +103,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       $variables['apartments'] = $apartments_stack ?? NULL;
 
       if ($services = $entity['field_services']) {
-        $services = $services['#items']->getValue();
+        $services = isset($services['#items']) ? $services['#items']->getValue() : NULL;
         $services_stack = [];
 
         foreach ($services as $service) {
@@ -118,7 +120,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       }
 
       if ($attachments = $entity['field_attachments']) {
-        $attachments = $attachments['#items']->getValue();
+        $attachments = isset($attachments['#items']) ? $attachments['#items']->getValue() : NULL;
         $attachments_stack = [];
 
         foreach ($attachments as $attachment) {
@@ -139,7 +141,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       }
 
       if ($services_url = $entity['field_services_url']) {
-        $services_url = $services_url['#items']->getValue()[0]['value'];
+        $services_url = isset($services_url['#items']) ? $services_url['#items']->getValue()[0]['value'] : NULL;
         $variables['services_url'] = $services_url ?? NULL;
       }
       break;
@@ -154,7 +156,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       $variables['sales_price'] = number_format($sales_price, 2, ',', '.') ?? NULL;
 
       if ($services = $entity['field_services']) {
-        $services = $services['#items']->getValue();
+        $services = isset($services['#items']) ? $services['#items']->getValue() : NULL;
         $services_stack = [];
 
         foreach ($services as $service) {
@@ -171,7 +173,7 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       }
 
       if ($attachments = $entity['field_attachments']) {
-        $attachments = $attachments['#items']->getValue();
+        $attachments = isset($attachments['#items']) ? $attachments['#items']->getValue() : NULL;
         $attachments_stack = [];
 
         foreach ($attachments as $attachment) {
@@ -192,8 +194,8 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
       }
 
       if ($services_url = $entity['field_services_url']) {
-        $services_url = $services_url['#items']->getValue()[0]['value'];
-        $variables['services_url'] = $services_url ?? NULL;
+        $services_url = isset($services_url['#items']) ? $services_url['#items']->getValue()[0]['value'] : NULL;
+        $variables['services_url'] = $services_url;
       }
       break;
   }
@@ -295,6 +297,22 @@ function asuntotuotanto_preprocess_views_view(&$variables) {
       }
 
       break;
+
+    case 'applications':
+      $current_user = User::load(\Drupal::currentUser()->id());
+      $variables['is_email_valid'] = $current_user->get('field_email_is_valid')->getValue()[0]['value'];
+      break;
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_input_alter().
+ */
+function asuntotuotanto_theme_suggestions_input_alter(&$suggestions, array $variables) {
+  $element = $variables['element'];
+
+  if (isset($element['#attributes']['data-twig-suggestion'])) {
+    $suggestions[] = 'input__' . $element['#type'] . '__' . $element['#attributes']['data-twig-suggestion'];
   }
 }
 
@@ -311,6 +329,30 @@ function asuntotuotanto_theme_suggestions_container_alter(&$suggestions, array $
 
   if (isset($element['#type']) && $element['#type'] == 'container' && isset($element['children']['#type'])) {
     $suggestions[] = 'container__' . $element['children']['#type'];
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function asuntotuotanto_form_alter(&$form, &$form_state, $form_id) {
+  if ($form['#id'] == 'user-login-form') {
+    $form['name']['#description'] = FALSE;
+    $form['pass']['#description'] = FALSE;
+  }
+
+  if ($form['#id'] == 'user-pass') {
+    unset($form['mail']);
+  }
+
+  if ($form['#id'] == 'user-register-form') {
+    $form['account']['pass']['#description'] = FALSE;
+    $form['actions']['submit']['#attributes']['data-twig-suggestion'] = 'register_form_submit_button';
+  }
+
+  if ($form['#id'] == 'user-form') {
+    $form['account']['mail']['#description'] = FALSE;
+    $form['account']['pass']['#description'] = FALSE;
   }
 }
 
