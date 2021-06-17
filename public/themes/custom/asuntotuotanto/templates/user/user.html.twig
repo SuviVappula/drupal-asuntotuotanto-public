@@ -16,15 +16,14 @@
  * @see template_preprocess_user()
  */
 #}
-
 {% set email = user.mail.value %}
-{% set first_name = content.field_first_name.0 %}
-{% set last_name = content.field_last_name.0 %}
-{% set phone_number = content.field_phone_number.0 %}
-{% set address = content.field_address.0 %}
-{% set postal_code = content.field_postal_code.0 %}
-{% set city = content.field_city.0 %}
-{% set date_of_birth = content.field_date_of_birth.0['#attributes']['datetime']|date("Y-m-d") %}
+{% set first_name = content.first_name %}
+{% set last_name = content.last_name %}
+{% set phone_number = content.phone_number %}
+{% set address = content.address %}
+{% set postal_code = content.postal_code %}
+{% set city = content.city %}
+{% set date_of_birth = content.date_of_birth|date("Y-m-d") %}
 {% set is_email_valid = user.field_email_is_valid.value %}
 
 {% set classes = [
@@ -139,11 +138,6 @@
         id: 'postal_code',
         label: 'Postal code'|t,
         value: postal_code,
-      } %}
-      {% include "@asuntotuotanto/user/disabled-input.html.twig" with {
-        id: 'city',
-        label: 'City'|t,
-        value: city,
       } %}
       {% include "@asuntotuotanto/user/disabled-input.html.twig" with {
         id: 'city',

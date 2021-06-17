@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class AuthenticationService {
 
+  private const TOKEN_KEY = 'asu_token';
+
   /**
    * Request handler.
    *
@@ -55,7 +57,7 @@ class AuthenticationService {
     if (!$this->isApiAuthenticated($user)) {
       try {
         $authenticationResponse = $this->authenticate($user);
-        $this->session->set('token', $authenticationResponse->getToken());
+        $this->session->set(self::TOKEN_KEY, $authenticationResponse->getToken());
         return $authenticationResponse->getToken();
       }
       catch (\Exception $e) {
@@ -64,7 +66,7 @@ class AuthenticationService {
         return NULL;
       }
     } else {
-      return $this->session->get('token');
+      return $this->session->get(self::TOKEN_KEY);
     }
     return NULL;
   }
@@ -79,9 +81,8 @@ class AuthenticationService {
    *   Is user able to send authenticated requests to backend.
    */
   private function isApiAuthenticated(UserInterface $user): bool {
-    if ($token = $this->session->get('token')) {
-      // Return $this->isTokenAlive($token);
-      return TRUE;
+    if ($token = $this->session->get(self::TOKEN_KEY)) {
+      return $this->isTokenAlive($token);
     }
     return FALSE;
   }
@@ -96,11 +97,10 @@ class AuthenticationService {
    *   Is token still usable.
    */
   private function isTokenAlive(string $token): bool {
-    $token = json_decode(base64_decode($token));
-    #$tokenArray = explode($);
-    // @todo Get the "exp" from token.
-    $tokenCreated = $token['exp'];
-    return strtotime('now') < $tokenCreated;
+    #$token = explode(',', json_decode(base64_decode($token)));
+    $token = explode(',', base64_decode($token));
+    $tokenExpire = $token['exp'];
+    return strtotime('now') < $tokenExpire;
   }
 
   /**
@@ -121,10 +121,10 @@ class AuthenticationService {
   }
 
   /**
-   *
+   * Get user token.
    */
   public function getUserToken(): string {
-    $this->session->get('token');
+    $this->session->get(self::TOKEN_KEY);
   }
 
 }

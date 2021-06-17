@@ -53,7 +53,7 @@ class RegisterForm extends BaseForm {
   }
 
   /**
-   *
+   * {@inheritDoc}
    */
   public function form(array $form, FormStateInterface $form_state): array {
     $form = parent::form($form, $form_state);
@@ -61,24 +61,19 @@ class RegisterForm extends BaseForm {
     $fields = $config->get('external_data_map');
 
     foreach ($fields as $field => $info) {
-      $form['account'][$field] = [
+      $form['basic_information'][$field] = [
         '#type' => $info['type'],
         '#title' => $this->t($info['title']),
         '#maxlength' => 255,
         '#required' => TRUE,
         '#attributes' => [
-          // 'class' => ['username'],
           'autocorrect' => 'off',
           'autocapitalize' => 'off',
           'spellcheck' => 'false',
         ],
-        // (!$register ? $account->getAccountName() : ''),
         '#default_value' => '',
-        // '#default_value' => (!$register ? $account->getAccountName() : ''),
-        // '#access' => $account->name->access('edit'),
       ];
     }
-
     return $form;
   }
 

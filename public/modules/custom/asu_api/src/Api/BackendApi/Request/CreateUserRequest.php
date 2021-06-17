@@ -13,7 +13,6 @@ use Psr\Http\Message\ResponseInterface;
  * Create user request.
  */
 class CreateUserRequest extends Request {
-
   protected const METHOD = 'POST';
 
   protected const PATH = 'v1/profiles/';

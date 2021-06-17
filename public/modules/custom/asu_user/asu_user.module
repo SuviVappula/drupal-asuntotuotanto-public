@@ -16,10 +16,12 @@ use Drupal\asu_api\Api\BackendApi\Request\UserRequest;
  * Implements hook_user_login().
  */
 function asu_user_user_login(UserInterface $account) {
-  asu_send_user_password_email($account);
-  asu_validate_email($account);
-  asu_authenticate_user($account);
-  asu_get_external_user_field_data($account);
+  if ($account->hasRole('customer')) {
+    asu_send_user_password_email($account);
+    asu_validate_email($account);
+    asu_authenticate_user($account);
+    asu_get_external_user_field_data($account);
+  }
 }
 
 /**
@@ -35,10 +37,6 @@ function asu_send_user_password_email(UserInterface $account) {
  * Set email valid if user uses emailed login link.
  */
 function asu_validate_email(UserInterface $account) {
-  if(!$account->hasRole('customer')){
-    return;
-  }
-
   $route_name = \Drupal::routeMatch()->getRouteName();
   $routes = ['user.login.http', 'user.reset.login'];
   // Set email_is_valid to true.
@@ -60,7 +58,7 @@ function asu_authenticate_user(UserInterface $account) {
   $backendApi = \Drupal::service('asu_api.backendapi');
   $user = User::load($account->id());
   try {
-    asu_get_user_fields($account);
+    asu_get_user_fields($user);
   }
   catch(\Exception $e){
     \Drupal::messenger()->addMessage('Unable to authenticate with backend.');
@@ -71,10 +69,6 @@ function asu_authenticate_user(UserInterface $account) {
  * Get the user data from django backend.
  */
 function asu_get_external_user_field_data(UserInterface $account) {
-  if (!in_array('customer', $account->getRoles())) {
-    return;
-  }
-
   /** @var \Drupal\asu_api\Api\BackendApi\BackendApi $backendApi */
   $backendApi = \Drupal::service('asu_api.backendapi');
   /** @var \Drupal\asu_user\Store $store */
@@ -94,12 +88,10 @@ function asu_get_external_user_field_data(UserInterface $account) {
     }
   }
   catch (RequestException $e) {
-    die('req');
     // Something else than 200.
     // @todo Handle error & logging.
   }
   catch (\Exception $e) {
-    die('eles: ' . $e->getMessage());
     // Something unexpected.
   }
 }
@@ -130,21 +122,20 @@ function asu_user_form_alter(&$form, &$form_state, $form_id) {
     if(!$store->get(array_keys($fieldMap)[0])){
       asu_get_user_fields($user);
     }
-
     foreach ($fieldMap as $field => $field_data) {
       $default_value = $store->get($field) ?? '';
-      $form[$field] = [
+      $form['basic_information'][$field] = [
         '#type' => $field_data['type'],
         '#title' => $field_data['title'],
         '#default_value' => $default_value,
-        '#weight' => 4,
       ];
     }
-    #$form['#submit'][] = 'update_user_to_backend';
-    $form['#submit'][] = 'user_edit_submit';
-
-    $form['actions']['submit']['#submit'][] = 'user_edit_submit';
+    if($user->hasRole('customer')){
+      $form['actions']['submit']['#submit'][] = 'user_edit_submit';
+    }
+    $form['actions']['submit']['#submit'][] = '_asu_user_user_edit_form_submit';
   }
+
 }
 
 /**
@@ -157,6 +148,11 @@ function user_edit_submit($form, &$form_state) {
   /** @var \Drupal\asu_api\Api\BackendApi\BackendApi $bakendApi */
   $backendApi = \Drupal::service('asu_api.backendapi');
   $user = User::load(\Drupal::currentUser()->id());
+
+  if (!$user->hasRole('customer')) {
+    return;
+  }
+
   try{
     $token = $backendApi
       ->getAuthenticationService()
@@ -186,7 +182,6 @@ function asu_user_entity_base_field_info(EntityTypeInterface $entity_type) {
       foreach ($config->get('external_data_map') as $fieldname => $field_data) {
         $fields[$fieldname] = BaseFieldDefinition::create('asu_external_string')
           ->setName($fieldname)
-          ->setRequired(TRUE)
           ->setTranslatable(FALSE)
           ->setLabel(t($field_data['title']))
           ->setComputed(TRUE)
@@ -203,47 +198,10 @@ function asu_user_entity_base_field_info(EntityTypeInterface $entity_type) {
 }
 
 /**
- * Submit handler for user form.
- */
-function update_user_to_backend(&$form, $form_state, $form_id) {
-  /*
-  $config = \Drupal::config('asu_user.external_user_fields');
-  $fields = $config->get('external_data_map');
-  $store = \Drupal::service('asu_user.tempstore');
-  $user = User::load(\Drupal::currentUser()->id());
-
-  $backendApi = \Drupal::service('asu_api.backendapi');
-
-  try {
-    if ($backendApi->getAuthenticationService()->handleAuthentication($user)) {
-      $request = new UpdateUserRequest($form_state, $fields);
-      $backendApi
-        ->getUserService()
-        ->updateUser($request);
-    }
-    else {
-      // Authentication failed.
-    }
-
-    foreach ($fields as $field => $field_information) {
-      if (isset($formState->{$field})) {
-        $store->set($field, $formState->{$field});
-      }
-    }
-  }
-  catch (RequestException $e) {
-    // Other than 200.
-  }
-  catch (\Exception $e) {
-    // Unexpected.
-  }
-  */
-}
-
-/**
  * Implements hook_field_formatter_info_alter().
  */
 function asu_user_field_formatter_info_alter(array &$info) {
+  // Used in custom computed field.
   $info['string']['field_types'][] = 'asu_external_string';
 }
 
@@ -251,6 +209,7 @@ function asu_user_field_formatter_info_alter(array &$info) {
  * Implements hook_field_widget_info_alter().
  */
 function asu_user_field_widget_info_alter(array &$info) {
+  // Used in custom computed field.
   $info['string_textfield']['field_types'][] = 'asu_external_string';
 }
 
@@ -273,16 +232,7 @@ function asu_get_user_fields($account) {
 }
 
 /**
- * Redirect user to user profile after they have submitted user edit form.
- */
-function asu_user_form_alter(&$form, $form_state, $form_id) {
-  if ($form_id === 'user_form') {
-    $form['actions']['submit']['#submit'][] = '_asu_user_user_edit_form_submit';
-  }
-}
-
-/**
- *
+ * User redirect after form submit.
  */
 function _asu_user_user_edit_form_submit($form, &$form_state) {
   $form_state->setRedirect('entity.user.canonical', ['user' => \Drupal::currentUser()->id()]);
