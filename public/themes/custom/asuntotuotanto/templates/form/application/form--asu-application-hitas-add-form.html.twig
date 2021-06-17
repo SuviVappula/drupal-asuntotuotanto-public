@@ -1,0 +1,52 @@
+{#
+/**
+ * @file
+ * Theme override for a 'form' element.
+ *
+ * Available variables
+ * - attributes: A list of HTML attributes for the wrapper element.
+ * - children: The child elements of the form.
+ *
+ * @see template_preprocess_form()
+ */
+#}
+
+{% set classes = [
+  'application-form',
+  'application-form--add',
+  'wrapper',
+  'wrapper--mw-1200'
+] %}
+
+<form{{ attributes|without('class') }} {{ create_attribute({'class': classes}) }}>
+  {{ link(
+    'Go back to applications'|t,
+    "internal:/user/#{current_user_id}/applications",
+    { 'class':['application-form__back-link']} )
+  }}
+  <div class="application-form__header">
+    <h1>
+      <span>
+          Hitas-{% trans %}application{% endtrans %}
+      </span>
+      {% trans %}
+        Kaakelikuja
+      {% endtrans %}
+    </h1>
+    <p>
+      {% trans %}
+        Submit an application during the application period. You can search for up to 5 apartments. Arrange the apartments in the order you want.
+      {% endtrans %}
+    </p>
+    <a href="https://google.fi">
+      {% trans %}
+        Read more about the application guide
+      {% endtrans %}
+    </a>
+  </div>
+  <div class="application-form__content">
+    <section class="application-form__section">
+      {{ children }}
+    </section>
+  </div>
+</form>
