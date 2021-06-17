@@ -1,18 +1,18 @@
-uuid: 1421539b-e7ff-4ed2-a026-63fe4cd51308
+uuid: 3f952128-901f-4834-876c-6c7a3c883d49
 langcode: en
 status: true
 dependencies:
   module:
     - external_entities
-    - options
 id: project.field_services_url
 field_name: field_services_url
 entity_type: project
-type: list_string
+type: string
 settings:
-  allowed_values: {  }
-  allowed_values_function: ''
-module: options
+  max_length: 9999
+  is_ascii: false
+  case_sensitive: false
+module: core
 locked: false
 cardinality: -1
 translatable: true

@@ -1,4 +1,4 @@
-uuid: a56add44-495b-4ff5-b671-79c4b80f8d03
+uuid: 2e9b984e-e755-4190-956d-656a086c9b2e
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,6 @@ dependencies:
     - field.storage.project.field_apartments
   module:
     - external_entities
-    - options
 id: project.project.field_apartments
 field_name: field_apartments
 entity_type: project
@@ -18,4 +17,4 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: list_string
+field_type: string

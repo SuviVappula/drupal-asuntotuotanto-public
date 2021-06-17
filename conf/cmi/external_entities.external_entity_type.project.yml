@@ -31,7 +31,7 @@ field_mappings:
   field_application_start_time:
     value: application_start_time
   field_attachments:
-    value: attachments
+    value: 'attachments/*'
   field_building_type:
     value: field_building_type
   field_city:
@@ -70,7 +70,7 @@ field_mappings:
     value: field_street_address
 storage_client_id: rest
 storage_client_config:
-  endpoint: 'http://Asu:asunnot_2020@dev.asuntotuotanto.druidfi.wod.by/fi/content/project'
+  endpoint: 'https://nginx-asuntotuotanto-test.agw.arodevtest.hel.fi/fi/content/project'
   response_format: json
   pager:
     default_limit: '50'

@@ -1,4 +1,4 @@
-uuid: d4c4eeb0-6cc2-4bc0-96bc-e3691615df84
+uuid: eb767fe1-f289-4d4f-b716-4de96f5530f3
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,6 @@ dependencies:
     - field.storage.apartment.field_services
   module:
     - external_entities
-    - options
 id: apartment.apartment.field_services
 field_name: field_services
 entity_type: apartment
@@ -18,4 +17,4 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: list_string
+field_type: string

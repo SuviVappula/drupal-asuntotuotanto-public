@@ -1,4 +1,4 @@
-uuid: 2f3e4a59-33eb-4fbd-9f40-ff4a2f1f0cf0
+uuid: 6d87ff11-f81f-4f75-af9c-b1bb672f979e
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,6 @@ dependencies:
     - field.storage.project.field_services_url
   module:
     - external_entities
-    - options
 id: project.project.field_services_url
 field_name: field_services_url
 entity_type: project
@@ -18,4 +17,4 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: list_string
+field_type: string

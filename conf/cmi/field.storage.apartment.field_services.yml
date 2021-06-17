@@ -1,18 +1,18 @@
-uuid: 5a7fb88c-6be8-49f7-81de-70417a1edd42
+uuid: 6b32535a-9aae-4e66-8894-aab515d8b147
 langcode: en
 status: true
 dependencies:
   module:
     - external_entities
-    - options
 id: apartment.field_services
 field_name: field_services
 entity_type: apartment
-type: list_string
+type: string
 settings:
-  allowed_values: {  }
-  allowed_values_function: ''
-module: options
+  max_length: 9999
+  is_ascii: false
+  case_sensitive: false
+module: core
 locked: false
 cardinality: -1
 translatable: true
