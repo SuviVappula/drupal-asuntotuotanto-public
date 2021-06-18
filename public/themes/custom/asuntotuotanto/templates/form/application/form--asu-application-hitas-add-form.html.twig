@@ -29,9 +29,7 @@
       <span>
           Hitas-{% trans %}application{% endtrans %}
       </span>
-      {% trans %}
-        Kaakelikuja
-      {% endtrans %}
+      {{ element.project_name }}
     </h1>
     <p>
       {% trans %}
@@ -46,7 +44,35 @@
   </div>
   <div class="application-form__content">
     <section class="application-form__section">
-      {{ children }}
+      {{ element.apartment }}
     </section>
+    <section class="application-form__section">
+      <h2>
+        {% trans %}
+          Are you looking for an apartment with a family with children?
+        {% endtrans %}
+      </h2>
+      <p>
+        {% trans %}
+          There is a minor child in my household.
+        {% endtrans %}
+      </p>
+      {{ element.has_children }}
+    </section>
+    <section class="application-form__section">
+      <h2>
+        {% trans %}
+          Are you looking for an apartment with someone?
+        {% endtrans %}
+      </h2>
+      <div class="application-form__input-elements">
+        {{ element.applicant }}
+      </div>
+    </section>
+  </div>
+  <div class="application-form__actions">
+    {{ element.form_build_id }} {# required #}
+    {{ element.form_id }} {# required #}
+    {{ element.actions }}
   </div>
 </form>
