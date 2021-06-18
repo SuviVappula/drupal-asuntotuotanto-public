@@ -37,7 +37,6 @@
       @include font-size($fontsize-body-m, 24px);
       font-weight: $font-weight-regular;
       margin: 0 0 $spacing-2-xs;
-      max-width: 790px;
 
       + a {
         @include font-size($fontsize-body-m, 24px);
@@ -74,6 +73,7 @@
     margin-right: -#{$spacing-l};
     padding-left: $spacing-l;
     padding-right: $spacing-l;
+    border-bottom: 0;
 
     @media screen and (min-width: $breakpoint-xl) {
       margin-left: -#{$spacing-2-xl};
