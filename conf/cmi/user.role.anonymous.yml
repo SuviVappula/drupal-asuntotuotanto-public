@@ -10,8 +10,8 @@ weight: 0
 is_admin: false
 permissions:
   - 'access content'
-  - 'create application'
   - 'administer rest resources'
+  - 'create application'
   - 'display eu cookie compliance popup'
   - 'restful get asu_applications'
   - 'restful get asu_filters'
