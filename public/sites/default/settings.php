@@ -109,7 +109,6 @@ if ($env = getenv('APP_ENV')) {
   $config['swiftmailer.transport']['smtp_encryption'] = '0';
 
   // External entity settings.
-  $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = getenv('ASU_ELASTICSEARCH_URL');
   $config['external_entities.external_entity_type.project']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_URL') ? getenv('ASU_ASUNTOTUOTANTO_URL') . '/fi/content/project' : 'https://nginx-asuntotuotanto-test.agw.arodevtest.hel.fi/fi/content/project';
   $config['external_entities.external_entity_type.apartment']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_URL') ?  getenv('ASU_ASUNTOTUOTANTO_URL') . '/fi/content/apartment' : 'https://nginx-asuntotuotanto-test.agw.arodevtest.hel.fi/fi/content/apartment';
 
@@ -138,7 +137,7 @@ if ($env = getenv('APP_ENV')) {
     $config['raven.settings']['environment'] = 'development';
   }
 
-  // Staging environment.
+  // Test environment.
   if ($env === 'test') {
     $config['raven.settings']['environment'] = 'testing';
   }
@@ -149,7 +148,7 @@ if ($env = getenv('APP_ENV')) {
   }
 
   // Production environment.
-  if ($env === 'production') {
+  if ($env === 'prod') {
     $config['raven.settings']['environment'] = 'production';
   }
 
