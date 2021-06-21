@@ -93,3 +93,29 @@
 .application-form__actions {
   padding-top: $spacing-l;
 }
+
+.application-form__apartments {
+  margin-bottom: $spacing-m;
+
+  @media screen and (min-width: $breakpoint-xl) {
+    margin-top: $spacing-m;
+  }
+
+  > h2 {
+    @include font-size($fontsize-heading-s, 24px);
+    font-weight: $font-weight-bold;
+    margin: 0 0 $spacing-2-xs;
+
+    + p {
+      @include font-size($fontsize-body-m, 24px);
+      font-weight: $font-weight-regular;
+      margin: 0 0 $spacing-m;
+    }
+  }
+}
+
+.application-form__apartments-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

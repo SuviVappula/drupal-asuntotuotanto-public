@@ -1,6 +1,7 @@
 .application {
   &.application--teaser {
     border: 1px solid var(--color-black-10);
+    margin-bottom: $spacing-m;
 
     @media screen and (min-width: $breakpoint-l) {
       display: flex;
