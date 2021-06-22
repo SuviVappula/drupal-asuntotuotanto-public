@@ -5,67 +5,71 @@
         "application_form_apartments_list"
       );
 
-      const createApartmentListItem = () => {
+      const createParagraphElementWithVisuallyHiddenText = (
+        classes,
+        hiddenTextString,
+        visibleString
+      ) => {
+        const p = document.createElement("p");
+        p.classList.add(...classes);
+
+        const span1 = document.createElement("span");
+        const span1Content = document.createTextNode(
+          Drupal.t(hiddenTextString)
+        );
+        span1.classList.add("visually-hidden");
+        span1.appendChild(span1Content);
+
+        const span2 = document.createElement("span");
+        const span2Content = document.createTextNode(visibleString);
+        span2.appendChild(span2Content);
+
+        p.append(span1, span2);
+
+        return p;
+      };
+
+      const createButtonElement = (classes, content, disabled = false) => {
+        const button = document.createElement("button");
+        button.classList.add(...classes);
+        const span = document.createElement("span");
+        const text = document.createTextNode(Drupal.t(content));
+
+        span.append(text);
+        button.append(span);
+
+        button.setAttribute("type", "button");
+
+        if (disabled) button.disabled = true;
+
+        return button;
+      };
+
+      const createListItemElementWithText = (description, value) => {
+        const liElement = document.createElement("li");
+        const span1 = document.createElement("span");
+        const text1 = document.createTextNode(Drupal.t(description));
+        span1.appendChild(text1);
+
+        const span2 = document.createElement("span");
+        const text2 = document.createTextNode(Drupal.t(value));
+        span2.appendChild(text2);
+
+        liElement.append(span1, span2);
+
+        return liElement;
+      };
+
+      const createApartmentListItem = (withSelectElement = false) => {
         const li = document.createElement("li");
-        li.classList.add("application-form__apartments-item");
+        li.classList.add(
+          "application-form__apartments-item",
+          withSelectElement &&
+            '"application-form__apartments-item--with-select"'
+        );
 
         const article = document.createElement("article");
         article.classList.add("application-form-apartment");
-
-        const createParagraphElementWithVisuallyHiddenText = (
-          classes,
-          hiddenTextString,
-          visibleString
-        ) => {
-          const p = document.createElement("p");
-          p.classList.add(...classes);
-
-          const span1 = document.createElement("span");
-          const span1Content = document.createTextNode(
-            Drupal.t(hiddenTextString)
-          );
-          span1.classList.add("visually-hidden");
-          span1.appendChild(span1Content);
-
-          const span2 = document.createElement("span");
-          const span2Content = document.createTextNode(visibleString);
-          span2.appendChild(span2Content);
-
-          p.append(span1, span2);
-
-          return p;
-        };
-
-        const createButtonElement = (classes, content, disabled = false) => {
-          const button = document.createElement("button");
-          button.classList.add(...classes);
-          const span = document.createElement("span");
-          const text = document.createTextNode(Drupal.t(content));
-
-          span.append(text);
-          button.append(span);
-
-          button.setAttribute("type", "button");
-
-          if (disabled) button.disabled = true;
-
-          return button;
-        };
-
-        const createListItemElementWithText = (description, value) => {
-          const liElement = document.createElement("li");
-          const span1 = document.createElement("span");
-          const text1 = document.createTextNode(Drupal.t(description));
-          span1.appendChild(text1);
-
-          const span2 = document.createElement("span");
-          const text2 = document.createTextNode(Drupal.t(value));
-          span2.appendChild(text2);
-
-          liElement.append(span1, span2);
-
-          return liElement;
-        };
 
         const listPositionDesktop = createParagraphElementWithVisuallyHiddenText(
           ["application-form-apartment__list-position", "is-desktop"],
@@ -94,11 +98,62 @@
           "4h, kt, s"
         );
 
-        formHeader.append(
-          listPositionMobile,
-          apartmentNumber,
-          apartmentStructure
+        const apartmentAddButton = createButtonElement(
+          ["application-form-apartment__apartment-add-button"],
+          "Add an apartment to the list"
         );
+
+        const apartmentListElementWrapper = document.createElement("div");
+        apartmentListElementWrapper.classList.add(
+          "application-form-apartment__apartment-add-actions-wrapper",
+          "is-hidden"
+        );
+
+        const selectElementId = "apartment_list_select";
+
+        const apartmentListElement = document.createElement("div");
+        apartmentListElement.classList.add("hds-select-element");
+
+        const apartmentSelectElementLabel = document.createElement("label");
+        const apartmentSelectElementLabelText = document.createTextNode(
+          Drupal.t("Apartment")
+        );
+        apartmentSelectElementLabel.appendChild(
+          apartmentSelectElementLabelText
+        );
+
+        apartmentSelectElementLabel.setAttribute("for", selectElementId);
+
+        const apartmentSelectElementWrapper = document.createElement("div");
+        apartmentSelectElementWrapper.classList.add(
+          "hds-select-element__select-wrapper"
+        );
+
+        const apartmentSelectElement = document.createElement("select");
+        apartmentSelectElement.classList.add("hds-select-element__select");
+        apartmentSelectElement.setAttribute("id", selectElementId);
+
+        apartmentSelectElementWrapper.appendChild(apartmentSelectElement);
+
+        apartmentListElement.append(
+          apartmentSelectElementLabel,
+          apartmentSelectElementWrapper
+        );
+        apartmentListElementWrapper.appendChild(apartmentListElement);
+
+        if (withSelectElement) {
+          formHeader.append(
+            listPositionMobile,
+            apartmentAddButton,
+            apartmentListElementWrapper
+          );
+        } else {
+          formHeader.append(
+            listPositionMobile,
+            apartmentNumber,
+            apartmentStructure
+          );
+        }
 
         const listPositionActions = document.createElement("div");
         listPositionActions.classList.add(
@@ -107,11 +162,13 @@
 
         const listPositionActionsRaiseButton = createButtonElement(
           "",
-          "Raise on the list"
+          "Raise on the list",
+          withSelectElement && true
         );
         const listPositionActionsLowerButton = createButtonElement(
           "",
-          "Lower on the list"
+          "Lower on the list",
+          withSelectElement && true
         );
 
         listPositionActions.append(
@@ -165,160 +222,24 @@
 
         formActions.append(formActionsDeleteButton, formActionsLink);
 
-        article.append(
-          listPositionDesktop,
-          formHeader,
-          listPositionActions,
-          formApartmentInformation,
-          formActions
-        );
-
-        return li.appendChild(article);
-      };
-
-      const createApartmentListItemWithSelect = () => {
-        const li = document.createElement("li");
-        li.classList.add(
-          "application-form__apartments-item",
-          "application-form__apartments-item--with-select"
-        );
-
-        const article = document.createElement("article");
-        article.classList.add("application-form-apartment");
-
-        const createParagraphElementWithVisuallyHiddenText = (
-          classes,
-          hiddenTextString,
-          visibleString
-        ) => {
-          const p = document.createElement("p");
-          p.classList.add(...classes);
-
-          const span1 = document.createElement("span");
-          const span1Content = document.createTextNode(
-            Drupal.t(hiddenTextString)
+        if (withSelectElement) {
+          article.append(listPositionDesktop, formHeader, listPositionActions);
+        } else {
+          article.append(
+            listPositionDesktop,
+            formHeader,
+            listPositionActions,
+            formApartmentInformation,
+            formActions
           );
-          span1.classList.add("visually-hidden");
-          span1.appendChild(span1Content);
-
-          const span2 = document.createElement("span");
-          const span2Content = document.createTextNode(visibleString);
-          span2.appendChild(span2Content);
-
-          p.append(span1, span2);
-
-          return p;
-        };
-
-        const createButtonElement = (classes, content, disabled = false) => {
-          const button = document.createElement("button");
-          button.classList.add(...classes);
-          const span = document.createElement("span");
-          const text = document.createTextNode(Drupal.t(content));
-
-          span.append(text);
-          button.append(span);
-
-          button.setAttribute("type", "button");
-
-          if (disabled) button.disabled = true;
-
-          return button;
-        };
-
-        const listPositionDesktop = createParagraphElementWithVisuallyHiddenText(
-          ["application-form-apartment__list-position", "is-desktop"],
-          "List position",
-          "1"
-        );
-
-        const formHeader = document.createElement("div");
-        formHeader.classList.add("application-form-apartment__header");
-
-        const listPositionMobile = createParagraphElementWithVisuallyHiddenText(
-          ["application-form-apartment__list-position", "is-mobile"],
-          "List position",
-          "1"
-        );
-
-        const apartmentAddButton = createButtonElement(
-          ["application-form-apartment__apartment-add-button"],
-          "Add an apartment to the list"
-        );
-
-        const apartmentListElementWrapper = document.createElement("div");
-        apartmentListElementWrapper.classList.add(
-          "application-form-apartment__apartment-add-actions-wrapper",
-          "is-hidden"
-        );
-
-        const selectElementId = "apartment_list_select";
-
-        const apartmentListElement = document.createElement("div");
-        apartmentListElement.classList.add("hds-select-element");
-
-        const apartmentSelectElementLabel = document.createElement("label");
-        const apartmentSelectElementLabelText = document.createTextNode(
-          Drupal.t("Apartment")
-        );
-        apartmentSelectElementLabel.appendChild(
-          apartmentSelectElementLabelText
-        );
-
-        apartmentSelectElementLabel.setAttribute("for", selectElementId);
-
-        const apartmentSelectElementWrapper = document.createElement("div");
-        apartmentSelectElementWrapper.classList.add(
-          "hds-select-element__select-wrapper"
-        );
-
-        const apartmentSelectElement = document.createElement("select");
-        apartmentSelectElement.classList.add("hds-select-element__select");
-        apartmentSelectElement.setAttribute("id", selectElementId);
-
-        apartmentSelectElementWrapper.appendChild(apartmentSelectElement);
-
-        apartmentListElement.append(
-          apartmentSelectElementLabel,
-          apartmentSelectElementWrapper
-        );
-        apartmentListElementWrapper.appendChild(apartmentListElement);
-
-        formHeader.append(
-          listPositionMobile,
-          apartmentAddButton,
-          apartmentListElementWrapper
-        );
-
-        const listPositionActions = document.createElement("div");
-        listPositionActions.classList.add(
-          "application-form-apartment__list-position-actions"
-        );
-
-        const listPositionActionsRaiseButton = createButtonElement(
-          "",
-          "Raise on the list",
-          true
-        );
-        const listPositionActionsLowerButton = createButtonElement(
-          "",
-          "Lower on the list",
-          true
-        );
-
-        listPositionActions.append(
-          listPositionActionsRaiseButton,
-          listPositionActionsLowerButton
-        );
-
-        article.append(listPositionDesktop, formHeader, listPositionActions);
+        }
 
         return li.appendChild(article);
       };
 
       applicationFormApartmentListElement.append(
         createApartmentListItem(),
-        createApartmentListItemWithSelect()
+        createApartmentListItem(true)
       );
     },
   };
