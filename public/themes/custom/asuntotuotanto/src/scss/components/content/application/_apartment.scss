@@ -7,6 +7,10 @@
     align-items: center;
     padding: $spacing-m 0;
   }
+
+  .hds-select-element {
+    width: 100%;
+  }
 }
 
 .application-form-apartment__header {
@@ -19,6 +23,13 @@
     order: 3;
     margin-right: $spacing-2-xl;
     min-width: 120px;
+  }
+
+  .application-form__apartments-item--with-select & {
+    @media screen and (min-width: $breakpoint-xl) {
+      width: 300px;
+      margin-right: 0;
+    }
   }
 }
 
@@ -70,6 +81,10 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+.application-form-apartment__apartment-add-actions-wrapper {
+  width: 100%;
 }
 
 .application-form-apartment__apartment-number {
