@@ -114,6 +114,47 @@
   }
 }
 
+.application-form__apartments-list-header {
+  display: flex;
+  margin: 0;
+  padding: 0 0 $spacing-s;
+  list-style: none;
+
+
+  @media screen and (max-width: $breakpoint-xl - 1px) {
+    display: none;
+    visibility: hidden;
+  }
+
+  li {
+    &:first-child {
+      min-width: 130px;
+    }
+
+    &:nth-child(2) {
+      min-width: 168px;
+    }
+
+    &:nth-child(3) {
+      min-width: 90px;
+    }
+
+    &:nth-child(4) {
+      min-width: 125px;
+    }
+
+    &:nth-child(5) {
+      min-width: 140px;
+    }
+  }
+
+  p {
+    @include font-size($fontsize-body-m, 24px);
+    margin: 0;
+
+  }
+}
+
 .application-form__apartments-list {
   margin: 0;
   padding: 0;
