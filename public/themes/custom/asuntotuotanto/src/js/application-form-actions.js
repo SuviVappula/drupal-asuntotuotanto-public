@@ -6,7 +6,9 @@
       );
 
       const getApplicationFormApartmentListElementCount = () =>
-        applicationFormApartmentListElement.getElementsByTagName("li").length;
+        applicationFormApartmentListElement.getElementsByClassName(
+          "application-form__apartments-item"
+        ).length;
 
       const getLastOriginalApartmentSelectElement = () => {
         const originalApartmentSelectElement = document.querySelector(
@@ -25,11 +27,6 @@
 
         return lastSelectParent.getElementsByTagName("select")[0];
       };
-
-      const getClonedSelectCount = () =>
-        document
-          .getElementById("application_form_apartments_list")
-          .getElementsByTagName("select").length;
 
       const createParagraphElementWithVisuallyHiddenText = (
         classes,
@@ -86,12 +83,78 @@
         return liElement;
       };
 
+      const createCustomSelectElement = () => {
+        const apartmentListElementWrapper = document.createElement("div");
+        apartmentListElementWrapper.classList.add(
+          "application-form-apartment__apartment-add-actions-wrapper"
+        );
+
+        const selectElementId = "apartment_list_select";
+
+        const apartmentListElement = document.createElement("div");
+        apartmentListElement.classList.add("hds-select-element");
+
+        const apartmentSelectElementLabel = document.createElement("label");
+        const apartmentSelectElementLabelText = document.createTextNode(
+          Drupal.t("Apartment")
+        );
+        apartmentSelectElementLabel.appendChild(
+          apartmentSelectElementLabelText
+        );
+
+        apartmentSelectElementLabel.setAttribute("for", selectElementId);
+
+        const apartmentSelectElementWrapper = document.createElement("div");
+        apartmentSelectElementWrapper.classList.add(
+          "hds-select-element__select-wrapper"
+        );
+
+        const selectCount = getApplicationFormApartmentListElementCount() - 1;
+
+        const apartmentSelectElement = getLastOriginalApartmentSelectElement().cloneNode(
+          true
+        );
+
+        apartmentSelectElement.classList.add("hds-select-element__select");
+        apartmentSelectElement.setAttribute("id", selectElementId);
+        apartmentSelectElement.setAttribute("data-id", selectCount);
+        apartmentSelectElement.removeAttribute("data-drupal-selector");
+
+        apartmentSelectElement.addEventListener("change", ({ target }) => {
+          const originalSelectElementTarget = document.querySelector(
+            `[data-drupal-selector="edit-apartment-${selectCount}-id"]`
+          );
+
+          const targetParent =
+            target.parentElement.parentElement.parentElement.parentElement
+              .parentElement.parentElement;
+
+          originalSelectElementTarget.value = target.value;
+          targetParent.classList.remove(
+            "application-form__apartments-item--with-select"
+          );
+          // eslint-disable-next-line no-use-before-define
+          targetParent.innerHTML = createApartmentListItem().innerHTML;
+        });
+
+        apartmentSelectElementWrapper.appendChild(apartmentSelectElement);
+
+        apartmentListElement.append(
+          apartmentSelectElementLabel,
+          apartmentSelectElementWrapper
+        );
+        apartmentListElementWrapper.appendChild(apartmentListElement);
+
+        return apartmentListElementWrapper;
+      };
+
       const createApartmentListItem = (withSelectElement = false) => {
         const li = document.createElement("li");
-        li.classList.add(
-          "application-form__apartments-item",
-          withSelectElement && "application-form__apartments-item--with-select"
-        );
+        li.classList.add("application-form__apartments-item");
+
+        if (withSelectElement) {
+          li.classList.add("application-form__apartments-item--with-select");
+        }
 
         const article = document.createElement("article");
         article.classList.add("application-form-apartment");
@@ -128,62 +191,6 @@
           "Add an apartment to the list"
         );
 
-        const createCustomSelectElement = () => {
-          const apartmentListElementWrapper = document.createElement("div");
-          apartmentListElementWrapper.classList.add(
-            "application-form-apartment__apartment-add-actions-wrapper"
-          );
-
-          const selectElementId = "apartment_list_select";
-
-          const apartmentListElement = document.createElement("div");
-          apartmentListElement.classList.add("hds-select-element");
-
-          const apartmentSelectElementLabel = document.createElement("label");
-          const apartmentSelectElementLabelText = document.createTextNode(
-            Drupal.t("Apartment")
-          );
-          apartmentSelectElementLabel.appendChild(
-            apartmentSelectElementLabelText
-          );
-
-          apartmentSelectElementLabel.setAttribute("for", selectElementId);
-
-          const apartmentSelectElementWrapper = document.createElement("div");
-          apartmentSelectElementWrapper.classList.add(
-            "hds-select-element__select-wrapper"
-          );
-
-          const selectCount = getClonedSelectCount();
-
-          const apartmentSelectElement = getLastOriginalApartmentSelectElement().cloneNode(
-            true
-          );
-
-          apartmentSelectElement.classList.add("hds-select-element__select");
-          apartmentSelectElement.setAttribute("id", selectElementId);
-          apartmentSelectElement.setAttribute("data-id", selectCount);
-          apartmentSelectElement.removeAttribute("data-drupal-selector");
-
-          apartmentSelectElement.addEventListener("change", ({ target }) => {
-            const originalSelectElementTarget = document.querySelector(
-              `[data-drupal-selector="edit-apartment-${selectCount}-id"]`
-            );
-
-            originalSelectElementTarget.value = target.value;
-          });
-
-          apartmentSelectElementWrapper.appendChild(apartmentSelectElement);
-
-          apartmentListElement.append(
-            apartmentSelectElementLabel,
-            apartmentSelectElementWrapper
-          );
-          apartmentListElementWrapper.appendChild(apartmentListElement);
-
-          return apartmentListElementWrapper;
-        };
-
         apartmentAddButton.addEventListener("click", ({ target }) => {
           const ajaxButton = $(
             '[data-drupal-selector="edit-apartment-add-more"]'
@@ -196,13 +203,13 @@
             ajaxButton.mousedown();
           }
 
+          formHeader.appendChild(createCustomSelectElement());
+          target.remove();
+
           if (getApplicationFormApartmentListElementCount() < 5) {
             // eslint-disable-next-line no-use-before-define
             appendListItemToApartmentList();
           }
-
-          target.remove();
-          formHeader.appendChild(createCustomSelectElement());
         });
 
         if (withSelectElement) {

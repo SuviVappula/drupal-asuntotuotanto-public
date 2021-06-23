@@ -154,8 +154,6 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
       ->setReadOnly(TRUE);
 
     $fields['apartment'] = BaseFieldDefinition::create('asu_apartment')
-      ->setLabel(t('Apartment ID'))
-      ->setDescription(t('The id of the project apartments'))
       ->setCardinality(-1)
       ->setReadOnly(FALSE)
       ->setDisplayOptions('view', [
