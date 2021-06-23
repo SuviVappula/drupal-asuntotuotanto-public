@@ -99,7 +99,7 @@
         const listPositionDesktop = createParagraphElementWithVisuallyHiddenText(
           ["application-form-apartment__list-position", "is-desktop"],
           "List position",
-          "1"
+          ""
         );
 
         const formHeader = document.createElement("div");
@@ -108,7 +108,7 @@
         const listPositionMobile = createParagraphElementWithVisuallyHiddenText(
           ["application-form-apartment__list-position", "is-mobile"],
           "List position",
-          "1"
+          ""
         );
 
         const apartmentNumber = createParagraphElementWithVisuallyHiddenText(

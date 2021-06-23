@@ -124,6 +124,13 @@
     margin-right: $spacing-2-xl;
   }
 
+  .application-form__apartments-item--with-select & {
+    @media screen and (max-width: $breakpoint-xl - 1px) {
+      display: none;
+      visibility: hidden;
+    }
+  }
+
   button {
     @include font-size($fontsize-body-m, 24px);
     align-items: center;

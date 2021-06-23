@@ -159,4 +159,22 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  counter-reset: apartment-list-counter;
+
+  li {
+    counter-increment: apartment-list-counter;
+    position: relative;
+
+    .application-form-apartment__list-position {
+      &:before {
+        content: counter(apartment-list-counter);
+        @include font-size($fontsize-heading-m, 29px);
+        font-weight: $font-weight-bold;
+
+        @media screen and (min-width: $breakpoint-xl) {
+          @include font-size($fontsize-heading-s, 24px);
+        }
+      }
+    }
+  }
 }
