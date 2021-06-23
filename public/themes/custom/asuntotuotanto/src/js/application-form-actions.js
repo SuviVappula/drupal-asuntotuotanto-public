@@ -83,13 +83,26 @@
         return liElement;
       };
 
+      const setFocusToLastSelectElement = () => {
+        const allCustomSelectElements = document.querySelectorAll(
+          '[data-drupal-selector="custom_apartment_select"]'
+        );
+
+        const customSelectCount = allCustomSelectElements.length;
+
+        const lastCustomSelect = allCustomSelectElements[customSelectCount - 1];
+
+        lastCustomSelect.focus();
+      };
+
       const createCustomSelectElement = () => {
         const apartmentListElementWrapper = document.createElement("div");
         apartmentListElementWrapper.classList.add(
           "application-form-apartment__apartment-add-actions-wrapper"
         );
 
-        const selectElementId = "apartment_list_select";
+        const selectCount = getApplicationFormApartmentListElementCount() - 1;
+        const selectElementId = `apartment_list_select_${selectCount}`;
 
         const apartmentListElement = document.createElement("div");
         apartmentListElement.classList.add("hds-select-element");
@@ -109,8 +122,6 @@
           "hds-select-element__select-wrapper"
         );
 
-        const selectCount = getApplicationFormApartmentListElementCount() - 1;
-
         const apartmentSelectElement = getLastOriginalApartmentSelectElement().cloneNode(
           true
         );
@@ -118,7 +129,10 @@
         apartmentSelectElement.classList.add("hds-select-element__select");
         apartmentSelectElement.setAttribute("id", selectElementId);
         apartmentSelectElement.setAttribute("data-id", selectCount);
-        apartmentSelectElement.removeAttribute("data-drupal-selector");
+        apartmentSelectElement.setAttribute(
+          "data-drupal-selector",
+          "custom_apartment_select"
+        );
 
         apartmentSelectElement.addEventListener("change", ({ target }) => {
           const originalSelectElementTarget = document.querySelector(
@@ -205,6 +219,7 @@
 
           formHeader.appendChild(createCustomSelectElement());
           target.remove();
+          setFocusToLastSelectElement();
 
           if (getApplicationFormApartmentListElementCount() < 5) {
             // eslint-disable-next-line no-use-before-define
