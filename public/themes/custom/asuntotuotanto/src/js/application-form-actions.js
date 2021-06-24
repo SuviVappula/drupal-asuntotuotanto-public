@@ -142,6 +142,7 @@
           const targetParent =
             target.parentElement.parentElement.parentElement.parentElement
               .parentElement.parentElement;
+          targetParent.setAttribute("data-id", selectCount);
 
           originalSelectElementTarget.value = target.value;
           targetParent.classList.remove(
@@ -169,12 +170,28 @@
         return element;
       };
 
+      const swapOriginalSelectWeights = (select1Id, select2Id) => {
+        const select1WeigthElement = document.querySelector(
+          `[name="apartment[${select1Id}][_weight]"]`
+        );
+        const select2WeigthElement = document.querySelector(
+          `[name="apartment[${select2Id}][_weight]"]`
+        );
+        const select1Weigth = select1WeigthElement.value;
+        select1WeigthElement.value = select2WeigthElement.value;
+        select2WeigthElement.value = select1Weigth;
+      };
+
       const handleListPositionRaiseClick = (target) => {
         const parent = target.parentElement.parentElement.parentElement;
         const sibling = parent.previousElementSibling;
 
         if (sibling !== null) {
           sibling.before(parent);
+          swapOriginalSelectWeights(
+            parent.getAttribute("data-id"),
+            sibling.getAttribute("data-id")
+          );
         }
       };
 
@@ -189,6 +206,10 @@
             )
           ) {
             sibling.after(parent);
+            swapOriginalSelectWeights(
+              parent.getAttribute("data-id"),
+              sibling.getAttribute("data-id")
+            );
           }
         }
       };
