@@ -2,7 +2,6 @@
 
 namespace Drupal\asu_api\Api\ElasticSearchApi\Response;
 
-use Drupal\asu_api\Api\ElasticSearchApi\Request\SingleApartmentRequest;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -16,7 +15,6 @@ class SingleApartmentResponse {
    * @var array
    */
   private array $apartment;
-
 
   /**
    * ApartmentResponse constructor.

@@ -6,7 +6,7 @@ use Drupal\asu_api\Api\DrupalApi\Service\ApartmentService;
 use Drupal\asu_api\Api\DrupalApi\Service\ApplicationService;
 use Drupal\asu_api\Api\DrupalApi\Service\FilterService;
 use Drupal\asu_api\Api\RequestHandler;
-use Drupal\asu_application\Entity\Application;
+use Drupal\Core\Site\Settings;
 
 /**
  * Integration to drupal.
@@ -37,8 +37,9 @@ class DrupalApi {
    * @param string $apiUrl
    *   Api url.
    */
-  public function __construct(string $apiUrl) {
-    $requestHandler = new RequestHandler($apiUrl);
+  public function __construct(string $apiUrlKey) {
+    $apiUrl = Settings::get($apiUrlKey);
+    $requestHandler = new RequestHandler($apiUrl . '/');
     $this->applicationService = new ApplicationService($requestHandler);
     $this->filtersService = new FilterService($requestHandler);
     $this->apartmentService = new ApartmentService($requestHandler);
