@@ -107,18 +107,25 @@ final class Initialize extends ResourceBase {
       ->getCurrentLanguage()
       ->getId();
 
+    // $cacheKey = $languageCode . '_asu_filters';
+    // if(!$cached = \Drupal::cache()->get($languageCode .'_asu_filters')) {.
     try {
       /** @var \Drupal\asu_api\Api\DrupalApi\DrupalApi $drupalApi */
       $drupalApi = \Drupal::service('asu_api.drupalapi');
-      return $drupalApi
+
+      $content = $drupalApi
         ->getFiltersService()
         ->getFilters(FilterRequest::create($languageCode))
         ->getContent();
+
+      // \Drupal::cache()->set($cacheKey, $content);
+      return $content;
     }
     catch (\Exception $e) {
-      // @todo error: connection failed, add logging.
+      \Drupal::logger('asu_filters')->critical('Unable to fetch filter for react component');
       return [];
     }
+    // }
   }
 
 }
