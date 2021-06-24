@@ -162,16 +162,49 @@
         return apartmentListElementWrapper;
       };
 
+      const createElementWithClasses = (tag, classes = []) => {
+        const element = document.createElement(tag);
+        element.classList.add(...classes);
+
+        return element;
+      };
+
+      const handleApartmentAddButtonClick = ({ target }) => {
+        const ajaxButton = $(
+          '[data-drupal-selector="edit-apartment-add-more"]'
+        );
+
+        if (
+          getApplicationFormApartmentListElementCount() <= 5 &&
+          getApplicationFormApartmentListElementCount() > 1
+        ) {
+          ajaxButton.mousedown();
+        }
+
+        const formHeader = target.parentElement;
+
+        formHeader.appendChild(createCustomSelectElement());
+        target.remove();
+        setFocusToLastSelectElement();
+
+        if (getApplicationFormApartmentListElementCount() < 5) {
+          // eslint-disable-next-line no-use-before-define
+          appendListItemToApartmentList();
+        }
+      };
+
       const createApartmentListItem = (withSelectElement = false) => {
-        const li = document.createElement("li");
-        li.classList.add("application-form__apartments-item");
+        const li = createElementWithClasses("li", [
+          "application-form__apartments-item",
+        ]);
 
         if (withSelectElement) {
           li.classList.add("application-form__apartments-item--with-select");
         }
 
-        const article = document.createElement("article");
-        article.classList.add("application-form-apartment");
+        const article = createElementWithClasses("article", [
+          "application-form-apartment",
+        ]);
 
         const listPositionDesktop = createParagraphElementWithVisuallyHiddenText(
           ["application-form-apartment__list-position", "is-desktop"],
@@ -179,8 +212,9 @@
           ""
         );
 
-        const formHeader = document.createElement("div");
-        formHeader.classList.add("application-form-apartment__header");
+        const formHeader = createElementWithClasses("div", [
+          "application-form-apartment__header",
+        ]);
 
         const listPositionMobile = createParagraphElementWithVisuallyHiddenText(
           ["application-form-apartment__list-position", "is-mobile"],
@@ -205,27 +239,10 @@
           "Add an apartment to the list"
         );
 
-        apartmentAddButton.addEventListener("click", ({ target }) => {
-          const ajaxButton = $(
-            '[data-drupal-selector="edit-apartment-add-more"]'
-          );
-
-          if (
-            getApplicationFormApartmentListElementCount() <= 5 &&
-            getApplicationFormApartmentListElementCount() > 1
-          ) {
-            ajaxButton.mousedown();
-          }
-
-          formHeader.appendChild(createCustomSelectElement());
-          target.remove();
-          setFocusToLastSelectElement();
-
-          if (getApplicationFormApartmentListElementCount() < 5) {
-            // eslint-disable-next-line no-use-before-define
-            appendListItemToApartmentList();
-          }
-        });
+        apartmentAddButton.addEventListener(
+          "click",
+          handleApartmentAddButtonClick
+        );
 
         if (withSelectElement) {
           formHeader.append(listPositionMobile, apartmentAddButton);
@@ -258,10 +275,9 @@
           listPositionActionsLowerButton
         );
 
-        const formApartmentInformation = document.createElement("ul");
-        formApartmentInformation.classList.add(
-          "application-form-apartment__information"
-        );
+        const formApartmentInformation = createElementWithClasses("ul", [
+          "application-form-apartment__information",
+        ]);
 
         const formApartmentInformationFloor = createListItemElementWithText(
           "Floor",
@@ -290,8 +306,9 @@
           formApartmentInformationDebtFreeSalesPrice
         );
 
-        const formActions = document.createElement("div");
-        formActions.classList.add("application-form-apartment__actions");
+        const formActions = createElementWithClasses("div", [
+          "application-form-apartment__actions",
+        ]);
 
         const formActionsDeleteButton = createButtonElement("", "Delete");
 
