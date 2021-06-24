@@ -169,6 +169,44 @@
         return element;
       };
 
+      const handleListPositionRaiseClick = (target) => {
+        const parent = target.parentElement.parentElement.parentElement;
+        const sibling = parent.previousElementSibling;
+
+        if (sibling !== null) {
+          sibling.before(parent);
+        }
+      };
+
+      const handleListPositionLowerClick = (target) => {
+        const parent = target.parentElement.parentElement.parentElement;
+        const sibling = parent.nextElementSibling;
+
+        if (sibling !== null) {
+          if (
+            !sibling.classList.contains(
+              "application-form__apartments-item--with-select"
+            )
+          ) {
+            sibling.after(parent);
+          }
+        }
+      };
+
+      const handleListPositionClicks = ({ target }) => {
+        if (
+          target.getAttribute("data-list-position-action-button") === "raise"
+        ) {
+          handleListPositionRaiseClick(target);
+        }
+
+        if (
+          target.getAttribute("data-list-position-action-button") === "lower"
+        ) {
+          handleListPositionLowerClick(target);
+        }
+      };
+
       const handleApartmentAddButtonClick = ({ target }) => {
         const ajaxButton = $(
           '[data-drupal-selector="edit-apartment-add-more"]'
@@ -182,6 +220,11 @@
         }
 
         const formHeader = target.parentElement;
+
+        const parentLiElement =
+          target.parentElement.parentElement.parentElement.parentElement;
+
+        parentLiElement.addEventListener("click", handleListPositionClicks);
 
         formHeader.appendChild(createCustomSelectElement());
         target.remove();
@@ -264,10 +307,21 @@
           "Raise on the list",
           withSelectElement && true
         );
+
+        listPositionActionsRaiseButton.setAttribute(
+          "data-list-position-action-button",
+          "raise"
+        );
+
         const listPositionActionsLowerButton = createButtonElement(
           "",
           "Lower on the list",
           withSelectElement && true
+        );
+
+        listPositionActionsLowerButton.setAttribute(
+          "data-list-position-action-button",
+          "lower"
         );
 
         listPositionActions.append(

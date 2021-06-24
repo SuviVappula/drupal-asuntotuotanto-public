@@ -161,7 +161,7 @@
   list-style: none;
   counter-reset: apartment-list-counter;
 
-  li {
+  > li {
     counter-increment: apartment-list-counter;
     position: relative;
 

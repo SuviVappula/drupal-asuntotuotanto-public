@@ -164,6 +164,7 @@
       height: 24px;
       margin-right: $spacing-2-xs;
       width: 24px;
+      pointer-events: none;
 
       @media screen and (min-width: $breakpoint-xl) {
         margin-right: 0;
@@ -192,6 +193,8 @@
     }
 
     span {
+      pointer-events: none;
+
       @media screen and (min-width: $breakpoint-xl) {
         position: absolute !important;
         overflow: hidden;
