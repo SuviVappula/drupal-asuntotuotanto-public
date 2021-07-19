@@ -10,7 +10,7 @@ use Drupal\contact_emails\Entity\ContactEmail;
 /**
  * Create contact email content entity for contact form.
  */
-function asu_mailer_update_8001() {
+function asu_mailer_update_8002() {
   $values = [
     'langcode' => 'en',
     'contact_form' => 'apply_for_free_apartment',
