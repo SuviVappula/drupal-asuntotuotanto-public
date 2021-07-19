@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Module.install.
+ */
+
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 
 /**
@@ -11,19 +16,21 @@ function asu_apartment_search_update_8001() {
   $menu_name = 'main';
 
   $hitas = MenuLinkContent::create([
-      'title' => 'Omistusasunnot',
-      'link' => ['uri' => 'route:asu_apartment_search.hitas_content'],
-      'menu_name' => $menu_name,
-      'expanded' => TRUE,
-      'weight' => 1,
+    'title' => 'Omistusasunnot',
+    'link' => ['uri' => 'route:asu_apartment_search.hitas_content'],
+    'menu_name' => $menu_name,
+    'expanded' => TRUE,
+    'weight' => 1,
   ]);
 
   $hitas->addTranslation('en', [
-    'title' => t('Owner-occupied housing')]
+    'title' => t('Owner-occupied housing'),
+  ]
   );
 
   $hitas->addTranslation('sv', [
-    'title' => t('Ägarboende')]
+    'title' => t('Ägarboende'),
+  ]
   );
 
   $hitas->save();
@@ -36,11 +43,13 @@ function asu_apartment_search_update_8001() {
   ]);
 
   $hitas_second_level_main_link->addTranslation('en', [
-      'title' => t('Search for apartment')]
+    'title' => t('Search for apartment'),
+  ]
   );
 
   $hitas_second_level_main_link->addTranslation('sv', [
-      'title' => t('Sök efter lägenhet')]
+    'title' => t('Sök efter lägenhet'),
+  ]
   );
 
   $hitas_second_level_main_link->save();
@@ -53,29 +62,33 @@ function asu_apartment_search_update_8001() {
   ]);
 
   $hitas_second_level->addTranslation('en', [
-    'title' => t('Upcoming projects')]
+    'title' => t('Upcoming projects'),
+  ]
   );
 
   $hitas_second_level->addTranslation('sv', [
-    'title' => t('Kommande projekt')]
+    'title' => t('Kommande projekt'),
+  ]
   );
 
   $hitas_second_level->save();
 
   $haso = MenuLinkContent::create([
-      'title' => 'Asumisoikeusasunnot',
-      'link' => ['uri' => 'route:asu_apartment_search.haso'],
-      'menu_name' => $menu_name,
-      'expanded' => TRUE,
-      'weight' => 2,
+    'title' => 'Asumisoikeusasunnot',
+    'link' => ['uri' => 'route:asu_apartment_search.haso'],
+    'menu_name' => $menu_name,
+    'expanded' => TRUE,
+    'weight' => 2,
   ]);
 
   $haso->addTranslation('en', [
-    'title' => t('Right-of-occupancy apartments')]
+    'title' => t('Right-of-occupancy apartments'),
+  ]
   );
 
   $haso->addTranslation('sv', [
-    'title' => t('Bostadsrätter')]
+    'title' => t('Bostadsrätter'),
+  ]
   );
 
   $haso->save();
@@ -88,11 +101,13 @@ function asu_apartment_search_update_8001() {
   ]);
 
   $haso_second_level_main_link->addTranslation('en', [
-      'title' => t('Search for apartment')]
+    'title' => t('Search for apartment'),
+  ]
   );
 
   $haso_second_level_main_link->addTranslation('sv', [
-      'title' => t('Sök efter lägenhet')]
+    'title' => t('Sök efter lägenhet'),
+  ]
   );
 
   $haso_second_level_main_link->save();
@@ -105,11 +120,13 @@ function asu_apartment_search_update_8001() {
   ]);
 
   $haso_second_level->addTranslation('en', [
-    'title' => t('Upcoming projects')]
+    'title' => t('Upcoming projects'),
+  ]
   );
 
   $haso_second_level->addTranslation('sv', [
-    'title' => t('Kommande projekt')]
+    'title' => t('Kommande projekt'),
+  ]
   );
 
   $haso_second_level->save();
