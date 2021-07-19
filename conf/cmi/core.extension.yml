@@ -24,6 +24,9 @@ module:
   config_replace: 0
   config_translation: 0
   config_update: 0
+  contact: 0
+  contact_emails: 0
+  contact_storage: 0
   context: 0
   context_ui: 0
   crop: 0
@@ -93,6 +96,7 @@ module:
   path: 0
   path_alias: 0
   personal_id: 0
+  raven: 0
   redirect: 0
   registration_role: 0
   responsive_image: 0
