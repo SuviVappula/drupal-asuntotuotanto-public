@@ -28,6 +28,19 @@
         return lastSelectParent.getElementsByTagName("select")[0];
       };
 
+      const getOriginalSelectElementValues = () => {
+        const selectElements = document.querySelectorAll(
+          '[data-drupal-selector="edit-apartment"] > table select'
+        );
+
+        return [...selectElements]
+          .filter((select) =>
+            select.getAttribute("data-drupal-selector").includes("-id")
+          )
+          .map((select) => select.value)
+          .filter((selectValue) => selectValue !== "0");
+      };
+
       const createParagraphElementWithVisuallyHiddenText = (
         classes,
         hiddenTextString,
@@ -122,6 +135,8 @@
           "hds-select-element__select-wrapper"
         );
 
+        const selectedApartments = getOriginalSelectElementValues();
+
         const apartmentSelectElement = getLastOriginalApartmentSelectElement().cloneNode(
           true
         );
@@ -134,10 +149,22 @@
           "custom_apartment_select"
         );
 
+        const earlierSelectedOptions = [
+          ...apartmentSelectElement.options,
+        ].filter((option) => selectedApartments.includes(option.value));
+
+        earlierSelectedOptions.forEach((option) => {
+          apartmentSelectElement.removeChild(option);
+        });
+
         apartmentSelectElement.addEventListener("change", ({ target }) => {
           const originalSelectElementTarget = document.querySelector(
             `[data-drupal-selector="edit-apartment-${selectCount}-id"]`
           );
+
+          const apartmentAddButton = document.getElementsByClassName(
+            "application-form-apartment__apartment-add-button"
+          )[0];
 
           const targetParent =
             target.parentElement.parentElement.parentElement.parentElement
@@ -168,6 +195,8 @@
             listItemValues,
             target.value
           ).innerHTML;
+
+          apartmentAddButton.removeAttribute("disabled");
         });
 
         apartmentSelectElementWrapper.appendChild(apartmentSelectElement);
@@ -338,6 +367,10 @@
           "click",
           handleApartmentAddButtonClick
         );
+
+        if (getApplicationFormApartmentListElementCount() > 0) {
+          apartmentAddButton.setAttribute("disabled", true);
+        }
 
         if (withSelectElement) {
           formHeader.append(listPositionMobile, apartmentAddButton);
