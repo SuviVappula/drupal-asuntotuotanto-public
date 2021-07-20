@@ -145,11 +145,29 @@
           targetParent.setAttribute("data-id", selectCount);
 
           originalSelectElementTarget.value = target.value;
+
           targetParent.classList.remove(
             "application-form__apartments-item--with-select"
           );
+
+          const selectedValueTextArray = target.options[
+            target.selectedIndex
+          ].text.split(" | ");
+
+          const listItemValues = {
+            apartment_number: selectedValueTextArray[0],
+            apartment_structure: selectedValueTextArray[1],
+            apartment_floor: selectedValueTextArray[2],
+            apartment_living_area_size: selectedValueTextArray[3],
+            apartment_sales_price: selectedValueTextArray[4],
+            apartment_debt_free_sales_price: selectedValueTextArray[5],
+          };
+
           // eslint-disable-next-line no-use-before-define
-          targetParent.innerHTML = createApartmentListItem().innerHTML;
+          targetParent.innerHTML = createApartmentListItem(
+            listItemValues,
+            target.value
+          ).innerHTML;
         });
 
         apartmentSelectElementWrapper.appendChild(apartmentSelectElement);
@@ -257,7 +275,20 @@
         }
       };
 
-      const createApartmentListItem = (withSelectElement = false) => {
+      const createApartmentListItem = (
+        values,
+        id,
+        withSelectElement = false
+      ) => {
+        const {
+          apartment_number: apartmentNumberValue,
+          apartment_structure: apartmentStructureValue,
+          apartment_floor: apartmentFloorValue,
+          apartment_living_area_size: apartmentLivingAreaSizeValue,
+          apartment_sales_price: apartmentSalesPriceValue,
+          apartment_debt_free_sales_price: apartmentDebtFreeSalesPriceValue,
+        } = values;
+
         const li = createElementWithClasses("li", [
           "application-form__apartments-item",
         ]);
@@ -289,13 +320,13 @@
         const apartmentNumber = createParagraphElementWithVisuallyHiddenText(
           ["application-form-apartment__apartment-number"],
           "Apartment",
-          "A75"
+          apartmentNumberValue
         );
 
         const apartmentStructure = createParagraphElementWithVisuallyHiddenText(
           ["application-form-apartment__apartment-structure"],
           "Apartment structure",
-          "4h, kt, s"
+          apartmentStructureValue
         );
 
         const apartmentAddButton = createButtonElement(
@@ -356,22 +387,22 @@
 
         const formApartmentInformationFloor = createListItemElementWithText(
           "Floor",
-          "7/7"
+          apartmentFloorValue
         );
 
         const formApartmentInformationLivingAreaSize = createListItemElementWithText(
           "Living area size",
-          "85,0 m2"
+          apartmentLivingAreaSizeValue
         );
 
         const formApartmentInformationSalesPrice = createListItemElementWithText(
           "Sales price",
-          "308 128 €"
+          apartmentSalesPriceValue
         );
 
         const formApartmentInformationDebtFreeSalesPrice = createListItemElementWithText(
           "Debt free sales price",
-          "378 128 €"
+          apartmentDebtFreeSalesPriceValue
         );
 
         formApartmentInformation.append(
@@ -392,7 +423,10 @@
           Drupal.t("Open apartment page")
         );
         formActionsLink.appendChild(formActionsLinkText);
-        formActionsLink.setAttribute("href", "https://google.fi");
+        formActionsLink.setAttribute(
+          "href",
+          `${window.location.origin}/apartment/${id}`
+        );
 
         formActions.append(formActionsDeleteButton, formActionsLink);
 
@@ -415,7 +449,7 @@
 
       const appendListItemToApartmentList = () => {
         applicationFormApartmentListElement.append(
-          createApartmentListItem(true)
+          createApartmentListItem({}, null, true)
         );
       };
 

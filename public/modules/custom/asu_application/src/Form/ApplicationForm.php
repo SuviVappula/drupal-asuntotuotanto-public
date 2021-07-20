@@ -179,7 +179,14 @@ class ApplicationForm extends ContentEntityForm {
     $apartments = [];
     foreach ($apartmentResponse->getApartments() as $apartment) {
       $data = $apartment['_source'];
-      $apartments[$data['nid']] = $data['apartment_address'];
+
+      $living_area_size_m2 = number_format($data['living_area'], 1, ',', '');
+      $debt_free_sales_price = number_format($data['debt_free_sales_price'], 0, ',', ' ');
+      $sales_price = number_format($data['sales_price'], 0, ',', ' ');
+
+      $select_text = "{$data['apartment_number']} | {$data['apartment_structure']} | {$data['floor']}/{$data['floor_max']} | {$living_area_size_m2} m2 | {$sales_price} € | {$debt_free_sales_price} €";
+
+      $apartments[$data['nid']] = $select_text;
     }
     ksort($apartments, SORT_NUMERIC);
 
