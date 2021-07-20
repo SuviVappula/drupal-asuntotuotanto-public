@@ -119,6 +119,7 @@ if ($env = getenv('APP_ENV')) {
     $config['swiftmailer.transport']['smtp_port'] = '1025';
     $config['swiftmailer.transport']['smtp_encryption'] = '0';
 
+    $settings['elastic_url'] = 'http://elastic:9200';
     $settings['asuntotuotanto_url'] = 'https://asuntotuotanto.docker.so';
     $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = 'http://elastic:9200';
 
