@@ -309,6 +309,10 @@
     @media screen and (min-width: $breakpoint-s) {
       margin: 0;
     }
+
+    span {
+      pointer-events: none;
+    }
   }
 
   a {

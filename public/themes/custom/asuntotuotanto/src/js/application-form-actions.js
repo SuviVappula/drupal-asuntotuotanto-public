@@ -369,7 +369,24 @@
         }
       };
 
-      const handleListPositionClicks = ({ target }) => {
+      const handleApartmentDeleteButtonClick = (target) => {
+        const parentLiElement =
+          target.parentElement.parentElement.parentElement;
+
+        applicationFormApartmentListElement.removeChild(parentLiElement);
+
+        const addButtonElement = document.getElementsByClassName(
+          "application-form-apartment__apartment-add-button"
+        );
+
+        if (addButtonElement.length === 0) {
+          // eslint-disable-next-line no-use-before-define
+          appendListItemToApartmentList();
+          addButtonElement[0].disabled = false;
+        }
+      };
+
+      const handleListItemInnerClicks = ({ target }) => {
         if (
           target.getAttribute("data-list-position-action-button") === "raise"
         ) {
@@ -380,6 +397,13 @@
           target.getAttribute("data-list-position-action-button") === "lower"
         ) {
           handleListPositionLowerClick(target);
+        }
+
+        if (
+          target.getAttribute("class") ===
+          "application-form-apartment__apartment-delete-button"
+        ) {
+          handleApartmentDeleteButtonClick(target);
         }
       };
 
@@ -400,7 +424,7 @@
         const parentLiElement =
           target.parentElement.parentElement.parentElement.parentElement;
 
-        parentLiElement.addEventListener("click", handleListPositionClicks);
+        parentLiElement.addEventListener("click", handleListItemInnerClicks);
 
         formHeader.appendChild(createCustomSelectElement());
         target.remove();
@@ -557,7 +581,10 @@
           "application-form-apartment__actions",
         ]);
 
-        const formActionsDeleteButton = createButtonElement("", "Delete");
+        const formActionsDeleteButton = createButtonElement(
+          ["application-form-apartment__apartment-delete-button"],
+          "Delete"
+        );
 
         const formActionsLink = document.createElement("a");
         const formActionsLinkText = document.createTextNode(
