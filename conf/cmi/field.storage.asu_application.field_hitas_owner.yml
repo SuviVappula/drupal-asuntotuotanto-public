@@ -1,17 +1,14 @@
-uuid: 3473c87d-1a1a-4d58-a19c-6875903f7b27
+uuid: 06f25d4c-142d-4d66-ab2e-c21ba7c23b40
 langcode: en
 status: true
 dependencies:
   module:
     - asu_application
-id: asu_application.field_ordinal_number
-field_name: field_ordinal_number
+id: asu_application.field_hitas_owner
+field_name: field_hitas_owner
 entity_type: asu_application
-type: string
-settings:
-  max_length: 10
-  is_ascii: false
-  case_sensitive: false
+type: boolean
+settings: {  }
 module: core
 locked: false
 cardinality: 1

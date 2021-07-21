@@ -1,15 +1,15 @@
-uuid: 2c15bb91-e6e2-4dfc-9ebe-269f822ca251
+uuid: 4ed0d16b-1e93-41ca-8920-688745d1be3f
 langcode: en
 status: true
 dependencies:
   config:
     - asu_application.application_type.haso
-    - field.storage.asu_application.field_ordinal_number
-id: asu_application.haso.field_ordinal_number
-field_name: field_ordinal_number
+    - field.storage.asu_application.field_right_of_residence_number
+id: asu_application.haso.field_right_of_residence_number
+field_name: field_right_of_residence_number
 entity_type: asu_application
 bundle: haso
-label: 'Ordinal number'
+label: 'Right of residence number'
 description: ''
 required: true
 translatable: false
