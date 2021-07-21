@@ -85,6 +85,12 @@
   &:hover {
     cursor: pointer;
   }
+
+  &:disabled {
+    color: $color-black-40;
+    cursor: default;
+    text-decoration: none;
+  }
 }
 
 .application-form-apartment__apartment-add-actions-wrapper {

@@ -41,6 +41,74 @@
           .filter((selectValue) => selectValue !== "0");
       };
 
+      const detectMutations = (mutations, observer) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === "childList") {
+            const listItem = document.getElementsByClassName(
+              "application-form__apartments-item"
+            );
+
+            [...listItem].map((item) => {
+              const actionButtonElements = item.querySelectorAll(
+                "button[data-list-position-action-button]"
+              );
+
+              const index = [...item.parentElement.children].indexOf(item);
+
+              if (
+                !item.classList.contains(
+                  "application-form__apartments-item--with-select"
+                )
+              ) {
+                if (
+                  index === 0 &&
+                  !item.nextElementSibling.classList.contains(
+                    "application-form__apartments-item--with-select"
+                  )
+                ) {
+                  actionButtonElements[0].disabled = true;
+                  actionButtonElements[1].disabled = false;
+                }
+
+                if (
+                  index > 0 &&
+                  index < getApplicationFormApartmentListElementCount() - 1
+                ) {
+                  if (
+                    item.nextElementSibling.classList.contains(
+                      "application-form__apartments-item--with-select"
+                    )
+                  ) {
+                    actionButtonElements[0].disabled = false;
+                    actionButtonElements[1].disabled = true;
+                  } else {
+                    actionButtonElements[0].disabled = false;
+                    actionButtonElements[1].disabled = false;
+                  }
+                }
+
+                if (
+                  index ===
+                  getApplicationFormApartmentListElementCount() - 1
+                ) {
+                  actionButtonElements[0].disabled = false;
+                  actionButtonElements[1].disabled = true;
+                }
+              }
+            });
+          }
+        });
+      };
+
+      const applicationFormApartmentListObserver = new MutationObserver(
+        detectMutations
+      );
+
+      applicationFormApartmentListObserver.observe(
+        applicationFormApartmentListElement,
+        { childList: true }
+      );
+
       const createParagraphElementWithVisuallyHiddenText = (
         classes,
         hiddenTextString,
@@ -141,6 +209,14 @@
           true
         );
 
+        // eslint-disable-next-line array-callback-return
+        [...apartmentSelectElement.options].map((option, index) => {
+          if (index > 0) {
+            const originalTextSplitted = option.innerHTML.split(" | ");
+            option.innerHTML = `${originalTextSplitted[0]} | ${originalTextSplitted[1]} | ${originalTextSplitted[3]}`;
+          }
+        });
+
         apartmentSelectElement.classList.add("hds-select-element__select");
         apartmentSelectElement.setAttribute("id", selectElementId);
         apartmentSelectElement.setAttribute("data-id", selectCount);
@@ -177,8 +253,8 @@
             "application-form__apartments-item--with-select"
           );
 
-          const selectedValueTextArray = target.options[
-            target.selectedIndex
+          const selectedValueTextArray = originalSelectElementTarget.options[
+            originalSelectElementTarget.selectedIndex
           ].text.split(" | ");
 
           const listItemValues = {
@@ -196,7 +272,39 @@
             target.value
           ).innerHTML;
 
-          apartmentAddButton.removeAttribute("disabled");
+          const index = [...targetParent.parentElement.children].indexOf(
+            targetParent
+          );
+
+          if (index === 0) {
+            targetParent.querySelector("button").disabled = true;
+          }
+
+          if (index === getApplicationFormApartmentListElementCount() - 1) {
+            targetParent.querySelector(
+              'button[data-list-position-action-button="lower"]'
+            ).disabled = true;
+          }
+
+          if (index > 0) {
+            targetParent.previousElementSibling.querySelector(
+              'button[data-list-position-action-button="lower"]'
+            ).disabled = false;
+          }
+
+          if (
+            targetParent.nextElementSibling.classList.contains(
+              "application-form__apartments-item--with-select"
+            )
+          ) {
+            targetParent.querySelector(
+              'button[data-list-position-action-button="lower"]'
+            ).disabled = true;
+          }
+
+          if (apartmentAddButton) {
+            apartmentAddButton.removeAttribute("disabled");
+          }
         });
 
         apartmentSelectElementWrapper.appendChild(apartmentSelectElement);
