@@ -2,7 +2,9 @@
   const applicantWrapper = $('#applicant-wrapper');
   const button = $('#has-additional-applicant');
 
-  applicantWrapper.hide();
+  if (!(button.prop('checked'))) {
+    applicantWrapper.hide();
+  }
 
   button.click(function() {
     if ((button.prop('checked'))) {
