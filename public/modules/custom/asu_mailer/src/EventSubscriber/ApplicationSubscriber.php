@@ -117,7 +117,9 @@ class ApplicationSubscriber implements EventSubscriberInterface {
     $to = $askoApi->getEmailAddress($application->bundle());
     $langcode = 'fi';
     $send = TRUE;
+    $subject = $askoApi->getEmailTitle($application->bundle());
     $params = [
+      'subject' => $subject,
       'message' => $body,
     ];
 

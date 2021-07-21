@@ -26,6 +26,20 @@ class AskoApi {
   private string $hasoEmailAddress;
 
   /**
+   * Asko hitas email title.
+   *
+   * @var string
+   */
+  private string $hitasTitle = 'asoy_hakemus';
+
+  /**
+   * Asko haso email title.
+   *
+   * @var string
+   */
+  private string $hasoTitle = 'asohakemus_haso';
+
+  /**
    * Constructor.
    */
   public function __construct(string $hasoAdressVariable, string $hitasEmailAddress) {
@@ -42,7 +56,8 @@ class AskoApi {
    * Get asko email address.
    *
    * @param string $type
-   *  Hitas or haso email address.
+   *   Hitas or haso email address.
+   *
    * @return string
    */
   public function getEmailAddress(string $type): string {
@@ -53,12 +68,15 @@ class AskoApi {
   }
 
   /**
-   * Get email address.
+   * Get title for email by application type.
+   *
+   * @param string $type
    *
    * @return string
+   *   Title for application email.
    */
-  public function getHitasEmailAddress(): string {
-    return $this->hasoEmailAddress;
+  public function getEmailTitle(string $type): string {
+    return $type == 'hitas' ? $this->hitasTitle : $this->hasoTitle;
   }
 
   /**
