@@ -12,18 +12,26 @@ use Drupal\user\Entity\User;
 class AskoApi {
 
   /**
-   * Asko email address.
+   * Asko hitas email address.
    *
    * @var string
    */
-  private string $askoEmailAddress;
+  private string $hitasEmailAddress;
+
+  /**
+   * Asko haso email address.
+   *
+   * @var string
+   */
+  private string $hasoEmailAddress;
 
   /**
    * Constructor.
    */
-  public function __construct(string $askoAdressVariable) {
-    if ($env = getenv($askoAdressVariable)) {
-      $this->askoEmailAddress = $env;
+  public function __construct(string $hasoAdressVariable, string $hitasEmailAddress) {
+    if ($hitas = getenv($hitasEmailAddress) && $haso = getenv($hasoAdressVariable)) {
+      $this->hitasEmailAddress = $hitas;
+      $this->hasoEmailAddress = $haso;
     }
     else {
       throw new \InvalidArgumentException('As-Ko address is not set');
@@ -31,12 +39,26 @@ class AskoApi {
   }
 
   /**
+   * Get asko email address.
+   *
+   * @param string $type
+   *  Hitas or haso email address.
+   * @return string
+   */
+  public function getEmailAddress(string $type): string {
+    if (in_array($type, ['hitas', 'haso'])) {
+      return $type == 'hitas' ? $this->hitasEmailAddress : $this->hasoEmailAddress;
+    }
+    throw new \Exception('Tried to fetch email for undefined application type.');
+  }
+
+  /**
    * Get email address.
    *
    * @return string
    */
-  public function getEmailAddress(): string {
-    return $this->askoEmailAddress;
+  public function getHitasEmailAddress(): string {
+    return $this->hasoEmailAddress;
   }
 
   /**
