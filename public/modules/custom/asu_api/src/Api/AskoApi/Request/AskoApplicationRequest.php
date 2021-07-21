@@ -6,7 +6,7 @@ use Drupal\asu_application\Entity\Application;
 use Drupal\user\Entity\User;
 
 /**
- *
+ * Request sent to AS-KO.
  */
 class AskoApplicationRequest {
 
@@ -68,7 +68,7 @@ class AskoApplicationRequest {
       // Hitas only.
       'hitasomistus' => '',
       'lapsiperhe' => '',
-      'lapsi1' => ''
+      'lapsi1' => '',
     ];
 
     if ($this->application->hasAdditionalApplicant()) {
@@ -142,11 +142,23 @@ class AskoApplicationRequest {
     return $this->application->field_aso_changer->value ? $this::YES : $this::NO;
   }
 
+  /**
+   * Is user hitas owner.
+   *
+   * @return string
+   *   Boolean as enum.
+   */
   private function userIsHitasOwner() : string {
     return $this->application->field_hitas_owner->value;
   }
 
-  private function userHasChildren() : string  {
+  /**
+   * Does user have underage children.
+   *
+   * @return string
+   *   Boolean as enum.
+   */
+  private function userHasChildren() : string {
     return $this->application->getHasChildren() ? $this::YES : $this::NO;
   }
 
@@ -154,6 +166,7 @@ class AskoApplicationRequest {
    * Get selected apartments as comma separated string.
    *
    * @return string
+   *   Selected apartment numbers as comma separated string.
    */
   private function getApartmentNumbers(): string {
     $apartments = $this->application->getApartments();
@@ -169,14 +182,14 @@ class AskoApplicationRequest {
    * Get additional applicant.
    *
    * @return array
-   *  Additional applicants.
+   *   Additional applicants.
    */
   private function getAdditionalApplicant(): ?array {
     $applicants = $this->application->getApplicants();
-    if(!empty($applicants)){
+    if (!empty($applicants)) {
       return $applicants[0];
     }
-    return false;
+    return FALSE;
   }
 
 }

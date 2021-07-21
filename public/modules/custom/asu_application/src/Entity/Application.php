@@ -109,7 +109,7 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
    * Get additional applicants.
    *
    * @return array
-   *  Array of applicants.
+   *   Array of applicants.
    */
   public function getApplicants(): array {
     return $this->applicant->getValue();
@@ -123,9 +123,9 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
   public function hasAdditionalApplicant(): bool {
     $applicants = $this->getApplicants();
     if (!empty($applicants)) {
-      return $applicants[0]['has_additional_applicant'] ? true : false;
+      return $applicants[0]['has_additional_applicant'] ? TRUE : FALSE;
     }
-    return false;
+    return FALSE;
   }
 
   /**

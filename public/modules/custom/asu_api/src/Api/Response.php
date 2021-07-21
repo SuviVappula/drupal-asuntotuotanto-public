@@ -9,13 +9,29 @@ use Psr\Http\Message\ResponseInterface;
  */
 abstract class Response {
 
-  abstract static function createFromHttpResponse(ResponseInterface $response): Response;
+  /**
+   * Create response class from http client response.
+   *
+   * @param \Psr\Http\Message\ResponseInterface $response
+   *
+   * @return Response
+   */
+  abstract public static function createFromHttpResponse(ResponseInterface $response): Response;
 
+  /**
+   * Is request 2xx.
+   *
+   * @param \Psr\Http\Message\ResponseInterface $response
+   *
+   * @return bool
+   *
+   * @throws \Exception
+   */
   public function requestOk(ResponseInterface $response): bool {
     if ($response->getStatusCode() < 200 && $response->getStatusCode() > 299) {
       throw new \Exception('Bad status code: ' . $response->getStatusCode());
     }
-    return true;
+    return TRUE;
   }
 
 }
