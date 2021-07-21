@@ -1,0 +1,33 @@
+uuid: 938630de-8c5f-4412-b821-bb35227791ef
+langcode: en
+status: true
+dependencies:
+  config:
+    - asu_application.application_type.haso
+    - field.field.asu_application.haso.field_ordinal_number
+    - field.field.asu_application.haso.field_personal_id
+  module:
+    - asu_application
+id: asu_application.haso.default
+targetEntityType: asu_application
+bundle: haso
+mode: default
+content:
+  field_ordinal_number:
+    weight: 27
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_personal_id:
+    weight: 26
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  uid: true
