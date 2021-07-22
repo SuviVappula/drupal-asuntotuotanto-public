@@ -378,6 +378,28 @@ function asuntotuotanto_form_alter(&$form, &$form_state, $form_id) {
     $form['application_project_information'] = $application_teaser_values;
   }
 
+  if ($form['#id'] == 'asu-application-hitas-form') {
+    $project_id = $form['project_id'];
+    $elastic = \Drupal::service('asu_api.elasticapi');
+    $request = new ProjectApartmentsRequest($project_id);
+    $apartmentResponse = $elastic->getApartmentService()
+      ->getProjectApartments($request);
+
+    $application_teaser_values = $apartmentResponse->getApplicationTeaserValues();
+    $form['application_project_information'] = $application_teaser_values;
+  }
+
+  if ($form['#id'] == 'asu-application-haso-form') {
+    $project_id = $form['project_id'];
+    $elastic = \Drupal::service('asu_api.elasticapi');
+    $request = new ProjectApartmentsRequest($project_id);
+    $apartmentResponse = $elastic->getApartmentService()
+      ->getProjectApartments($request);
+
+    $application_teaser_values = $apartmentResponse->getApplicationTeaserValues();
+    $form['application_project_information'] = $application_teaser_values;
+  }
+
 }
 
 /**
