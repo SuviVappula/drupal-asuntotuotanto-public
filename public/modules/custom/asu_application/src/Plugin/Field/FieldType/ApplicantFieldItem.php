@@ -89,10 +89,10 @@ class ApplicantFieldItem extends FieldItemBase implements FieldItemInterface {
       ->setLabel(t('Street address'));
 
     $properties['postal_code'] = DataDefinition::create('string')
-      ->setLabel(t('postal_code'));
+      ->setLabel(t('Postal code'));
 
     $properties['city'] = DataDefinition::create('string')
-      ->setLabel(t('city'));
+      ->setLabel(t('City'));
 
     $properties['phone_number'] = DataDefinition::create('string')
       ->setLabel(t('Phone number'));
