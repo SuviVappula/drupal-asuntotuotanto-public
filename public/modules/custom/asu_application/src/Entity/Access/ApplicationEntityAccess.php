@@ -22,6 +22,8 @@ class ApplicationEntityAccess extends EntityAccessControlHandler {
     switch ($operation) {
       case 'view':
         return AccessResult::allowedIf($account->id() === $entity->getOwnerId());
+      case 'update':
+        return AccessResult::allowedIf($account->id() === $entity->getOwnerId());
     }
 
     return AccessResult::neutral();

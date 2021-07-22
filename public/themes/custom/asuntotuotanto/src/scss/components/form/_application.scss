@@ -67,6 +67,24 @@
     }
   }
 
+  > h3 {
+    @include font-size($fontsize-heading-xxs, 24px);
+    font-weight: $font-weight-bold;
+    margin: 0 0 $spacing-2-xs;
+
+    + p {
+      @include font-size($fontsize-body-m, 24px);
+      font-weight: $font-weight-regular;
+      margin: 0 0 $spacing-m;
+    }
+
+    &:last-of-type {
+      + p {
+        margin: 0;
+      }
+    }
+  }
+
   &:first-of-type {
     background-color: var(--color-white);
     margin-left: -#{$spacing-l};
@@ -85,8 +103,39 @@
 }
 
 .application-form__input-elements {
-  @media screen and (min-width: $breakpoint-m) {
-    max-width: 550px;
+  .form-item-applicant-0-has-additional-applicant {
+    margin-top: $spacing-m;
+  }
+
+  .form-item {
+    @media screen and (min-width: $breakpoint-m) {
+      max-width: 550px;
+    }
+  }
+
+  .application-form__application-information {
+    margin: $spacing-m 0;
+  }
+
+  .application-form__application-information-tooltip {
+    @include font-size($fontsize-body-s, 26px);
+    background-color: var(--color-info-light);
+    box-shadow: inset 8px 0 0 0 var(--color-info);
+    align-items: center;
+    display: inline-flex;
+    padding: $spacing-2-xs $spacing-s;
+    margin: 0;
+
+    &:before {
+      background-image: url('../icons/info-circle-fill.svg');
+      background-position: right;
+      background-size: 24px;
+      content: "";
+      display: inline-block;
+      height: 24px;
+      width: 24px;
+      margin-right: $spacing-2-xs;
+    }
   }
 }
 

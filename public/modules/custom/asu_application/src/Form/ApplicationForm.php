@@ -36,7 +36,7 @@ class ApplicationForm extends ContentEntityForm {
       $application_type_id = $application->id();
     }
     else {
-      $project_id = $this->entity->get('project_id');
+      $project_id = $this->entity->get('project_id')->value;
       $user = $this->entity->getOwner();
       $application_type_id = $this->entity->bundle();
     }
