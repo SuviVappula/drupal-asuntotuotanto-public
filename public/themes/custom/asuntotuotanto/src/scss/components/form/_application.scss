@@ -120,7 +120,6 @@
   padding: 0 0 $spacing-s;
   list-style: none;
 
-
   @media screen and (max-width: $breakpoint-xl - 1px) {
     display: none;
     visibility: hidden;
@@ -128,11 +127,11 @@
 
   li {
     &:first-child {
-      min-width: 130px;
+      min-width: 135px;
     }
 
     &:nth-child(2) {
-      min-width: 168px;
+      min-width: 152px;
     }
 
     &:nth-child(3) {
@@ -140,11 +139,11 @@
     }
 
     &:nth-child(4) {
-      min-width: 125px;
+      min-width: 124px;
     }
 
     &:nth-child(5) {
-      min-width: 140px;
+      min-width: 142px;
     }
   }
 
@@ -167,7 +166,7 @@
 
     .application-form-apartment__list-position {
       &:before {
-        content: counter(apartment-list-counter);
+        content: counter(apartment-list-counter) '.';
         @include font-size($fontsize-heading-m, 29px);
         font-weight: $font-weight-bold;
 
