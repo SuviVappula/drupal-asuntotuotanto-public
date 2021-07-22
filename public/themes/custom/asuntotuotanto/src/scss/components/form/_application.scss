@@ -100,6 +100,28 @@
       padding-right: $spacing-2-xl;
     }
   }
+
+  .field--widget-boolean-checkbox {
+    > .form-item {
+      flex-direction: column;
+
+      &:last-of-type {
+        margin-bottom: 0
+      }
+    }
+
+    .description {
+      @include font-size($fontsize-body-m, 24px);
+      margin-top: $spacing-3-xs;
+    }
+  }
+
+  .form-item-field-personal-id-0-value,
+  .form-item-field-right-of-residence-number-0-value {
+    @media screen and (min-width: $breakpoint-m) {
+      max-width: 550px;
+    }
+  }
 }
 
 .application-form__input-elements {

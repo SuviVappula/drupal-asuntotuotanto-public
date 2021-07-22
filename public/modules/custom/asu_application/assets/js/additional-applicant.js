@@ -4,7 +4,9 @@
       const applicantFormWrapperElement = document.getElementById('applicant-wrapper');
       const checkboxToggleElement = document.getElementById('has-additional-applicant');
 
-      applicantFormWrapperElement.style.display = 'none';
+      if (!checkboxToggleElement.checked) {
+        applicantFormWrapperElement.style.display = 'none';
+      }
 
       checkboxToggleElement.addEventListener('click', () => {
         if (checkboxToggleElement.checked) {
