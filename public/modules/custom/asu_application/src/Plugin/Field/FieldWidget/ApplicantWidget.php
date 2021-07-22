@@ -66,21 +66,21 @@ class ApplicantWidget extends WidgetBase {
       '#default_value' => isset($items->getValue()[$delta]['street_address']) ? $items->getValue()[$delta]['street_address'] : '',
     ];
 
-    $element['Postal code'] = [
+    $element['postal_code'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Postal code'),
       '#size' => 50,
       '#default_value' => isset($items->getValue()[$delta]['postal_code']) ? $items->getValue()[$delta]['postal_code'] : '',
     ];
 
-    $element['City'] = [
+    $element['city'] = [
       '#type' => 'textfield',
       '#title' => $this->t('City'),
       '#size' => 50,
       '#default_value' => isset($items->getValue()[$delta]['city']) ? $items->getValue()[$delta]['city'] : '',
     ];
 
-    $element['Phone number'] = [
+    $element['phone_number'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Phone number'),
       '#size' => 20,
