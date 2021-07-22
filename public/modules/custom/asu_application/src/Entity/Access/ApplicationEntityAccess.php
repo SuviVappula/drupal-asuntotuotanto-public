@@ -18,9 +18,10 @@ class ApplicationEntityAccess extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
-
     switch ($operation) {
       case 'view':
+        return AccessResult::allowedIf($account->id() === $entity->getOwnerId());
+      case 'update':
         return AccessResult::allowedIf($account->id() === $entity->getOwnerId());
     }
 
