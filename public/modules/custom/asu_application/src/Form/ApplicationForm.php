@@ -49,8 +49,6 @@ class ApplicationForm extends ContentEntityForm {
     $project_id = $this->entity->get('project_id')->value;
     $user = $this->entity->getOwner();
     $application_type_id = $this->entity->bundle();
-    $application = $parameters->get('application_type');
-
     $form['project_id'] = $project_id;
 
     try {
@@ -187,10 +185,10 @@ class ApplicationForm extends ContentEntityForm {
       $data = $apartment['_source'];
 
       $living_area_size_m2 = number_format($data['living_area'], 1, ',', '');
-      $debt_free_sales_price = number_format($data['debt_free_sales_price'], 0, ',', ' ');
-      $sales_price = number_format($data['sales_price'], 0, ',', ' ');
+      $debt_free_sales_price = number_format($data['debt_free_sales_price'] / 100, 0, ',', ' ');
+      $sales_price = number_format($data['sales_price'] / 100, 0, ',', ' ');
 
-      $select_text = "{$data['apartment_number']} | {$data['apartment_structure']} | {$data['floor']}/{$data['floor_max']} | {$living_area_size_m2} m2 | {$sales_price} € | {$debt_free_sales_price} €";
+      $select_text = "{$data['apartment_number']} | {$data['apartment_structure']} | {$data['floor']} / {$data['floor_max']} | {$living_area_size_m2} m2 | {$sales_price} € | {$debt_free_sales_price} €";
 
       $apartments[$data['nid']] = $select_text;
     }

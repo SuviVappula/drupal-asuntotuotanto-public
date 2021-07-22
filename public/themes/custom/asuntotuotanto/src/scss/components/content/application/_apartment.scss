@@ -21,7 +21,7 @@
   @media screen and (min-width: $breakpoint-xl) {
     margin-bottom: 0;
     order: 3;
-    margin-right: $spacing-2-xl;
+    margin-right: $spacing-l;
     min-width: 120px;
   }
 
@@ -38,13 +38,6 @@
   font-weight: $font-weight-bold;
   margin: 0 $spacing-s 0 0;
   position: relative;
-  padding-right: 7px;
-
-  &:after {
-    content: '.';
-    position: absolute;
-    right: 0;
-  }
 
   @media screen and (min-width: $breakpoint-xl) {
     @include font-size($fontsize-heading-s, 24px);
@@ -61,6 +54,7 @@
     display: inline-block;
     order: 1;
     margin: 0 0 0 0;
+    min-width: 20px;
 
     @media screen and (max-width: $breakpoint-xl - 1px) {
       display: none;
@@ -221,9 +215,7 @@
   @media screen and (min-width: $breakpoint-xl) {
     margin: 0;
     order: 3;
-    display: grid;
-    grid-gap: $spacing-4-xl;
-    grid-template-columns: repeat(4, auto);
+    display: flex;
   }
 
   li {
@@ -238,6 +230,7 @@
 
       @media screen and (min-width: $breakpoint-xl) {
         margin-top: 0;
+        margin-left: $spacing-2-xl;
       }
     }
 
@@ -254,6 +247,30 @@
           height: 1px;
           word-wrap: normal;
         }
+      }
+    }
+
+    &:nth-child(1) {
+      @media screen and (min-width: $breakpoint-xl) {
+        min-width: 42px;
+      }
+    }
+
+    &:nth-child(2) {
+      @media screen and (min-width: $breakpoint-xl) {
+        min-width: 75px;
+      }
+    }
+
+    &:nth-child(3) {
+      @media screen and (min-width: $breakpoint-xl) {
+        min-width: 95px;
+      }
+    }
+
+    &:nth-child(4) {
+      @media screen and (min-width: $breakpoint-xl) {
+        min-width: 95px;
       }
     }
   }

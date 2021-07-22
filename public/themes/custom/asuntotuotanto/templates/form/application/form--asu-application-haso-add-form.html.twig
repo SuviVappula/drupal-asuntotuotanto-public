@@ -27,7 +27,7 @@
   <div class="application-form__header">
     <h1>
       <span>
-          Hitas-{% trans %}application{% endtrans %}
+          Haso-{% trans %}application{% endtrans %}
       </span>
       {{ element.project_name }}
     </h1>
@@ -143,10 +143,18 @@
     <section class="application-form__section">
       <h2>
         {% trans %}
-          Hitas owner
+          Right of residence number
         {% endtrans %}
       </h2>
-      {{ element.field_hitas_owner }}
+      {{ element.field_right_of_residence_number }}
+    </section>
+    <section class="application-form__section">
+      <h2>
+        {% trans %}
+          ASO Changer
+        {% endtrans %}
+      </h2>
+      {{ element.field_aso_changer }}
     </section>
     <section class="application-form__section">
       <h2>

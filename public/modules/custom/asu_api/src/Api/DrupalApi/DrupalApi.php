@@ -6,7 +6,6 @@ use Drupal\asu_api\Api\DrupalApi\Service\ApartmentService;
 use Drupal\asu_api\Api\DrupalApi\Service\ApplicationService;
 use Drupal\asu_api\Api\DrupalApi\Service\FilterService;
 use Drupal\asu_api\Api\RequestHandler;
-use Drupal\asu_application\Entity\Application;
 
 /**
  * Integration to drupal.

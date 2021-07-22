@@ -114,10 +114,12 @@ class ApplicationSubscriber implements EventSubscriberInterface {
 
     $module = 'asu_mailer';
     $key = 'application_asko_' . $application->bundle();
-    $to = $askoApi->getEmailAddress();
+    $to = $askoApi->getEmailAddress($application->bundle());
     $langcode = 'fi';
     $send = TRUE;
+    $subject = $askoApi->getEmailTitle($application->bundle());
     $params = [
+      'subject' => $subject,
       'message' => $body,
     ];
 
@@ -125,11 +127,12 @@ class ApplicationSubscriber implements EventSubscriberInterface {
 
     if ($result['result'] != TRUE) {
       // Email sending failed.
-      \Drupal::messenger()->addMessage('Email sending failed. Most likely due to misconfigured email system.');
+      \Drupal::messenger()->addMessage('Asko email sending failed. Most likely due to misconfigured email system.');
       // @todo Add logging.
       return;
     }
 
+    // @todo Remove message when logging is done.
     \Drupal::messenger()->addMessage('Email successfully sent to As-Ko');
   }
 
