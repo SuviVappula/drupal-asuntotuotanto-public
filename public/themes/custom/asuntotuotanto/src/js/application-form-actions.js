@@ -375,7 +375,38 @@
         const parentLiElement =
           target.parentElement.parentElement.parentElement;
 
-        applicationFormApartmentListElement.removeChild(parentLiElement);
+        const originalSelectElements = $(
+          '[data-drupal-selector="edit-apartment"] > table select'
+        );
+
+        const originalSelectElement = originalSelectElements.filter(
+          // eslint-disable-next-line func-names
+          function () {
+            if ($(this).attr("data-drupal-selector").indexOf("-id") >= 0) {
+              if ($(this).children("option:selected").val()) {
+                if (
+                  $(this)
+                    .attr("data-drupal-selector")
+                    .indexOf(parentLiElement.getAttribute("data-id")) >= 0
+                ) {
+                  return $(this);
+                }
+              }
+            }
+
+            return null;
+          }
+        );
+
+        const ajaxDeleteButtonElement = originalSelectElement
+          .parent()
+          .parent()
+          .next();
+
+        if (ajaxDeleteButtonElement) {
+          ajaxDeleteButtonElement.click();
+          applicationFormApartmentListElement.removeChild(parentLiElement);
+        }
 
         const addButtonElement = document.getElementsByClassName(
           "application-form-apartment__apartment-add-button"
