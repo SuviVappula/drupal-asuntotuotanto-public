@@ -26,13 +26,27 @@ class ApplicationForm extends ContentEntityForm {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $parameters = \Drupal::routeMatch()->getParameters();
 
+    // If user already has an application for this project.
+    if ($project_id = $parameters->get('project_id')) {
+      $applications = \Drupal::entityTypeManager()
+        ->getStorage('asu_application')
+        ->loadByProperties([
+          'uid' => \Drupal::currentUser()->id(),
+          'project_id' => $project_id,
+        ]);
+      if (!empty($applications)) {
+        $url = reset($applications)->toUrl()->toString();
+        (new RedirectResponse($url.'/edit'))->send();
+        return $form;
+      }
+    }
+
     // Pre-create the application if user comes to the form for the first time.
     if($this->entity->isNew()){
       $project_id = $parameters->get('project_id');
       $user = User::load(\Drupal::currentUser()->id());
       /** @var \Drupal\asu_application\Entity\ApplicationType $application */
       $application = $parameters->get('application_type');
-      $application_type_id = $application->id();
       $this->entity->save();
       $url = $this->entity->toUrl()->toString();
       (new RedirectResponse($url.'/edit'))->send();
