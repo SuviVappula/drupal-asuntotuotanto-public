@@ -39,6 +39,16 @@ class ApartmentWidget extends WidgetBase {
       ]
     ];
 
+    $element['update'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Remove'),
+      '#ajax' => [
+        'event' => 'click',
+        'wrapper' => 'apartment-add-more-wrapper',
+        'callback' => '::removeApartmentCallback',
+      ]
+    ];
+
     return $element;
   }
 

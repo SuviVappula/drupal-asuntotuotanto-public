@@ -211,31 +211,17 @@ class ApplicationForm extends ContentEntityForm {
    * @return array
    */
   public function saveApplicationCallback(array &$form, FormStateInterface $form_state) {
-    $fields = [
-      'apartment',
-      'has_children',
-      'applicant'
-    ];
     /** @var Application $entity */
     $entity = $form_state->getFormObject()->entity;
     $values = $form_state->getUserInput();
 
+    // Save apartment values to database.
+    $this->updateApartments($form, $entity, $values['apartment']);
 
-    $apartments = [];
-    foreach ($values['apartment'] as $key => $value) {
-      if($value['id'] == 0) {
-        continue;
-      }
-      $apartments[] = [
-        'id' => $value['id'],
-        'information' => $form['apartment_values'][$value['id']]
-      ];
-    }
-
+    // Update "has_children" value
     $entity->set('has_children', $values['has_children']['value'] ?? 0);
-    $entity->apartment->setValue($apartments);
+
     $entity->save();
-    return;
   }
 
   /**
@@ -246,6 +232,49 @@ class ApplicationForm extends ContentEntityForm {
    */
   public function removeApartmentCallback(array &$form, FormStateInterface $form_state) {
 
+    // Remove unwanted element from the form.
+    $newApartments = [];
+    foreach ($form_state->getUserInput()['apartment'] as $key => $value) {
+      if ($value['id'] != 0) {
+        $newApartments[] = $value;
+      } else {
+        unset($form['apartment']['widget'][$key]);
+      }
+    }
+
+    // Sort by weight.
+    uasort($newApartments, function ($item, $compare)  {
+      return $item['_weight'] >= $compare['_weight'];
+    });
+
+    // Save apartments to database.
+    $entity = $form_state->getFormObject()->entity;
+    $this->updateApartments($form, $entity, $newApartments);
+
+    // Return updated form.
+    $form_state->setRebuild(TRUE);
+    return $form['apartment'];
+  }
+
+  /**
+   * Update entity.
+   *
+   * @param $form
+   * @param $entity
+   * @param $apartmentValues
+   */
+  private function updateApartments(array $form, Application $entity, array $apartmentValues) {
+    $apartments = [];
+    foreach ($apartmentValues as $key => $value) {
+      if($value['id'] == 0) {
+        continue;
+      }
+      $apartments[] = [
+        'id' => $value['id'],
+        'information' => $form['apartment_values'][$value['id']]
+      ];
+    }
+    $entity->apartment->setValue($apartments);
   }
 
 }
