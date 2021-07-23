@@ -33,6 +33,10 @@ class ApartmentWidget extends WidgetBase {
       // Apartment_values is set where ever the form is built.
       '#options' => isset($form['apartment_values']) ? $form['apartment_values'] : [],
       '#default_value' => isset($items->getValue()[$delta]['id']) ? $items->getValue()[$delta]['id'] : 0,
+      '#ajax' => [
+        'event' => 'change',
+        'callback' => '::saveApplicationCallback'
+      ]
     ];
 
     return $element;

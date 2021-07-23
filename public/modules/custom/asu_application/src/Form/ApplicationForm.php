@@ -3,11 +3,15 @@
 namespace Drupal\asu_application\Form;
 
 use Drupal\asu_api\Api\ElasticSearchApi\Request\ProjectApartmentsRequest;
+use Drupal\asu_application\Entity\Application;
 use Drupal\Core\Entity\ContentEntityForm;
+use Drupal\Core\Entity\EntityBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerTrait;
+use Drupal\Core\Url;
 use Drupal\user\Entity\User;
 use Drupal\asu_application\Event\ApplicationEvent;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Form for Application.
@@ -20,27 +24,31 @@ class ApplicationForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $parameters = \Drupal::routeMatch()->getParameters();
+
+    // Pre-create the application if user comes to the form for the first time.
+    if($this->entity->isNew()){
+      $project_id = $parameters->get('project_id');
+      $user = User::load(\Drupal::currentUser()->id());
+      /** @var \Drupal\asu_application\Entity\ApplicationType $application */
+      $application = $parameters->get('application_type');
+      $application_type_id = $application->id();
+      $this->entity->save();
+      $url = $this->entity->toUrl()->toString();
+      (new RedirectResponse($url.'/edit'))->send();
+      return $form;
+    }
+
+    // Application is created.
     if ($this->isFormAccessable()) {
       // @todo Add message & redirect.
       // $this->messenger()->addMessage($this->t('You are trying to fill an application which is not active.'));
       die('you should not be here');
     }
 
-    $parameters = \Drupal::routeMatch()->getParameters();
-
-    if ($this->entity->isNew()) {
-      $project_id = $parameters->get('project_id');
-      $user = User::load(\Drupal::currentUser()->id());
-      /** @var \Drupal\asu_application\Entity\ApplicationType $application */
-      $application = $parameters->get('application_type');
-      $application_type_id = $application->id();
-    }
-    else {
-      $project_id = $this->entity->get('project_id')->value;
-      $user = $this->entity->getOwner();
-      $application_type_id = $this->entity->bundle();
-    }
-
+    $project_id = $this->entity->get('project_id')->value;
+    $user = $this->entity->getOwner();
+    $application_type_id = $this->entity->bundle();
     $form['project_id'] = $project_id;
 
     try {
@@ -72,16 +80,6 @@ class ApplicationForm extends ContentEntityForm {
 
     $form['#title'] = $this->t('Application for') . ' ' . $projectName;
 
-    if ($application_type_id == 'haso') {
-      if ($this->entity->isNew()) {
-        if (!$user->field_right_of_r->value) {
-          // $this->messenger()->addMessage("Your user account is missing the right of residence number. You must add a valid right of residence number in order to apply.");
-        }
-      }
-    }
-    elseif ($application_type_id == 'hitas') {
-    }
-
     return $form;
   }
 
@@ -89,6 +87,12 @@ class ApplicationForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
+    if($form_state->getTriggeringElement()['#type'] == 'select'){
+      parent::save($form, $form_state);
+      return $this->entity;
+    }
+    \Drupal::logger('asu_application')->notice('ajax saving');
+
     $entity = &$this->entity;
     $message_params = [
       '%entity_label' => $entity->id(),
@@ -101,10 +105,10 @@ class ApplicationForm extends ContentEntityForm {
     switch ($status) {
       case SAVED_NEW:
         $project_name = $form['project_name'];
-        $event = new ApplicationEvent($entity->id(), $project_name);
+        #$event = new ApplicationEvent($entity->id(), $project_name);
         /** @var \Symfony\Component\EventDispatcher\EventDispatcher $event_dispatcher */
-        $event_dispatcher = \Drupal::service('event_dispatcher');
-        $event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
+        #$event_dispatcher = \Drupal::service('event_dispatcher');
+        #$event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
         $this->messenger()->addStatus($this->t('Created the %bundle_label - %content_entity_label entity:  %entity_label.', $message_params));
         break;
 
@@ -197,6 +201,51 @@ class ApplicationForm extends ContentEntityForm {
       'application_end_date' => $apartmentResponse->getEndTime(),
       'apartments' => $apartments,
     ];
+  }
+
+  /**
+   * Ajax callback function to presave the form.
+   *
+   * @param array $form
+   * @param FormStateInterface $form_state
+   * @return array
+   */
+  public function saveApplicationCallback(array &$form, FormStateInterface $form_state) {
+    $fields = [
+      'apartment',
+      'has_children',
+      'applicant'
+    ];
+    /** @var Application $entity */
+    $entity = $form_state->getFormObject()->entity;
+    $values = $form_state->getUserInput();
+
+
+    $apartments = [];
+    foreach ($values['apartment'] as $key => $value) {
+      if($value['id'] == 0) {
+        continue;
+      }
+      $apartments[] = [
+        'id' => $value['id'],
+        'information' => $form['apartment_values'][$value['id']]
+      ];
+    }
+
+    $entity->set('has_children', $values['has_children']['value'] ?? 0);
+    $entity->apartment->setValue($apartments);
+    $entity->save();
+    return;
+  }
+
+  /**
+   * Ajax callback function to remove apartment from list.
+   *
+   * @param array $form
+   * @param FormStateInterface $form_state
+   */
+  public function removeApartmentCallback(array &$form, FormStateInterface $form_state) {
+
   }
 
 }

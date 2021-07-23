@@ -248,6 +248,7 @@
           targetParent.setAttribute("data-id", selectCount);
 
           originalSelectElementTarget.value = target.value;
+          originalSelectElementTarget.dispatchEvent(new Event("change"));
 
           targetParent.classList.remove(
             "application-form__apartments-item--with-select"
