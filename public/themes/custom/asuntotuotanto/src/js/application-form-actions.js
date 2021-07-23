@@ -332,6 +332,7 @@
         const select2WeigthElement = document.querySelector(
           `[name="apartment[${select2Id}][_weight]"]`
         );
+
         const select1Weigth = select1WeigthElement.value;
         select1WeigthElement.value = select2WeigthElement.value;
         select2WeigthElement.value = select1Weigth;
@@ -668,6 +669,17 @@
 
         if (getApplicationFormApartmentListElementCount() === 0) {
           appendListItemToApartmentList();
+        }
+
+        const alreadyExistingLiElements = document.getElementsByClassName(
+          "application-form__apartments-item"
+        );
+
+        if (alreadyExistingLiElements.length > 0) {
+          [...alreadyExistingLiElements].map((item, index) => {
+            item.setAttribute("data-id", index);
+            item.addEventListener("click", handleListItemInnerClicks);
+          });
         }
       };
     },
