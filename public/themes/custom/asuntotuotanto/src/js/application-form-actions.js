@@ -333,6 +333,7 @@
         const select2WeigthElement = document.querySelector(
           `[name="apartment[${select2Id}][_weight]"]`
         );
+
         const select1Weigth = select1WeigthElement.value;
         select1WeigthElement.value = select2WeigthElement.value;
         select2WeigthElement.value = select1Weigth;
@@ -415,7 +416,8 @@
 
         if (
           getApplicationFormApartmentListElementCount() <= 5 &&
-          getApplicationFormApartmentListElementCount() > 1
+          getApplicationFormApartmentListElementCount() > 1 &&
+          getLastOriginalApartmentSelectElement().value !== "0"
         ) {
           ajaxButton.mousedown();
         }
@@ -622,9 +624,65 @@
         );
       };
 
-      if (getApplicationFormApartmentListElementCount() === 0) {
-        appendListItemToApartmentList();
-      }
+      window.onload = () => {
+        if (getOriginalSelectElementValues().length > 0) {
+          const selectElements = document.querySelectorAll(
+            '[data-drupal-selector="edit-apartment"] > table select'
+          );
+
+          const selectElementsArray = [...selectElements]
+            .filter((select) =>
+              select.getAttribute("data-drupal-selector").includes("-id")
+            )
+            .filter((select) => select.value !== "0");
+
+          selectElementsArray.map((select) => {
+            const selectedValueTextArray = select.options[
+              select.selectedIndex
+            ].text.split(" | ");
+
+            const listItemValues = {
+              apartment_number: selectedValueTextArray[0],
+              apartment_structure: selectedValueTextArray[1],
+              apartment_floor: selectedValueTextArray[2],
+              apartment_living_area_size: selectedValueTextArray[3],
+              apartment_sales_price: selectedValueTextArray[4],
+              apartment_debt_free_sales_price: selectedValueTextArray[5],
+            };
+
+            applicationFormApartmentListElement.append(
+              createApartmentListItem(listItemValues, select.value, false)
+            );
+          });
+
+          if (getApplicationFormApartmentListElementCount() < 4) {
+            appendListItemToApartmentList();
+
+            const apartmentAddButton = document.getElementsByClassName(
+              "application-form-apartment__apartment-add-button"
+            )[0];
+
+            if (apartmentAddButton) {
+              apartmentAddButton.removeAttribute("disabled");
+            }
+          }
+        }
+
+        if (getApplicationFormApartmentListElementCount() === 0) {
+          appendListItemToApartmentList();
+        }
+
+        const alreadyExistingLiElements = document.getElementsByClassName(
+          "application-form__apartments-item"
+        );
+
+        if (alreadyExistingLiElements.length > 0) {
+          [...alreadyExistingLiElements].map((item, index) => {
+            item.setAttribute("data-id", index);
+            item.addEventListener("click", handleListItemInnerClicks);
+          });
+        }
+      };
     },
   };
 })(jQuery, Drupal);
