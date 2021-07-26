@@ -191,6 +191,7 @@ class ApplicationForm extends ContentEntityForm {
   private function getApartments($projectId): ?array {
     /** @var \Drupal\asu_api\Api\ElasticSearchApi\ElasticSearchApi $elastic */
     $elastic = \Drupal::service('asu_api.elasticapi');
+
     $request = new ProjectApartmentsRequest($projectId);
     $apartmentResponse = $elastic->getApartmentService()
       ->getProjectApartments($request);
@@ -239,6 +240,7 @@ class ApplicationForm extends ContentEntityForm {
     $entity->set('has_children', $values['has_children']['value'] ?? 0);
 
     $entity->save();
+    $form_state->setRebuild(TRUE);
   }
 
   /**
@@ -282,16 +284,18 @@ class ApplicationForm extends ContentEntityForm {
    */
   private function updateApartments(array $form, Application $entity, array $apartmentValues) {
     $apartments = [];
+    ksort($apartmentValues);
     foreach ($apartmentValues as $key => $value) {
       if($value['id'] == 0) {
         continue;
       }
       $apartments[] = [
         'id' => $value['id'],
-        'information' => $form['apartment_values'][$value['id']]
+        'information' => $form['#apartment_values'][$value['id']]
       ];
     }
     $entity->apartment->setValue($apartments);
+
   }
 
 }
