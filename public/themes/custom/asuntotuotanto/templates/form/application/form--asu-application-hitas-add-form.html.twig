@@ -29,7 +29,7 @@
       <span>
           Hitas-{% trans %}application{% endtrans %}
       </span>
-      {{ element.project_name }}
+      {{ element['#project_name'] }}
     </h1>
     <p>
       {% trans %}
@@ -57,7 +57,7 @@
               {% endtrans %}
               {{ ': ' }}
             </span>
-            {{ element.application_project_information.project_name }}
+            {{ element.application_project_information['#teaser_values'].project_name }}
           </h2>
           <p class="application__project-address">
             <span class="visually-hidden">
@@ -67,9 +67,9 @@
               {{ ': ' }}
             </span>
             <strong>
-              {{ element.application_project_information.project_district }}{{ ',' }}
+              {{ element.application_project_information['#teaser_values'].project_district }}{{ ',' }}
             </strong>
-            {{ element.application_project_information.project_address }}
+            {{ element.application_project_information['#teaser_values'].project_address }}
           </p>
           <span class="application__project-ownership-type">
             <span class="visually-hidden">
@@ -78,7 +78,7 @@
               {% endtrans %}
               {{ ': ' }}
             </span>
-            {{ element.application_project_information.project_ownership_type }}
+            {{ element.application_project_information['#teaser_values'].project_ownership_type }}
           </span>
           <ul class="application__date-information">
             <li>
@@ -89,11 +89,11 @@
                 {% endtrans %}
                 {{ ': ' }}
               </span>
-              {{ element.application_project_information.project_estimated_completion }}
+              {{ element.application_project_information['#teaser_values'].project_estimated_completion }}
             </li>
             <li>
-              {% set date = element.application_project_information.application_end_time|date("d.m.Y") %}
-              {% set time = element.application_project_information.application_end_time|date("H.i") %}
+              {% set date = element.application_project_information['#teaser_values'].application_end_time|date("d.m.Y") %}
+              {% set time = element.application_project_information['#teaser_values'].application_end_time|date("H.i") %}
               {% include "@hdbt/misc/icon.twig" with {icon: 'check-circle-fill', label: ''} %}
               {% trans %}
                 The application period is open until {{ time }} on {{ date }}

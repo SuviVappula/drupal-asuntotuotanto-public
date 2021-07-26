@@ -129,6 +129,15 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
   }
 
   /**
+   * Application has been sent to backend and therefore is locked.
+   *
+   * @return bool
+   */
+  public function isLocked(): bool {
+    return $this->field_locked->value ? true : false;
+  }
+
+  /**
    * {@inheritDoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {

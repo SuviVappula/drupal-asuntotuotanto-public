@@ -63,7 +63,7 @@ class ApplicationForm extends ContentEntityForm {
     $project_id = $this->entity->get('project_id')->value;
     $user = $this->entity->getOwner();
     $application_type_id = $this->entity->bundle();
-    $form['project_id'] = $project_id;
+    $form['#project_id'] = $project_id;
 
     try {
       $project_data = $this->getApartments($project_id);
@@ -86,9 +86,12 @@ class ApplicationForm extends ContentEntityForm {
 
     $projectName = $project_data['project_name'];
     $apartments = $project_data['apartments'];
+
     // Set the apartments as a value to the form array.
-    $form['apartment_values'] = $apartments;
-    $form['project_name'] = $projectName;
+    $form['#apartment_values'] = $apartments;
+    $form['#project_name'] = $projectName;
+
+    // dump($form);die();
 
     $form = parent::buildForm($form, $form_state);
 

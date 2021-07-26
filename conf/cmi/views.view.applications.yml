@@ -3,7 +3,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.asu_application.teaser
+    - core.entity_view_mode.asu_application.draft_teaser
+    - core.entity_view_mode.asu_application.submitted_teaser
   module:
     - asu_application
     - user
@@ -61,7 +62,7 @@ display:
         type: 'entity:asu_application'
         options:
           relationship: none
-          view_mode: teaser
+          view_mode: submitted_teaser
       fields:
         operations:
           table: asu_application
@@ -286,13 +287,67 @@ display:
             group_items: {  }
           entity_type: user
           plugin_id: user_current
+        field_locked:
+          id: field_locked
+          table: asu_application
+          field: field_locked
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '0'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: asu_application
+          entity_field: field_locked
+          plugin_id: boolean
       defaults:
         filters: false
         filter_groups: false
+        style: false
+        row: false
       filter_groups:
         operator: AND
         groups:
           1: AND
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          uses_fields: false
+      row:
+        type: 'entity:asu_application'
+        options:
+          relationship: none
+          view_mode: draft_teaser
     cache_metadata:
       max-age: -1
       contexts:
@@ -443,7 +498,7 @@ display:
         type: 'entity:asu_application'
         options:
           relationship: none
-          view_mode: teaser
+          view_mode: submitted_teaser
       fields: {  }
       title: Applications
     cache_metadata:
