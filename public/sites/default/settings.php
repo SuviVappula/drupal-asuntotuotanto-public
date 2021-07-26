@@ -95,7 +95,7 @@ if ($env = getenv('APP_ENV')) {
   // Default settings.
   $config['user.settings']['notify']['register_no_approval_required'] = FALSE;
 
-  // Other environments.
+  // Default settings for most environments.
   $settings['backend_url'] = getenv('ASU_DJANGO_BACKEND_URL');
   $settings['elastic_url'] = getenv('ASU_ELASTICSEARCH_URL');
   $settings['asuntotuotanto_url'] = getenv('ASU_ASUNTOTUOTANTO_URL');
@@ -108,9 +108,12 @@ if ($env = getenv('APP_ENV')) {
   $config['swiftmailer.transport']['transport'] = getenv('ASU_MAILSERVER_TRANSPORT') ?? 'smtp';
   $config['swiftmailer.transport']['smtp_encryption'] = '0';
 
+  $settings['asuntotuotanto_url'] = getenv('ASU_ASUNTOTUOTANTO_ADDRESS');
+  $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = getenv('ASU_ELASTICSEARCH_ADDRESS');
+
   // External entity settings.
-  $config['external_entities.external_entity_type.project']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_URL') ? getenv('ASU_ASUNTOTUOTANTO_URL') . '/fi/content/project' : 'https://nginx-asuntotuotanto-test.agw.arodevtest.hel.fi/fi/content/project';
-  $config['external_entities.external_entity_type.apartment']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_URL') ?  getenv('ASU_ASUNTOTUOTANTO_URL') . '/fi/content/apartment' : 'https://nginx-asuntotuotanto-test.agw.arodevtest.hel.fi/fi/content/apartment';
+  $config['external_entities.external_entity_type.project']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_ADDRESS');
+  $config['external_entities.external_entity_type.apartment']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_ADDRESS');
 
   // Sentry settings.
   $config['raven.settings']['client_key'] = getenv('ASU_SENTRY_DNS');
@@ -128,6 +131,7 @@ if ($env = getenv('APP_ENV')) {
     $config['swiftmailer.transport']['smtp_port'] = '1025';
     $config['swiftmailer.transport']['smtp_encryption'] = '0';
 
+    $settings['elastic_url'] = 'http://elastic:9200';
     $settings['asuntotuotanto_url'] = 'https://asuntotuotanto.docker.so';
     $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = 'http://elastic:9200';
   }
