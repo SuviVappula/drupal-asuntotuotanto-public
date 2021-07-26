@@ -160,7 +160,7 @@ class ApplicationRequest extends Request {
    * @param string $value
    *   Application type.
    */
-  public function setRightOfResidenceNumber(string $value) {
+  public function setRightOfResidenceNumber(string $value = NULL) {
     $this->rightOfResidenceNumber = $value;
   }
 

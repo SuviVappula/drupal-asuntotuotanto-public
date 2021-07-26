@@ -92,11 +92,15 @@ if ($env = getenv('APP_ENV')) {
 }
 
 if ($env = getenv('APP_ENV')) {
+  // Default settings.
   $config['user.settings']['notify']['register_no_approval_required'] = FALSE;
 
   // Default settings for most environments.
-  $settings['backend_url'] = getenv('ASU_DJANGO_BACKEND_ADDRESS');
-  $settings['elastic_url'] = getenv('ASU_ELASTICSEARCH_ADDRESS');
+  $settings['backend_url'] = getenv('ASU_DJANGO_BACKEND_URL');
+  $settings['elastic_url'] = getenv('ASU_ELASTICSEARCH_URL');
+  $settings['asuntotuotanto_url'] = getenv('ASU_ASUNTOTUOTANTO_URL');
+
+  // Email settings.
   $config['mailsystem.settings']['defaults']['sender'] = 'swiftmailer';
   $config['mailsystem.settings']['defaults']['formatter'] = 'swiftmailer';
   $config['swiftmailer.transport']['smtp_host'] = getenv('ASU_MAILSERVER_ADDRESS') ?? '10.232.13.1';
@@ -107,11 +111,19 @@ if ($env = getenv('APP_ENV')) {
   $settings['asuntotuotanto_url'] = getenv('ASU_ASUNTOTUOTANTO_ADDRESS');
   $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = getenv('ASU_ELASTICSEARCH_ADDRESS');
 
+  // External entity settings.
   $config['external_entities.external_entity_type.project']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_ADDRESS');
   $config['external_entities.external_entity_type.apartment']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_ADDRESS');
 
+  // Sentry settings.
+  $config['raven.settings']['client_key'] = getenv('ASU_SENTRY_DNS');
+  $config['raven.settings']['fatal_error_handler'] = TRUE;
+  $config['raven.settings']['stack'] = TRUE;
+  $config['raven.settings']['log_levels'][1] = 1;
+
+  // Local development environment.
   if ($env === 'dev') {
-    // Local development environment.
+    // Email settings.
     $config['mailsystem.settings']['defaults']['sender'] = 'swiftmailer';
     $config['mailsystem.settings']['defaults']['formatter'] = 'swiftmailer';
     $config['swiftmailer.transport']['transport'] = 'smtp';
@@ -122,6 +134,26 @@ if ($env = getenv('APP_ENV')) {
     $settings['elastic_url'] = 'http://elastic:9200';
     $settings['asuntotuotanto_url'] = 'https://asuntotuotanto.docker.so';
     $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = 'http://elastic:9200';
-
   }
+
+  // Development environment.
+  if ($env === 'development') {
+    $config['raven.settings']['environment'] = 'development';
+  }
+
+  // Test environment.
+  if ($env === 'test') {
+    $config['raven.settings']['environment'] = 'testing';
+  }
+
+  // Staging environment.
+  if ($env === 'staging') {
+    $config['raven.settings']['environment'] = 'staging';
+  }
+
+  // Production environment.
+  if ($env === 'prod') {
+    $config['raven.settings']['environment'] = 'production';
+  }
+
 }

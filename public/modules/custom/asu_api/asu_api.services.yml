@@ -1,8 +1,10 @@
 parameters:
-  asu_api.backend.base_url_variable: 'backend_url'
-  asu_api.drupal.base_url_variable: 'asuntotuotanto_url'
-  asu_api.elastic.base_url_variable: 'elastic_url'
-  asu_api.asko.address_variable: 'ASU_ASKO_ADDRESS'
+  asu_api.backend.base_url_variable: 'ASU_DJANGO_BACKEND_URL'
+  asu_api.drupal.base_url_variable: 'ASU_ASUNTOTUOTANTO_URL'
+  asu_api.elastic.base_url_variable: 'ASU_ELASTICSEARCH_URL'
+  asu_api.asko.address: 'ASU_ASKO_ADDRESS'
+  asu_api.asko.hitas_address_variable: 'ASU_ASKO_HITAS_ADDRESS'
+  asu_api.asko.haso_address_variable: 'ASU_ASKO_HASO_ADDRESS'
 
 services:
   asu_api.backendapi:
@@ -19,4 +21,4 @@ services:
 
   asu_api.askoapi:
     class: Drupal\asu_api\Api\AskoApi\AskoApi
-    arguments: ['%asu_api.asko.address_variable%']
+    arguments: ['%asu_api.asko.hitas_address_variable%', '%asu_api.asko.haso_address_variable%']

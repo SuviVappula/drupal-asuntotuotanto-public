@@ -106,6 +106,29 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
   }
 
   /**
+   * Get additional applicants.
+   *
+   * @return array
+   *   Array of applicants.
+   */
+  public function getApplicants(): array {
+    return $this->applicant->getValue();
+  }
+
+  /**
+   * Is additional applicant set to the application form.
+   *
+   * @return bool
+   */
+  public function hasAdditionalApplicant(): bool {
+    $applicants = $this->getApplicants();
+    if (!empty($applicants)) {
+      return $applicants[0]['has_additional_applicant'] ? TRUE : FALSE;
+    }
+    return FALSE;
+  }
+
+  /**
    * {@inheritDoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
@@ -196,7 +219,6 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the entity was last edited.'));
 
-    // REMOVE _FIELD.
     $fields['field_locked'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Locked'))
       ->setDefaultValue(0)
