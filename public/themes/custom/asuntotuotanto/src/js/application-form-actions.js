@@ -345,10 +345,19 @@
 
         if (sibling !== null) {
           sibling.before(parent);
+
+          const originalSelectElementTarget = document.querySelector(
+            `[data-drupal-selector="edit-apartment-${parent.getAttribute(
+              "data-id"
+            )}-id"]`
+          );
+
           swapOriginalSelectWeights(
             parent.getAttribute("data-id"),
             sibling.getAttribute("data-id")
           );
+
+          originalSelectElementTarget.dispatchEvent(new Event("change"));
         }
       };
 
@@ -363,10 +372,19 @@
             )
           ) {
             sibling.after(parent);
+
+            const originalSelectElementTarget = document.querySelector(
+              `[data-drupal-selector="edit-apartment-${parent.getAttribute(
+                "data-id"
+              )}-id"]`
+            );
+
             swapOriginalSelectWeights(
               parent.getAttribute("data-id"),
               sibling.getAttribute("data-id")
             );
+
+            originalSelectElementTarget.dispatchEvent(new Event("change"));
           }
         }
       };
