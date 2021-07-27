@@ -76,7 +76,7 @@ class AsuExternalStringItem extends StringItem {
         $name = $this->getFieldDefinition()->getFieldStorageDefinition()->getName();
         $dataMap = \Drupal::config('asu_user.external_user_fields')->get('external_data_map');
         $value = [
-          'value' => $this->store->get($dataMap[$name]),
+          'value' => $this->store->get($dataMap[$name]['external_field']),
         ];
         $this->setValue($value);
       }

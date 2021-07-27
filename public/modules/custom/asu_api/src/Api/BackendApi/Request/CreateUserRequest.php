@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface;
 class CreateUserRequest extends Request {
   protected const METHOD = 'POST';
 
-  protected const PATH = 'v1/profiles/';
+  protected const PATH = '/v1/profiles/';
 
   protected const AUTHENTICATED = FALSE;
 
@@ -55,7 +55,7 @@ class CreateUserRequest extends Request {
       $data[$information['external_field']] = $this->form_state->getValue($field);
     }
 
-    $dateOfBirth = (new \DateTime($this->user->field_date_of_birth->value))->format('Y-m-d');
+    $dateOfBirth = (new \DateTime($this->user->date_of_birth->value))->format('Y-m-d');
     $data['date_of_birth'] = $dateOfBirth;
     // @todo Remove right of residence.
     $data['right_of_residence'] = '1000';

@@ -11,7 +11,7 @@ use Drupal\user\UserInterface;
 class AuthenticationRequest extends Request {
   protected const METHOD = 'POST';
 
-  protected const PATH = 'v1/token/';
+  protected const PATH = '/v1/token/';
 
   protected const AUTHENTICATED = FALSE;
 

@@ -97,10 +97,17 @@ class AuthenticationService {
    *   Is token still usable.
    */
   private function isTokenAlive(string $token): bool {
-    #$token = explode(',', json_decode(base64_decode($token)));
     $token = explode(',', base64_decode($token));
-    $tokenExpire = $token['exp'];
-    return strtotime('now') < $tokenExpire;
+
+    foreach ($token as $key => $value) {
+      if (strpos($value, 'exp') !== FALSE) {
+        $int = (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+
+        return strtotime('now') < $int;
+      }
+    }
+
+    return false;
   }
 
   /**

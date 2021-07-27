@@ -11,7 +11,7 @@ use Drupal\user\Entity\User;
 class UserRequest extends Request {
 
   protected const METHOD = 'GET';
-  protected const PATH = 'v1/profiles/';
+  protected const PATH = '/v1/profiles/';
 
   private User $user;
 

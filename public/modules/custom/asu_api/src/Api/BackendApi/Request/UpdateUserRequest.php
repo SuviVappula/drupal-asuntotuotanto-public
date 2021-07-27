@@ -13,7 +13,7 @@ class UpdateUserRequest extends Request {
 
   protected const METHOD = 'PUT';
 
-  protected const PATH = 'v1/profiles/';
+  protected const PATH = '/v1/profiles/';
 
   private FormStateInterface $formState;
 

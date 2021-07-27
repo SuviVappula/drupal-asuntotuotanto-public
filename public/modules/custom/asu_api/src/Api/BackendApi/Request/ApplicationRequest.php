@@ -16,7 +16,7 @@ class ApplicationRequest extends Request {
    *
    * @var string
    */
-  protected const PATH = 'application';
+  protected const PATH = '/application';
 
   /**
    * Method.
