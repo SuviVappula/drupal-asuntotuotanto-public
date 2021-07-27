@@ -82,6 +82,8 @@ class RegisterForm extends BaseForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     parent::save($form, $form_state);
+    $store = \Drupal::service('asu_user.tempstore');
+    $store->setMultipleByConfiguration($form_state->getUserInput());
     $this->sendToBackend($form_state);
   }
 

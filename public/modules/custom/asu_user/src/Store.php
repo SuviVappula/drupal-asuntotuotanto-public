@@ -64,7 +64,6 @@ class Store {
    */
   public function setMultipleByConfiguration($data) {
     if ($this->config) {
-
       foreach ($data as $key => $value) {
         // Get the index number of configuration by external field name.
         // Only set store-values if they are configured no matter what API returns.
@@ -74,6 +73,8 @@ class Store {
           $this->store->set(array_keys($this->config)[$fieldNumber], $value);
         }
       }
+      // @todo Foreach skips "address" key.
+      $this->store->set('address', $data['address']);
     }
   }
 
