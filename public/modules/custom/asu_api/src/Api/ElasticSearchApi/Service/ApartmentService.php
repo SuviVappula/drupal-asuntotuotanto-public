@@ -39,29 +39,6 @@ class ApartmentService extends ServiceBase {
   }
 
   /**
-   * Get project apartments.
-   *
-   * @param \Drupal\asu_api\Api\ElasticSearchApi\Request\ProjectApartmentsRequest $apartmentRequest
-   *   Apartment request.
-   *
-   * @return \Drupal\asu_api\Api\ElasticSearchApi\Response\ProjectApartmentsResponse
-   *   Apartment response.
-   *
-   * @throws \Exception
-   */
-  public function getProjectApartments(ProjectApartmentsRequest $apartmentRequest): ProjectApartmentsResponse {
-    $options = [
-      'headers' => [
-        'Content-Type' => 'application/json',
-        'Accept' => 'application/json',
-      ],
-      'json' => $apartmentRequest->toArray(),
-    ];
-    $response = $this->requestHandler->post($apartmentRequest->getPath(), $options);
-    return ProjectApartmentsResponse::createFromHttpResponse($response);
-  }
-
-  /**
    * Get apartment by id.
    *
    * @param $id
