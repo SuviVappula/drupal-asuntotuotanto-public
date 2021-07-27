@@ -25,14 +25,13 @@ class UpdateUserResponse extends Response {
    *   Contents of the response.
    */
   public function __construct(\stdClass $content) {
-    // @todo Set content as attributes and create setters.
     $this->content = $content;
   }
 
   /**
-   * Get request content.
+   * Get user information.
    */
-  public function getContent(): \stdClass {
+  public function getUserInformation(): \stdClass {
     return $this->content;
   }
 

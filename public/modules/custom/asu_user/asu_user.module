@@ -112,18 +112,14 @@ function asu_user_form_alter(&$form, &$form_state, $form_id) {
     $user = User::load(\Drupal::currentUser()->id());
     /** @var \Drupal\asu_user\Store $store */
     $store = \Drupal::service('asu_user.tempstore');
-
     $fieldMap = \Drupal::config('asu_user.external_user_fields')->get('external_data_map');
-    $store = \Drupal::service('asu_user.tempstore');
-
-    // @todo abstraction
 
     // If a field value is missing, fetch user information.
     if(!$store->get(array_keys($fieldMap)[0])){
       asu_get_user_fields($user);
     }
     foreach ($fieldMap as $field => $field_data) {
-      $default_value = $store->get($field) ?? '';
+      $default_value = $field_data['type'] == 'date' ? (new \DateTime($store->get($field)))->format('Y-m-d') : $store->get($field);
       $form['basic_information'][$field] = [
         '#type' => $field_data['type'],
         '#title' => $field_data['title'],
@@ -135,7 +131,6 @@ function asu_user_form_alter(&$form, &$form_state, $form_id) {
     }
     $form['actions']['submit']['#submit'][] = '_asu_user_user_edit_form_submit';
   }
-
 }
 
 /**
@@ -166,6 +161,9 @@ function user_edit_submit($form, &$form_state) {
     $updateUserResponse = $backendApi
       ->getUserService()
       ->updateUser($updateRequest, $user->field_backend_profile->value, $token);
+    /** @var \Drupal\asu_user\Store $store */
+    $store = \Drupal::service('asu_user.tempstore');
+    $store->setMultipleByConfiguration($updateUserResponse->getUserInformation());
   }
 }
 
