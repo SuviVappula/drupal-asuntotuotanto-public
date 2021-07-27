@@ -4,12 +4,12 @@ namespace Drupal\asu_api\Api\ElasticSearchApi;
 
 use Drupal\asu_api\Api\ElasticSearchApi\Service\ApartmentService;
 use Drupal\asu_api\Api\RequestHandler;
+use Drupal\Core\Site\Settings;
 
 /**
  * ElasticSearch api.
  */
 class ElasticSearchApi {
-
   /**
    * Apartment service.
    *
@@ -25,7 +25,12 @@ class ElasticSearchApi {
    * @param string $baseurl
    *   Elasticsearch baseurl.
    */
-  public function __construct(string $baseurl) {
+  public function __construct(string $baseurlVariable) {
+    $baseurl = Settings::get($baseurlVariable);
+    $username = getenv('ASU_ELASTICSEARCH_USERNAME');
+    $password = getenv('ASU_ELASTICSEARCH_PASSWORD');
+    $credentialsString = 'https://' . $username . ':' . $password . '@';
+    $baseurl = isset($username) && isset($password) ? str_replace('https://', $credentialsString, $baseurl) : $baseurl;
     $handler = new RequestHandler($baseurl);
     $this->apartmentService = new ApartmentService($handler);
   }

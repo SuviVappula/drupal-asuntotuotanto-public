@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Module.install.
  */
 
 use Drupal\menu_link_content\Entity\MenuLinkContent;

@@ -10,7 +10,7 @@ use Drupal\asu_api\Api\Request;
 class SingleApartmentRequest extends Request {
 
   protected const METHOD = 'POST';
-  protected const PATH = 'elasticsearch_index_drupal_apartment/_search';
+  protected const PATH = 'asuntotuotanto_apartment/_search';
 
   /**
    * Apartment id.
