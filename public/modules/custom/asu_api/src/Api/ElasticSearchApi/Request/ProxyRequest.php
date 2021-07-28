@@ -9,7 +9,7 @@ use Drupal\asu_api\Api\Request;
  */
 class ProxyRequest extends Request {
 
-  protected const METHOD = 'POST';
+  protected const METHOD = 'GET';
   protected const PATH = '/_search';
 
   private $requestArray;

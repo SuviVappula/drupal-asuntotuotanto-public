@@ -2,10 +2,7 @@
 
 namespace Drupal\asu_rest\Controller;
 
-use Drupal\asu_api\Api\ElasticSearchApi\Request\ProxyRequest;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Form\Exception\BrokenPostRequestException;
-use Drupal\rest\ModifiedResourceResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,14 +14,13 @@ class ElasticProxyController extends ControllerBase {
    * Returns a renderable array for a asuntohaku page.
    */
   public function elasticProxy(Request $request): array {
-    #$response = [];
-    #$queryString = $request->getContent();
+    $query = $request->getContent();
     try {
       $elasticSearchApi = \Drupal::service('asu_api.elasticapi');
-      /** @var ProxyRequest $proxyRequest */
+      /** @var \Drupal\asu_api\Api\ElasticSearchApi\Request\ProxyRequest $proxyRequest */
       $proxyRequest = $elasticSearchApi
         ->getApartmentService()
-        ->proxyRequest([]);
+        ->proxyRequest(json_decode($query, TRUE));
       $response = $proxyRequest->getHits();
     }
     catch (\Exception $e) {

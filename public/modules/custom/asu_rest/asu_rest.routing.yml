@@ -1,6 +1,6 @@
 asu_rest.elasticproxy:
   path: '/elasticproxy'
-  methods: ['POST']
+  methods: ['POST', 'GET']
   defaults:
     _controller: '\Drupal\asu_rest\Controller\ElasticProxyController::elasticProxy'
   requirements:
