@@ -10,7 +10,7 @@ use Drupal\taxonomy\Entity\Term;
 /**
  * Add taxonomy terms to News category vocabularity automatically.
  */
-function asu_content_update_8001() {
+function asu_content_update_8002() {
   $vocabularity = 'news_category';
 
   $term_common = Term::create([
