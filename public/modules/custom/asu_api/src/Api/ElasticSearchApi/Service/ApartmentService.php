@@ -74,7 +74,6 @@ class ApartmentService extends ServiceBase {
         'Content-Type' => 'application/json',
         'Accept' => 'application/json',
       ],
-      'json' => $proxyRequest->toArray(),
     ];
     $response = $this->requestHandler->post($proxyRequest->getPath(), $options);
     return ProxyResponse::createFromHttpResponse($response);
