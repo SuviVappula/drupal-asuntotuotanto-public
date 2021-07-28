@@ -77,7 +77,8 @@
           {% endif %}
 
           {% if
-            design == "background-image" and
+            (design == "background-image" or
+            design == "background-image-with-text-box") and
             content.field_hero_link|render
           %}
             {% set link_type = content.field_hero_link_design[0]['#markup'] %}
@@ -112,6 +113,7 @@
       design == "with-image-left" or
       design == "with-image-bottom" or
       design == "background-image" or
+      design == "background-image-with-text-box" or
       design == "diagonal"
     %}
       {% set image_uri = content.field_hero_image[0]['#media'].field_media_image.entity.uri.value %}

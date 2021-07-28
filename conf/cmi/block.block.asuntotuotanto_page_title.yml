@@ -5,6 +5,7 @@ dependencies:
   module:
     - context
     - ctools
+    - system
   theme:
     - asuntotuotanto
 _core:
@@ -36,3 +37,7 @@ visibility:
     negate: true
     context_mapping:
       node: '@node.node_route_context:node'
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: true
