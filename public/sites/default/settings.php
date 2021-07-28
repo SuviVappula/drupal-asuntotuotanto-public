@@ -96,9 +96,9 @@ if ($env = getenv('APP_ENV')) {
   $config['user.settings']['notify']['register_no_approval_required'] = FALSE;
 
   // Default settings for most environments.
-  $settings['backend_url'] = getenv('ASU_DJANGO_BACKEND_URL');
-  $settings['elastic_url'] = getenv('ASU_ELASTICSEARCH_URL');
-  $settings['asuntotuotanto_url'] = getenv('ASU_ASUNTOTUOTANTO_URL');
+  $settings['ASU_DJANGO_BACKEND_URL'] = getenv('ASU_DJANGO_BACKEND_URL');
+  $settings['ASU_ELASTICSEARCH_URL'] = getenv('ASU_ELASTICSEARCH_URL');
+  $settings['ASU_ASUNTOTUOTANTO_URL'] = getenv('ASU_ASUNTOTUOTANTO_URL');
 
   // Email settings.
   $config['mailsystem.settings']['defaults']['sender'] = 'swiftmailer';

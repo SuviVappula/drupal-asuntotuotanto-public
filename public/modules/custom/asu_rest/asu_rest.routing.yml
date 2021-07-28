@@ -1,0 +1,12 @@
+asu_rest.elasticproxy:
+  path: '/elasticproxy'
+  methods: ['POST', 'GET']
+  defaults:
+    _controller: '\Drupal\asu_rest\Controller\ElasticProxyController::elasticProxy'
+  requirements:
+    _csrf_token: 'FALSE'
+    _csrf_request_header_token: 'FALSE'
+  options:
+    no_cache: 'TRUE'
+
+

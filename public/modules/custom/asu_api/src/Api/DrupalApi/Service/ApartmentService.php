@@ -5,7 +5,6 @@ namespace Drupal\asu_api\Api\DrupalApi\Service;
 use Drupal\asu_api\Api\DrupalApi\Request\ApartmentRequest;
 use Drupal\asu_api\Api\DrupalApi\Response\ApartmentResponse;
 use Drupal\asu_api\Api\RequestHandler;
-use Drupal\asu_api\Api\Response;
 
 /**
  * Application service.
@@ -20,7 +19,8 @@ class ApartmentService {
 
   /**
    * Constructor.
-   * @param RequestHandler $requestHandler
+   *
+   * @param \Drupal\asu_api\Api\RequestHandler $requestHandler
    */
   public function __construct(RequestHandler $requestHandler) {
     $this->requestHandler = $requestHandler;

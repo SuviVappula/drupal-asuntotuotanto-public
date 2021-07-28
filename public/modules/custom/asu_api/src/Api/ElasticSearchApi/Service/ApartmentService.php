@@ -74,9 +74,12 @@ class ApartmentService extends ServiceBase {
         'Content-Type' => 'application/json',
         'Accept' => 'application/json',
       ],
-      'json' => $proxyRequest->toArray(),
     ];
-    $response = $this->requestHandler->post($proxyRequest->getPath(), $options);
+    if (!empty($request)) {
+      $options['json'] = json_encode($request);
+    }
+    $query = $proxyRequest->getPath() . '?source_content_type=application/json&source=' . json_encode($request);
+    $response = $this->requestHandler->get($query, $options);
     return ProxyResponse::createFromHttpResponse($response);
   }
 
