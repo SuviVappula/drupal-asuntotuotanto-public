@@ -4,6 +4,7 @@
   margin-right: -$spacing-l;
   margin-top: $spacing-2-xl;
   position: relative;
+  overflow: hidden;
 
   @media screen and (min-width: $breakpoint-l) {
     margin-top: $spacing-4-xl;
@@ -53,6 +54,7 @@
   margin: 0;
   align-items: center;
   display: inline-flex;
+  text-decoration: none;
 
   &:after {
     background-image: url('../icons/angle-right.svg');
@@ -61,7 +63,6 @@
     display: inline-block;
     height: 24px;
     margin-left: $spacing-3-xs;
-    margin-top: $spacing-4-xs;
     width: 24px;
   }
 }

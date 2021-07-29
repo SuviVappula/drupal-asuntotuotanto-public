@@ -13,6 +13,7 @@ dependencies:
     - paragraphs.paragraphs_type.liftup_with_image
     - paragraphs.paragraphs_type.list_of_links
     - paragraphs.paragraphs_type.remote_video
+    - paragraphs.paragraphs_type.stacked_text_blocks_with_image
   module:
     - entity_reference_revisions
 _core:
@@ -37,6 +38,7 @@ settings:
       list_of_links: list_of_links
       liftup_with_image: liftup_with_image
       content_cards: content_cards
+      stacked_text_blocks_with_image: stacked_text_blocks_with_image
       from_library: from_library
       remote_video: remote_video
       latest_news: latest_news
@@ -89,7 +91,13 @@ settings:
       remote_video:
         enabled: true
         weight: 27
+      stacked_text_blocks_with_image:
+        enabled: true
+        weight: 20
       text:
         weight: -15
+        enabled: false
+      text_block_with_link:
+        weight: 38
         enabled: false
 field_type: entity_reference_revisions
