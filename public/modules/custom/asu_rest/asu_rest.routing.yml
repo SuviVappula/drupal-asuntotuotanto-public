@@ -4,8 +4,7 @@ asu_rest.elasticproxy:
   defaults:
     _controller: '\Drupal\asu_rest\Controller\ElasticProxyController::elasticProxy'
   requirements:
-    _csrf_token: 'FALSE'
-    _csrf_request_header_token: 'FALSE'
+    _access: 'TRUE'
   options:
     no_cache: 'TRUE'
 
