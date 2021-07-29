@@ -1,7 +1,7 @@
 parameters:
   asu_api.backend.base_url_variable: 'ASU_DJANGO_BACKEND_URL'
   asu_api.drupal.base_url_variable: 'ASU_ASUNTOTUOTANTO_URL'
-  asu_api.elastic.base_url_variable: 'ASU_ELASTICSEARCH_URL'
+  asu_api.elastic.base_url_variable: 'ASU_ELASTICSEARCH_ADDRESS'
   asu_api.asko.address: 'ASU_ASKO_ADDRESS'
   asu_api.asko.hitas_address_variable: 'ASU_ASKO_HITAS_ADDRESS'
   asu_api.asko.haso_address_variable: 'ASU_ASKO_HASO_ADDRESS'
