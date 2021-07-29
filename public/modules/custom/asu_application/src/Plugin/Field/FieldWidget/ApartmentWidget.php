@@ -34,18 +34,9 @@ class ApartmentWidget extends WidgetBase {
       '#options' => isset($form['#apartment_values']) ? $form['#apartment_values'] : [],
       '#default_value' => isset($items->getValue()[$delta]['id']) ? $items->getValue()[$delta]['id'] : 0,
       '#ajax' => [
+        'wrapper' => 'edit-apartment-wrapper',
         'event' => 'change',
         'callback' => '::saveApplicationCallback'
-      ]
-    ];
-
-    $element['update'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Remove'),
-      '#ajax' => [
-        'event' => 'click',
-        'wrapper' => 'apartment-add-more-wrapper',
-        'callback' => '::removeApartmentCallback',
       ]
     ];
 

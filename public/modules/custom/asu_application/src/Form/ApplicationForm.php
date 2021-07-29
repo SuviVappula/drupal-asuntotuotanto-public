@@ -4,13 +4,11 @@ namespace Drupal\asu_application\Form;
 
 use Drupal\asu_api\Api\ElasticSearchApi\Request\ProjectApartmentsRequest;
 use Drupal\asu_application\Entity\Application;
+use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Entity\ContentEntityForm;
-use Drupal\Core\Entity\EntityBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerTrait;
-use Drupal\Core\Url;
 use Drupal\user\Entity\User;
-use Drupal\asu_application\Event\ApplicationEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -91,8 +89,6 @@ class ApplicationForm extends ContentEntityForm {
     $form['#apartment_values'] = $apartments;
     $form['#project_name'] = $projectName;
 
-    // dump($form);die();
-
     $form = parent::buildForm($form, $form_state);
 
     $form['#title'] = $this->t('Application for') . ' ' . $projectName;
@@ -104,6 +100,7 @@ class ApplicationForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
+    $form_state->setRebuild(TRUE);
     if($form_state->getTriggeringElement()['#type'] == 'select'){
       parent::save($form, $form_state);
       return $this->entity;
@@ -226,52 +223,37 @@ class ApplicationForm extends ContentEntityForm {
    *
    * @param array $form
    * @param FormStateInterface $form_state
-   * @return array
    */
   public function saveApplicationCallback(array &$form, FormStateInterface $form_state) {
+    $triggerName = $form_state->getTriggeringElement()['#name'];
+    $trigger = (int)preg_replace('/[^0-9]/', '', $triggerName);
+    $userInput = $form_state->getUserInput();
+
     /** @var Application $entity */
     $entity = $form_state->getFormObject()->entity;
     $values = $form_state->getUserInput();
 
-    // Save apartment values to database.
-    $this->updateApartments($form, $entity, $values['apartment']);
+    // Delete
+    if(
+      strpos($triggerName, 'apartment') !== FALSE &&
+      $form_state->getUserInput()['apartment'][$trigger]['id'] === "0"
+    ) {
+      unset($userInput['apartment'][$trigger]);
+      unset($form['apartment']['widget'][$trigger]);
 
-    // Update "has_children" value
-    $entity->set('has_children', $values['has_children']['value'] ?? 0);
-
-    $entity->save();
-    $form_state->setRebuild(TRUE);
-  }
-
-  /**
-   * Ajax callback function to remove apartment from list.
-   *
-   * @param array $form
-   * @param FormStateInterface $form_state
-   */
-  public function removeApartmentCallback(array &$form, FormStateInterface $form_state) {
-
-    // Remove unwanted element from the form.
-    $newApartments = [];
-    foreach ($form_state->getUserInput()['apartment'] as $key => $value) {
-      if ($value['id'] != 0) {
-        $newApartments[] = $value;
-      } else {
-        unset($form['apartment']['widget'][$key]);
-      }
+      // Save apartment values to database.
+      $this->updateApartments($form, $entity, $values['apartment']);
+      // Update "has_children" value
+      $entity->set('has_children', $values['has_children']['value'] ?? 0);
+      $entity->save();
+      return $form['apartment'];
     }
 
-    // Sort by weight.
-    uasort($newApartments, function ($item, $compare)  {
-      return $item['_weight'] >= $compare['_weight'];
-    });
-
-    // Save apartments to database.
-    $entity = $form_state->getFormObject()->entity;
-    $this->updateApartments($form, $entity, $newApartments);
-
-    // Return updated form.
-    $form_state->setRebuild(TRUE);
+    // Save apartment values to database.
+    $this->updateApartments($form, $entity, $values['apartment']);
+    // Update "has_children" value
+    $entity->set('has_children', $values['has_children']['value'] ?? 0);
+    $entity->save();
     return $form['apartment'];
   }
 
@@ -284,9 +266,13 @@ class ApplicationForm extends ContentEntityForm {
    */
   private function updateApartments(array $form, Application $entity, array $apartmentValues) {
     $apartments = [];
-    ksort($apartmentValues);
-    foreach ($apartmentValues as $key => $value) {
-      if($value['id'] == 0) {
+    $sorted = [];
+    foreach($apartmentValues as $apartment){
+      $sorted[$apartment['_weight']] = $apartment;
+    }
+    ksort($sorted);
+    foreach ($sorted as $value) {
+      if($value['id'] == 0 || !$value['id']) {
         continue;
       }
       $apartments[] = [
@@ -295,7 +281,6 @@ class ApplicationForm extends ContentEntityForm {
       ];
     }
     $entity->apartment->setValue($apartments);
-
   }
 
 }

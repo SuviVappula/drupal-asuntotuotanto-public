@@ -416,15 +416,11 @@
           }
         );
 
-        const ajaxDeleteButtonElement = originalSelectElement
-          .parent()
-          .parent()
-          .next();
+        originalSelectElement.val(0);
+        originalSelectElement.change();
 
-        if (ajaxDeleteButtonElement) {
-          ajaxDeleteButtonElement.click();
-          applicationFormApartmentListElement.removeChild(parentLiElement);
-        }
+        // originalSelectElement.parent().parent().parent().parent().remove();
+        applicationFormApartmentListElement.removeChild(parentLiElement);
 
         const addButtonElement = document.getElementsByClassName(
           "application-form-apartment__apartment-add-button"
