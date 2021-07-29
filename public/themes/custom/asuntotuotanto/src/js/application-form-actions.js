@@ -419,7 +419,6 @@
         originalSelectElement.val(0);
         originalSelectElement.change();
 
-        // originalSelectElement.parent().parent().parent().parent().remove();
         applicationFormApartmentListElement.removeChild(parentLiElement);
 
         const addButtonElement = document.getElementsByClassName(
@@ -431,6 +430,8 @@
           appendListItemToApartmentList();
           addButtonElement[0].disabled = false;
         }
+
+        setTimeout(() => window.location.reload(), 500);
       };
 
       const handleListItemInnerClicks = ({ target }) => {
@@ -700,7 +701,7 @@
             );
           });
 
-          if (getApplicationFormApartmentListElementCount() < 4) {
+          if (getApplicationFormApartmentListElementCount() < 5) {
             appendListItemToApartmentList();
 
             const apartmentAddButton = document.getElementsByClassName(

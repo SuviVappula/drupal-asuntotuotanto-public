@@ -3,7 +3,7 @@
 }
 
 .application-form {
-  #edit-apartment-wrapper {
+  [data-drupal-selector="edit-apartment-wrapper"] {
     height: 0;
     visibility: hidden;
     width: 0;
