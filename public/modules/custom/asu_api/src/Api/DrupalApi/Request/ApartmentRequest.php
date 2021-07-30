@@ -35,7 +35,10 @@ class ApartmentRequest extends Request {
   }
 
   /**
+   * Get path.
    *
+   * @return string
+   *   Request path.
    */
   public function getPath(): string {
     $language = \Drupal::languageManager()->getCurrentLanguage();

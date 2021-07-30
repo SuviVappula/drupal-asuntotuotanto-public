@@ -18,6 +18,20 @@ class ElasticSearchApi {
   private ApartmentService $apartmentService;
 
   /**
+   * Api username.
+   *
+   * @var string|mixed
+   */
+  private string $username;
+
+  /**
+   * Api password
+   *
+   * @var string|mixed
+   */
+  private string $password;
+
+  /**
    * Constructor.
    *
    * ElasticSearchApi constructor.
@@ -25,13 +39,11 @@ class ElasticSearchApi {
    * @param string $baseurl
    *   Elasticsearch baseurl.
    */
-  public function __construct(string $baseurlVariable) {
+  public function __construct(string $baseurlVariable, string $usernameVariable, string $passwordVariable) {
     $baseurl = Settings::get($baseurlVariable);
-    $username = getenv('ASU_ELASTICSEARCH_USERNAME');
-    $password = getenv('ASU_ELASTICSEARCH_PASSWORD');
-    $credentialsString = 'https://' . $username . ':' . $password . '@';
-    $baseurl = isset($username) && isset($password) ? str_replace('https://', $credentialsString, $baseurl) : $baseurl;
-    $handler = new RequestHandler($baseurl);
+    $this->username = Settings::get($usernameVariable);
+    $this->password = Settings::get($passwordVariable);
+    $handler = new RequestHandler($baseurl, ['auth' => [$this->username, $this->password]]);
     $this->apartmentService = new ApartmentService($handler);
   }
 

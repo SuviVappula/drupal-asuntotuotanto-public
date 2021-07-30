@@ -63,7 +63,13 @@ class ProjectApartmentsResponse {
     $this->ownershipType = $content[0]['_source']['project_ownership_type'];
   }
 
-  public function getApplicationTeaserValues() {
+  /**
+   * Get application teaser values.
+   *
+   * @return array
+   *   Array of values shown on application teaser.
+   */
+  public function getApplicationTeaserValues(): array {
     return [
       'project_name' => $this->apartments[0]['_source']['project_housing_company'],
       'project_address' => $this->apartments[0]['_source']['apartment_address'],

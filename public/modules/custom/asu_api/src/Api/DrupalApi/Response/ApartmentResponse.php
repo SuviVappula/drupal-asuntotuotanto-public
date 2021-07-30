@@ -6,7 +6,7 @@ use Drupal\asu_api\Api\Response;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- *
+ * Response for apartment request.
  */
 class ApartmentResponse extends Response {
 
@@ -20,14 +20,14 @@ class ApartmentResponse extends Response {
   }
 
   /**
-   *
+   * Get response content.
    */
   public function getContent(): string {
     return $this->content;
   }
 
   /**
-   *
+   * {@inheritDoc}
    */
   public static function createFromHttpResponse(ResponseInterface $response): Response {
     parent::requestOk($response);

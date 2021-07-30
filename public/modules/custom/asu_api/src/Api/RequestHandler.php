@@ -26,11 +26,19 @@ class RequestHandler {
   private string $apiUrl;
 
   /**
+   * Options to set as guzzle request options.
+   *
+   * @var array
+   */
+  private $clientOptions;
+
+  /**
    * Constructor.
    */
-  public function __construct(string $apiUrl) {
-    $this->apiUrl = $apiUrl;
+  public function __construct(string $apiUrl, array $clientOptions = []) {
     $this->client = \Drupal::httpClient();
+    $this->apiUrl = $apiUrl;
+    $this->clientOptions = $clientOptions;
   }
 
   /**
@@ -64,6 +72,20 @@ class RequestHandler {
   public function post(string $endpoint, array $options): ResponseInterface {
     $url = $this->apiUrl . $endpoint;
     return $this->client->post($url, $options);
+  }
+
+  /**
+   * Send http client get request.
+   *
+   * @param string $endpoint
+   *   Api endpoint.
+   *
+   * @return \Psr\Http\Message\ResponseInterface
+   *   Http response.
+   */
+  public function get(string $endpoint): ResponseInterface {
+    $url = $this->apiUrl . $endpoint;
+    return $this->client->request('GET', $url, $this->clientOptions);
   }
 
   /**
