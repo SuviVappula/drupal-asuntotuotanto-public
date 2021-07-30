@@ -29,7 +29,7 @@ class ProxyResponse extends Response {
   /**
    * {@inheritDoc}
    */
-  public static function createFromHttpResponse(ResponseInterface $response): Response {
+  public static function createFromHttpResponse(ResponseInterface $response): ProxyResponse {
     if ($response->getStatusCode() < 200 && $response->getStatusCode() > 299) {
       throw new ApplicationRequestException('Bad status code: ' . $response->getStatusCode());
     }

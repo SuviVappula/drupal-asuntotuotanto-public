@@ -67,7 +67,7 @@ class ApartmentService extends ServiceBase {
   /**
    * Elasticsearch request proxy.
    */
-  public function proxyRequest(array $request): Response {
+  public function proxyRequest(array $request): ProxyResponse {
     $proxyRequest = new ProxyRequest($request);
     $query = $proxyRequest->getPath();
     if($request) {
