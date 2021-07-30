@@ -8,7 +8,6 @@ use Drupal\asu_api\Api\ElasticSearchApi\Request\SingleApartmentRequest;
 use Drupal\asu_api\Api\ElasticSearchApi\Response\ProjectApartmentsResponse;
 use Drupal\asu_api\Api\ElasticSearchApi\Response\ProxyResponse;
 use Drupal\asu_api\Api\ElasticSearchApi\Response\SingleApartmentResponse;
-use Drupal\asu_api\Api\Response;
 use Drupal\asu_api\Api\ServiceBase;
 
 /**
@@ -70,16 +69,10 @@ class ApartmentService extends ServiceBase {
    */
   public function proxyRequest(array $request): Response {
     $proxyRequest = new ProxyRequest($request);
-    $options = [
-      'headers' => [
-        'Content-Type' => 'application/json',
-        'Accept' => 'application/json',
-      ],
-    ];
-    if (!empty($request)) {
-      $options['json'] = json_encode($request);
+    $query = $proxyRequest->getPath();
+    if($request) {
+      $query .= '?source_content_type=application/json&source=' . json_encode($request);
     }
-    $query = $proxyRequest->getPath() . '?source_content_type=application/json&source=' . json_encode($request);
     $response = $this->requestHandler->get($query);
     return ProxyResponse::createFromHttpResponse($response);
   }
