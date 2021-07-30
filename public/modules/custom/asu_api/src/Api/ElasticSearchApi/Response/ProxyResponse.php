@@ -6,7 +6,7 @@ use Drupal\asu_api\Api\Response;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- *
+ * Response for ProxyRequest.
  */
 class ProxyResponse extends Response {
 
