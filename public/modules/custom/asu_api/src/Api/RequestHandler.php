@@ -68,6 +68,20 @@ class RequestHandler {
   }
 
   /**
+   * Send http client get request.
+   *
+   * @param string $endpoint
+   *   Api endpoint.
+   *
+   * @return \Psr\Http\Message\ResponseInterface
+   *   Http response.
+   */
+  public function get(string $endpoint): ResponseInterface {
+    $url = $this->apiUrl . $endpoint;
+    return $this->client->get($url);
+  }
+
+  /**
    * Build request to be sent.
    *
    * @param \Drupal\asu_api\Api\Request $request
