@@ -25,10 +25,10 @@ class ElasticSearchApi {
    * @param string $baseurl
    *   Elasticsearch baseurl.
    */
-  public function __construct(string $baseurlVariable) {
+  public function __construct(string $baseurlVariable, string $usernameVariable, string $passwordVariable) {
     $baseurl = Settings::get($baseurlVariable);
-    $username = getenv('ASU_ELASTICSEARCH_USERNAME');
-    $password = getenv('ASU_ELASTICSEARCH_PASSWORD');
+    $username = Settings::get($usernameVariable);
+    $password = Settings::get($passwordVariable);
     $credentialsString = 'https://' . $username . ':' . $password . '@';
     $baseurl = isset($username) && isset($password) ? str_replace('https://', $credentialsString, $baseurl) : $baseurl;
     $handler = new RequestHandler($baseurl);
