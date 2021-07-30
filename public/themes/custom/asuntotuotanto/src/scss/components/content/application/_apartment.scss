@@ -1,3 +1,13 @@
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .application-form-apartment {
   border-top: 1px solid var(--color-black-20);
   padding: $spacing-s;
@@ -11,6 +21,24 @@
   .hds-select-element {
     width: 100%;
   }
+}
+
+.application-form-apartment-loader-wrapper {
+  border-top: 1px solid var(--color-black-20);
+  height: 89px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.application-form-apartment-loader {
+  border: 6px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 6px solid var(--color-bus);
+  width: 40px;
+  height: 40px;
+  animation: spin 1.5s linear infinite;
+  margin: 0 auto;
 }
 
 .application-form-apartment__header {

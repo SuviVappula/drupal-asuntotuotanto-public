@@ -419,17 +419,8 @@
         originalSelectElement.val(0);
         originalSelectElement.change();
 
-        applicationFormApartmentListElement.removeChild(parentLiElement);
-
-        const addButtonElement = document.getElementsByClassName(
-          "application-form-apartment__apartment-add-button"
-        );
-
-        if (addButtonElement.length === 0) {
-          // eslint-disable-next-line no-use-before-define
-          appendListItemToApartmentList();
-          addButtonElement[0].disabled = false;
-        }
+        parentLiElement.innerHTML =
+          "<div class='application-form-apartment-loader-wrapper'><div class='application-form-apartment-loader'></div></div>";
 
         setTimeout(() => window.location.reload(), 500);
       };
