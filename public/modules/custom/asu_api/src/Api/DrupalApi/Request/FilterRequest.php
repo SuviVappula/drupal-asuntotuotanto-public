@@ -10,7 +10,7 @@ use Drupal\asu_api\Api\Request;
 class FilterRequest extends Request {
 
   protected const METHOD = 'GET';
-  protected const PATH = 'filters';
+  protected const PATH = '/filters';
 
   /**
    * Language for the filters.

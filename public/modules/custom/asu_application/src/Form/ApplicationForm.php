@@ -2,6 +2,8 @@
 
 namespace Drupal\asu_application\Form;
 
+use Drupal\asu_api\Api\BackendApi\BackendApi;
+use Drupal\asu_api\Api\BackendApi\Request\ApplicationRequest;
 use Drupal\asu_api\Api\ElasticSearchApi\Request\ProjectApartmentsRequest;
 use Drupal\asu_application\Entity\Application;
 use Drupal\Core\Ajax\AjaxResponse;
@@ -23,6 +25,19 @@ class ApplicationForm extends ContentEntityForm {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $parameters = \Drupal::routeMatch()->getParameters();
+
+    $project_id = $this->entity->get('project_id')->value;
+    $user = $this->entity->getOwner();
+    $application_type_id = $this->entity->bundle();
+    $form['#project_id'] = $project_id;
+
+    try {
+      $project_data = $this->getApartments($project_id);
+    }
+    catch (\Exception $e) {
+      die($e->getMessage());
+      // @todo Message & redirect, cannot fetch apartments.
+    }
 
     // If user already has an application for this project.
     if ($project_id = $parameters->get('project_id')) {
@@ -49,25 +64,6 @@ class ApplicationForm extends ContentEntityForm {
       $url = $this->entity->toUrl()->toString();
       (new RedirectResponse($url.'/edit'))->send();
       return $form;
-    }
-
-    // Application is created.
-    if ($this->isFormAccessable()) {
-      // @todo Add message & redirect.
-      // $this->messenger()->addMessage($this->t('You are trying to fill an application which is not active.'));
-      die('you should not be here');
-    }
-
-    $project_id = $this->entity->get('project_id')->value;
-    $user = $this->entity->getOwner();
-    $application_type_id = $this->entity->bundle();
-    $form['#project_id'] = $project_id;
-
-    try {
-      $project_data = $this->getApartments($project_id);
-    }
-    catch (\Exception $e) {
-      // @todo Message & redirect, cannot fetch apartments.
     }
 
     if (!$this->isCorrectApplicationFormForProject($application_type_id, $project_data['ownership_type'])) {
@@ -100,49 +96,29 @@ class ApplicationForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    $form_state->setRebuild(TRUE);
     if($form_state->getTriggeringElement()['#type'] == 'select'){
       parent::save($form, $form_state);
       return $this->entity;
     }
-    \Drupal::logger('asu_application')->notice('ajax saving');
 
     $entity = &$this->entity;
+
+    $status = parent::save($form, $form_state);
+
+    $project_name = $form['project_name'];
+    $event = new ApplicationEvent($entity->id(), $project_name);
+    $event_dispatcher = \Drupal::service('event_dispatcher');
+    $event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
+    $this->messenger()->addStatus($this->t('Created the %bundle_label - %content_entity_label entity:  %entity_label.', $message_params));
+
     $message_params = [
       '%entity_label' => $entity->id(),
       '%content_entity_label' => $entity->getEntityType()->getLabel()->render(),
       '%bundle_label' => $entity->bundle->entity->label(),
     ];
-
-    $status = parent::save($form, $form_state);
-
-    switch ($status) {
-      case SAVED_NEW:
-        $project_name = $form['project_name'];
-        #$event = new ApplicationEvent($entity->id(), $project_name);
-        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $event_dispatcher */
-        #$event_dispatcher = \Drupal::service('event_dispatcher');
-        #$event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
-        $this->messenger()->addStatus($this->t('Created the %bundle_label - %content_entity_label entity:  %entity_label.', $message_params));
-        break;
-
-      default:
-        $this->messenger()->addStatus($this->t('Saved the %bundle_label - %content_entity_label entity:  %entity_label.', $message_params));
-    }
-
+    $this->messenger()->addStatus($this->t('Saved the %bundle_label - %content_entity_label entity:  %entity_label.', $message_params));
     $content_entity_id = $entity->getEntityType()->id();
     $form_state->setRedirect("entity.{$content_entity_id}.canonical", [$content_entity_id => $entity->id()]);
-
-  }
-
-  /**
-   * Check if the form be edited or filled.
-   *
-   * @return bool
-   *   Is the form accessible.
-   */
-  private function isFormAccessable(): bool {
-    return !$this->entity->isNew() && !$this->entity->getProjectId();
   }
 
   /**
@@ -192,7 +168,6 @@ class ApplicationForm extends ContentEntityForm {
     $request = new ProjectApartmentsRequest($projectId);
     $apartmentResponse = $elastic->getApartmentService()
       ->getProjectApartments($request);
-
     $projectName = $apartmentResponse->getProjectName();
 
     $apartments = [];

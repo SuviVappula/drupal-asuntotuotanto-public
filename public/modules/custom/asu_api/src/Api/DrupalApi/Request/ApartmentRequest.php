@@ -13,7 +13,7 @@ class ApartmentRequest extends Request {
    *
    * @var string
    */
-  protected const PATH = 'content';
+  protected const PATH = '/content';
 
   /**
    * Method.
