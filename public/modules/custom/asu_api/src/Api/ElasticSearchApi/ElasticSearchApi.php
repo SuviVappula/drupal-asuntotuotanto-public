@@ -30,8 +30,8 @@ class ElasticSearchApi {
     $username = Settings::get($usernameVariable);
     $password = Settings::get($passwordVariable);
     $credentialsString = 'https://' . $username . ':' . $password . '@';
-    $baseurl = isset($username) && isset($password) ? str_replace('https://', $credentialsString, $baseurl) : $baseurl;
-    $handler = new RequestHandler($baseurl);
+    $baseurlWithCredentials = isset($username) && isset($password) ? str_replace('https://', $credentialsString, $baseurl) : $baseurl;
+    $handler = new RequestHandler($baseurlWithCredentials);
     $this->apartmentService = new ApartmentService($handler);
   }
 
