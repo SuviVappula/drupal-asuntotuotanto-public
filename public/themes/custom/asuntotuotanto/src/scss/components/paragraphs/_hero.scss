@@ -55,6 +55,22 @@
       flex-flow: column;
 
       .hero__button {
+        --background-color: transparent;
+        --background-color-hover: var(--color-black-20);
+        --background-color-focus: transparent;
+        --background-color-hover-focus: var(--color-black-20);
+        --background-color-disabled: transparent;
+        --border-color: var(--color-black-90);
+        --border-color-hover: var(--color-black-80);
+        --border-color-focus: var(--color-black-90);
+        --border-color-hover-focus: var(--color-black-80);
+        --border-color-disabled: var(--color-black-50);
+        --color: var(--color-black-90);
+        --color-hover: var(--color-black-80);
+        --color-focus: var(--color-black-90);
+        --color-hover-focus: var(--color-black-80);
+        --focus-outline-color: var(--color-black-90);
+
         &:first-child {
           margin-top: 0;
         }
