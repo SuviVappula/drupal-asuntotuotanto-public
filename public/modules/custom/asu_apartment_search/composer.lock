@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9347432897830bc9e2a10dec18085e7a",
+    "content-hash": "5fdb8bb7cfbe94cacb46307f33eb3e4b",
     "packages": [
         {
             "name": "city-of-helsinki/asuntomyynti-react",
@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/asuntomyynti-react",
-                "reference": "41d4c968127a0af06a4b14e474a81844c92e83c8"
+                "reference": "aed03f3b116babba88a922c07277dfb975108452"
             },
             "type": "library"
         }

@@ -3,8 +3,10 @@
 namespace Drupal\asu_api\Api\ElasticSearchApi\Service;
 
 use Drupal\asu_api\Api\ElasticSearchApi\Request\ProjectApartmentsRequest;
+use Drupal\asu_api\Api\ElasticSearchApi\Request\ProxyRequest;
 use Drupal\asu_api\Api\ElasticSearchApi\Request\SingleApartmentRequest;
 use Drupal\asu_api\Api\ElasticSearchApi\Response\ProjectApartmentsResponse;
+use Drupal\asu_api\Api\ElasticSearchApi\Response\ProxyResponse;
 use Drupal\asu_api\Api\ElasticSearchApi\Response\SingleApartmentResponse;
 use Drupal\asu_api\Api\ServiceBase;
 
@@ -36,6 +38,19 @@ class ApartmentService extends ServiceBase {
     return ProjectApartmentsResponse::createFromHttpResponse($response);
   }
 
+  /**
+   * Public function getApartments() {
+   * $options = [
+   * 'headers' => [
+   * 'Content-Type' => 'application/json',
+   * 'Accept' => 'application/json',
+   * ],
+   * 'json' => $apartmentRequest->toArray(),
+   * ];
+   * $response = $this->requestHandler->post($apartmentRequest->getPath(), $options);
+   * return ProjectApartmentsResponse::createFromHttpResponse($response);
+   * }
+   */
   public function getApartment($id): SingleApartmentResponse {
     $request = new SingleApartmentRequest($id);
     $options = [
@@ -47,6 +62,25 @@ class ApartmentService extends ServiceBase {
     ];
     $response = $this->requestHandler->post($request->getPath(), $options);
     return SingleApartmentResponse::createFromHttpResponse($response);
+  }
+
+  /**
+   * Elasticsearch request proxy.
+   */
+  public function proxyRequest(array $request): ProxyResponse {
+    $proxyRequest = new ProxyRequest($request);
+    $options = [
+      'headers' => [
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+      ],
+    ];
+    if (!empty($request)) {
+      $options['json'] = json_encode($request);
+    }
+    $query = $proxyRequest->getPath() . '?source_content_type=application/json&source=' . json_encode($request);
+    $response = $this->requestHandler->get($query, $options);
+    return ProxyResponse::createFromHttpResponse($response);
   }
 
 }

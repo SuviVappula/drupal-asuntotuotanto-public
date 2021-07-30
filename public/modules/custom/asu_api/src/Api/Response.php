@@ -19,7 +19,7 @@ abstract class Response {
   abstract public static function createFromHttpResponse(ResponseInterface $response): Response;
 
   /**
-   * Is request 2xx.
+   * Is request statuscode 2xx.
    *
    * @param \Psr\Http\Message\ResponseInterface $response
    *

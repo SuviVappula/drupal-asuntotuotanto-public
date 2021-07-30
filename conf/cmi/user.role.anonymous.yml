@@ -16,5 +16,6 @@ permissions:
   - 'restful get asu_applications'
   - 'restful get asu_filters'
   - 'restful get asu_initialize'
+  - 'restful post asu_elastic_proxy'
   - 'view media'
   - 'view remote entities'

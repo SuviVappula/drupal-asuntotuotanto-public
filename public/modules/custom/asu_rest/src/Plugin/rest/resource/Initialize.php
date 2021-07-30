@@ -5,6 +5,7 @@ namespace Drupal\asu_rest\Plugin\rest\resource;
 use Drupal\asu_application\Applications;
 use Drupal\asu_rest\UserDto;
 use Drupal\asu_api\Api\DrupalApi\Request\FilterRequest;
+use Drupal\Core\Access\CsrfRequestHeaderAccessCheck;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\rest\ModifiedResourceResponse;
 use Drupal\rest\Plugin\ResourceBase;
@@ -42,6 +43,7 @@ final class Initialize extends ResourceBase {
     $response['filters'] = $this->getFilters();
     $response['static_content'] = $this->getStaticContent();
     $response['apartment_application_status'] = $this->getApartmentApplicationStatus();
+    $response['token'] = \Drupal::service('csrf_token')->get(CsrfRequestHeaderAccessCheck::TOKEN_KEY);
 
     /** @var \Drupal\user\Entity\User $user */
     if ($user = User::load(\Drupal::currentUser()->id())) {
@@ -107,18 +109,25 @@ final class Initialize extends ResourceBase {
       ->getCurrentLanguage()
       ->getId();
 
+    // $cacheKey = $languageCode . '_asu_filters';
+    // if(!$cached = \Drupal::cache()->get($languageCode .'_asu_filters')) {.
     try {
       /** @var \Drupal\asu_api\Api\DrupalApi\DrupalApi $drupalApi */
       $drupalApi = \Drupal::service('asu_api.drupalapi');
-      return $drupalApi
+
+      $content = $drupalApi
         ->getFiltersService()
         ->getFilters(FilterRequest::create($languageCode))
         ->getContent();
+
+      // \Drupal::cache()->set($cacheKey, $content);
+      return $content;
     }
     catch (\Exception $e) {
-      // @todo error: connection failed, add logging.
+      \Drupal::logger('asu_filters')->critical('Unable to fetch filter for react component: ' . $e->getMessage());
       return [];
     }
+    // }
   }
 
 }

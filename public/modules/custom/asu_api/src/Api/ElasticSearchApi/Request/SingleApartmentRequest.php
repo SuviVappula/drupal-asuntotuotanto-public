@@ -10,7 +10,7 @@ use Drupal\asu_api\Api\Request;
 class SingleApartmentRequest extends Request {
 
   protected const METHOD = 'POST';
-  protected const PATH = 'elasticsearch_index_drupal_apartment/_search';
+  protected const PATH = 'asuntotuotanto_apartment/_search';
 
   /**
    * Apartment id.
@@ -31,7 +31,7 @@ class SingleApartmentRequest extends Request {
    */
   public function toArray(): array {
     return [
-      #"size" => 10000,
+      // "size" => 10000,
       "query" => [
         "match" => [
           "nid" => (int) $this->apartmentId,

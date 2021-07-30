@@ -1,28 +1,28 @@
 <?php
 
-namespace Drupal\asu_api\Api\DrupalApi\Response;
+namespace Drupal\asu_api\Api\ElasticSearchApi\Response;
 
 use Drupal\asu_api\Api\Response;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Response for apartment request.
+ *
  */
-class ApartmentResponse extends Response {
+class ProxyResponse extends Response {
 
-  private string $content;
+  private array $content;
 
   /**
    * Constructor.
    */
-  public function __construct(string $content) {
+  public function __construct(array $content) {
     $this->content = $content;
   }
 
   /**
-   * Get response content.
+   * Get hits.
    */
-  public function getContent(): string {
+  public function getHits() {
     return $this->content;
   }
 
@@ -30,7 +30,9 @@ class ApartmentResponse extends Response {
    * {@inheritDoc}
    */
   public static function createFromHttpResponse(ResponseInterface $response): Response {
-    parent::requestOk($response);
+    if ($response->getStatusCode() < 200 && $response->getStatusCode() > 299) {
+      throw new ApplicationRequestException('Bad status code: ' . $response->getStatusCode());
+    }
     $content = json_decode($response->getBody()->getContents(), TRUE);
     return new self($content);
   }
