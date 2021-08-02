@@ -103,6 +103,9 @@
         "patches": {
             "drupal/core": {
                 "Views attachments are not rendered in the specified order [https://www.drupal.org/project/drupal/issues/2943293]": "https://www.drupal.org/files/issues/2019-05-25/2943293-17.patch"
+            },
+            "drupal/hdbt_admin": {
+                "Custom hero addition": "./public/patches/custom_hero_addition.patch"
             }
         }
     },

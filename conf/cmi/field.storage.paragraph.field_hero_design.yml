@@ -34,6 +34,9 @@ settings:
     -
       value: diagonal
       label: Diagonal
+    -
+      value: background-image-with-text-box
+      label: 'Background image with text box'
   allowed_values_function: ''
 module: options
 locked: false

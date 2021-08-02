@@ -38,57 +38,58 @@
  * @ingroup themeable
  */
 #}
-
-{% set background_color = content.field_hero_bg_color[0]['#markup'] %}
-{% set design = content.field_hero_design[0]['#markup'] %}
-{% set description = content.field_hero_desc %}
+{% set design = content.field_liftup_image_links_design[0]['#markup'] %}
 
 {%
   set classes = [
-    'hero',
-    view_mode ? 'hero--' ~ view_mode|clean_class,
-    not paragraph.isPublished() ? 'hero--unpublished',
-    design ? 'hero--' ~ design,
-    background_color ? 'hero--bg-color--' ~ background_color
+    'liftup-with-image-and-links',
+    view_mode ? 'liftup-with-image-and-links--' ~ view_mode|clean_class,
+    not paragraph.isPublished() ? 'liftup-with-image-and-links--unpublished',
+    'liftup-with-image-and-links--design-' ~ design,
+    'liftup-with-image-and-links--color-' ~ theme_color
   ]
 %}
 
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-    {% embed "@hdbt/misc/container.twig" with {container_element: 'hero'} %}
-      {% block container_content %}
-        <div class="hero__text-content">
-          <h1 class="hero__title">
-            {{ content.field_hero_title }}
-          </h1>
-          {% if description[0]['#text'] is not empty %}
+    <div class="liftup-with-image-and-links__image">
+      {% if content.field_liftup_with_image_image|render %}
+        {% for key, image in content.field_liftup_with_image_image %}
+          {% if image.entity %}
+            {% set media = image.entity %}
+            {% set alt = media.fields.field_media_image.alt %}
             {% if
-              design == "without-image-left" or
-              design == "without-image-center" or
-              design == "with-image-right" or
-              design == "with-image-left" or
-              design == "with-image-bottom" or
-              design == "diagonal"
+              design == "image-on-right" or
+              design == "image-on-left"
             %}
-              <div class="hero__description">
-                {{ description }}
-              </div>
+              {% set image =
+                drupal_image(media.fields.field_media_image.entity.uri.value, 'image__3_2', {alt: alt}, responsive=true)
+              %}
+            {% else %}
+              {% set image =
+                drupal_image(media.fields.field_media_image.entity.uri.value, 'hero__background', {alt: alt}, responsive=true)
+              %}
             {% endif %}
+            {{ image }}
           {% endif %}
-
-          {% if
-            (design == "background-image" or
-            design == "background-image-with-text-box") and
-            content.field_hero_link|render
-          %}
-            {% set link_type = content.field_hero_link_design[0]['#markup'] %}
-            <div class="hero__cta">
-              {% for key, item in content.field_hero_link if key|first != '#' %}
+        {% endfor %}
+      {% endif %}
+    </div>
+    {% embed "@hdbt/misc/container.twig" with {container_element: 'liftup-with-image-and-links'} %}
+      {% block container_content %}
+        <div class="liftup-with-image-and-links__content">
+          <h2 class="liftup-with-image-and-links__title">{{ content.field_liftup_with_image_title }}</h2>
+          {% if content.field_liftup_with_image_desc|render %}
+            <div class="liftup-with-image-and-links__desc">{{ content.field_liftup_with_image_desc }}</div>
+          {% endif %}
+          {% if content.field_links|render %}
+            <div class="liftup-with-image-and-links__cta">
+              {% for key, item in content.field_links if key|first != '#' %}
                 {% set link = item['#url'] %}
                 {% set text = item['#title'] %}
                 {% set target_new = item['#options']['target_new'] %}
 
-                <a href="{{ link }}" {% if target_new %}target="_blank"{% endif %} class="hero__button hds-button {% if link_type %}{{ 'hds-button--' ~ link_type }}{% endif %}">
+                <a href="{{ link }}" {% if target_new %}target="_blank"{% endif %} class="hds-button hds-button--secondary">
                   {% if icon_first == true %}<span aria-hidden="true" class="hds-icon {{ 'hds-icon--' ~ icon_first_type }}"></span>{% endif %}
                   <span class="hds-button__label">{{ text }}</span>
                   {% if link_type == 'supplementary' %}
@@ -107,35 +108,5 @@
         </div>
       {% endblock %}
     {% endembed %}
-
-    {% if
-      design == "with-image-right" or
-      design == "with-image-left" or
-      design == "with-image-bottom" or
-      design == "background-image" or
-      design == "background-image-with-text-box" or
-      design == "diagonal"
-    %}
-      {% set image_uri = content.field_hero_image[0]['#media'].field_media_image.entity.uri.value %}
-
-      {# This check should be done in edit form. #}
-      {% if image_uri %}
-        {% set image_style = 'hero__background' %}
-
-        {% if design == "with-image-right" or design == "with-image-left" %}
-          {% set image_style = 'hero__left_right' %}
-        {% elseif design == "with-image-bottom" %}
-          {% set image_style = 'hero__bottom' %}
-        {% elseif design == "diagonal" %}
-          {% set image_style = 'hero__diagonal' %}
-        {% endif %}
-
-        <div class="hero__image-container">
-          {% include '@hdbt/misc/koro.twig' with {koro: koro, flip: true } %}
-          {{ drupal_image(image_uri, image_style, responsive=true) }}
-        </div>
-      {% endif %}
-    {% endif %}
-    {% include '@hdbt/misc/koro.twig' with {koro: koro, flip: false } %}
   </div>
 {% endblock paragraph %}
