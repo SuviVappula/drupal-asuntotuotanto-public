@@ -39,17 +39,14 @@ class ApartmentService extends ServiceBase {
   }
 
   /**
-   * Public function getApartments() {
-   * $options = [
-   * 'headers' => [
-   * 'Content-Type' => 'application/json',
-   * 'Accept' => 'application/json',
-   * ],
-   * 'json' => $apartmentRequest->toArray(),
-   * ];
-   * $response = $this->requestHandler->post($apartmentRequest->getPath(), $options);
-   * return ProjectApartmentsResponse::createFromHttpResponse($response);
-   * }
+   * Get apartment by id.
+   *
+   * @param $id
+   *   Id if aoartment
+   *
+   * @return \Drupal\asu_api\Api\ElasticSearchApi\Response\SingleApartmentResponse
+   *
+   * @throws \Exception
    */
   public function getApartment($id): SingleApartmentResponse {
     $request = new SingleApartmentRequest($id);
@@ -70,7 +67,7 @@ class ApartmentService extends ServiceBase {
   public function proxyRequest(array $request): ProxyResponse {
     $proxyRequest = new ProxyRequest($request);
     $query = $proxyRequest->getPath();
-    if($request) {
+    if ($request) {
       $query .= '?source_content_type=application/json&source=' . json_encode($request);
     }
     $response = $this->requestHandler->get($query);

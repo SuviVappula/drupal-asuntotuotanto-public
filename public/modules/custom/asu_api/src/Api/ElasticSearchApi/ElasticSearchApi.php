@@ -25,7 +25,7 @@ class ElasticSearchApi {
   private string $username;
 
   /**
-   * Api password
+   * Api password.
    *
    * @var string|mixed
    */

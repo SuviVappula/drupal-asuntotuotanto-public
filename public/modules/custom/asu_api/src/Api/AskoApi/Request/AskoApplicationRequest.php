@@ -41,14 +41,14 @@ class AskoApplicationRequest {
   public function toArray(): array {
     $date = new \DateTime($this->user->field_date_of_birth->value);
     $data = [
-      'etunimi' => $this->user->field_first_name->value,
-      'sukunimi' => $this->user->field_last_name->value,
+      'etunimi' => $this->user->first_name->value,
+      'sukunimi' => $this->user->last_name->value,
       'syntyma-aika' => $date->format('d.m.Y'),
       'hetuloppu' => $this->application->field_personal_id->value,
-      'osoite' => $this->user->field_address->value,
-      'postinumero' => $this->user->field_postal_code->value,
-      'postitoimipaikka' => $this->user->field_city->value,
-      'puhelin' => $this->user->field_phone_number->value,
+      'osoite' => $this->user->address->value,
+      'postinumero' => $this->user->postal_code->value,
+      'postitoimipaikka' => $this->user->city->value,
+      'puhelin' => $this->user->phone_number->value,
       'email' => $this->user->getEmail(),
       'etunimi2' => '',
       'sukunimi2' => '',

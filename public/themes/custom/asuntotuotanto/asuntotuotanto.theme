@@ -490,3 +490,11 @@ function get_apartment_application_status($application_status) {
     "label" => $application_status_mapping[$application_status],
   ];
 }
+
+function asuntotuotanto_preprocess_user(&$variables){
+  $store = \Drupal::service('asu_user.tempstore');
+  $fields = \Drupal::config('asu_user.external_user_fields')->get('external_data_map');
+  foreach($fields as $field_name => $field){
+    $variables['content'][$field_name] = $store->get($field_name);
+  }
+}

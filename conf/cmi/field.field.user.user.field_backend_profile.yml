@@ -1,16 +1,16 @@
-uuid: 8fbb18c6-9636-42cd-a199-aa6331704c29
+uuid: 715d6644-a57d-4fa0-9f08-822159e1f1fb
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_postal_code
+    - field.storage.user.field_backend_profile
   module:
     - user
-id: user.user.field_postal_code
-field_name: field_postal_code
+id: user.user.field_backend_profile
+field_name: field_backend_profile
 entity_type: user
 bundle: user
-label: 'Postal code'
+label: 'Backend profile'
 description: ''
 required: true
 translatable: false
