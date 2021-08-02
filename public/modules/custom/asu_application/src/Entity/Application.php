@@ -41,7 +41,7 @@ use Drupal\user\EntityOwnerTrait;
  *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
  *     },
  *     "route_provider" = {
- *       "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
+ *       "html" = "Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider",
  *     },
  *   },
  *   links = {
@@ -129,6 +129,15 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
   }
 
   /**
+   * Application has been sent to backend and therefore is locked.
+   *
+   * @return bool
+   */
+  public function isLocked(): bool {
+    return $this->field_locked->value ? true : false;
+  }
+
+  /**
    * {@inheritDoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
@@ -177,8 +186,6 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
       ->setReadOnly(TRUE);
 
     $fields['apartment'] = BaseFieldDefinition::create('asu_apartment')
-      ->setLabel(t('Apartment ID'))
-      ->setDescription(t('The id of the project apartments'))
       ->setCardinality(-1)
       ->setReadOnly(FALSE)
       ->setDisplayOptions('view', [

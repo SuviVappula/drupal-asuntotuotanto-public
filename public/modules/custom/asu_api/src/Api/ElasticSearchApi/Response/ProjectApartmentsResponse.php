@@ -71,13 +71,15 @@ class ProjectApartmentsResponse {
    */
   public function getApplicationTeaserValues(): array {
     return [
-      'project_name' => $this->apartments[0]['_source']['project_housing_company'],
-      'project_address' => $this->apartments[0]['_source']['apartment_address'],
-      'project_ownership_type' => $this->apartments[0]['_source']['project_ownership_type'],
-      'project_estimated_completion' => $this->apartments[0]['_source']['project_estimated_completion'],
-      'application_end_time' => $this->apartments[0]['_source']['project_application_end_time'],
-      'project_main_image_url' => $this->apartments[0]['_source']['project_main_image_url'],
-      'project_district' => $this->apartments[0]['_source']['project_district'],
+      '#teaser_values' => [
+        'project_name' => $this->apartments[0]['_source']['project_housing_company'],
+        'project_address' => $this->apartments[0]['_source']['apartment_address'],
+        'project_ownership_type' => $this->apartments[0]['_source']['project_ownership_type'],
+        'project_estimated_completion' => $this->apartments[0]['_source']['project_estimated_completion'],
+        'application_end_time' => $this->apartments[0]['_source']['project_application_end_time'],
+        'project_main_image_url' => $this->apartments[0]['_source']['project_main_image_url'],
+        'project_district' => $this->apartments[0]['_source']['project_district'],
+      ]
     ];
   }
 
@@ -148,6 +150,7 @@ class ProjectApartmentsResponse {
     $content = $responseContent['hits']['hits'];
     if (empty($content)) {
       throw new \Exception('No apartments found.');
+
     }
     return new self($content);
   }
