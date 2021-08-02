@@ -27,7 +27,7 @@ class FilterResponse {
   /**
    * Get the request content.
    */
-  public function getContent() {
+  public function getContent(): array {
     return $this->content;
   }
 
