@@ -10,7 +10,7 @@ use Drupal\asu_api\Api\Request;
 class LotteryRequest extends Request {
 
   const METHOD = 'POST';
-  const PATH = 'api/v1/lottery';
+  const PATH = '/api/v1/lottery';
 
   /**
    * Constructor.

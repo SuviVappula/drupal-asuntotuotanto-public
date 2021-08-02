@@ -9,6 +9,7 @@ use Drupal\Core\Url;
 use Drupal\user\Entity\User;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\asu_application\Applications;
+use Drupal\asu_api\Api\ElasticSearchApi\Request\ProjectApartmentsRequest;
 
 /**
  * Helper function to get the icons path.
@@ -354,6 +355,51 @@ function asuntotuotanto_form_alter(&$form, &$form_state, $form_id) {
     $form['account']['mail']['#description'] = FALSE;
     $form['account']['pass']['#description'] = FALSE;
   }
+
+  if ($form['#id'] == 'asu-application-hitas-add-form') {
+    $project_id = $form['#project_id'];
+    $elastic = \Drupal::service('asu_api.elasticapi');
+    $request = new ProjectApartmentsRequest($project_id);
+    $apartmentResponse = $elastic->getApartmentService()
+      ->getProjectApartments($request);
+
+    $application_teaser_values = $apartmentResponse->getApplicationTeaserValues();
+    $form['application_project_information'] = $application_teaser_values;
+  }
+
+  if ($form['#id'] == 'asu-application-haso-add-form') {
+    $project_id = $form['#project_id'];
+    $elastic = \Drupal::service('asu_api.elasticapi');
+    $request = new ProjectApartmentsRequest($project_id);
+    $apartmentResponse = $elastic->getApartmentService()
+      ->getProjectApartments($request);
+
+    $application_teaser_values = $apartmentResponse->getApplicationTeaserValues();
+    $form['application_project_information'] = $application_teaser_values;
+  }
+
+  if ($form['#id'] == 'asu-application-hitas-form') {
+    $project_id = $form['#project_id'];
+    $elastic = \Drupal::service('asu_api.elasticapi');
+    $request = new ProjectApartmentsRequest($project_id);
+    $apartmentResponse = $elastic->getApartmentService()
+      ->getProjectApartments($request);
+
+    $application_teaser_values = $apartmentResponse->getApplicationTeaserValues();
+    $form['application_project_information'] = $application_teaser_values;
+  }
+
+  if ($form['#id'] == 'asu-application-haso-form') {
+    $project_id = $form['#project_id'];
+    $elastic = \Drupal::service('asu_api.elasticapi');
+    $request = new ProjectApartmentsRequest($project_id);
+    $apartmentResponse = $elastic->getApartmentService()
+      ->getProjectApartments($request);
+
+    $application_teaser_values = $apartmentResponse->getApplicationTeaserValues();
+    $form['application_project_information'] = $application_teaser_values;
+  }
+
 }
 
 /**
@@ -443,4 +489,12 @@ function get_apartment_application_status($application_status) {
     "status" => strtolower($application_status),
     "label" => $application_status_mapping[$application_status],
   ];
+}
+
+function asuntotuotanto_preprocess_user(&$variables){
+  $store = \Drupal::service('asu_user.tempstore');
+  $fields = \Drupal::config('asu_user.external_user_fields')->get('external_data_map');
+  foreach($fields as $field_name => $field){
+    $variables['content'][$field_name] = $store->get($field_name);
+  }
 }

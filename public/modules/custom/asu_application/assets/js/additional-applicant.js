@@ -1,16 +1,20 @@
-(function ($) {
-  const applicantWrapper = $('#applicant-wrapper');
-  const button = $('#has-additional-applicant');
+((Drupal) => {
+  Drupal.behaviors.applicantFormToggle = {
+    attach: function attach() {
+      const applicantFormWrapperElement = document.getElementById('applicant-wrapper');
+      const checkboxToggleElement = document.getElementById('has-additional-applicant');
 
-  if (!(button.prop('checked'))) {
-    applicantWrapper.hide();
-  }
+      if (!checkboxToggleElement.checked) {
+        applicantFormWrapperElement.style.display = 'none';
+      }
 
-  button.click(function() {
-    if ((button.prop('checked'))) {
-      applicantWrapper.show();
-    } else {
-      applicantWrapper.hide();
-    }
-  });
-}(jQuery))
+      checkboxToggleElement.addEventListener('click', () => {
+        if (checkboxToggleElement.checked) {
+          applicantFormWrapperElement.style.display = 'block';
+        } else {
+          applicantFormWrapperElement.style.display = 'none';
+        }
+      })
+    },
+  };
+})(Drupal);

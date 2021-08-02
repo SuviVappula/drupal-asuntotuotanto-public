@@ -2,20 +2,21 @@
 
 namespace Drupal\asu_api\Api\BackendApi\Response;
 
+use Drupal\asu_api\Api\Response;
 use Drupal\asu_api\Exception\ApplicationRequestException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Response for application request.
  */
-class ApplicationResponse {
+class ApplicationResponse extends Response {
 
   /**
    * Content.
    *
-   * @var \StdClass
+   * @var array
    */
-  private \StdClass $content;
+  protected array $content;
 
   /**
    * Constructor.
@@ -23,7 +24,7 @@ class ApplicationResponse {
    * @param object $content
    *   Contents of the response.
    */
-  public function __construct(\stdClass $content) {
+  public function __construct(array $content) {
     // @todo Set content as attributes and create setters.
     $this->content = $content;
   }
@@ -31,7 +32,7 @@ class ApplicationResponse {
   /**
    * Get request content.
    */
-  public function getContent() {
+  public function getContent(): array {
     return $this->content;
   }
 
@@ -46,11 +47,11 @@ class ApplicationResponse {
    *
    * @throws \Exception
    */
-  public static function createFromHttpResponse(ResponseInterface $response) {
-    if ($response->getStatusCode() < 200 && $response->getStatusCode() > 299) {
+  public static function createFromHttpResponse(ResponseInterface $response): self {
+    if (!self::requestOk($response)) {
       throw new ApplicationRequestException('Bad status code: ' . $response->getStatusCode());
     }
-    $content = json_decode($response->getBody()->getContents(), FALSE);
+    $content = json_decode($response->getBody()->getContents(), TRUE);
     return new self($content);
   }
 

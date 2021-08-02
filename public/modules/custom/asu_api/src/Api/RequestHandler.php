@@ -5,33 +5,40 @@ namespace Drupal\asu_api\Api;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Drupal\asu_api\Api\Request as AppRequest;
+use GuzzleHttp\Client;
 
 /**
  * Handles requests.
  */
 class RequestHandler {
-
   /**
    * Guzzle http-client.
    *
    * @var \GuzzleHttp\Client
    */
-  private $client;
+  private Client $client;
 
   /**
    * Api url.
    *
    * @var string
    */
-  private $apiUrl;
+  private string $apiUrl;
+
+  /**
+   * Options to set as guzzle request options.
+   *
+   * @var array
+   */
+  private $clientOptions;
 
   /**
    * Constructor.
    */
-  public function __construct(string $apiUrl) {
-    $this->apiUrl = $apiUrl;
+  public function __construct(string $apiUrl, array $clientOptions = []) {
     $this->client = \Drupal::httpClient();
+    $this->apiUrl = $apiUrl;
+    $this->clientOptions = $clientOptions;
   }
 
   /**
@@ -68,6 +75,20 @@ class RequestHandler {
   }
 
   /**
+   * Send http client get request.
+   *
+   * @param string $endpoint
+   *   Api endpoint.
+   *
+   * @return \Psr\Http\Message\ResponseInterface
+   *   Http response.
+   */
+  public function get(string $endpoint): ResponseInterface {
+    $url = $this->apiUrl . $endpoint;
+    return $this->client->request('GET', $url, $this->clientOptions);
+  }
+
+  /**
    * Build request to be sent.
    *
    * @param \Drupal\asu_api\Api\Request $request
@@ -76,7 +97,7 @@ class RequestHandler {
    * @return \GuzzleHttp\Psr7\RequestInterface
    *   Request to send.
    */
-  public function buildRequest(AppRequest $request): RequestInterface {
+  public function buildRequest(\Drupal\asu_api\Api\Request $request): RequestInterface {
     $method = $request->getMethod();
     $uri = "{$this->apiUrl}{$request->getPath()}";
     $payload = $request->toArray();
@@ -84,6 +105,25 @@ class RequestHandler {
       $method,
       $uri,
       ['Content-Type' => 'application/json'],
+      json_encode($payload)
+    );
+  }
+
+  /**
+   *
+   */
+  public function buildAuthenticatedRequest(\Drupal\asu_api\Api\Request $request, string $profileId, string $token): RequestInterface {
+    $method = $request->getMethod();
+    $uri = "{$this->apiUrl}{$request->getPath()}$profileId/";
+    $payload = $request->toArray();
+    $headers = [
+      'Content-Type' => 'application/json',
+      'Authorization' => 'Bearer ' . $token,
+    ];
+    return new Request(
+      $method,
+      $uri,
+      $headers,
       json_encode($payload)
     );
   }
