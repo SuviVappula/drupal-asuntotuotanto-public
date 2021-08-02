@@ -2,11 +2,9 @@
 
 namespace Drupal\asu_application\Form;
 
-use Drupal\asu_api\Api\BackendApi\BackendApi;
-use Drupal\asu_api\Api\BackendApi\Request\ApplicationRequest;
 use Drupal\asu_api\Api\ElasticSearchApi\Request\ProjectApartmentsRequest;
 use Drupal\asu_application\Entity\Application;
-use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\asu_application\Event\ApplicationEvent;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerTrait;
