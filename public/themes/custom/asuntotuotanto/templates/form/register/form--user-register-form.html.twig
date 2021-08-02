@@ -37,13 +37,7 @@
           Fill all fields
         {% endtrans %}
       </p>
-      {{ element.field_first_name }}
-      {{ element.field_last_name }}
-      {{ element.field_phone_number }}
-      {{ element.field_address }}
-      {{ element.field_postal_code }}
-      {{ element.field_city }}
-      {{ element.field_date_of_birth }}
+      {{ element.basic_information }}
       {{ element['gdpr-warning'] }}
     </section>
     {{ element.form_build_id }} {# required #}

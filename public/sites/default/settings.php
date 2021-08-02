@@ -106,12 +106,10 @@ if ($env = getenv('APP_ENV')) {
   // Email settings.
   $config['mailsystem.settings']['defaults']['sender'] = 'swiftmailer';
   $config['mailsystem.settings']['defaults']['formatter'] = 'swiftmailer';
-  $config['swiftmailer.transport']['smtp_host'] = getenv('ASU_MAILSERVER_ADDRESS') ?? '10.232.13.1';
+  $config['swiftmailer.transport']['smtp_host'] = getenv('ASU_MAILSERVER_ADDRESS');
   $config['swiftmailer.transport']['smtp_port'] = getenv('ASU_MAILSERVER_PORT') ?? '25';
   $config['swiftmailer.transport']['transport'] = getenv('ASU_MAILSERVER_TRANSPORT') ?? 'smtp';
   $config['swiftmailer.transport']['smtp_encryption'] = '0';
-
-  $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = getenv('ASU_ELASTICSEARCH_ADDRESS');
 
   // External entity settings.
   $config['external_entities.external_entity_type.project']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_ADDRESS');
@@ -134,8 +132,6 @@ if ($env = getenv('APP_ENV')) {
     $config['swiftmailer.transport']['smtp_encryption'] = '0';
 
     $settings['ASU_ELASTICSEARCH_ADDRESS'] = 'http://elastic:9200';
-    $settings['ASU_ELASTICSEARCH_URL'] = 'https://asuntotuotanto.docker.so';
-    $config['elasticsearch_connector.cluster.asuntotuotanto']['url'] = 'http://elastic:9200';
   }
 
   // Development environment.

@@ -9,6 +9,7 @@ abstract class Request {
 
   protected const METHOD = 'GET';
   protected const PATH = '';
+  protected const AUTHENTICATED = FALSE;
 
   /**
    * Gets the HTTP method.

@@ -7,9 +7,9 @@ use Drupal\asu_api\Exception\ApplicationRequestException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Response for application request.
+ * Response for update user request.
  */
-class ApplicationResponse extends Response {
+class UpdateUserResponse extends Response {
 
   /**
    * Content.
@@ -21,18 +21,17 @@ class ApplicationResponse extends Response {
   /**
    * Constructor.
    *
-   * @param object $content
+   * @param array $content
    *   Contents of the response.
    */
   public function __construct(array $content) {
-    // @todo Set content as attributes and create setters.
     $this->content = $content;
   }
 
   /**
-   * Get request content.
+   * Get user information.
    */
-  public function getContent(): array {
+  public function getUserInformation(): array {
     return $this->content;
   }
 
