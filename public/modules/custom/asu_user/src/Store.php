@@ -59,10 +59,10 @@ class Store {
   /**
    * Set multiple values to store by configuration.
    *
-   * @param $fields
-   * @param $data
+   * @param array $fields
+   * @param array $data
    */
-  public function setMultipleByConfiguration($data) {
+  public function setMultipleByConfiguration(array $data) {
     if ($this->config) {
       foreach ($data as $key => $value) {
         // Get the index number of configuration by external field name.

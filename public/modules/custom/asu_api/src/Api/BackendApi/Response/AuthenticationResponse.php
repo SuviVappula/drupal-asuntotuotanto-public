@@ -23,9 +23,9 @@ class AuthenticationResponse extends Response {
   /**
    * Constructor.
    */
-  public function __construct(\stdClass $content) {
-    $this->token = $content->access;
-    $this->access = $content->refresh;
+  public function __construct(array $content) {
+    $this->token = $content['access'];
+    $this->access = $content['refresh'];
   }
 
   /**
@@ -42,7 +42,7 @@ class AuthenticationResponse extends Response {
     if (!self::requestOk($response)) {
       throw new RequestException('Bad status code: ' . $response->getStatusCode());
     }
-    $content = json_decode($response->getBody()->getContents(), FALSE);
+    $content = json_decode($response->getBody()->getContents(), TRUE);
     return new self($content);
   }
 

@@ -14,24 +14,24 @@ class UpdateUserResponse extends Response {
   /**
    * Content.
    *
-   * @var \StdClass
+   * @var array
    */
-  protected \StdClass $content;
+  protected array $content;
 
   /**
    * Constructor.
    *
-   * @param object $content
+   * @param array $content
    *   Contents of the response.
    */
-  public function __construct(\stdClass $content) {
+  public function __construct(array $content) {
     $this->content = $content;
   }
 
   /**
    * Get user information.
    */
-  public function getUserInformation(): \stdClass {
+  public function getUserInformation(): array {
     return $this->content;
   }
 
@@ -50,7 +50,7 @@ class UpdateUserResponse extends Response {
     if (!self::requestOk($response)) {
       throw new ApplicationRequestException('Bad status code: ' . $response->getStatusCode());
     }
-    $content = json_decode($response->getBody()->getContents(), FALSE);
+    $content = json_decode($response->getBody()->getContents(), TRUE);
     return new self($content);
   }
 

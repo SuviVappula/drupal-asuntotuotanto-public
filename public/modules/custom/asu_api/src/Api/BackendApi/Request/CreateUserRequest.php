@@ -2,12 +2,9 @@
 
 namespace Drupal\asu_api\Api\BackendApi\Request;
 
-use Drupal\asu_api\Api\BackendApi\Response\UserResponse;
 use Drupal\asu_api\Api\Request;
-use Drupal\asu_api\Api\Response;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\user\UserInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Create user request.
@@ -63,4 +60,5 @@ class CreateUserRequest extends Request {
 
     return $data;
   }
+
 }

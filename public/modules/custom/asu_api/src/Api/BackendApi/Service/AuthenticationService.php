@@ -65,7 +65,8 @@ class AuthenticationService {
         // Token is not set and authentication failed. Emergency.
         return NULL;
       }
-    } else {
+    }
+    else {
       return $this->session->get(self::TOKEN_KEY);
     }
     return NULL;
@@ -107,7 +108,7 @@ class AuthenticationService {
       }
     }
 
-    return false;
+    return FALSE;
   }
 
   /**

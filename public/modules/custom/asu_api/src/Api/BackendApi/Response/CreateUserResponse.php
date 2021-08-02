@@ -31,18 +31,18 @@ class CreateUserResponse extends Response {
   /**
    * Constructor.
    *
-   * @param object $content
+   * @param array $content
    *   Contents of the response.
    */
-  public function __construct(\stdClass $content) {
-    if (!$content->profile_id) {
+  public function __construct(array $content) {
+    if (!$content['profile_id']) {
       throw new ResponseParameterException('No profile id returned on user creation');
     }
-    if (!$content->password) {
+    if (!$content['password']) {
       throw new ResponseParameterException('No password returned on user creation');
     }
-    $this->profileId = $content->profile_id;
-    $this->password = $content->password;
+    $this->profileId = $content['profile_id'];
+    $this->password = $content['password'];
   }
 
   /**
@@ -80,7 +80,7 @@ class CreateUserResponse extends Response {
     if (!self::requestOk($response)) {
       throw new RequestException('Bad status code: ' . $response->getStatusCode());
     }
-    $content = json_decode($response->getBody()->getContents(), FALSE);
+    $content = json_decode($response->getBody()->getContents(), TRUE);
     return new self($content);
   }
 
