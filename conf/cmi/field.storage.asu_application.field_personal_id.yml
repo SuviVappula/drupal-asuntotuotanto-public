@@ -9,7 +9,7 @@ field_name: field_personal_id
 entity_type: asu_application
 type: string
 settings:
-  max_length: 4
+  max_length: 5
   is_ascii: false
   case_sensitive: false
 module: core
