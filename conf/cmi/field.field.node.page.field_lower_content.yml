@@ -8,6 +8,7 @@ dependencies:
     - paragraphs.paragraphs_type.accordion
     - paragraphs.paragraphs_type.columns
     - paragraphs.paragraphs_type.content_cards
+    - paragraphs.paragraphs_type.cta_block
     - paragraphs.paragraphs_type.from_library
     - paragraphs.paragraphs_type.gallery
     - paragraphs.paragraphs_type.image
@@ -41,6 +42,7 @@ settings:
       list_of_links: list_of_links
       content_cards: content_cards
       from_library: from_library
+      cta_block: cta_block
       steps_list: steps_list
     target_bundles_drag_drop:
       accordion:
@@ -58,6 +60,9 @@ settings:
       content_cards:
         enabled: true
         weight: -23
+      cta_block:
+        enabled: true
+        weight: 29
       from_library:
         enabled: true
         weight: 21
