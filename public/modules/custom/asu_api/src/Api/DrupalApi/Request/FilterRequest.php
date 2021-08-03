@@ -36,7 +36,7 @@ class FilterRequest extends Request {
     if (!static::PATH) {
       throw new \LogicException('Missing path.');
     }
-    return $this->language . '/' . static::PATH;
+    return $this->language . static::PATH;
   }
 
   /**
