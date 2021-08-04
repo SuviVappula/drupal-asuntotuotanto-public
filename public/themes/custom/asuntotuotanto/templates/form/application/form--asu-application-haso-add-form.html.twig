@@ -138,7 +138,10 @@
         Enter your ID's last 4 characters.
         {% endtrans %}
       </p>
-      {{ element.field_personal_id }}
+      <div class="application-form__personal-id">
+        <p aria-label="{% trans %} The beginning of social security number {% endtrans %} {{ element['#pid_start'] }}">{{ element['#pid_start'] }}</p>
+          {{ element.field_personal_id }}
+      </div>
     </section>
     <section class="application-form__section">
       <h2>

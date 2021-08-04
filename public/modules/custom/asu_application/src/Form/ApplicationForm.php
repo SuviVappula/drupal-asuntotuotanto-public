@@ -25,10 +25,10 @@ class ApplicationForm extends ContentEntityForm {
     $parameters = \Drupal::routeMatch()->getParameters();
 
     $project_id = $this->entity->get('project_id')->value;
-    $user = $this->entity->getOwner();
+    $user = User::load($this->entity->getOwner()->id());
     $application_type_id = $this->entity->bundle();
     $form['#project_id'] = $project_id;
-
+    $bday = $user->date_of_birth->value;
     try {
       $project_data = $this->getApartments($project_id);
     }
@@ -45,6 +45,7 @@ class ApplicationForm extends ContentEntityForm {
           'uid' => \Drupal::currentUser()->id(),
           'project_id' => $project_id,
         ]);
+
       if (!empty($applications)) {
         $url = reset($applications)->toUrl()->toString();
         (new RedirectResponse($url.'/edit'))->send();
@@ -55,9 +56,13 @@ class ApplicationForm extends ContentEntityForm {
     // Pre-create the application if user comes to the form for the first time.
     if($this->entity->isNew()){
       $project_id = $parameters->get('project_id');
-      $user = User::load(\Drupal::currentUser()->id());
       /** @var \Drupal\asu_application\Entity\ApplicationType $application */
       $application = $parameters->get('application_type');
+      if($this->entity->hasField('field_personal_id')){
+        $personalIdDivider = $this->getPersonalIdDivider($bday);
+        $this->entity->set('field_personal_id', $personalIdDivider);
+      }
+
       $this->entity->save();
       $url = $this->entity->toUrl()->toString();
       (new RedirectResponse($url.'/edit'))->send();
@@ -82,7 +87,7 @@ class ApplicationForm extends ContentEntityForm {
     // Set the apartments as a value to the form array.
     $form['#apartment_values'] = $apartments;
     $form['#project_name'] = $projectName;
-
+    $form['#pid_start'] = $this->dateToPersonalId($bday);
     $form = parent::buildForm($form, $form_state);
 
     $form['#title'] = $this->t('Application for') . ' ' . $projectName;
@@ -254,6 +259,20 @@ class ApplicationForm extends ContentEntityForm {
       ];
     }
     $entity->apartment->setValue($apartments);
+  }
+
+  private function getPersonalIdDivider(string $dateString){
+    $dividers = ['18' => 'A', '19' => '-', '20' => 'A'];
+    $year = (new \DateTime($dateString))->format('Y');
+    return $dividers[substr($year,0,2)];
+  }
+
+  private function dateToPersonalId(string $dateString){
+    $date = new \DateTime($dateString);
+    $day = $date->format('d');
+    $month = $date->format('m');
+    $year = $date->format('y');
+    return $day.$month.$year;
   }
 
 }
