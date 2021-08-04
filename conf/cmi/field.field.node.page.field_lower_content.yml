@@ -13,6 +13,7 @@ dependencies:
     - paragraphs.paragraphs_type.gallery
     - paragraphs.paragraphs_type.image
     - paragraphs.paragraphs_type.list_of_links
+    - paragraphs.paragraphs_type.showcase_block
     - paragraphs.paragraphs_type.steps_list
     - paragraphs.paragraphs_type.text
   module:
@@ -44,6 +45,7 @@ settings:
       from_library: from_library
       cta_block: cta_block
       steps_list: steps_list
+      showcase_block: showcase_block
     target_bundles_drag_drop:
       accordion:
         enabled: true
@@ -99,6 +101,12 @@ settings:
       remote_video:
         weight: 39
         enabled: false
+      showcase:
+        weight: 44
+        enabled: false
+      showcase_block:
+        enabled: true
+        weight: 45
       stacked_text_blocks_with_image:
         weight: 40
         enabled: false

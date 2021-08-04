@@ -498,3 +498,18 @@ function asuntotuotanto_preprocess_user(&$variables){
     $variables['content'][$field_name] = $store->get($field_name);
   }
 }
+
+/**
+ * Implements template_preprocess_paragraph().
+ */
+function asuntotuotanto_preprocess_paragraph(array &$variables) {
+  /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+  $paragraph = $variables['paragraph'];
+  $paragraph_type = $paragraph->getType();
+
+  if ($paragraph_type == 'showcase_block') {
+    if ($paragraph->hasField('field_showcases')) {
+      $variables['showcases_count'] = count($paragraph->get('field_showcases')->getValue());
+    }
+  }
+}

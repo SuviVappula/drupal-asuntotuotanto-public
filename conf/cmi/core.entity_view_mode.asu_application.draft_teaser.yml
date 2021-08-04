@@ -5,6 +5,6 @@ dependencies:
   module:
     - asu_application
 id: asu_application.draft_teaser
-label: Draft Teaser
+label: 'Draft Teaser'
 targetEntityType: asu_application
 cache: true
