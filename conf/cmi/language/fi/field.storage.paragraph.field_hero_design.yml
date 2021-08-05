@@ -16,3 +16,5 @@ settings:
       label: Taustakuva
     6:
       label: Diagonaalinen
+    8:
+      label: 'Erotetut otsikko ja kuvaus tekstit koros-aallolla'
