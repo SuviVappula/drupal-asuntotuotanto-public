@@ -73,8 +73,6 @@ class Store {
           $this->store->set(array_keys($this->config)[$fieldNumber], $value);
         }
       }
-      // @todo Foreach skips "address" key.
-      $this->store->set('address', $data['address']);
     }
   }
 

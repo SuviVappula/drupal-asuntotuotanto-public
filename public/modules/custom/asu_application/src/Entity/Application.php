@@ -121,11 +121,7 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
    * @return bool
    */
   public function hasAdditionalApplicant(): bool {
-    $applicants = $this->getApplicants();
-    if (!empty($applicants)) {
-      return $applicants[0]['has_additional_applicant'] ? TRUE : FALSE;
-    }
-    return FALSE;
+    return $this->applicant->isEmpty() ? FALSE : TRUE;
   }
 
   /**

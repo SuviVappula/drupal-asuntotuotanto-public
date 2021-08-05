@@ -31,6 +31,7 @@ class ApplicantWidget extends WidgetBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Add additional applicant'),
       '#attributes' => ['id' => 'has-additional-applicant'],
+      '#default_value' => !$items->isEmpty()
     ];
 
     $element['applicant_prefix'] = [
@@ -63,6 +64,7 @@ class ApplicantWidget extends WidgetBase {
     $element['first_name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('First name'),
+      '#maxlength' => 50,
       '#size' => 100,
       '#default_value' => isset($items->getValue()[$delta]['first_name']) ? $items->getValue()[$delta]['first_name'] : '',
     ];
@@ -70,6 +72,7 @@ class ApplicantWidget extends WidgetBase {
     $element['last_name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Last name'),
+      '#maxlength' => 50,
       '#size' => 100,
       '#default_value' => isset($items->getValue()[$delta]['last_name']) ? $items->getValue()[$delta]['last_name'] : '',
     ];
@@ -81,16 +84,26 @@ class ApplicantWidget extends WidgetBase {
       '#default_value' => isset($items->getValue()[$delta]['date_of_birth']) ? $items->getValue()[$delta]['date_of_birth'] : '',
     ];
 
-    $element['street_address'] = [
+    $element['personal_id'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Personal id'),
+      '#description' => $this->t('last 5 characters'),
+      '#minlength' => 5,
+      '#maxlength' => 5,
+      '#default_value' => isset($items->getValue()[$delta]['phone_number']) ? $items->getValue()[$delta]['phone_number'] : '',
+    ];
+
+    $element['address'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Street address'),
-      '#size' => 100,
-      '#default_value' => isset($items->getValue()[$delta]['street_address']) ? $items->getValue()[$delta]['street_address'] : '',
+      '#maxlength' => 99,
+      '#default_value' => isset($items->getValue()[$delta]['address']) ? $items->getValue()[$delta]['address'] : '',
     ];
 
     $element['postal_code'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Postal code'),
+      '#maxlength' => 5,
       '#size' => 50,
       '#default_value' => isset($items->getValue()[$delta]['postal_code']) ? $items->getValue()[$delta]['postal_code'] : '',
     ];
@@ -98,20 +111,23 @@ class ApplicantWidget extends WidgetBase {
     $element['city'] = [
       '#type' => 'textfield',
       '#title' => $this->t('City'),
+      '#maxlength' => 50,
       '#size' => 50,
       '#default_value' => isset($items->getValue()[$delta]['city']) ? $items->getValue()[$delta]['city'] : '',
     ];
 
-    $element['phone_number'] = [
+    $element['phone'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Phone number'),
+      '#maxlength' => 20,
       '#size' => 20,
-      '#default_value' => isset($items->getValue()[$delta]['phone_number']) ? $items->getValue()[$delta]['phone_number'] : '',
+      '#default_value' => isset($items->getValue()[$delta]['phone']) ? $items->getValue()[$delta]['phone'] : '',
     ];
 
     $element['email'] = [
       '#type' => 'email',
       '#title' => $this->t('Email'),
+      '#maxlength' => 99,
       '#size' => 50,
       '#default_value' => isset($items->getValue()[$delta]['email']) ? $items->getValue()[$delta]['email'] : '',
     ];
