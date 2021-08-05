@@ -6,7 +6,6 @@ use Drupal\asu_api\Api\ElasticSearchApi\Request\ProjectApartmentsRequest;
 use Drupal\asu_application\Entity\Application;
 use Drupal\asu_application\Event\ApplicationEvent;
 use Drupal\Core\Entity\ContentEntityForm;
-use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\user\Entity\User;
@@ -23,6 +22,10 @@ class ApplicationForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    if($this->entity->hasField('field_locked') && $this->entity->field_locked->value === '1'){
+      // @todo Redirect to applications page.
+    }
+
     $parameters = \Drupal::routeMatch()->getParameters();
 
     $project_id = $this->entity->get('project_id')->value;
@@ -111,25 +114,34 @@ class ApplicationForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    $this->updateEntityFieldsWithUserInput($form_state);
     $values = $form_state->getUserInput();
+
+    $this->updateEntityFieldsWithUserInput($form_state);
     $this->updateApartments($form, $this->entity, $values['apartment']);
 
     parent::save($form, $form_state);
+    // Validate additional applicant.
+    if ($values['applicant'][0]['has_additional_applicant'] === "1") {
+      foreach ($values['applicant'][0] as $key => $value) {
+        if(!isset($value) || !$value || $value === ''){
+          $this->messenger()->addError($this->t('You must fill all fields for additional applicant before application can be submitted'));
+          return;
+        }
+      }
+    }
 
-    $project_name = $form['#project_name'];
+    try {
+      $event = new ApplicationEvent($this->entity->id(), $form['#project_name']);
+      $event_dispatcher = \Drupal::service('event_dispatcher');
+      $event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
+    } catch(\Exception $e){
 
-    $event = new ApplicationEvent($this->entity->id(), $project_name);
-    $event_dispatcher = \Drupal::service('event_dispatcher');
-    $event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
+    }
 
-    $message_params = [
-      '%entity_label' => $this->entity->id(),
-      '%content_entity_label' => $this->entity->getEntityType()->getLabel()->render(),
-      '%bundle_label' => $this->entity->bundle->entity->label(),
-    ];
+    $this->entity->set('field_locked', 1);
+    $this->entity->save();
 
-    $this->messenger()->addStatus($this->t('Saved the %bundle_label - %content_entity_label entity:  %entity_label.', $message_params));
+    $this->messenger()->addStatus($this->t('Your application has been submitted successfully. You can no longer edit the applicaiton.'));
     $content_entity_id = $this->entity->getEntityType()->id();
     $form_state->setRedirect("entity.{$content_entity_id}.canonical", [$content_entity_id => $this->entity->id()]);
   }
@@ -314,5 +326,4 @@ class ApplicationForm extends ContentEntityForm {
     $year = $date->format('y');
     return $day.$month.$year;
   }
-
 }

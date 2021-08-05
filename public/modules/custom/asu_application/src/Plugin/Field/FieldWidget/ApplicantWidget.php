@@ -90,7 +90,7 @@ class ApplicantWidget extends WidgetBase {
       '#description' => $this->t('last 5 characters'),
       '#minlength' => 5,
       '#maxlength' => 5,
-      '#default_value' => isset($items->getValue()[$delta]['phone_number']) ? $items->getValue()[$delta]['phone_number'] : '',
+      '#default_value' => isset($items->getValue()[$delta]['personal_id']) ? $items->getValue()[$delta]['personal_id'] : '',
     ];
 
     $element['address'] = [
