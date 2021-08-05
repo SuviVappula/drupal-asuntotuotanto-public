@@ -18,7 +18,7 @@ external_data_map:
   address:
     title: "Address"
     type: "textfield"
-    external_field: "address"
+    external_field: "street_address"
   city:
     title: "City"
     type: "textfield"

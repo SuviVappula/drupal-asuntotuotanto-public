@@ -6,6 +6,7 @@ use Drupal\asu_api\Api\ElasticSearchApi\Request\ProjectApartmentsRequest;
 use Drupal\asu_application\Entity\Application;
 use Drupal\asu_application\Event\ApplicationEvent;
 use Drupal\Core\Entity\ContentEntityForm;
+use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\user\Entity\User;
@@ -92,36 +93,45 @@ class ApplicationForm extends ContentEntityForm {
 
     $form['#title'] = $this->t('Application for') . ' ' . $projectName;
 
+    $form['actions']['draft'] = [
+      '#type' => 'submit',
+      '#value' => t('Save as a draft'),
+      '#submit' => ['::saveAsDraft'],
+    ];
     return $form;
+  }
+
+  public function saveAsDraft(array $form, FormStateInterface $form_state){
+    $this->updateEntityFieldsWithUserInput($form_state);
+    parent::save($form, $form_state);
+    $this->messenger()->addMessage($this->t('The application has been saved. You must submit the application before the application time expires.'));
   }
 
   /**
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    if($form_state->getTriggeringElement()['#type'] == 'select'){
-      parent::save($form, $form_state);
-      return $this->entity;
-    }
+    $this->updateEntityFieldsWithUserInput($form_state);
+    $values = $form_state->getUserInput();
+    $this->updateApartments($form, $this->entity, $values['apartment']);
 
-    $entity = &$this->entity;
+    parent::save($form, $form_state);
 
-    $status = parent::save($form, $form_state);
+    $project_name = $form['#project_name'];
 
-    $project_name = $form['project_name'];
-    $event = new ApplicationEvent($entity->id(), $project_name);
+    $event = new ApplicationEvent($this->entity->id(), $project_name);
     $event_dispatcher = \Drupal::service('event_dispatcher');
     $event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
-    $this->messenger()->addStatus($this->t('Created the %bundle_label - %content_entity_label entity:  %entity_label.', $message_params));
 
     $message_params = [
-      '%entity_label' => $entity->id(),
-      '%content_entity_label' => $entity->getEntityType()->getLabel()->render(),
-      '%bundle_label' => $entity->bundle->entity->label(),
+      '%entity_label' => $this->entity->id(),
+      '%content_entity_label' => $this->entity->getEntityType()->getLabel()->render(),
+      '%bundle_label' => $this->entity->bundle->entity->label(),
     ];
+
     $this->messenger()->addStatus($this->t('Saved the %bundle_label - %content_entity_label entity:  %entity_label.', $message_params));
-    $content_entity_id = $entity->getEntityType()->id();
-    $form_state->setRedirect("entity.{$content_entity_id}.canonical", [$content_entity_id => $entity->id()]);
+    $content_entity_id = $this->entity->getEntityType()->id();
+    $form_state->setRedirect("entity.{$content_entity_id}.canonical", [$content_entity_id => $this->entity->id()]);
   }
 
   /**
@@ -261,12 +271,42 @@ class ApplicationForm extends ContentEntityForm {
     $entity->apartment->setValue($apartments);
   }
 
+  /**
+   * Update the entity with input fields.
+   *
+   * @param FormStateInterface $form_state
+   */
+  private function updateEntityFieldsWithUserInput(FormStateInterface $form_state){
+    foreach ($form_state->getUserInput() as $key => $value) {
+      if (in_array($key, $form_state->getCleanValueKeys())) {
+        continue;
+      }
+      if($this->entity->hasField($key)) {
+        $this->entity->set($key, $value);
+      }
+    }
+  }
+
+  /**
+   * Figure out the divider in henkilötunnus.
+   *
+   * @param string $dateString
+   * @return string
+   * @throws \Exception
+   */
   private function getPersonalIdDivider(string $dateString){
-    $dividers = ['18' => 'A', '19' => '-', '20' => 'A'];
+    $dividers = ['18' => '+', '19' => '-', '20' => 'A'];
     $year = (new \DateTime($dateString))->format('Y');
     return $dividers[substr($year,0,2)];
   }
 
+  /**
+   * Turn date into henkilötunnus format "ddmmyy".
+   *
+   * @param string $dateString
+   * @return string
+   * @throws \Exception
+   */
   private function dateToPersonalId(string $dateString){
     $date = new \DateTime($dateString);
     $day = $date->format('d');
