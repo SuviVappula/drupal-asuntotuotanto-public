@@ -39,12 +39,27 @@ class AskoApplicationRequest {
    * @throws \Exception
    */
   public function toArray(): array {
-    $date = new \DateTime($this->user->field_date_of_birth->value);
+
+
+    $store = \Drupal::service('asu_user.tempstore');
+    $fields = \Drupal::config('asu_user.external_user_fields')->get('external_data_map');
+    $variables = ['content' => []];
+    foreach($fields as $field_name => $field){
+      $variables['content'][$field_name] = $store->get($field_name);
+    }
+
+    $date = new \DateTime($this->user->date_of_birth->value);
+    if($this->application->field_personal_id->value && strlen($this->application->field_personal_id->value) === 5){
+      $personal_id = substr($this->application->field_personal_id->value,1,4);
+    } else {
+      $personal_id = $this->application->field_personal_id->value;
+    }
+
     $data = [
       'etunimi' => $this->user->first_name->value,
       'sukunimi' => $this->user->last_name->value,
       'syntyma-aika' => $date->format('d.m.Y'),
-      'hetuloppu' => $this->application->field_personal_id->value,
+      'hetuloppu' => $personal_id,
       'osoite' => $this->user->address->value,
       'postinumero' => $this->user->postal_code->value,
       'postitoimipaikka' => $this->user->city->value,
@@ -72,17 +87,18 @@ class AskoApplicationRequest {
     ];
 
     if ($this->application->hasAdditionalApplicant()) {
-      $applicant = $this->getAdditionalApplicant();
-      $data['etunimi2'] = $applicant['first_name'];
-      $data['sukunimi2'] = $applicant['last_name'];
-      $date2 = new \DateTime($applicant['date_of_birth']);
-      $data['syntyma-aika2'] = $date2->format('d.m.Y');
-      $data['hetuloppu2'] = $this->application->field_personal_id->value;
-      $data['osoite2'] = $applicant['street_address'];
-      $data['postinumero2'] = $applicant['postal_code'];
-      $data['postitoimipaikka2'] = $applicant['city'];
-      $data['puhelin2'] = $applicant['phone_number'];
-      $data['email2'] = $applicant['email'];
+      if ($applicant = $this->getAdditionalApplicant()) {
+        $data['etunimi2'] = $applicant['first_name'];
+        $data['sukunimi2'] = $applicant['last_name'];
+        $date2 = new \DateTime($applicant['date_of_birth']);
+        $data['syntyma-aika2'] = $date2->format('d.m.Y');
+        $data['hetuloppu2'] = $this->personalIdWithoutDivider($applicant['personal_id']);
+        $data['osoite2'] = $applicant['address'];
+        $data['postinumero2'] = $applicant['postal_code'];
+        $data['postitoimipaikka2'] = $applicant['city'];
+        $data['puhelin2'] = $applicant['phone'];
+        $data['email2'] = $applicant['email'];
+      }
     }
 
     if ($this->application->bundle() == 'hitas') {
@@ -149,7 +165,7 @@ class AskoApplicationRequest {
    *   Boolean as enum.
    */
   private function userIsHitasOwner() : string {
-    return $this->application->field_hitas_owner->value;
+    return $this->application->field_hitas_owner->value ? $this::YES : $this::NO;
   }
 
   /**
@@ -172,8 +188,11 @@ class AskoApplicationRequest {
     $apartments = $this->application->getApartments();
     $values = [];
     foreach ($apartments as $key => $apartment) {
-      $array = explode(' ', $apartment->information);
-      $values[] = end($array);
+      if ($apartment->id == 0) {
+        continue;
+      }
+      $array = explode('|', $apartment->information);
+      $values[] = trim(reset($array));
     }
     return implode(',', $values);
   }
@@ -190,6 +209,14 @@ class AskoApplicationRequest {
       return $applicants[0];
     }
     return FALSE;
+  }
+
+  /**
+   * @param string $personalId
+   * @return false|string
+   */
+  private function personalIdWithoutDivider(string $personalId){
+    return substr($personalId, 1,4);
   }
 
 }
