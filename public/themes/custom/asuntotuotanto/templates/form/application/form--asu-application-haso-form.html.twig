@@ -157,7 +157,9 @@
         {% endtrans %}
       </h2>
       <p>
-        In order to apply for HASO aparment you need right of residence number
+        {% trans %}
+          In order to apply for HASO aparment you need right of residence number
+        {% endtrans %}
       </p>
       {{ element.field_right_of_residence_number }}
     </section>
@@ -167,7 +169,11 @@
           Previous ownership
         {% endtrans %}
       </h2>
-      <p>I currently own an HASO apartment but I'm planning to let it go. </p>
+      <p>
+        {% trans %}
+          I currently own an HASO apartment but I'm planning to let it go.
+        {% endtrans %}
+      </p>
       {{ element.field_aso_changer }}
     </section>
     <section class="application-form__section">
