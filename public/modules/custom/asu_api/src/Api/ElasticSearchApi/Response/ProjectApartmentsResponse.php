@@ -79,7 +79,7 @@ class ProjectApartmentsResponse {
         'application_end_time' => $this->apartments[0]['_source']['project_application_end_time'],
         'project_main_image_url' => $this->apartments[0]['_source']['project_main_image_url'],
         'project_district' => $this->apartments[0]['_source']['project_district'],
-      ]
+      ],
     ];
   }
 

@@ -71,6 +71,9 @@ class RequestHandler {
    */
   public function post(string $endpoint, array $options): ResponseInterface {
     $url = $this->apiUrl . $endpoint;
+    if (is_array($this->clientOptions) && !empty($this->clientOptions)) {
+      $options += $this->clientOptions;
+    }
     return $this->client->post($url, $options);
   }
 
