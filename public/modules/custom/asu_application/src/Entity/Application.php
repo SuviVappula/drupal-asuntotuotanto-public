@@ -130,7 +130,7 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
    * @return bool
    */
   public function isLocked(): bool {
-    return $this->field_locked->value ? true : false;
+    return $this->field_locked->value ? TRUE : FALSE;
   }
 
   /**

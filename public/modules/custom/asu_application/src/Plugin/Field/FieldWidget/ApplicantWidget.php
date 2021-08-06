@@ -31,7 +31,7 @@ class ApplicantWidget extends WidgetBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Add additional applicant'),
       '#attributes' => ['id' => 'has-additional-applicant'],
-      '#default_value' => !$items->isEmpty()
+      '#default_value' => !$items->isEmpty(),
     ];
 
     $element['applicant_prefix'] = [
@@ -46,8 +46,8 @@ class ApplicantWidget extends WidgetBase {
 
     $element['application_information_tooltip'] = [
       '#type' => 'markup',
-      '#markup' => '<p class="application-form__application-information-tooltip">'. $this->t('
-      This applicant cannot complete another application for the same item.') .'</p>',
+      '#markup' => '<p class="application-form__application-information-tooltip">' . $this->t('
+      This applicant cannot complete another application for the same item.') . '</p>',
     ];
 
     $element['application_information_text'] = [

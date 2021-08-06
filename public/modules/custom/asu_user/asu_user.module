@@ -60,7 +60,7 @@ function asu_authenticate_user(UserInterface $account) {
   try {
     asu_get_user_fields($user);
   }
-  catch(\Exception $e){
+  catch (\Exception $e) {
     \Drupal::messenger()->addMessage('Unable to authenticate with backend.');
   }
 }
@@ -115,7 +115,7 @@ function asu_user_form_alter(&$form, &$form_state, $form_id) {
     $fieldMap = \Drupal::config('asu_user.external_user_fields')->get('external_data_map');
 
     // If a field value is missing, fetch user information.
-    if(!$store->get(array_keys($fieldMap)[0])){
+    if (!$store->get(array_keys($fieldMap)[0])) {
       asu_get_user_fields($user);
     }
     foreach ($fieldMap as $field => $field_data) {
@@ -126,7 +126,7 @@ function asu_user_form_alter(&$form, &$form_state, $form_id) {
         '#default_value' => $default_value,
       ];
     }
-    if($user->hasRole('customer')){
+    if ($user->hasRole('customer')) {
       $form['actions']['submit']['#submit'][] = 'user_edit_submit';
     }
     $form['actions']['submit']['#submit'][] = '_asu_user_user_edit_form_submit';
@@ -148,12 +148,12 @@ function user_edit_submit($form, &$form_state) {
     return;
   }
 
-  try{
+  try {
     $token = $backendApi
       ->getAuthenticationService()
       ->handleAuthentication($user);
   }
-  catch(\Exception $e){
+  catch (\Exception $e) {
   }
 
   if ($token) {
@@ -213,6 +213,9 @@ function asu_user_field_widget_info_alter(array &$info) {
   $info['string_textfield']['field_types'][] = 'asu_external_string';
 }
 
+/**
+ *
+ */
 function asu_get_user_fields($account) {
   $backendApi = \Drupal::service('asu_api.backendapi');
   /** @var \Drupal\asu_user\Store $store */

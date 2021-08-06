@@ -22,7 +22,7 @@ class ApplicationForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    if($this->entity->hasField('field_locked') && $this->entity->field_locked->value === '1'){
+    if ($this->entity->hasField('field_locked') && $this->entity->field_locked->value === '1') {
       // @todo Redirect to applications page.
     }
 
@@ -52,24 +52,24 @@ class ApplicationForm extends ContentEntityForm {
 
       if (!empty($applications)) {
         $url = reset($applications)->toUrl()->toString();
-        (new RedirectResponse($url.'/edit'))->send();
+        (new RedirectResponse($url . '/edit'))->send();
         return $form;
       }
     }
 
     // Pre-create the application if user comes to the form for the first time.
-    if($this->entity->isNew()){
+    if ($this->entity->isNew()) {
       $project_id = $parameters->get('project_id');
       /** @var \Drupal\asu_application\Entity\ApplicationType $application */
       $application = $parameters->get('application_type');
-      if($this->entity->hasField('field_personal_id')){
+      if ($this->entity->hasField('field_personal_id')) {
         $personalIdDivider = $this->getPersonalIdDivider($bday);
         $this->entity->set('field_personal_id', $personalIdDivider);
       }
 
       $this->entity->save();
       $url = $this->entity->toUrl()->toString();
-      (new RedirectResponse($url.'/edit'))->send();
+      (new RedirectResponse($url . '/edit'))->send();
       return $form;
     }
 
@@ -104,7 +104,10 @@ class ApplicationForm extends ContentEntityForm {
     return $form;
   }
 
-  public function saveAsDraft(array $form, FormStateInterface $form_state){
+  /**
+   *
+   */
+  public function saveAsDraft(array $form, FormStateInterface $form_state) {
     $this->updateEntityFieldsWithUserInput($form_state);
     parent::save($form, $form_state);
     $this->messenger()->addMessage($this->t('The application has been saved. You must submit the application before the application time expires.'));
@@ -123,7 +126,7 @@ class ApplicationForm extends ContentEntityForm {
     // Validate additional applicant.
     if ($values['applicant'][0]['has_additional_applicant'] === "1") {
       foreach ($values['applicant'][0] as $key => $value) {
-        if(!isset($value) || !$value || $value === ''){
+        if (!isset($value) || !$value || $value === '') {
           $this->messenger()->addError($this->t('You must fill all fields for additional applicant before application can be submitted'));
           return;
         }
@@ -134,7 +137,8 @@ class ApplicationForm extends ContentEntityForm {
       $event = new ApplicationEvent($this->entity->id(), $form['#project_name']);
       $event_dispatcher = \Drupal::service('event_dispatcher');
       $event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
-    } catch(\Exception $e){
+    }
+    catch (\Exception $e) {
 
     }
 
@@ -222,19 +226,19 @@ class ApplicationForm extends ContentEntityForm {
    * Ajax callback function to presave the form.
    *
    * @param array $form
-   * @param FormStateInterface $form_state
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
    */
   public function saveApplicationCallback(array &$form, FormStateInterface $form_state) {
     $triggerName = $form_state->getTriggeringElement()['#name'];
-    $trigger = (int)preg_replace('/[^0-9]/', '', $triggerName);
+    $trigger = (int) preg_replace('/[^0-9]/', '', $triggerName);
     $userInput = $form_state->getUserInput();
 
-    /** @var Application $entity */
+    /** @var \Drupal\asu_application\Entity\Application $entity */
     $entity = $form_state->getFormObject()->entity;
     $values = $form_state->getUserInput();
 
-    // Delete
-    if(
+    // Delete.
+    if (
       strpos($triggerName, 'apartment') !== FALSE &&
       $form_state->getUserInput()['apartment'][$trigger]['id'] === "0"
     ) {
@@ -243,7 +247,7 @@ class ApplicationForm extends ContentEntityForm {
 
       // Save apartment values to database.
       $this->updateApartments($form, $entity, $values['apartment']);
-      // Update "has_children" value
+      // Update "has_children" value.
       $entity->set('has_children', $values['has_children']['value'] ?? 0);
       $entity->save();
       return $form['apartment'];
@@ -251,7 +255,7 @@ class ApplicationForm extends ContentEntityForm {
 
     // Save apartment values to database.
     $this->updateApartments($form, $entity, $values['apartment']);
-    // Update "has_children" value
+    // Update "has_children" value.
     $entity->set('has_children', $values['has_children']['value'] ?? 0);
     $entity->save();
     return $form['apartment'];
@@ -267,17 +271,17 @@ class ApplicationForm extends ContentEntityForm {
   private function updateApartments(array $form, Application $entity, array $apartmentValues) {
     $apartments = [];
     $sorted = [];
-    foreach($apartmentValues as $apartment){
+    foreach ($apartmentValues as $apartment) {
       $sorted[$apartment['_weight']] = $apartment;
     }
     ksort($sorted);
     foreach ($sorted as $value) {
-      if($value['id'] == 0 || !$value['id']) {
+      if ($value['id'] == 0 || !$value['id']) {
         continue;
       }
       $apartments[] = [
         'id' => $value['id'],
-        'information' => $form['#apartment_values'][$value['id']]
+        'information' => $form['#apartment_values'][$value['id']],
       ];
     }
     $entity->apartment->setValue($apartments);
@@ -286,14 +290,14 @@ class ApplicationForm extends ContentEntityForm {
   /**
    * Update the entity with input fields.
    *
-   * @param FormStateInterface $form_state
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
    */
-  private function updateEntityFieldsWithUserInput(FormStateInterface $form_state){
+  private function updateEntityFieldsWithUserInput(FormStateInterface $form_state) {
     foreach ($form_state->getUserInput() as $key => $value) {
       if (in_array($key, $form_state->getCleanValueKeys())) {
         continue;
       }
-      if($this->entity->hasField($key)) {
+      if ($this->entity->hasField($key)) {
         $this->entity->set($key, $value);
       }
     }
@@ -303,27 +307,32 @@ class ApplicationForm extends ContentEntityForm {
    * Figure out the divider in henkilötunnus.
    *
    * @param string $dateString
+   *
    * @return string
+   *
    * @throws \Exception
    */
-  private function getPersonalIdDivider(string $dateString){
+  private function getPersonalIdDivider(string $dateString) {
     $dividers = ['18' => '+', '19' => '-', '20' => 'A'];
     $year = (new \DateTime($dateString))->format('Y');
-    return $dividers[substr($year,0,2)];
+    return $dividers[substr($year, 0, 2)];
   }
 
   /**
    * Turn date into henkilötunnus format "ddmmyy".
    *
    * @param string $dateString
+   *
    * @return string
+   *
    * @throws \Exception
    */
-  private function dateToPersonalId(string $dateString){
+  private function dateToPersonalId(string $dateString) {
     $date = new \DateTime($dateString);
     $day = $date->format('d');
     $month = $date->format('m');
     $year = $date->format('y');
-    return $day.$month.$year;
+    return $day . $month . $year;
   }
+
 }
