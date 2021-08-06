@@ -40,18 +40,18 @@ class AskoApplicationRequest {
    */
   public function toArray(): array {
 
-
     $store = \Drupal::service('asu_user.tempstore');
     $fields = \Drupal::config('asu_user.external_user_fields')->get('external_data_map');
     $variables = ['content' => []];
-    foreach($fields as $field_name => $field){
+    foreach ($fields as $field_name => $field) {
       $variables['content'][$field_name] = $store->get($field_name);
     }
 
     $date = new \DateTime($this->user->date_of_birth->value);
-    if($this->application->field_personal_id->value && strlen($this->application->field_personal_id->value) === 5){
-      $personal_id = substr($this->application->field_personal_id->value,1,4);
-    } else {
+    if ($this->application->field_personal_id->value && strlen($this->application->field_personal_id->value) === 5) {
+      $personal_id = substr($this->application->field_personal_id->value, 1, 4);
+    }
+    else {
       $personal_id = $this->application->field_personal_id->value;
     }
 
@@ -215,8 +215,8 @@ class AskoApplicationRequest {
    * @param string $personalId
    * @return false|string
    */
-  private function personalIdWithoutDivider(string $personalId){
-    return substr($personalId, 1,4);
+  private function personalIdWithoutDivider(string $personalId) {
+    return substr($personalId, 1, 4);
   }
 
 }
