@@ -13,7 +13,7 @@ use Drupal\taxonomy\Entity\Term;
  *
  * @throws \Drupal\Core\Entity\EntityStorageException
  */
-function asu_apartment_search_update_9001() {
+function asu_apartment_search_update_8001() {
   $menu_name = 'main';
 
   $hitas = MenuLinkContent::create([
@@ -136,7 +136,7 @@ function asu_apartment_search_update_9001() {
 /**
  * Add taxonomy terms to News category vocabularity automatically.
  */
-function asu_apartment_search_update_9002() {
+function asu_apartment_search_update_8002() {
   $vocabularity = 'news_category';
 
   $term_common = Term::create([
