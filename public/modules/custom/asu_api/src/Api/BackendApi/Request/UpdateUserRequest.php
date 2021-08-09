@@ -19,6 +19,8 @@ class UpdateUserRequest extends Request {
 
   private array $fields;
 
+  private UserInterface $user;
+
   /**
    * Constructor.
    */

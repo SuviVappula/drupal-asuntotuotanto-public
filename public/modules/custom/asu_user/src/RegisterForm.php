@@ -11,7 +11,7 @@ use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\user\RegisterForm as BaseForm;
 
@@ -81,28 +81,43 @@ class RegisterForm extends BaseForm {
    * {@inheritDoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    parent::save($form, $form_state);
-    $store = \Drupal::service('asu_user.tempstore');
-    $store->setMultipleByConfiguration($form_state->getUserInput());
-    $this->sendToBackend($form_state);
+    $account = $this->entity;
+
+    // Default login flow.
+    $pass = $account->getPassword();
+    $admin = $form_state->getValue('administer_users');
+    $notify = !$form_state->isValueEmpty('notify');
+    $account->save();
+
+    // Create user to backend.
+    $this->store->setMultipleByConfiguration($form_state->getUserInput());
+    $this->sendToBackend($account, $form_state);
+
+    $form_state->set('user', $account);
+    $form_state->setValue('uid', $account->id());
+
+    $this->logger('user')->notice('New user: %name %email.', ['%name' => $form_state->getValue('name'), '%email' => '<' . $form_state->getValue('mail') . '>', 'type' => $account->toLink($this->t('Edit'), 'edit-form')->toString()]);
+
+    // Add plain text password into user account to generate mail tokens.
+    $account->password = $pass;
+
+    user_login_finalize($account);
   }
 
   /**
    * Send the user information to Django backend.
    */
-  private function sendToBackend(FormStateInterface $form_state) {
+  private function sendToBackend(UserInterface $account, FormStateInterface $form_state) {
     /** @var \Drupal\user\UserInterface $account */
-    $account = $this->entity;
-    $user = User::load($account->id());
     try {
-      $request = new CreateUserRequest($user, $form_state);
+      $request = new CreateUserRequest($account, $form_state->getUserInput());
       $response = $this->backendApi
         ->getUserService()
         ->createUser($request);
 
-      $user->field_backend_profile = $response->getProfileId();
-      $user->field_backend_password = $response->getPassword();
-      $user->save();
+      $account->field_backend_profile = $response->getProfileId();
+      $account->field_backend_password = $response->getPassword();
+      $account->save();
     }
     catch (ResponseParameterException $e) {
       // @todo Proper logging and error handling.
@@ -114,7 +129,7 @@ class RegisterForm extends BaseForm {
     }
     catch (\Exception $e) {
       // Something unexpected happened.
-      $this->messenger()->addError('Unexpected exception: ' . $e->getMessage());
+      $this->messenger()->addError('Unexpected exception while sending user to backend: ' . $e->getMessage());
     }
   }
 

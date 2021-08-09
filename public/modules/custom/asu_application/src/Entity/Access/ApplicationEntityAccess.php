@@ -18,11 +18,13 @@ class ApplicationEntityAccess extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
+    $createPermission = 'create application';
     switch ($operation) {
       case 'view':
-        return AccessResult::allowedIf($account->id() === $entity->getOwnerId());
+        return AccessResult::allowedIf(($account->id() === $entity->getOwnerId() && $account->hasPermission($createPermission)));
+
       case 'update':
-        return AccessResult::allowedIf($account->id() === $entity->getOwnerId());
+        return AccessResult::allowedIf(($account->id() === $entity->getOwnerId() && $account->hasPermission($createPermission)));
     }
 
     return AccessResult::neutral();

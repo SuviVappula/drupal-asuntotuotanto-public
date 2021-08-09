@@ -11,25 +11,18 @@ use Drupal\user\Entity\User;
 use Drupal\asu_api\Exception\RequestException;
 use Drupal\user\UserInterface;
 use Drupal\asu_api\Api\BackendApi\Request\UserRequest;
+use Drupal\asu_api\Api\BackendApi\Request\CreateUserRequest;
 
 /**
  * Implements hook_user_login().
  */
 function asu_user_user_login(UserInterface $account) {
   if ($account->hasRole('customer')) {
-    asu_send_user_password_email($account);
+    asu_update_account_profile_field_value($account);
     asu_validate_email($account);
+    asu_send_user_password_email($account);
+    asu_create_backend_user($account);
     asu_authenticate_user($account);
-    asu_get_external_user_field_data($account);
-  }
-}
-
-/**
- * Send user an email if email is not validated.
- */
-function asu_send_user_password_email(UserInterface $account) {
-  if ($account->hasRole('customer') && $account->field_email_is_valid->value == 0) {
-    _user_mail_notify('password_reset', $account);
   }
 }
 
@@ -49,6 +42,41 @@ function asu_validate_email(UserInterface $account) {
 }
 
 /**
+ * Send user an email if email is not validated.
+ */
+function asu_send_user_password_email(UserInterface $account) {
+  if ($account->field_email_is_valid->value == 0) {
+    _user_mail_notify('password_reset', $account);
+  }
+}
+
+/**
+ * @param \Drupal\user\Entity\UserInterface $account
+ */
+function asu_create_backend_user(UserInterface $account) {
+  /** @var Drupal\asu_api\Api\BackendApi\BackendApi $backendApi */
+  $backendApi = \Drupal::service('asu_api.backendapi');
+
+  $profileId = $account->field_backend_profile->value;
+
+  if (!$profileId) {
+    \Drupal::logger('asu_user')->critical('User should already have backend profile created.');
+    try {
+      /** @var \Drupal\asu_user\Store $store */
+      $store = \Drupal::service('asu_user.tempstore');
+      $createUser = new CreateUserRequest($account, $store->getExternalUserData());
+      $response = $backendApi->getUserService()->createUser($createUser);
+      $account->field_backend_profile = $response->getProfileId();
+      $account->field_backend_password = $response->getPassword();
+      $account->save();
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('asu_user')->critical('Exception while creating backend user:' . $e->getMessage());
+    }
+  }
+}
+
+/**
  * Get auth token from backend.
  */
 function asu_authenticate_user(UserInterface $account) {
@@ -56,9 +84,8 @@ function asu_authenticate_user(UserInterface $account) {
   // User entity hasn't been updated yet most likely.
   /** @var \Drupal\asu_api\Api\BackendApi\BackendApi $backendApi */
   $backendApi = \Drupal::service('asu_api.backendapi');
-  $user = User::load($account->id());
   try {
-    asu_get_user_fields($user);
+    asu_get_user_fields($account);
   }
   catch (\Exception $e) {
     \Drupal::messenger()->addMessage('Unable to authenticate with backend.');
@@ -79,6 +106,7 @@ function asu_get_external_user_field_data(UserInterface $account) {
       ->handleAuthentication($account);
 
     if ($token) {
+      // @todo Duplicate maybe.
       asu_get_user_fields($account);
       $request = new UserRequest($account);
       $userInformationResponse = $backendApi
@@ -221,6 +249,13 @@ function asu_get_user_fields($account) {
   /** @var \Drupal\asu_user\Store $store */
   $store = \Drupal::service('asu_user.tempstore');
 
+  $profileId = $account->field_backend_profile->value;
+  // Workaround for the first login right after registering.
+  // Cached user object wouldn't contain backend api information.
+  if (!$profileId) {
+    $profileId = asu_update_account_profile_field_value($account);
+  }
+
   $token = $backendApi
     ->getAuthenticationService()
     ->handleAuthentication($account);
@@ -229,7 +264,7 @@ function asu_get_user_fields($account) {
     $request = new UserRequest($account);
     $userInformationResponse = $backendApi
       ->getUserService()
-      ->getUser($request, $account->field_backend_profile->value, $token);
+      ->getUser($request, $profileId, $token);
     $store->setMultipleByConfiguration($userInformationResponse->getUserInformation());
   }
 }
@@ -264,4 +299,33 @@ function asu_user_form_contact_message_apply_for_free_apartment_form_alter(&$for
   foreach ($fields as $formFieldName => $data) {
     $form[$formFieldName]['widget'][0]['value']['#default_value'] = $data ?? '';
   }
+}
+
+/**
+ * Workaround for first time login cache problem.
+ */
+function asu_update_account_profile_field_value(&$account) {
+  $profileId = $account->field_backend_profile->value;
+  if (!$profileId) {
+    $database = \Drupal::database();
+    $query = $database->query('SELECT field_backend_profile_value
+    FROM user__field_backend_profile
+    WHERE bundle = :bundle
+    AND entity_id = :userid',
+      [
+        ':bundle' => 'user',
+        ':userid' => $account->id(),
+      ]
+    );
+    $profileId = NULL;
+    if ($results = $query->fetchAll()) {
+      foreach ($results as $result) {
+        $profileId = $result->field_backend_profile_value;
+        $account->set('field_backend_profile', $profileId);
+        return $profileId;
+        break;
+      }
+    }
+  }
+  return $profileId;
 }

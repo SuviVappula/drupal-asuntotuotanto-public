@@ -3,7 +3,6 @@
 namespace Drupal\asu_api\Api\BackendApi\Request;
 
 use Drupal\asu_api\Api\Request;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -17,13 +16,13 @@ class CreateUserRequest extends Request {
   protected const AUTHENTICATED = FALSE;
 
   /**
-   * Current user.
+   * User data in array.
    *
-   * @var \Drupal\user\UserInterface
+   * @var array
    */
   private UserInterface $user;
 
-  private FormStateInterface $form_state;
+  private array $userInformation;
 
   /**
    * Construct.
@@ -31,9 +30,9 @@ class CreateUserRequest extends Request {
    * @param Drupal\user\UserInterface $user
    *   Current user.
    */
-  public function __construct(UserInterface $user, FormStateInterface $form_state) {
+  public function __construct(UserInterface $user, array $userInformation) {
     $this->user = $user;
-    $this->form_state = $form_state;
+    $this->userInformation = $userInformation;
   }
 
   /**
@@ -48,14 +47,15 @@ class CreateUserRequest extends Request {
       'email' => $this->user->getEmail(),
     ];
 
-    foreach ($fieldMap as $field => $information) {
-      $data[$information['external_field']] = $this->form_state->getValue($field);
+    if ($this->userInformation) {
+      foreach ($fieldMap as $field => $information) {
+        $data[$information['external_field']] = $this->userInformation[$field];
+      }
     }
 
+    // @todo Onko väärä datetime.
     $dateOfBirth = (new \DateTime($this->user->date_of_birth->value))->format('Y-m-d');
     $data['date_of_birth'] = $dateOfBirth;
-    // @todo Remove right of residence.
-    $data['right_of_residence'] = '1000';
     $data['contact_language'] = $this->user->getPreferredLangcode();
 
     return $data;
