@@ -36,8 +36,8 @@ class ApartmentWidget extends WidgetBase {
       '#ajax' => [
         'wrapper' => 'edit-apartment-wrapper',
         'event' => 'change',
-        'callback' => '::saveApplicationCallback'
-      ]
+        'callback' => '::saveApplicationCallback',
+      ],
     ];
 
     return $element;

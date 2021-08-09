@@ -34,7 +34,7 @@ class ApplicantFormatter extends FormatterBase {
 
     foreach ($items as $delta => $item) {
       // Render each element as markup.
-      $element[$delta] = ['#markup' => "{$item->name}, {$item->email}<br>"];
+      $element[$delta] = ['#markup' => "{$item->first_name}, {$item->email}<br>"];
     }
 
     return $element;

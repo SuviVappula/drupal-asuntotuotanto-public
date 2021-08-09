@@ -27,7 +27,7 @@
   <div class="application-form__header">
     <h1>
       <span>
-          Hitas-{% trans %}application{% endtrans %}
+          HASO-{% trans %}application{% endtrans %}
       </span>
       {{ element['#project_name'] }}
     </h1>
@@ -138,15 +138,43 @@
         Enter your ID's last 4 characters.
         {% endtrans %}
       </p>
-      {{ element.field_personal_id }}
+      <div class="application-form__personal-id">
+        <p aria-label="{% trans %} The beginning of social security number {% endtrans %} {{ element['#pid_start'] }}">{{ element['#pid_start'] }}</p>
+          {{ element.field_personal_id }}
+      </div>
     </section>
     <section class="application-form__section">
       <h2>
         {% trans %}
-          Hitas owner
+          HASO owner
         {% endtrans %}
       </h2>
-      {{ element.field_hitas_owner }}
+    </section>
+    <section class="application-form__section">
+      <h2>
+        {% trans %}
+          Right of Residence Number
+        {% endtrans %}
+      </h2>
+      <p>
+        {% trans %}
+          In order to apply for HASO aparment you need right of residence number
+        {% endtrans %}
+      </p>
+      {{ element.field_right_of_residence_number }}
+    </section>
+    <section class="application-form__section">
+      <h2>
+        {% trans %}
+          Previous ownership
+        {% endtrans %}
+      </h2>
+      <p>
+        {% trans %}
+          I currently own an HASO apartment but I'm planning to let it go.
+        {% endtrans %}
+      </p>
+      {{ element.field_aso_changer }}
     </section>
     <section class="application-form__section">
       <h2>

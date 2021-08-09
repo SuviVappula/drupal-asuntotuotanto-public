@@ -260,3 +260,14 @@
     border-bottom: 1px solid var(--color-black-20);
   }
 }
+
+.application-form__personal-id {
+  display: flex;
+  align-items:center;
+
+  > p {
+    @include font-size($fontsize-body-m, 24px);
+    font-weight: $font-weight-regular;
+    margin: 0 $spacing-2-xs 0 0;
+  }
+}

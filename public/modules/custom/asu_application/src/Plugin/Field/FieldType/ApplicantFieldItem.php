@@ -41,6 +41,11 @@ class ApplicantFieldItem extends FieldItemBase implements FieldItemInterface {
           'length' => 30,
           'default' => '',
         ],
+        'personal_id' => [
+          'type' => 'varchar',
+          'length' => 5,
+          'default' => '',
+        ],
         'address' => [
           'type' => 'varchar',
           'length' => 100,
@@ -85,6 +90,9 @@ class ApplicantFieldItem extends FieldItemBase implements FieldItemInterface {
     $properties['date_of_birth'] = DataDefinition::create('datetime_iso8601')
       ->setLabel(t('Date value'));
 
+    $properties['personal_id'] = DataDefinition::create('string')
+      ->setLabel(t('Personal id'));
+
     $properties['street_address'] = DataDefinition::create('string')
       ->setLabel(t('Street address'));
 
@@ -94,7 +102,7 @@ class ApplicantFieldItem extends FieldItemBase implements FieldItemInterface {
     $properties['city'] = DataDefinition::create('string')
       ->setLabel(t('City'));
 
-    $properties['phone_number'] = DataDefinition::create('string')
+    $properties['phone'] = DataDefinition::create('string')
       ->setLabel(t('Phone number'));
 
     $properties['email'] = DataDefinition::create('email')
@@ -106,7 +114,22 @@ class ApplicantFieldItem extends FieldItemBase implements FieldItemInterface {
    * {@inheritdoc}
    */
   public function isEmpty() {
-    return $this->name === NULL || $this->name === '';
+    return $this->first_name === NULL ||
+           $this->first_name === '' &&
+           $this->last_name === NULL ||
+           $this->last_name === '' &&
+           $this->date_of_birth === NULL ||
+           $this->date_of_birth === '' &&
+           $this->personal_id === NULL ||
+           $this->personal_id === '' &&
+           $this->street_address === NULL ||
+           $this->street_address === '' &&
+           $this->city === NULL ||
+           $this->city === '' &&
+           $this->phone === NULL ||
+           $this->phone === '' &&
+           $this->email === NULL ||
+           $this->email === '';
   }
 
 }
