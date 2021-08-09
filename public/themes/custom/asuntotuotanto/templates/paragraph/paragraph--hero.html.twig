@@ -150,6 +150,14 @@
               {{ content.field_hero_title }}
             </h1>
           </div>
+
+          {% set image_uri = content.field_hero_image[0]['#media'].field_media_image.entity.uri.value %}
+
+          {% if image_uri %}
+            <div class="hero__image-container">
+              {{ drupal_image(image_uri, 'hero__left_right', responsive=true) }}
+            </div>
+          {% endif %}
         {% endblock %}
       {% endembed %}
       {% include '@hdbt/misc/koro.twig' with {koro: koro, flip: false, color: 'white' } %}
@@ -163,7 +171,6 @@
                 </div>
               {% endif %}
             </div>
-
             {% set image_uri = content.field_hero_image[0]['#media'].field_media_image.entity.uri.value %}
 
             {% if image_uri %}
