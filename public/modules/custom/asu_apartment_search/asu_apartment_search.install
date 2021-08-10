@@ -161,3 +161,48 @@ function asu_apartment_search_update_8002() {
   $term_haso->save();
   $term_hitas->save();
 }
+
+/**
+ * Add taxonomy terms to FAQ category vocabularity automatically.
+ */
+function asu_apartment_search_update_8003() {
+  $vocabularity = 'faq_category';
+
+  $term_common = Term::create([
+    'name' => 'Common',
+    'vid' => $vocabularity,
+    'uuid' => '34fd6937-7e5c-449d-a833-042b4fc7b967',
+  ]);
+
+  $term_buying = Term::create([
+    'name' => 'Buying',
+    'vid' => $vocabularity,
+    'uuid' => '5237f303-02f3-4929-b8dd-3375b8e10121',
+  ]);
+
+  $term_price = Term::create([
+    'name' => 'Price',
+    'vid' => $vocabularity,
+    'uuid' => '81b20f4a-986e-4b40-ac26-a1c0ed3695b6',
+  ]);
+
+  $term_owning = Term::create([
+    'name' => 'Owning',
+    'vid' => $vocabularity,
+    'uuid' => '59da223c-3e7a-43df-85ab-849f919d688e',
+  ]);
+
+  $term_selling = Term::create([
+    'name' => 'Selling',
+    'vid' => $vocabularity,
+    'uuid' => '537cc3d2-5375-476d-8bc4-923b38007606',
+  ]);
+
+  $term_common->save();
+  $term_buying->save();
+  $term_price->save();
+  $term_owning->save();
+  $term_selling->save();
+}
+
+$node_loaded_by_uuid = \Drupal::entityTypeManager()->getStorage('taxonomy')->loadByProperties(['uuid' => 'a4cd9585-84aa-4a1b-ae53-6976cc08f4a4']);
