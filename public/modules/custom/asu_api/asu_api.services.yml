@@ -4,7 +4,6 @@ parameters:
   asu_api.elastic.base_url_variable: 'ASU_ELASTICSEARCH_ADDRESS'
   asu_api.elastic.username_variable: 'ASU_ELASTICSEARCH_USERNAME'
   asu_api.elastic.password_variable: 'ASU_ELASTICSEARCH_PASSWORD'
-  asu_api.asko.address: 'ASU_ASKO_ADDRESS'
   asu_api.asko.hitas_address_variable: 'ASU_ASKO_HITAS_ADDRESS'
   asu_api.asko.haso_address_variable: 'ASU_ASKO_HASO_ADDRESS'
 
