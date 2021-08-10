@@ -41,7 +41,6 @@ function asu_mailer_mail(string $key, array &$message, array $params) {
  */
 function send_asko_haso_mail(&$message, $params) {
   $message['from'] = \Drupal::config('system.site')->get('mail');
-  $message['to'] = getenv('ASKO_ADDRESS');
   $message['subject'] = 'asohakemus_haso';
   $message['body'][] = $params['message'];
 }
@@ -56,7 +55,6 @@ function send_asko_haso_mail(&$message, $params) {
  */
 function send_asko_hitas_mail(array &$message, array $params) {
   $message['from'] = \Drupal::config('system.site')->get('mail');
-  $message['to'] = getenv('ASKO_ADDRESS');
   $message['subject'] = 'asoy_hakemus';
   $message['body'][] = $params['message'];
 }
