@@ -33,6 +33,7 @@ class ApplicationForm extends ContentEntityForm {
     $application_type_id = $this->entity->bundle();
     $form['#project_id'] = $project_id;
     $bday = $user->date_of_birth->value;
+
     try {
       $project_data = $this->getApartments($project_id);
     }

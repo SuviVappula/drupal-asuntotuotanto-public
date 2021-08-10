@@ -57,6 +57,20 @@ class Store {
   }
 
   /**
+   * Get all user fields from database.
+   *
+   * @return array
+   *   Array of field values keyed by external field name.
+   */
+  public function getExternalUserData(): array {
+    $values = [];
+    foreach ($this->config as $field => $value) {
+      $values[$value['external_field']] = $this->get($field) ?? '-';
+    }
+    return $values;
+  }
+
+  /**
    * Set multiple values to store by configuration.
    *
    * @param array $fields

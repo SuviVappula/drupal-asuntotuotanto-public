@@ -41,7 +41,7 @@ class UserService extends ServiceBase {
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function getUser(Request $request, $profile, $token): Response {
+  public function getUser(Request $request, string $profile, string $token): Response {
     $httpRequest = $this->requestHandler->buildAuthenticatedRequest($request, $profile, $token);
     $response = $this->requestHandler->send($httpRequest);
     return UserResponse::createFromHttpResponse($response);

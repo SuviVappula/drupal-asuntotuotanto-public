@@ -5,6 +5,7 @@
  * Functions to support theming in the HDBT Subtheme.
  */
 
+use Drupal\node\Entity\Node;
 use Drupal\Core\Url;
 use Drupal\user\Entity\User;
 use Drupal\paragraphs\Entity\Paragraph;
@@ -83,7 +84,8 @@ function asuntotuotanto_preprocess_external_entity(&$variables) {
           $project_id = $entity['#project']->id();
           $applications = Applications::create()
             ->getApartmentApplicationStatuses($project_id);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
           $variables['applications'] = [];
         }
 
@@ -406,7 +408,7 @@ function asuntotuotanto_form_alter(&$form, &$form_state, $form_id) {
  * Implements hook_preprocess_node().
  */
 function asuntotuotanto_preprocess_node(&$variables) {
-  $node  = \Drupal\node\Entity\Node::load($variables['node']->id());
+  $node = Node::load($variables['node']->id());
 
   if ($node->field_content && !empty($node->field_content->getValue())) {
 
@@ -415,21 +417,23 @@ function asuntotuotanto_preprocess_node(&$variables) {
 
       if (!empty($value['entity'])) {
         $paragraph = $value['entity'];
-      } elseif (!empty($value['target_id'])) {
+      }
+      elseif (!empty($value['target_id'])) {
         $paragraph = Paragraph::load($value['target_id']);
       }
 
       if (!empty($paragraph) && $paragraph instanceof Paragraph) {
         if ($paragraph->type->getValue()[0]["target_id"] === "text") {
           $text = strip_tags($paragraph->get('field_text')->value);
-          $text = str_replace(array("\r", "\n"), ' ', $text);
+          $text = str_replace(["\r", "\n"], ' ', $text);
 
           if (strlen($text) > 80) {
             if ($variables['view_mode'] === 'teaser_prominent') {
               if (strlen($text) > 230) {
                 $text = rtrim(substr($text, 0, 230)) . "...";
               }
-            } else {
+            }
+            else {
               $text = rtrim(substr($text, 0, 80)) . "...";
             }
           }
@@ -491,10 +495,13 @@ function get_apartment_application_status($application_status) {
   ];
 }
 
-function asuntotuotanto_preprocess_user(&$variables){
+/**
+ *
+ */
+function asuntotuotanto_preprocess_user(&$variables) {
   $store = \Drupal::service('asu_user.tempstore');
   $fields = \Drupal::config('asu_user.external_user_fields')->get('external_data_map');
-  foreach($fields as $field_name => $field){
+  foreach ($fields as $field_name => $field) {
     $variables['content'][$field_name] = $store->get($field_name);
   }
 }
