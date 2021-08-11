@@ -90,18 +90,20 @@ class RegisterForm extends BaseForm {
     $account->save();
 
     // Create user to backend.
-    $this->store->setMultipleByConfiguration($form_state->getUserInput());
-    $this->sendToBackend($account, $form_state);
+    if ($account->hasRole('customer')) {
+      $this->store->setMultipleByConfiguration($form_state->getUserInput());
+      $this->sendToBackend($account, $form_state);
 
-    $form_state->set('user', $account);
-    $form_state->setValue('uid', $account->id());
+      $form_state->set('user', $account);
+      $form_state->setValue('uid', $account->id());
 
-    $this->logger('user')->notice('New user: %name %email.', ['%name' => $form_state->getValue('name'), '%email' => '<' . $form_state->getValue('mail') . '>', 'type' => $account->toLink($this->t('Edit'), 'edit-form')->toString()]);
+      $this->logger('user')->notice('New user: %name %email.', ['%name' => $form_state->getValue('name'), '%email' => '<' . $form_state->getValue('mail') . '>', 'type' => $account->toLink($this->t('Edit'), 'edit-form')->toString()]);
 
-    // Add plain text password into user account to generate mail tokens.
-    $account->password = $pass;
+      // Add plain text password into user account to generate mail tokens.
+      $account->password = $pass;
 
-    user_login_finalize($account);
+      user_login_finalize($account);
+    }
   }
 
   /**
