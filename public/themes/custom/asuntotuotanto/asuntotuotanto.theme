@@ -415,6 +415,10 @@ function asuntotuotanto_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['reset']['#attributes']['data-twig-suggestion'] = 'faq_form_reset_button';
   }
 
+  if ($form['#id'] == 'views-exposed-form-faq-faq-page-haso') {
+    $form['actions']['reset']['#attributes']['data-twig-suggestion'] = 'faq_form_reset_button';
+  }
+
 }
 
 /**
