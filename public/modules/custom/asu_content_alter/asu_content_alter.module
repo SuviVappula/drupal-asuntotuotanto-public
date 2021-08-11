@@ -7,7 +7,7 @@
 /**
  * Implements hook_form_alter().
  */
-function asu_content_form_alter(&$form, $form_state, $form_id) {
+function asu_content_alter_form_alter(&$form, $form_state, $form_id) {
   if ($form_id === 'node_news_form') {
     $form['sticky']['widget']['value']['#title'] = t('Create main news item');
   }

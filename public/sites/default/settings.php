@@ -104,12 +104,17 @@ if ($env = getenv('APP_ENV')) {
   $settings['ASU_ELASTICSEARCH_PASSWORD'] = getenv('ASU_ELASTICSEARCH_PASSWORD');
 
   // Email settings.
-  #$config['mailsystem.settings']['defaults']['sender'] = 'swiftmailer';
-  #$config['mailsystem.settings']['defaults']['formatter'] = 'swiftmailer';
-  #$config['swiftmailer.transport']['smtp_host'] = getenv('ASU_MAILSERVER_ADDRESS');
-  #$config['swiftmailer.transport']['smtp_port'] = getenv('ASU_MAILSERVER_PORT') ?? '25';
-  #$config['swiftmailer.transport']['transport'] = getenv('ASU_MAILSERVER_TRANSPORT') ?? 'smtp';
-  #$config['swiftmailer.transport']['smtp_encryption'] = '0';
+  $config['mailsystem.settings']['defaults']['sender'] = 'swiftmailer';
+  $config['mailsystem.settings']['defaults']['formatter'] = 'swiftmailer';
+  $config['mailsystem.settings']['modules']['swiftmailer']['none']['formatter'] = 'swiftmailer';
+  $config['mailsystem.settings']['modules']['swiftmailer']['none']['sender'] = 'swiftmailer';
+
+  $config['swiftmailer.transport']['transport'] = 'smtp';
+  $config['swiftmailer.transport']['smtp_host'] = getenv('ASU_MAILSERVER_ADDRESS');
+  $config['swiftmailer.transport']['smtp_port'] = 25;
+  $config['swiftmailer.transport']['smtp_encryption'] = '0';
+  $config['swiftmailer.transport']['smtp_credential_provider'] = 'swiftmailer';
+
 
   // External entity settings.
   $config['external_entities.external_entity_type.project']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_ADDRESS');
