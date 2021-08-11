@@ -402,6 +402,10 @@ function asuntotuotanto_form_alter(&$form, &$form_state, $form_id) {
     $form['application_project_information'] = $application_teaser_values;
   }
 
+  if ($form['#id'] == 'views-exposed-form-faq-faq-page-hitas') {
+    $form['actions']['reset']['#attributes']['data-twig-suggestion'] = 'faq_form_reset_button';
+  }
+
 }
 
 /**

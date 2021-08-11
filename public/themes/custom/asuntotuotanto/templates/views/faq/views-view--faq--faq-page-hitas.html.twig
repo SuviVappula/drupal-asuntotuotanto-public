@@ -36,6 +36,8 @@
     'views--' ~ id|clean_class,
     'views--' ~ display_id|clean_class,
     dom_id ? 'js-view-dom-id-' ~ dom_id,
+    'faq',
+    'faq--hitas'
   ]
 %}
 <div{{attributes.addClass(classes)}}>
@@ -49,12 +51,31 @@
     </header>
   {% endif %}
 
-  {{ drupal_block('views_exposed_filter_block:faq-faq_page_hitas') }}
+  <div class="faq__hero">
+    {% embed "@hdbt/misc/container.twig" with {container_element: 'hero'} %}
+      {% block container_content %}
+          <h1 class="faq__title">
+            <span>Hitas:</span>
+            {% trans %}
+              Frequently asked questions
+            {% endtrans %}
+          </h1>
+          {{ drupal_block('views_exposed_filter_block:faq-faq_page_hitas') }}
+      {% endblock %}
+    {% endembed %}
+    {% include '@hdbt/misc/koro.twig' with {koro: koro, flip: false, color: 'white' } %}
+  </div>
 
   {{ exposed }}
   {{ attachment_before }}
 
-  {{ rows }}
+  <div class="faq__content">
+    {% embed "@hdbt/misc/container.twig" with {container_element: 'hero'} %}
+      {% block container_content %}
+        {{ rows }}
+      {% endblock %}
+    {% endembed %}
+  </div>
 
   {{ empty }}
   {{ pager }}
