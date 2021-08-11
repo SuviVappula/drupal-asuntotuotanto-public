@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.taxonomy_term.teaser
+    - core.entity_view_mode.taxonomy_term.faq_teaser
     - taxonomy.vocabulary.faq_category
     - taxonomy.vocabulary.faq_hitas
   module:
@@ -84,7 +84,7 @@ display:
         type: 'entity:taxonomy_term'
         options:
           relationship: none
-          view_mode: teaser
+          view_mode: faq_teaser
       fields:
         name:
           id: name
