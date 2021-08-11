@@ -204,25 +204,3 @@ function asu_apartment_search_update_8003() {
   $term_owning->save();
   $term_selling->save();
 }
-
-/**
- * Add base taxonomy terms to FAQ vocabularity automatically.
- */
-function asu_apartment_search_update_8004() {
-  $vocabularity = 'faq';
-
-  $term_hitas = Term::create([
-    'name' => 'HITAS',
-    'vid' => $vocabularity,
-    'uuid' => '8fb8e203-4c7c-4f6d-b0ef-0acae62d4e9b',
-  ]);
-
-  $term_haso = Term::create([
-    'name' => 'HASO',
-    'vid' => $vocabularity,
-    'uuid' => 'b19ed56b-47fa-403f-98a2-06dea246fa4c',
-  ]);
-
-  $term_hitas->save();
-  $term_haso->save();
-}
