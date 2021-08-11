@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * Form for Application.
  */
 class ApplicationForm extends ContentEntityForm {
-
   use MessengerTrait;
 
   /**

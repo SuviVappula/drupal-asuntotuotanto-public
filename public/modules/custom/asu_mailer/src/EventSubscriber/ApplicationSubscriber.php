@@ -106,8 +106,7 @@ class ApplicationSubscriber implements EventSubscriberInterface {
         ->toMailFormat();
     }
     catch (\InvalidArgumentException $exception) {
-      // Email address not set.
-      \Drupal::messenger()->addMessage($exception->getMessage());
+      \Drupal::messenger()->addMessage('Exception while creating asko request: ' . $exception->getMessage());
       return;
       // @todo Add logging.
     }

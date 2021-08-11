@@ -150,7 +150,6 @@ class ProjectApartmentsResponse {
     $content = $responseContent['hits']['hits'];
     if (empty($content)) {
       throw new \Exception('No apartments found.');
-
     }
     return new self($content);
   }
