@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.taxonomy_term.faq_teaser
-    - system.menu.main
     - taxonomy.vocabulary.faq_category
     - taxonomy.vocabulary.faq_hitas
   module:
@@ -302,11 +301,11 @@ display:
         filters: true
         filter_groups: true
       menu:
-        type: normal
+        type: none
         title: 'Frequently asked questions'
         description: ''
         expanded: false
-        parent: 'menu_link_content:ff19b2ff-d033-4b01-962e-e2365d8c2ff0'
+        parent: ''
         weight: 3
         context: '0'
         menu_name: main
@@ -331,11 +330,11 @@ display:
       display_description: ''
       exposed_block: true
       menu:
-        type: normal
+        type: none
         title: 'Frequently asked questions'
         description: ''
         expanded: false
-        parent: 'menu_link_content:a813a595-63e1-46f0-a427-7c16d4dc76ce'
+        parent: ''
         weight: 3
         context: '0'
         menu_name: main
