@@ -497,7 +497,7 @@ display:
           admin_label: ''
           operator: or
           value:
-          5: 5
+            5: 5
           group: 1
           exposed: false
           expose:
@@ -533,6 +533,7 @@ display:
           vid: news_category
           hierarchy: false
           error_message: true
+          5: 5
           plugin_id: taxonomy_index_tid
         langcode:
           id: langcode
