@@ -231,7 +231,7 @@ function asuntotuotanto_preprocess_menu(&$variables) {
         $language = Drupal::languageManager()->getCurrentLanguage();
         $current_langcode = $language->getId();
         $items = $variables['items'];
-        $current_path = Url::fromRoute('<current>')->setRouteParameter('lang', $current_langcode)->toString();
+        $current_path = "/$current_langcode" . \Drupal::service('path.current')->getPath() . "?lang=$current_langcode";
 
         foreach ($items as $key => $item) {
           $is_active = FALSE;
