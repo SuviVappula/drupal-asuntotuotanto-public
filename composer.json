@@ -11,6 +11,7 @@
         "cweagans/composer-patches": "^1.6.7",
         "druidfi/omen": "^0.2.0",
         "drupal/api_tools": "^1.0",
+        "drupal/better_exposed_filters": "^5.0@beta",
         "drupal/better_passwords": "^2.0",
         "drupal/better_social_sharing_buttons": "^3.2",
         "drupal/config_ignore": "^2.3",
@@ -32,6 +33,7 @@
         "drupal/helfi_tunnistamo": "^1.0",
         "drupal/honeypot": "^2.0",
         "drupal/imagecache_external": "^3.0",
+        "drupal/jquery_ui_touch_punch": "^1.0",
         "drupal/mailsystem": "^4.3",
         "drupal/menu_block": "^1.7",
         "drupal/menu_link_attributes": "^1.2",
@@ -106,6 +108,9 @@
             },
             "drupal/hdbt_admin": {
                 "Custom hero addition": "./public/patches/custom_hero_addition.patch"
+            },
+            "drupal/jquery_ui_touch_punch": {
+                "jQuery UI Touch Punch library [https://www.drupal.org/project/jquery_ui_touch_punch/issues/3159222]": "https://www.drupal.org/files/issues/2021-02-26/jquery_ui_touch_punch.patch"
             }
         }
     },

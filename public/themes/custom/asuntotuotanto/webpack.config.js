@@ -20,6 +20,7 @@ module.exports = {
         "./src/js/showcase-gallery.js",
         "./src/js/user-tools.js",
         "./src/js/application-form-actions.js",
+        "./src/js/faq.js",
       ],
     }),
     stickyNavigation: ["./src/js/sticky-navigation.js"],
@@ -27,6 +28,7 @@ module.exports = {
     showcaseGallery: ["./src/js/showcase-gallery.js"],
     userToolsNavigation: ["./src/js/user-tools.js"],
     applicationFormActions: ["./src/js/application-form-actions.js"],
+    faq: ["./src/js/faq.js"],
   },
   output: {
     devtoolLineToLine: true,
