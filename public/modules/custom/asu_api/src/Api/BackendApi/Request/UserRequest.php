@@ -9,7 +9,6 @@ use Drupal\user\Entity\User;
  * Request user information from backend.
  */
 class UserRequest extends Request {
-
   protected const METHOD = 'GET';
   protected const PATH = '/v1/profiles/';
 
@@ -20,6 +19,20 @@ class UserRequest extends Request {
    */
   public function __construct(User $user) {
     $this->user = $user;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getPath(): string {
+    return static::PATH . $this->getBackendProfileId() . '/';
+  }
+
+  /**
+   * Get users backend profile.
+   */
+  public function getBackendProfileId(): string {
+    return $this->user->field_backend_profile->value;
   }
 
   /**

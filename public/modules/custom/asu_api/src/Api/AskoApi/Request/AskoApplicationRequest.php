@@ -144,7 +144,7 @@ class AskoApplicationRequest {
    * @throws \Exception
    */
   private function userIsSenior(): string {
-    $birthday = new \DateTime($this->user->field_date_of_birth->value);
+    $birthday = new \DateTime($this->user->date_of_birth->value);
     return $this::SENIOR <= $birthday->diff(new \DateTime('NOW'))->y ? $this::YES : $this::NO;
   }
 
@@ -208,7 +208,7 @@ class AskoApplicationRequest {
     if (!empty($applicants)) {
       return $applicants[0];
     }
-    return FALSE;
+    return NULL;
   }
 
   /**

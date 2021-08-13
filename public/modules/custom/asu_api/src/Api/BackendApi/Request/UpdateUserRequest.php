@@ -31,6 +31,20 @@ class UpdateUserRequest extends Request {
   }
 
   /**
+   * {@inheritDoc}
+   */
+  public function getPath(): string {
+    return static::PATH . $this->getBackendProfileId() . '/';
+  }
+
+  /**
+   * Get user backend profile.
+   */
+  public function getBackendProfileId(): string {
+    return $this->user->field_backend_profile->value;
+  }
+
+  /**
    * Update user request data to array.
    */
   public function toArray(): array {

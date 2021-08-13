@@ -27,6 +27,10 @@ user-tools:
   dependencies:
     - core/jquery
 
+faq:
+  js:
+    dist/js/faq.min.js: {}
+
 global-styling:
   version: 1.x
   css:

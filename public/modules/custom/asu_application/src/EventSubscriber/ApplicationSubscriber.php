@@ -3,7 +3,7 @@
 namespace Drupal\asu_application\EventSubscriber;
 
 use Drupal\asu_api\Exception\ApplicationRequestException;
-use Drupal\asu_api\Api\BackendApi\Request\ApplicationRequest;
+use Drupal\asu_api\Api\BackendApi\Request\CreateApplicationRequest;
 use Drupal\asu_api\Api\BackendApi\BackendApi;
 use Drupal\asu_application\Event\ApplicationEvent;
 use Drupal\Core\Messenger\MessengerTrait;
@@ -14,7 +14,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * Application subscriber.
  */
 class ApplicationSubscriber implements EventSubscriberInterface {
-
   use MessengerTrait;
 
   /**
@@ -50,9 +49,9 @@ class ApplicationSubscriber implements EventSubscriberInterface {
    *   The event names to listen to.
    */
   public static function getSubscribedEvents() {
-    return [
-      ApplicationEvent::EVENT_NAME => 'sendApplication',
-    ];
+    $events = [];
+    $events[ApplicationEvent::EVENT_NAME][] = ['sendApplicationToBackend', 5];
+    return $events;
   }
 
   /**
@@ -64,7 +63,8 @@ class ApplicationSubscriber implements EventSubscriberInterface {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function sendApplication(ApplicationEvent $applicationEvent) {
+  public function sendApplicationToBackend(ApplicationEvent $applicationEvent) {
+
     $entity_type = 'asu_application';
     $entity_id = $applicationEvent->getApplicationId();
 
@@ -73,13 +73,27 @@ class ApplicationSubscriber implements EventSubscriberInterface {
     $user = $entity->getOwner();
 
     try {
-      $request = new ApplicationRequest($user, $entity);
-      $content = $this->backendApi
-        ->getApplicationService()
-        ->sendApplication($request)
-        ->getContent();
+      $request = new CreateApplicationRequest(
+        $user,
+        $entity,
+        [
+          'uuid' => $applicationEvent->getProjectUuid(),
+          'apartment_uuids' => $applicationEvent->getApartmentUuids(),
+        ]
+      );
 
-      // @todo implement rest of the logic.
+      $token = $this->backendApi
+        ->getAuthenticationService()
+        ->handleAuthentication($user);
+
+      if ($token) {
+        $content = $this->backendApi
+          ->getApplicationService()
+          ->sendApplication($request, $token)
+          ->getContent();
+
+        $this->logger->notice('User sent an application to backend successfully');
+      }
     }
     catch (ApplicationRequestException $e) {
       // Backend returned non 2xx response.

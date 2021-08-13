@@ -43,9 +43,9 @@ class AskoApi {
    * Constructor.
    */
   public function __construct(string $hasoAdressVariable, string $hitasEmailAddress) {
-    if ($hitas = getenv($hitasEmailAddress) && $haso = getenv($hasoAdressVariable)) {
-      $this->hitasEmailAddress = $hitas;
-      $this->hasoEmailAddress = $haso;
+    if (getenv($hasoAdressVariable) && getenv($hitasEmailAddress)) {
+      $this->hasoEmailAddress = getenv($hasoAdressVariable);
+      $this->hitasEmailAddress = getenv($hitasEmailAddress);
     }
     else {
       throw new \InvalidArgumentException('As-Ko address is not set');
