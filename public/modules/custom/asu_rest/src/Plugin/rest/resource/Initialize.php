@@ -45,8 +45,16 @@ final class Initialize extends ResourceBase {
     $response['apartment_application_status'] = $this->getApartmentApplicationStatus();
     $response['token'] = \Drupal::service('csrf_token')->get(CsrfRequestHeaderAccessCheck::TOKEN_KEY);
 
+    $response['user'] = [
+      'user_id' => 0,
+      'email_address' => '',
+      'username' => '',
+      'applications' => []
+    ];
+
     /** @var \Drupal\user\Entity\User $user */
-    if ($user = User::load(\Drupal::currentUser()->id())) {
+    if (User::load(\Drupal::currentUser())->isAuthenticated()) {
+      $user = User::load(\Drupal::currentUser()->id());
       $response['user'] = $this->getUser($user);
       $response['user']['applications'] = $this->getUserApplications($user);
     }
