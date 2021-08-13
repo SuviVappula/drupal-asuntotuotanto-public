@@ -92,6 +92,9 @@ class ApplicationForm extends ContentEntityForm {
     $form['#apartment_values'] = $apartments;
     $form['#project_name'] = $projectName;
     $form['#pid_start'] = $this->dateToPersonalId($bday);
+    $form['#project_uuid'] = $project_data['project_uuid'];
+    $form['#apartment_uuids'] = $project_data['apartment_uuids'];
+
     $form = parent::buildForm($form, $form_state);
 
     $form['#title'] = $this->t('Application for') . ' ' . $projectName;
@@ -132,20 +135,21 @@ class ApplicationForm extends ContentEntityForm {
         }
       }
     }
+    $user = User::load(\Drupal::currentUser()->id());
 
-    try {
-      $event = new ApplicationEvent($this->entity->id(), $form['#project_name']);
-      $event_dispatcher = \Drupal::service('event_dispatcher');
-      $event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
-    }
-    catch (\Exception $e) {
-
-    }
+    $event = new ApplicationEvent(
+      $this->entity->id(),
+      $form['#project_name'],
+      $form['#project_uuid'],
+      $form['#apartment_uuids']
+    );
+    $event_dispatcher = \Drupal::service('event_dispatcher');
+    $event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
 
     $this->entity->set('field_locked', 1);
     $this->entity->save();
 
-    $this->messenger()->addStatus($this->t('Your application has been submitted successfully. You can no longer edit the applicaiton.'));
+    $this->messenger()->addStatus($this->t('Your application has been submitted successfully. You can no longer edit the application.'));
     $content_entity_id = $this->entity->getEntityType()->id();
     $form_state->setRedirect("entity.{$content_entity_id}.canonical", [$content_entity_id => $this->entity->id()]);
   }
@@ -198,6 +202,7 @@ class ApplicationForm extends ContentEntityForm {
     $apartmentResponse = $elastic->getApartmentService()
       ->getProjectApartments($request);
     $projectName = $apartmentResponse->getProjectName();
+    $projectUuid = $apartmentResponse->getProjectUuid();
 
     $apartments = [];
     foreach ($apartmentResponse->getApartments() as $apartment) {
@@ -210,15 +215,18 @@ class ApplicationForm extends ContentEntityForm {
       $select_text = "{$data['apartment_number']} | {$data['apartment_structure']} | {$data['floor']} / {$data['floor_max']} | {$living_area_size_m2} m2 | {$sales_price} € | {$debt_free_sales_price} €";
 
       $apartments[$data['nid']] = $select_text;
+      $apartmentsUuid[$data['nid']] = $data['uuid'];
     }
     ksort($apartments, SORT_NUMERIC);
 
     return [
       'project_name' => $projectName,
+      'project_uuid' => $projectUuid,
       'ownership_type' => $apartmentResponse->getOwnershipType(),
       'application_start_date' => $apartmentResponse->getStartTime(),
       'application_end_date' => $apartmentResponse->getEndTime(),
       'apartments' => $apartments,
+      'apartment_uuids' => $apartmentsUuid,
     ];
   }
 

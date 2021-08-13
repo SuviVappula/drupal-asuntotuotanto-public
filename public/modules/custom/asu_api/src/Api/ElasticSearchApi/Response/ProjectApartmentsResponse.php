@@ -45,6 +45,13 @@ class ProjectApartmentsResponse {
   private string $ownershipType;
 
   /**
+   * Project uuid for external use.
+   *
+   * @var string|mixed
+   */
+  private string $projectUuid;
+
+  /**
    * ApartmentResponse constructor.
    *
    * @param array $content
@@ -58,6 +65,7 @@ class ProjectApartmentsResponse {
     }
     $this->apartments = $content;
     $this->projectName = $content[0]['_source']['project_street_address'];
+    $this->projectUuid = $content[0]['_source']['project_uuid'];
     $this->startTime = $content[0]['_source']['project_application_start_time'];
     $this->endTime = $content[0]['_source']['project_application_end_time'];
     $this->ownershipType = $content[0]['_source']['project_ownership_type'];
@@ -131,6 +139,16 @@ class ProjectApartmentsResponse {
    */
   public function getProjectName(): string {
     return $this->projectName;
+  }
+
+  /**
+   * Get the project uuid.
+   *
+   * @return string
+   *   Project uuid.
+   */
+  public function getProjectUuid(): string {
+    return $this->projectUuid;
   }
 
   /**

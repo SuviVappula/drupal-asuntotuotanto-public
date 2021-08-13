@@ -88,6 +88,7 @@ function asu_authenticate_user(UserInterface $account) {
     asu_get_user_fields($account);
   }
   catch (\Exception $e) {
+    \Drupal::logger('backend_api')->critical('Unable to authenticate: ' . $e->getMessage());
     \Drupal::messenger()->addMessage('Unable to authenticate with backend.');
   }
 }
@@ -264,7 +265,7 @@ function asu_get_user_fields($account) {
     $request = new UserRequest($account);
     $userInformationResponse = $backendApi
       ->getUserService()
-      ->getUser($request, $profileId, $token);
+      ->getUser($request, $token);
     $store->setMultipleByConfiguration($userInformationResponse->getUserInformation());
   }
 }
