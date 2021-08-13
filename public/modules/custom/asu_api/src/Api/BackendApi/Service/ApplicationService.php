@@ -4,7 +4,7 @@ namespace Drupal\asu_api\Api\BackendApi\Service;
 
 use Drupal\asu_api\Api\BackendApi\Response\ApplicationResponse;
 use Drupal\asu_api\Api\ServiceBase;
-use Drupal\asu_api\Api\BackendApi\Request\ApplicationRequest;
+use Drupal\asu_api\Api\BackendApi\Request\CreateApplicationRequest;
 
 /**
  * Handle requests and responses related to applications.
@@ -22,8 +22,8 @@ class ApplicationService extends ServiceBase {
    *
    * @throws \Exception
    */
-  public function sendApplication(ApplicationRequest $request): ApplicationResponse {
-    $httpRequest = $this->requestHandler->buildRequest($request);
+  public function sendApplication(CreateApplicationRequest $request, string $token): ApplicationResponse {
+    $httpRequest = $this->requestHandler->buildAuthenticatedRequest($request, $token);
     $response = $this->requestHandler->send($httpRequest);
     return ApplicationResponse::createFromHttpResponse($response);
   }

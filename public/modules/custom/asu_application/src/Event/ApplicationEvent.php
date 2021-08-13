@@ -64,10 +64,16 @@ class ApplicationEvent extends Event {
     return $this->projectName;
   }
 
+  /**
+   *
+   */
   public function getProjectUuid(): string {
     return $this->projectUuid;
   }
 
+  /**
+   *
+   */
   public function getApartmentUuids(): array {
     return $this->apartmentUuids;
   }

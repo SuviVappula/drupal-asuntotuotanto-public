@@ -64,7 +64,6 @@ class ApplicationSubscriber implements EventSubscriberInterface {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function sendApplicationToBackend(ApplicationEvent $applicationEvent) {
-    $this->logger->notice('sending application to backend.');
 
     $entity_type = 'asu_application';
     $entity_id = $applicationEvent->getApplicationId();
@@ -90,10 +89,10 @@ class ApplicationSubscriber implements EventSubscriberInterface {
       if ($token) {
         $content = $this->backendApi
           ->getApplicationService()
-          ->sendApplication($request, $user->field_backend_profile->value, $token)
+          ->sendApplication($request, $token)
           ->getContent();
 
-        $this->logger->notice('user sent an application: ' . json_encode($content));
+        $this->logger->notice('User sent an application to backend successfully');
       }
     }
     catch (ApplicationRequestException $e) {

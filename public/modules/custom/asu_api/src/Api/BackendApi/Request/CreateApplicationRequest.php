@@ -54,6 +54,9 @@ class CreateApplicationRequest extends Request {
     $this->projectData = $projectData;
   }
 
+  /**
+   *
+   */
   private function getApartments() {
     $apartments = [];
     foreach ($this->application->getApartments()->getValue() as $key => $value) {
@@ -107,12 +110,15 @@ class CreateApplicationRequest extends Request {
     return $interval->y;
   }
 
-  private function getApplicant(){
-    if(!$this->application->hasAdditionalApplicant()) {
+  /**
+   *
+   */
+  private function getApplicant() {
+    if (!$this->application->hasAdditionalApplicant()) {
       return NULL;
     }
     $applicant = $this->application->getApplicants()[0];
-    // @todo: Use external field map configuration.
+    // @todo Use external field map configuration.
     return [
       'first_name' => $applicant['first_name'],
       'last_name' => $applicant['last_name'],

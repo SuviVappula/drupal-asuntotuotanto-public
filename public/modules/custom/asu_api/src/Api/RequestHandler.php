@@ -115,9 +115,9 @@ class RequestHandler {
   /**
    *
    */
-  public function buildAuthenticatedRequest(\Drupal\asu_api\Api\Request $request, string $profileId, string $token): RequestInterface {
+  public function buildAuthenticatedRequest(\Drupal\asu_api\Api\Request $request, string $token): RequestInterface {
     $method = $request->getMethod();
-    $uri = "{$this->apiUrl}{$request->getPath()}$profileId/";
+    $uri = "{$this->apiUrl}{$request->getPath()}";
     $payload = $request->toArray();
     $headers = [
       'Content-Type' => 'application/json',
