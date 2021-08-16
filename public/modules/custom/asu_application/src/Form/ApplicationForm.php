@@ -22,9 +22,17 @@ class ApplicationForm extends ContentEntityForm {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
-    if (\Drupal::currentUser()->isAnonymous()) {
+    // Anonymous user must login.
+    if (!\Drupal::currentUser()->isAuthenticated()) {
       \Drupal::messenger()->addMessage($this->t('You must be logged in to send an application'));
       return(new RedirectResponse('/user/login', 301));
+    }
+
+    // User must have customer role.
+    if (!in_array('customer', \Drupal::currentUser()->getRoles())) {
+      \Drupal::logger('asu_application')->critical('User without customer role tried to create application: User id: ' . \Drupal::currentUser()->id());
+      \Drupal::messenger()->addMessage($this->t('Users without customer role cannot fill applications.'));
+      return(new RedirectResponse(\Drupal::request()->getSchemeAndHttpHost(), 301));
     }
 
     $applicationsUrl = $this->getUserApplicationsUrl();
@@ -39,6 +47,7 @@ class ApplicationForm extends ContentEntityForm {
     $project_id = $this->entity->get('project_id')->value;
     $user = User::load($this->entity->getOwner()->id());
     $application_type_id = $this->entity->bundle();
+
     $form['#project_id'] = $project_id;
     $bday = $user->date_of_birth->value;
 
@@ -69,33 +78,15 @@ class ApplicationForm extends ContentEntityForm {
     }
 
     if (!$this->isCorrectApplicationFormForProject($application_type_id, $project_data['ownership_type'])) {
-      $this->logger('asu_application')->critical('User tried to access ' . $project_data['ownership_type'] . ' application with project id of '. $project_id .' using wrong url.');
+      $this->logger('asu_application')->critical('User tried to access ' . $project_data['ownership_type'] . ' application with project id of ' . $project_id . ' using wrong url.');
       $types = [
         'hitas' => 'haso',
         'haso' => 'hitas',
       ];
       $correctApplicationForm = \Drupal::request()->getSchemeAndHttpHost() .
-        '/application/add/' . $types[$application_type_id] . '/' .
+        '/application/add/' . $types[strtolower($application_type_id)] . '/' .
         $project_id;
-      #(new RedirectResponse($correctApplicationForm))->send();
-      #return;
       return new RedirectResponse($correctApplicationForm);
-    }
-
-    // Pre-create the application if user comes to the form for the first time.
-    if ($this->entity->isNew()) {
-      $project_id = $parameters->get('project_id');
-      /** @var \Drupal\asu_application\Entity\ApplicationType $application */
-      $application = $parameters->get('application_type');
-      if ($this->entity->hasField('field_personal_id')) {
-        $personalIdDivider = $this->getPersonalIdDivider($bday);
-        $this->entity->set('field_personal_id', $personalIdDivider);
-      }
-
-      $this->entity->save();
-      $url = $this->entity->toUrl()->toString();
-      (new RedirectResponse($url . '/edit'))->send();
-      return $form;
     }
 
     $startDate = $project_data['application_start_date'];
@@ -119,6 +110,22 @@ class ApplicationForm extends ContentEntityForm {
       return new RedirectResponse($freeApplicationUrl);
     }
 
+    // All prerequisites for creating as application has been met.
+    // Pre-create the application if user comes to the form for the first time.
+    if ($this->entity->isNew()) {
+      $project_id = $parameters->get('project_id');
+      /** @var \Drupal\asu_application\Entity\ApplicationType $application */
+      $application = $parameters->get('application_type');
+      if ($this->entity->hasField('field_personal_id')) {
+        $personalIdDivider = $this->getPersonalIdDivider($bday);
+        $this->entity->set('field_personal_id', $personalIdDivider);
+      }
+
+      $this->entity->save();
+      $url = $this->entity->toUrl()->toString();
+      (new RedirectResponse($url . '/edit'))->send();
+      return $form;
+    }
 
     $projectName = $project_data['project_name'];
     $apartments = $project_data['apartments'];
@@ -220,7 +227,7 @@ class ApplicationForm extends ContentEntityForm {
    *   Does the apartment ownershiptype match the form's type.
    */
   private function isCorrectApplicationFormForProject($formType, $ownershipType) {
-    return $formType == $ownershipType;
+    return strtolower($formType) == strtolower($ownershipType);
   }
 
   /**
@@ -378,8 +385,11 @@ class ApplicationForm extends ContentEntityForm {
     return $day . $month . $year;
   }
 
+  /**
+   *
+   */
   private function getUserApplicationsUrl(): string {
-    $applicationsUrl = \Drupal::request()->getSchemeAndHttpHost() .
+    return \Drupal::request()->getSchemeAndHttpHost() .
       '/user/' . \Drupal::currentUser()->id() .
       '/applications';
   }
@@ -397,7 +407,7 @@ class ApplicationForm extends ContentEntityForm {
    * @return bool
    *   Is application period.
    */
-  private function isApplicationPeriod(string $period, string $startDate, string $endDate) {
+  private function isApplicationPeriod(string $period, string $startDate, string $endDate): bool {
     if (!$startDate || !$endDate) {
       return FALSE;
     }
@@ -409,15 +419,15 @@ class ApplicationForm extends ContentEntityForm {
       case "before":
         return $now < $startTime;
 
-        break;
+      break;
       case "during":
         return $now > $startTime && $now < $endTime;
 
-        break;
+      break;
       case "after":
         return $now > $endTime;
 
-        break;
+      break;
     }
   }
 

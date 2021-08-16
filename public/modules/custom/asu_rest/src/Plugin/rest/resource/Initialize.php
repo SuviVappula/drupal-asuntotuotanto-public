@@ -49,7 +49,7 @@ final class Initialize extends ResourceBase {
       'user_id' => 0,
       'email_address' => '',
       'username' => '',
-      'applications' => []
+      'applications' => [],
     ];
 
     /** @var \Drupal\user\Entity\User $user */
