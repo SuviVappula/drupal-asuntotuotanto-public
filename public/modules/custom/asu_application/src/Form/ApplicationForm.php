@@ -37,8 +37,16 @@ class ApplicationForm extends ContentEntityForm {
       $project_data = $this->getApartments($project_id);
     }
     catch (\Exception $e) {
-      die($e->getMessage());
-      // @todo Message & redirect, cannot fetch apartments.
+      // Project not found.
+      $this->logger('asu_application')->critical('User tried to access nonexistent project of id ' . $project_id);
+
+      $applicationsUrl = \Drupal::request()->getSchemeAndHttpHost() .
+        '/user/' . \Drupal::currentUser()->id() .
+        '/applications';
+
+      $this->messenger()->addMessage($this->t('Project not found'));
+      (new RedirectResponse($applicationsUrl))->send();
+
     }
 
     // If user already has an application for this project.
