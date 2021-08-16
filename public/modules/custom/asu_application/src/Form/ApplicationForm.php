@@ -21,8 +21,11 @@ class ApplicationForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $applicationsUrl = $this->getUserApplicationsUrl();
+
     if ($this->entity->hasField('field_locked') && $this->entity->field_locked->value === '1') {
-      // @todo Redirect to applications page.
+      $this->messenger()->addMessage($this->t('This application has already been sent.'));
+      return new RedirectResponse($applicationsUrl);
     }
 
     $parameters = \Drupal::routeMatch()->getParameters();
@@ -39,14 +42,8 @@ class ApplicationForm extends ContentEntityForm {
     catch (\Exception $e) {
       // Project not found.
       $this->logger('asu_application')->critical('User tried to access nonexistent project of id ' . $project_id);
-
-      $applicationsUrl = \Drupal::request()->getSchemeAndHttpHost() .
-        '/user/' . \Drupal::currentUser()->id() .
-        '/applications';
-
       $this->messenger()->addMessage($this->t('Project not found'));
-      (new RedirectResponse($applicationsUrl))->send();
-
+      return new RedirectResponse($applicationsUrl);
     }
 
     // If user already has an application for this project.
@@ -65,6 +62,20 @@ class ApplicationForm extends ContentEntityForm {
       }
     }
 
+    if (!$this->isCorrectApplicationFormForProject($application_type_id, $project_data['ownership_type'])) {
+      $this->logger('asu_application')->critical('User tried to access ' . $project_data['ownership_type'] . ' application with project id of '. $project_id .' using wrong url.');
+      $types = [
+        'hitas' => 'haso',
+        'haso' => 'hitas',
+      ];
+      $correctApplicationForm = \Drupal::request()->getSchemeAndHttpHost() .
+        '/application/add/' . $types[$application_type_id] . '/' .
+        $project_id;
+      #(new RedirectResponse($correctApplicationForm))->send();
+      #return;
+      return new RedirectResponse($correctApplicationForm);
+    }
+
     // Pre-create the application if user comes to the form for the first time.
     if ($this->entity->isNew()) {
       $project_id = $parameters->get('project_id');
@@ -81,17 +92,27 @@ class ApplicationForm extends ContentEntityForm {
       return $form;
     }
 
-    if (!$this->isCorrectApplicationFormForProject($application_type_id, $project_data['ownership_type'])) {
-      // @todo Redirect to correct form.
-    }
-
     $startDate = $project_data['application_start_date'];
     $endDate = $project_data['application_end_date'];
 
-    if (!$this->isFormActive($startDate, $endDate)) {
-      // @todo Add redirect to proper place, outside of application time.
-      $this->messenger()->addMessage($this->t('You are trying to fill an application which is not active.'));
+    if (!isset($startDate) || !isset($endDate)) {
+      $this->logger()->critical('User tried to access application form of a project with no start or end date: project id' . $project_id);
+      $this->messenger()->addMessage(t('The apartment you tried to apply has no start or end date.'));
+      return new RedirectResponse($applicationsUrl);
     }
+
+    if ($this->isApplicationPeriod('before', $startDate, $endDate)) {
+      $this->messenger()->addMessage(t('The application period has not yet started'));
+      return new RedirectResponse($applicationsUrl);
+    }
+
+    if ($this->isApplicationPeriod('after', $startDate, $endDate)) {
+      $this->messenger()->addMessage(t('The application period has ended. You can still apply for the apartment by contacting us.'));
+      $freeApplicationUrl = \Drupal::request()->getSchemeAndHttpHost() .
+        '/contact/apply_free_apartment?title=' . $project_data['project_name'];
+      return new RedirectResponse($freeApplicationUrl);
+    }
+
 
     $projectName = $project_data['project_name'];
     $apartments = $project_data['apartments'];
@@ -349,6 +370,49 @@ class ApplicationForm extends ContentEntityForm {
     $month = $date->format('m');
     $year = $date->format('y');
     return $day . $month . $year;
+  }
+
+  private function getUserApplicationsUrl(): string {
+    $applicationsUrl = \Drupal::request()->getSchemeAndHttpHost() .
+      '/user/' . \Drupal::currentUser()->id() .
+      '/applications';
+  }
+
+  /**
+   * Check application period.
+   *
+   * @param string $period
+   *   Should be either 'before', 'after', or 'during'.
+   * @param string $startDate
+   *   Project application start date as ISO string.
+   * @param string $endDate
+   *   Project application end date as ISO string.
+   *
+   * @return bool
+   *   Is application period.
+   */
+  private function isApplicationPeriod(string $period, string $startDate, string $endDate) {
+    if (!$startDate || !$endDate) {
+      return FALSE;
+    }
+    $startTime = strtotime($startDate);
+    $endTime = strtotime($endDate);
+    $now = time();
+
+    switch ($period) {
+      case "before":
+        return $now < $startTime;
+
+        break;
+      case "during":
+        return $now > $startTime && $now < $endTime;
+
+        break;
+      case "after":
+        return $now > $endTime;
+
+        break;
+    }
   }
 
 }
