@@ -53,7 +53,7 @@ final class Initialize extends ResourceBase {
     ];
 
     /** @var \Drupal\user\Entity\User $user */
-    if (User::load(\Drupal::currentUser())->isAuthenticated()) {
+    if (\Drupal::currentUser()->isAuthenticated()) {
       $user = User::load(\Drupal::currentUser()->id());
       $response['user'] = $this->getUser($user);
       $response['user']['applications'] = $this->getUserApplications($user);
@@ -128,6 +128,15 @@ final class Initialize extends ResourceBase {
         ->getFilters(FilterRequest::create($languageCode))
         ->getContent();
 
+      // District items is associative array for some reason.
+      if (isset($content['project_district_hitas']['items'])) {
+        $content['project_district_hitas']['items'] = array_values($content['project_district_hitas']['items']);
+      }
+
+      // District items is associative array for some reason.
+      if (isset($content['project_district_haso']['items'])) {
+        $content['project_district_haso']['items'] = array_values($content['project_district_haso']['items']);
+      }
       // \Drupal::cache()->set($cacheKey, $content);
       return $content;
     }
