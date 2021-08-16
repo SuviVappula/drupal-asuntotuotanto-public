@@ -120,6 +120,15 @@ final class Initialize extends ResourceBase {
         ->getFilters(FilterRequest::create($languageCode))
         ->getContent();
 
+      // District items is associative array for some reason.
+      if (isset($content['project_district_hitas']['items'])) {
+        $content['project_district_hitas']['items'] = array_values($content['project_district_hitas']['items']);
+      }
+
+      // District items is associative array for some reason.
+      if (isset($content['project_district_haso']['items'])) {
+        $content['project_district_haso']['items'] = array_values($content['project_district_haso']['items']);
+      }
       // \Drupal::cache()->set($cacheKey, $content);
       return $content;
     }
