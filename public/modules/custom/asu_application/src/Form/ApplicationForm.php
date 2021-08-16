@@ -21,9 +21,15 @@ class ApplicationForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+
+    if (\Drupal::currentUser()->isAnonymous()) {
+      \Drupal::messenger()->addMessage($this->t('You must be logged in to send an application'));
+      return(new RedirectResponse('/user/login', 301));
+    }
+
     $applicationsUrl = $this->getUserApplicationsUrl();
 
-    if ($this->entity->hasField('field_locked') && $this->entity->field_locked->value === '1') {
+    if ($this->entity->hasField('field_locked') && $this->entity->field_locked->value == 1) {
       $this->messenger()->addMessage($this->t('This application has already been sent.'));
       return new RedirectResponse($applicationsUrl);
     }
