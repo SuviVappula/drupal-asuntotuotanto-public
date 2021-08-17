@@ -21,10 +21,17 @@ class ApplicationForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $applicationsUrl = $this->getUserApplicationsUrl();
+    $project_id = $this->entity->get('project_id')->value;
+    $application_type_id = $this->entity->bundle();
 
     // Anonymous user must login.
     if (!\Drupal::currentUser()->isAuthenticated()) {
       \Drupal::messenger()->addMessage($this->t('You must be logged in to send an application'));
+      $project_type = strtolower($application_type_id);
+      $application_url = "/application/add/$project_type/$project_id";
+      $session = \Drupal::request()->getSession();
+      $session->set('asu_last_application_url', $application_url);
       return(new RedirectResponse('/user/login', 301));
     }
 
@@ -35,8 +42,6 @@ class ApplicationForm extends ContentEntityForm {
       return(new RedirectResponse(\Drupal::request()->getSchemeAndHttpHost(), 301));
     }
 
-    $applicationsUrl = $this->getUserApplicationsUrl();
-
     if ($this->entity->hasField('field_locked') && $this->entity->field_locked->value == 1) {
       $this->messenger()->addMessage($this->t('This application has already been sent.'));
       return new RedirectResponse($applicationsUrl);
@@ -44,9 +49,9 @@ class ApplicationForm extends ContentEntityForm {
 
     $parameters = \Drupal::routeMatch()->getParameters();
 
-    $project_id = $this->entity->get('project_id')->value;
+
     $user = User::load($this->entity->getOwner()->id());
-    $application_type_id = $this->entity->bundle();
+
 
     $form['#project_id'] = $project_id;
     $bday = $user->date_of_birth->value;
