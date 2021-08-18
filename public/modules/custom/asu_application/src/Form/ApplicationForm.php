@@ -42,17 +42,33 @@ class ApplicationForm extends ContentEntityForm {
       return(new RedirectResponse(\Drupal::request()->getSchemeAndHttpHost(), 301));
     }
 
+    /** @var \Drupal\user\Entity\User $user */
+    $user = User::load(\Drupal::currentUser()->id());
+
+    $applications = \Drupal::entityTypeManager()
+      ->getStorage('asu_application')
+      ->loadByProperties([
+        'uid' => \Drupal::currentUser()->id(),
+        'project_id' => $project_id,
+      ]);
+
+    // User must have valid email address to fill more than one applications.
+    if ($user->hasField('field_email_is_valid') && $user->field_email_is_valid->value == 0) {
+      // User must be able to access the one application they created.
+      if (!empty($applications) && $applications[0]->id() != $this->entity->id()) {
+        \Drupal::messenger(t('You cannot fill more than one application until you have verified your email address.
+        Verify your email address by clicking the link sent to your email address.'));
+        $response = $this->getUserApplicationsUrl();
+        return $response;
+      }
+    }
+
     if ($this->entity->hasField('field_locked') && $this->entity->field_locked->value == 1) {
       $this->messenger()->addMessage($this->t('This application has already been sent.'));
       return new RedirectResponse($applicationsUrl);
     }
 
     $parameters = \Drupal::routeMatch()->getParameters();
-
-
-    $user = User::load($this->entity->getOwner()->id());
-
-
     $form['#project_id'] = $project_id;
     $bday = $user->date_of_birth->value;
 
@@ -183,22 +199,28 @@ class ApplicationForm extends ContentEntityForm {
       }
     }
     $user = User::load(\Drupal::currentUser()->id());
-
-    $event = new ApplicationEvent(
-      $this->entity->id(),
-      $form['#project_name'],
-      $form['#project_uuid'],
-      $form['#apartment_uuids']
-    );
-    $event_dispatcher = \Drupal::service('event_dispatcher');
-    $event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
-
-    $this->entity->set('field_locked', 1);
-    $this->entity->save();
-
-    $this->messenger()->addStatus($this->t('Your application has been submitted successfully. You can no longer edit the application.'));
-    $content_entity_id = $this->entity->getEntityType()->id();
-    $form_state->setRedirect("entity.{$content_entity_id}.canonical", [$content_entity_id => $this->entity->id()]);
+    if ($user->hasField('field_email_is_valid') && $user->field_email_is_valid == 1) {
+      $event = new ApplicationEvent(
+        $this->entity->id(),
+        $form['#project_name'],
+        $form['#project_uuid'],
+        $form['#apartment_uuids']
+      );
+      $event_dispatcher = \Drupal::service('event_dispatcher');
+      $event_dispatcher->dispatch($event, ApplicationEvent::EVENT_NAME);
+      $this->entity->set('field_locked', 1);
+      $this->entity->save();
+      $this->messenger()->addStatus($this->t('Your application has been submitted successfully.
+       You can no longer edit the application.'));
+      $content_entity_id = $this->entity->getEntityType()->id();
+      $form_state->setRedirect("entity.{$content_entity_id}.canonical", [$content_entity_id => $this->entity->id()]);
+    }
+    else {
+      \Drupal::messenger(t('You cannot submit application before you have verified your email address.
+      Verify your email address by clicking the link sent to your email address.'));
+      $response = $this->getUserApplicationsUrl();
+      return $response;
+    }
   }
 
   /**

@@ -4,6 +4,7 @@
  * @file
  */
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\asu_api\Api\BackendApi\Request\UpdateUserRequest;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -12,7 +13,6 @@ use Drupal\asu_api\Exception\RequestException;
 use Drupal\user\UserInterface;
 use Drupal\asu_api\Api\BackendApi\Request\UserRequest;
 use Drupal\asu_api\Api\BackendApi\Request\CreateUserRequest;
-use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -148,7 +148,7 @@ function asu_user_entity_type_alter(array &$entity_types) {
 /**
  * Implements hook_form_alter().
  */
-function asu_user_form_alter(&$form, \Drupal\Core\Form\FormStateInterface &$form_state, $form_id) {
+function asu_user_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
   if ($form_id == 'user_form') {
 
     $backendApi = \Drupal::service('asu_api.backendapi');
@@ -173,7 +173,7 @@ function asu_user_form_alter(&$form, \Drupal\Core\Form\FormStateInterface &$form
       $form['actions']['submit']['#submit'][] = 'user_edit_submit';
     }
 
-    if($response = asu_session_check_application_url()) {
+    if ($response = asu_session_check_application_url()) {
       $response->send();
       return;
     }
@@ -295,7 +295,7 @@ function asu_get_user_fields($account) {
  */
 function _asu_user_user_edit_form_submit($form, &$form_state) {
   $session = \Drupal::request()->getSession();
-  if (!$session->get('asu_last_application_url')){
+  if (!$session->get('asu_last_application_url')) {
     $form_state->setRedirect('entity.user.canonical', ['user' => \Drupal::currentUser()->id()]);
   }
 }
@@ -354,11 +354,14 @@ function asu_update_account_profile_field_value(&$account) {
   return $profileId;
 }
 
+/**
+ *
+ */
 function asu_session_check_application_url(): ?RedirectResponse {
   $session = \Drupal::request()->getSession();
   if ($url = $session->get('asu_last_application_url')) {
     $session->remove('asu_last_application_url');
-    return new RedirectResponse(\Drupal::request()->getSchemeAndHttpHost().$url, 301);
+    return new RedirectResponse(\Drupal::request()->getSchemeAndHttpHost() . $url, 301);
   }
   return NULL;
 }
