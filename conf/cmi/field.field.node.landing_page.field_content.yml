@@ -7,6 +7,7 @@ dependencies:
     - node.type.landing_page
     - paragraphs.paragraphs_type.banner
     - paragraphs.paragraphs_type.columns
+    - paragraphs.paragraphs_type.contact_information_with_map
     - paragraphs.paragraphs_type.content_cards
     - paragraphs.paragraphs_type.from_library
     - paragraphs.paragraphs_type.latest_news
@@ -43,6 +44,7 @@ settings:
       from_library: from_library
       remote_video: remote_video
       latest_news: latest_news
+      contact_information_with_map: contact_information_with_map
       liftup_with_image_and_links: liftup_with_image_and_links
     target_bundles_drag_drop:
       accordion:
@@ -57,9 +59,15 @@ settings:
       columns:
         enabled: true
         weight: -27
+      contact_information_with_map:
+        enabled: true
+        weight: 31
       content_cards:
         enabled: true
         weight: -23
+      cta_block:
+        weight: 33
+        enabled: false
       from_library:
         enabled: true
         weight: 21
@@ -96,9 +104,21 @@ settings:
       remote_video:
         enabled: true
         weight: 27
+      showcase:
+        weight: 46
+        enabled: false
+      showcase_block:
+        weight: 47
+        enabled: false
       stacked_text_blocks_with_image:
         enabled: true
         weight: 20
+      step:
+        weight: 49
+        enabled: false
+      steps_list:
+        weight: 50
+        enabled: false
       text:
         weight: -15
         enabled: false
