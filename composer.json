@@ -107,7 +107,8 @@
                 "Views attachments are not rendered in the specified order [https://www.drupal.org/project/drupal/issues/2943293]": "https://www.drupal.org/files/issues/2019-05-25/2943293-17.patch"
             },
             "drupal/hdbt_admin": {
-                "Custom hero addition": "./public/patches/custom_hero_addition.patch"
+                "Custom hero addition": "./public/patches/custom_hero_addition.patch",
+                "Column paragraph modification": "./public/patches/columns_toggle_modification.patch"
             },
             "drupal/jquery_ui_touch_punch": {
                 "jQuery UI Touch Punch library [https://www.drupal.org/project/jquery_ui_touch_punch/issues/3159222]": "https://www.drupal.org/files/issues/2021-02-26/jquery_ui_touch_punch.patch"

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "918f5dc8e14593b310ceda4076772df5",
+    "content-hash": "f490eaff6a8ff610ff205247ad659764",
     "packages": [
         {
             "name": "City-of-Helsinki/php-hauki-client",
@@ -4326,16 +4326,16 @@
         },
         {
             "name": "drupal/hdbt_admin",
-            "version": "1.3.6",
+            "version": "1.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-hdbt-admin.git",
-                "reference": "a7a4d70f89e12365f565b1fd715d8bb0d5366969"
+                "reference": "f8fb1ba98accef3f2e17ae07be9cd19cfe1d8ef7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt-admin/zipball/a7a4d70f89e12365f565b1fd715d8bb0d5366969",
-                "reference": "a7a4d70f89e12365f565b1fd715d8bb0d5366969",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt-admin/zipball/f8fb1ba98accef3f2e17ae07be9cd19cfe1d8ef7",
+                "reference": "f8fb1ba98accef3f2e17ae07be9cd19cfe1d8ef7",
                 "shasum": ""
             },
             "require": {
@@ -4351,10 +4351,10 @@
                 "Drupal"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-hdbt-admin/tree/1.3.6",
+                "source": "https://github.com/City-of-Helsinki/drupal-hdbt-admin/tree/latest",
                 "issues": "https://github.com/City-of-Helsinki/drupal-hdbt-admin/issues"
             },
-            "time": "2021-07-08T12:10:51+00:00"
+            "time": "2021-07-16T12:24:23+00:00"
         },
         {
             "name": "drupal/helfi_ahjo",
@@ -17020,5 +17020,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
