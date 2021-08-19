@@ -65,14 +65,16 @@
         </li>
         <li class="contact-information-with-map__information-item">
           <span class="visually-hidden">{{ "Postal code and city"|t }}</span>
-          {{ postal_code }}, {{ locality }}
+          {{ postal_code }} {{ locality }}
         </li>
         <li class="contact-information-with-map__information-item">
           <span class="visually-hidden">{{ "Email"|t }}</span>
+          {% include "@hdbt/misc/icon.twig" with {icon: 'envelope', label: ''} %}
           {{ email }}
         </li>
         <li class="contact-information-with-map__information-item">
           <span class="visually-hidden">{{ "Phone"|t }}</span>
+          {% include "@hdbt/misc/icon.twig" with {icon: 'phone', label: ''} %}
           {{ phone }}
         </li>
       </ul>
