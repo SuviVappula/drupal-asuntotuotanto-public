@@ -57,7 +57,7 @@ class ElasticProxy extends ResourceBase {
     }
     catch (\Exception $e) {
       \Drupal::logger('asu_elastic_proxy')->critical('Could not fetch apartments for react search component: ' . $e->getMessage());
-      return new ModifiedResourceResponse(['message' => 'Query for apartments failed.'], 500);
+      return new ModifiedResourceResponse(['message' => 'Proxy query for apartments failed.'], 500);
     }
 
     $headers = getenv('APP_ENV') == 'test' ? [
