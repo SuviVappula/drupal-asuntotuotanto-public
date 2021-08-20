@@ -52,9 +52,10 @@ class ApplicationForm extends ContentEntityForm {
 
     // User must have valid email address to fill more than one applications.
     if ($user->hasField('field_email_is_valid') && $user->field_email_is_valid->value == 0) {
+      $application = reset($applications);
       // User must be able to access the one application they have already created.
-      if (!empty($applications) && $this->entity->id() === null) {
-        $this->messenger()->addMessage(t('You cannot fill more than one application until you have confirmed your email address.
+      if (!empty($applications) && $this->entity->id() === NULL || $application && $application->id() != $this->entity->id()) {
+        $this->messenger()->addMessage($this->t('You cannot fill more than one application until you have confirmed your email address.
         To confirm your email you must click the link sent to your email address.'));
         $response = (new RedirectResponse($applicationsUrl, 301))->send();
         return $response;
@@ -113,17 +114,17 @@ class ApplicationForm extends ContentEntityForm {
 
     if (!isset($startDate) || !isset($endDate)) {
       $this->logger()->critical('User tried to access application form of a project with no start or end date: project id' . $project_id);
-      $this->messenger()->addMessage(t('The apartment you tried to apply has no start or end date.'));
+      $this->messenger()->addMessage($this->t('The apartment you tried to apply has no start or end date.'));
       return new RedirectResponse($applicationsUrl);
     }
 
     if ($this->isApplicationPeriod('before', $startDate, $endDate)) {
-      $this->messenger()->addMessage(t('The application period has not yet started'));
+      $this->messenger()->addMessage($this->t('The application period has not yet started'));
       return new RedirectResponse($applicationsUrl);
     }
 
     if ($this->isApplicationPeriod('after', $startDate, $endDate)) {
-      $this->messenger()->addMessage(t('The application period has ended. You can still apply for the apartment by contacting us.'));
+      $this->messenger()->addMessage($this->t('The application period has ended. You can still apply for the apartment by contacting us.'));
       $freeApplicationUrl = \Drupal::request()->getSchemeAndHttpHost() .
         '/contact/apply_free_apartment?title=' . $project_data['project_name'];
       return new RedirectResponse($freeApplicationUrl);
@@ -165,12 +166,13 @@ class ApplicationForm extends ContentEntityForm {
   }
 
   /**
-   * Save the form without settings
+   * Save the form without settings.
    */
   public function saveAsDraft(array $form, FormStateInterface $form_state) {
     $this->updateEntityFieldsWithUserInput($form_state);
     parent::save($form, $form_state);
-    $this->messenger()->addMessage($this->t('The application has been saved. You must submit the application before the application time expires.'));
+    $this->messenger()->addMessage($this->t('The application has been saved as a draft.
+     You must submit the application before the application time expires.'));
   }
 
   /**
@@ -207,13 +209,13 @@ class ApplicationForm extends ContentEntityForm {
       $this->messenger()->addStatus($this->t('Your application has been submitted successfully.
        You can no longer edit the application.'));
       $content_entity_id = $this->entity->getEntityType()->id();
-      $form_state->setRedirect("entity.{$content_entity_id}.canonical", [$content_entity_id => $this->entity->id()]);
+      // $form_state->setRedirect("entity.{$content_entity_id}.canonical", [$content_entity_id => $this->entity->id()]);
     }
     else {
       \Drupal::messenger(t('You cannot submit application before you have confirmed your email address.
       To confirm your email address you must click the link sent to your email address.'));
-      $response = (new RedirectResponse($this->getUserApplicationsUrl(), 301))->send();
-      return $response;
+      // $response = (new RedirectResponse($this->getUserApplicationsUrl(), 301))->send();
+      // return $response;
     }
   }
 
