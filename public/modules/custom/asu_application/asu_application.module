@@ -49,6 +49,7 @@ function template_preprocess_asu_application(array &$variables) {
     $application_teaser_values['#teaser_values']['application_url'] = $application->isLocked() ? "/application/$id" : "/application/$id/edit";
   }
   catch (\Exception $e) {
+    \Drupal::logger('asu_application')->critical('Unable to fetch apartments for application form preprocessor');
     $application_teaser_values = [];
   }
 

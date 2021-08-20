@@ -34,6 +34,7 @@ class ApartmentService extends ServiceBase {
       ],
       'json' => $apartmentRequest->toArray(),
     ];
+
     $response = $this->requestHandler->post($apartmentRequest->getPath(), $options);
     return ProjectApartmentsResponse::createFromHttpResponse($response);
   }

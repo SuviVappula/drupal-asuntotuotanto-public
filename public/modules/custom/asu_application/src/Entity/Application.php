@@ -80,7 +80,7 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
    * @return bool
    *   Has children.
    */
-  public function getHasChildren(): bool {
+  public function getHasChildren(): ?bool {
     return $this->has_children->value;
   }
 
@@ -243,7 +243,6 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
       'uid' => \Drupal::currentUser()->id(),
       'project_id' => $project_id,
     ];
-
   }
 
 }
