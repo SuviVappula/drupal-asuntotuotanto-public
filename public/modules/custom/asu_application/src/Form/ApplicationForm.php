@@ -5,6 +5,8 @@ namespace Drupal\asu_application\Form;
 use Drupal\asu_api\Api\ElasticSearchApi\Request\ProjectApartmentsRequest;
 use Drupal\asu_application\Entity\Application;
 use Drupal\asu_application\Event\ApplicationEvent;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerTrait;
@@ -157,22 +159,17 @@ class ApplicationForm extends ContentEntityForm {
 
     $form['#title'] = $this->t('Application for') . ' ' . $projectName;
 
+    $form['actions']['submit']['#value'] = $this->t('Send application');
+
     $form['actions']['draft'] = [
       '#type' => 'submit',
       '#value' => t('Save as a draft'),
-      '#submit' => ['::saveAsDraft'],
+      '#ajax' => [
+        'callback' => '::ajaxSaveDraft',
+        'event' => 'click',
+      ],
     ];
     return $form;
-  }
-
-  /**
-   * Save the form without settings.
-   */
-  public function saveAsDraft(array $form, FormStateInterface $form_state) {
-    $this->updateEntityFieldsWithUserInput($form_state);
-    parent::save($form, $form_state);
-    $this->messenger()->addMessage($this->t('The application has been saved as a draft.
-     You must submit the application before the application time expires.'));
   }
 
   /**
@@ -184,7 +181,8 @@ class ApplicationForm extends ContentEntityForm {
     $this->updateEntityFieldsWithUserInput($form_state);
     $this->updateApartments($form, $this->entity, $values['apartment']);
 
-    parent::save($form, $form_state);
+    $this->entity->save();
+
     // Validate additional applicant.
     if ($values['applicant'][0]['has_additional_applicant'] === "1") {
       foreach ($values['applicant'][0] as $key => $value) {
@@ -194,6 +192,7 @@ class ApplicationForm extends ContentEntityForm {
         }
       }
     }
+
     $user = User::load(\Drupal::currentUser()->id());
     if ($user->hasField('field_email_is_valid') && $user->field_email_is_valid == 1) {
       $event = new ApplicationEvent(
@@ -209,14 +208,31 @@ class ApplicationForm extends ContentEntityForm {
       $this->messenger()->addStatus($this->t('Your application has been submitted successfully.
        You can no longer edit the application.'));
       $content_entity_id = $this->entity->getEntityType()->id();
-      // $form_state->setRedirect("entity.{$content_entity_id}.canonical", [$content_entity_id => $this->entity->id()]);
+      $form_state->setRedirect("entity.{$content_entity_id}.canonical", [$content_entity_id => $this->entity->id()]);
     }
     else {
       \Drupal::messenger(t('You cannot submit application before you have confirmed your email address.
       To confirm your email address you must click the link sent to your email address.'));
-      // $response = (new RedirectResponse($this->getUserApplicationsUrl(), 301))->send();
-      // return $response;
+      $response = (new RedirectResponse($this->getUserApplicationsUrl(), 301))->send();
+      return $response;
     }
+  }
+
+  /**
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   */
+  public function ajaxSaveDraft(array $form, FormStateInterface $form_state) {
+    $this->updateEntityFieldsWithUserInput($form_state);
+    $this->entity->save();
+
+    $this->messenger()->addMessage($this->t('The application has been saved as a draft.
+     You must submit the application before the application time expires.'));
+    $url = $this->getUserApplicationsUrl();
+    $response = new AjaxResponse();
+    $response->addCommand(new RedirectCommand($url));
+    return $response;
   }
 
   /**
