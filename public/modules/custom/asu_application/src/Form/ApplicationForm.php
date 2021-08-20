@@ -194,7 +194,7 @@ class ApplicationForm extends ContentEntityForm {
     }
 
     $user = User::load(\Drupal::currentUser()->id());
-    if ($user->hasField('field_email_is_valid') && $user->field_email_is_valid == 1) {
+    if ($user->hasField('field_email_is_valid') && $user->field_email_is_valid->value == 1) {
       $event = new ApplicationEvent(
         $this->entity->id(),
         $form['#project_name'],
