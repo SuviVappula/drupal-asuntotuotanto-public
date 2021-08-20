@@ -102,7 +102,6 @@ function asu_authenticate_user(UserInterface $account) {
 function asu_redirect_on_login_by_session() {
   if ($response = asu_session_check_application_url()) {
     $response->send();
-    return;
   }
 }
 
@@ -150,7 +149,6 @@ function asu_user_entity_type_alter(array &$entity_types) {
  */
 function asu_user_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
   if ($form_id == 'user_form') {
-
     $backendApi = \Drupal::service('asu_api.backendapi');
     $user = User::load(\Drupal::currentUser()->id());
     /** @var \Drupal\asu_user\Store $store */
@@ -203,6 +201,7 @@ function user_edit_submit($form, &$form_state) {
       ->handleAuthentication($user);
   }
   catch (\Exception $e) {
+    \Drupal::logger('asu_user')->critical('authentication failed.');
   }
 
   if ($token) {

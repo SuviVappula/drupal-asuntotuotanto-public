@@ -17,7 +17,7 @@ function asu_mailer_update_8002() {
     'subject' => 'Yhteydenottopyyntö vapaaseen huoneistoon [contact_message:field_apartment_information]',
     'message' => 'Käyttäjä täytti hakemuslomakkeen vapaaseen huoneistoon [contact_message:created:date:long]
 
-Huoneisto: [contact_message:field_apartment_information
+Huoneisto: [contact_message:field_apartment_information]
 Nimi: [contact_message:field_name]
 Syntymäaika: [contact_message:field_date_of_birth:date:short]
 Puhelinnumero: [contact_message:field_phone_number]

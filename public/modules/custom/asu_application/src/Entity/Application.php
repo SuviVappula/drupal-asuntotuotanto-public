@@ -243,7 +243,6 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
       'uid' => \Drupal::currentUser()->id(),
       'project_id' => $project_id,
     ];
-
   }
 
 }

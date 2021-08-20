@@ -27,7 +27,7 @@ class ApplicationForm extends ContentEntityForm {
 
     // Anonymous user must login.
     if (!\Drupal::currentUser()->isAuthenticated()) {
-      \Drupal::messenger()->addMessage($this->t('You must be logged in to send an application'));
+      \Drupal::messenger()->addMessage($this->t('You must be logged in to fill an application'));
       $project_type = strtolower($application_type_id);
       $application_url = "/application/add/$project_type/$project_id";
       $session = \Drupal::request()->getSession();
@@ -44,21 +44,19 @@ class ApplicationForm extends ContentEntityForm {
 
     /** @var \Drupal\user\Entity\User $user */
     $user = User::load(\Drupal::currentUser()->id());
-
     $applications = \Drupal::entityTypeManager()
       ->getStorage('asu_application')
       ->loadByProperties([
         'uid' => \Drupal::currentUser()->id(),
-        'project_id' => $project_id,
       ]);
 
     // User must have valid email address to fill more than one applications.
     if ($user->hasField('field_email_is_valid') && $user->field_email_is_valid->value == 0) {
-      // User must be able to access the one application they created.
-      if (!empty($applications) && $applications[0]->id() != $this->entity->id()) {
-        \Drupal::messenger(t('You cannot fill more than one application until you have verified your email address.
-        Verify your email address by clicking the link sent to your email address.'));
-        $response = $this->getUserApplicationsUrl();
+      // User must be able to access the one application they have already created.
+      if (!empty($applications) && $this->entity->id() === null) {
+        $this->messenger()->addMessage(t('You cannot fill more than one application until you have confirmed your email address.
+        To confirm your email you must click the link sent to your email address.'));
+        $response = (new RedirectResponse($applicationsUrl, 301))->send();
         return $response;
       }
     }
@@ -131,12 +129,8 @@ class ApplicationForm extends ContentEntityForm {
       return new RedirectResponse($freeApplicationUrl);
     }
 
-    // All prerequisites for creating as application has been met.
     // Pre-create the application if user comes to the form for the first time.
     if ($this->entity->isNew()) {
-      $project_id = $parameters->get('project_id');
-      /** @var \Drupal\asu_application\Entity\ApplicationType $application */
-      $application = $parameters->get('application_type');
       if ($this->entity->hasField('field_personal_id')) {
         $personalIdDivider = $this->getPersonalIdDivider($bday);
         $this->entity->set('field_personal_id', $personalIdDivider);
@@ -171,7 +165,7 @@ class ApplicationForm extends ContentEntityForm {
   }
 
   /**
-   *
+   * Save the form without settings
    */
   public function saveAsDraft(array $form, FormStateInterface $form_state) {
     $this->updateEntityFieldsWithUserInput($form_state);
@@ -216,9 +210,9 @@ class ApplicationForm extends ContentEntityForm {
       $form_state->setRedirect("entity.{$content_entity_id}.canonical", [$content_entity_id => $this->entity->id()]);
     }
     else {
-      \Drupal::messenger(t('You cannot submit application before you have verified your email address.
-      Verify your email address by clicking the link sent to your email address.'));
-      $response = $this->getUserApplicationsUrl();
+      \Drupal::messenger(t('You cannot submit application before you have confirmed your email address.
+      To confirm your email address you must click the link sent to your email address.'));
+      $response = (new RedirectResponse($this->getUserApplicationsUrl(), 301))->send();
       return $response;
     }
   }
