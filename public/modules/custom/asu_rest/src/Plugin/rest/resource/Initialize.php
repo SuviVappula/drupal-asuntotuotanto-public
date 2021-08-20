@@ -62,7 +62,7 @@ final class Initialize extends ResourceBase {
     $headers = getenv('APP_ENV') == 'test' ? [
       'Access-Control-Allow-Origin' => '*',
       'Access-Control-Allow-Methods' => '*',
-      'Access-Control-Allow-Headers' => '*'
+      'Access-Control-Allow-Headers' => '*',
     ] : [];
 
     return new ModifiedResourceResponse($response, 200, $headers);
