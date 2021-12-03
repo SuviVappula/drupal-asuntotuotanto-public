@@ -1,0 +1,20 @@
+uuid: 2932dade-713a-4eab-84a0-f7f862af2523
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_attachments
+  module:
+    - external_entities
+id: project.project.field_attachments
+field_name: field_attachments
+entity_type: project
+bundle: project
+label: Attachments
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

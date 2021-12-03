@@ -1,4 +1,4 @@
-uuid: 753ee134-30fc-4877-9d11-d88e0c18437c
+uuid: b36c9e3d-a56c-4216-9302-a0dd4a1f422c
 langcode: en
 status: true
 dependencies:
@@ -9,9 +9,10 @@ dependencies:
     - field.field.paragraph.columns.field_columns_title
     - paragraphs.paragraphs_type.columns
   module:
+    - hdbt_admin_editorial
     - paragraphs
 _core:
-  default_config_hash: epEWSZ1PtLCc7zcGls3RWqhFaaCFGlehVQb8QLysEX0
+  default_config_hash: UdB9StYRd1ami-k28GJOyZFqzuZGdc6LZ7CHyx4rNYg
 id: paragraph.columns.default
 targetEntityType: paragraph
 bundle: columns
@@ -21,7 +22,7 @@ content:
     weight: 1
     settings: {  }
     third_party_settings: {  }
-    type: options_select
+    type: design_field_widget
     region: content
   field_columns_left_column:
     type: paragraphs

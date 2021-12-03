@@ -1,0 +1,21 @@
+uuid: f607b224-6b04-4382-bc6d-f547c1935fd2
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: apartment.field_services_url
+field_name: field_services_url
+entity_type: apartment
+type: string
+settings:
+  max_length: 9999
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

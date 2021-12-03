@@ -1,0 +1,21 @@
+uuid: 8b723f11-1def-4155-a05e-807aae43339f
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: apartment.field_ownership_type
+field_name: field_ownership_type
+entity_type: apartment
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

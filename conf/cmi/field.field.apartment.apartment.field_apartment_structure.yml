@@ -1,0 +1,20 @@
+uuid: 9ce48908-5d70-480e-ba6b-8fb969d9d428
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_apartment_structure
+  module:
+    - external_entities
+id: apartment.apartment.field_apartment_structure
+field_name: field_apartment_structure
+entity_type: apartment
+bundle: apartment
+label: 'Apartment structure'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

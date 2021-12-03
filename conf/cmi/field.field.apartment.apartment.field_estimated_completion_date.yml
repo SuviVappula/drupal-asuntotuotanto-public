@@ -1,0 +1,20 @@
+uuid: 96fc50e5-a227-4936-895b-b486ccd222c4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_estimated_completion_date
+  module:
+    - external_entities
+id: apartment.apartment.field_estimated_completion_date
+field_name: field_estimated_completion_date
+entity_type: apartment
+bundle: apartment
+label: 'Estimated completion date'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

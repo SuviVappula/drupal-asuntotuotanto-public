@@ -1,9 +1,11 @@
+description: 'Hitta och hantera media.'
 display:
   default:
     display_title: Huvud
     display_options:
       exposed_form:
         options:
+          submit_button: 'Tillämpa filter'
           reset_button_label: Återställ
           exposed_sorts_label: 'Sortera efter'
           sort_asc_label: Stigande
@@ -17,8 +19,13 @@ display:
           tags:
             previous: ‹‹
             next: ››
+      fields:
+        media_bulk_form:
+          action_title: Åtgärd
       filters:
         status:
+          expose:
+            label: 'Status för publicering'
           group_info:
             label: Publicerad
             group_items:
@@ -29,21 +36,48 @@ display:
         name:
           expose:
             label: Namn
+        bundle:
+          expose:
+            label: Mediatyp
+          group_info:
+            label: Mediatyp
         langcode:
           expose:
             label: Språk
+      sorts:
+        created:
+          expose:
+            label: 'Nyaste först'
+        name:
+          expose:
+            label: 'Namn (A-Z)'
+        name_1:
+          expose:
+            label: 'Namn (Z-A)'
       title: Media
+      empty:
+        area_text_custom:
+          content: 'Ingen media tillgänglig.'
   page:
     display_title: Sida
     display_options:
       fields:
+        media_bulk_form:
+          action_title: Åtgärd
         name:
           separator: ', '
         edit_media:
+          alter:
+            text: 'Redigera {{ name }}'
+            alt: 'Redigera {{ name }}'
           text: Redigera
         delete_media:
+          alter:
+            text: 'Radera {{ name }}'
+            alt: 'Radera {{ name }}'
           text: Radera
   widget:
+    display_title: Widget
     display_options:
       filters:
         name:
@@ -53,9 +87,17 @@ display:
         bundle:
           exception:
             title: Alla
+      header:
+        display_link_grid:
+          label: Rutnät
+        display_link_table:
+          label: Tabell
   widget_table:
+    display_title: 'Gränssnittskomponent (tabell)'
     display_options:
       fields:
+        thumbnail__target_id:
+          label: Miniatyr
         name:
           label: Namn
         uid:
@@ -70,3 +112,8 @@ display:
         bundle:
           exception:
             title: Alla
+      header:
+        display_link_grid:
+          label: Rutnät
+        display_link_table:
+          label: Tabell

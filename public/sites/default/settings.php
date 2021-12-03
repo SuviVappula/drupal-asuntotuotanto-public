@@ -90,3 +90,73 @@ if ($env = getenv('APP_ENV')) {
     include __DIR__ . '/local.settings.php';
   }
 }
+
+if ($env = getenv('APP_ENV')) {
+  // Default settings.
+  $config['user.settings']['notify']['register_no_approval_required'] = FALSE;
+
+  // Default settings for most environments.
+  $settings['ASU_DJANGO_BACKEND_URL'] = getenv('ASU_DJANGO_BACKEND_URL');
+  $settings['ASU_ASUNTOTUOTANTO_URL'] = getenv('ASU_ASUNTOTUOTANTO_URL');
+  $settings['ASU_ELASTICSEARCH_ADDRESS'] = getenv('ASU_ELASTICSEARCH_ADDRESS');
+
+  $settings['ASU_ELASTICSEARCH_USERNAME'] = getenv('ASU_ELASTICSEARCH_USERNAME');
+  $settings['ASU_ELASTICSEARCH_PASSWORD'] = getenv('ASU_ELASTICSEARCH_PASSWORD');
+
+  // Email settings.
+  $config['mailsystem.settings']['defaults']['sender'] = 'swiftmailer';
+  $config['mailsystem.settings']['defaults']['formatter'] = 'swiftmailer';
+  $config['mailsystem.settings']['modules']['swiftmailer']['none']['formatter'] = 'swiftmailer';
+  $config['mailsystem.settings']['modules']['swiftmailer']['none']['sender'] = 'swiftmailer';
+
+  $config['swiftmailer.transport']['transport'] = 'smtp';
+  $config['swiftmailer.transport']['smtp_host'] = getenv('ASU_MAILSERVER_ADDRESS');
+  $config['swiftmailer.transport']['smtp_port'] = 25;
+  $config['swiftmailer.transport']['smtp_encryption'] = '0';
+  $config['swiftmailer.transport']['smtp_credential_provider'] = 'swiftmailer';
+
+
+  // External entity settings.
+  $config['external_entities.external_entity_type.project']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_ADDRESS');
+  $config['external_entities.external_entity_type.apartment']['storage_client_config']['endpoint'] = getenv('ASU_ASUNTOTUOTANTO_ADDRESS');
+
+  // Sentry settings.
+  $config['raven.settings']['client_key'] = getenv('ASU_SENTRY_DNS');
+  $config['raven.settings']['fatal_error_handler'] = TRUE;
+  $config['raven.settings']['stack'] = TRUE;
+  $config['raven.settings']['log_levels'][1] = 1;
+
+  // Local development environment.
+  if ($env === 'dev') {
+    // Email settings.
+    $config['mailsystem.settings']['defaults']['sender'] = 'swiftmailer';
+    $config['mailsystem.settings']['defaults']['formatter'] = 'swiftmailer';
+    $config['swiftmailer.transport']['transport'] = 'smtp';
+    $config['swiftmailer.transport']['smtp_host'] = 'mailhog';
+    $config['swiftmailer.transport']['smtp_port'] = '1025';
+    $config['swiftmailer.transport']['smtp_encryption'] = '0';
+
+    $settings['ASU_ELASTICSEARCH_ADDRESS'] = 'http://elastic:9200';
+  }
+
+  // Development environment.
+  if ($env === 'development') {
+    $config['raven.settings']['environment'] = 'development';
+  }
+
+  // Test environment.
+  if ($env === 'test') {
+    $config['raven.settings']['environment'] = 'testing';
+  }
+
+  // Staging environment.
+  if ($env === 'staging') {
+    $config['raven.settings']['environment'] = 'staging';
+  }
+
+  // Production environment.
+  if ($env === 'prod') {
+    $config['raven.settings']['environment'] = 'production';
+  }
+
+}

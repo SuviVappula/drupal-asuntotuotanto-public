@@ -1,0 +1,91 @@
+uuid: c3205be1-8d32-45a0-82cc-297344124629
+langcode: en
+status: true
+dependencies: {  }
+id: project
+label: Project
+label_plural: Projects
+description: ''
+read_only: false
+field_mappings:
+  id:
+    value: id
+  uuid:
+    value: uuid
+  title:
+    value: title
+  field_accessibility:
+    value: field_project_accessibility
+  field_apartment_living_areas:
+    value: apartment_living_area_sizes_m2
+  field_apartment_sales_prices:
+    value: apartment_sales_prices
+  field_apartment_structures:
+    value: apartment_structures
+  field_apartments:
+    value: 'apartments/*'
+  field_apartments_count:
+    value: apartments_count
+  field_application_end_time:
+    value: application_end_time
+  field_application_start_time:
+    value: application_start_time
+  field_attachments:
+    value: 'attachments/*'
+  field_building_type:
+    value: field_building_type
+  field_city:
+    value: field_city
+  field_debt_free_sales_prices:
+    value: apartment_debt_free_sales_prices
+  field_district:
+    value: field_district
+  field_energy_class:
+    value: field_energy_class
+  field_estimated_completion_date:
+    value: estimated_completion_date
+  field_housing_company:
+    value: field_housing_company
+  field_images:
+    uri: images
+  field_is_application_period:
+    value: is_application_period_active
+  field_ownership_type:
+    value: field_ownership_type
+  field_postal_code:
+    value: field_postal_code
+  field_project_area_description:
+    value: field_project_area_description
+  field_project_description:
+    value: field_project_description
+  field_services:
+    value: 'services/*'
+  field_services_url:
+    value: 'services_url/*'
+  field_site_owner:
+    value: field_site_owner
+  field_site_renter:
+    value: field_site_renter
+  field_street_address:
+    value: field_street_address
+storage_client_id: rest
+storage_client_config:
+  endpoint: 'https://nginx-asuntotuotanto-test.agw.arodevtest.hel.fi/fi/content/project'
+  response_format: json
+  pager:
+    default_limit: '50'
+    page_parameter: ''
+    page_parameter_type: null
+    page_size_parameter: ''
+    page_size_parameter_type: null
+  api_key:
+    header_name: ''
+    key: ''
+  parameters:
+    list: {  }
+    single: {  }
+persistent_cache_max_age: 10800
+annotation_entity_type_id: null
+annotation_bundle_id: null
+annotation_field_name: null
+inherits_annotation_fields: false

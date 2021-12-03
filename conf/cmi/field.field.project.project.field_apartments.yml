@@ -1,0 +1,20 @@
+uuid: 2e9b984e-e755-4190-956d-656a086c9b2e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_apartments
+  module:
+    - external_entities
+id: project.project.field_apartments
+field_name: field_apartments
+entity_type: project
+bundle: project
+label: Apartments
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

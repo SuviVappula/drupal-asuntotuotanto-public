@@ -1,0 +1,20 @@
+uuid: 5371e3fb-8109-492e-b154-f77b5b2173b7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_postal_code
+  module:
+    - external_entities
+id: project.project.field_postal_code
+field_name: field_postal_code
+entity_type: project
+bundle: project
+label: 'Postal code'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -6,14 +6,14 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
 
 /**
- * Class ApplicationTypeListBuilder
+ * ApplicationTypeListBuilder class .
  */
 class ApplicationListBuilder extends EntityListBuilder {
 
   /**
    * {@inheritdoc}
    */
-  public function buildHeader(){
+  public function buildHeader() {
     $header['id'] = $this->t('Linked Entity Id');
     $header['content_entity_label'] = $this->t('Content Entity Label');
     $header['content_entity_id'] = $this->t('Content Entity Id');
@@ -35,4 +35,5 @@ class ApplicationListBuilder extends EntityListBuilder {
 
     return $row + parent::buildRow($entity);
   }
+
 }

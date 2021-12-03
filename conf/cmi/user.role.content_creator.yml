@@ -1,9 +1,0 @@
-uuid: c469b101-114a-4260-a3d7-07ef27b94007
-langcode: en
-status: true
-dependencies: {  }
-id: content_creator
-label: 'Content creator'
-weight: -7
-is_admin: null
-permissions: {  }

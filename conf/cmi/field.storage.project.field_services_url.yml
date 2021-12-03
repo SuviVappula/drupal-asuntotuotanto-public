@@ -1,0 +1,21 @@
+uuid: 3f952128-901f-4834-876c-6c7a3c883d49
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: project.field_services_url
+field_name: field_services_url
+entity_type: project
+type: string
+settings:
+  max_length: 9999
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

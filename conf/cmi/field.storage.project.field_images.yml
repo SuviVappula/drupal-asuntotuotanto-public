@@ -1,0 +1,19 @@
+uuid: e94698c1-9765-4a8b-875c-770e7ab206c2
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+    - link
+id: project.field_images
+field_name: field_images
+entity_type: project
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

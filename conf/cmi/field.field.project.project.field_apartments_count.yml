@@ -1,0 +1,24 @@
+uuid: d294a3da-46f0-4d0a-b215-e25cf1a23864
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_apartments_count
+  module:
+    - external_entities
+id: project.project.field_apartments_count
+field_name: field_apartments_count
+entity_type: project
+bundle: project
+label: 'Apartments count'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

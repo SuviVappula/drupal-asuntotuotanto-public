@@ -6,6 +6,9 @@ use Drupal\Core\Entity\BundleEntityFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\field_ui\FieldUI;
 
+/**
+ * Entity form for Application type.
+ */
 class ApplicationTypeEntityForm extends BundleEntityFormBase {
 
   /**
@@ -80,7 +83,9 @@ class ApplicationTypeEntityForm extends BundleEntityFormBase {
    * Form submission handler to redirect to Manage fields page of Field UI.
    *
    * @param array $form
-   * @param FormStateInterface $form_state
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
    */
   public function redirectToFieldUi(array $form, FormStateInterface $form_state) {
     $route_info = FieldUI::getOverviewRouteInfo($this->entity->getEntityType()->getBundleOf(), $this->entity->id());
@@ -89,4 +94,5 @@ class ApplicationTypeEntityForm extends BundleEntityFormBase {
       $form_state->setRedirectUrl($route_info);
     }
   }
+
 }

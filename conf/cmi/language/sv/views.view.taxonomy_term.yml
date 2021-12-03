@@ -1,4 +1,5 @@
 label: Taxonomiterm
+description: 'Innehåll som hör till en viss taxonomiterm.'
 display:
   default:
     display_title: Huvud
@@ -23,5 +24,8 @@ display:
         tid:
           exception:
             title: Alla
+          title: '{{ arguments.tid }}'
+  feed_1:
+    display_title: Innehållsflöde
   page_1:
     display_title: Sida

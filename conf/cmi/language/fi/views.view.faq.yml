@@ -1,0 +1,15 @@
+label: UKK
+display:
+  default:
+    display_options:
+      title: UKK
+  faq_page_haso:
+    display_title: 'UKK Sivu - Haso'
+    display_options:
+      menu:
+        title: 'Usein kysytyt kysymykset'
+  faq_page_hitas:
+    display_title: 'UKK Sivu - Hitas'
+    display_options:
+      menu:
+        title: 'Usein kysytyt kysymykset'

@@ -7,9 +7,9 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\user\EntityOwnerInterface;
 use Drupal\user\EntityOwnerTrait;
+
 /**
  * Defines the Application entity.
  *
@@ -33,7 +33,7 @@ use Drupal\user\EntityOwnerTrait;
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\Core\Entity\EntityListBuilder",
- *     "access" = "Drupal\Core\Entity\EntityAccessControlHandler",
+ *     "access" = "Drupal\asu_application\Entity\Access\ApplicationEntityAccess",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "form" = {
  *       "default" = "Drupal\asu_application\Form\ApplicationForm",
@@ -41,7 +41,7 @@ use Drupal\user\EntityOwnerTrait;
  *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
  *     },
  *     "route_provider" = {
- *       "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
+ *       "html" = "Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider",
  *     },
  *   },
  *   links = {
@@ -64,12 +64,79 @@ use Drupal\user\EntityOwnerTrait;
 class Application extends EditorialContentEntityBase implements ContentEntityInterface, EntityOwnerInterface {
   use EntityOwnerTrait;
 
-  public function getProjectId(){
+  /**
+   * Gets project id.
+   *
+   * @return string
+   *   Project id.
+   */
+  public function getProjectId() {
     return $this->project_id->value;
   }
 
-  public static function baseFieldDefinitions(EntityTypeInterface $entity_type)
-  {
+  /**
+   * Return has children.
+   *
+   * @return bool
+   *   Has children.
+   */
+  public function getHasChildren(): ?bool {
+    return $this->has_children->value;
+  }
+
+  /**
+   * Get apartments.
+   *
+   * @return object
+   *   Apartments object
+   */
+  public function getApartments(): object {
+    return $this->apartment;
+  }
+
+  /**
+   * Get the ids of the apartments in application.
+   */
+  public function getApartmentIds(): array {
+    $apartments = [];
+    foreach ($this->getApartments() as $apartment) {
+      $apartments[] = (int) $apartment->id;
+    }
+    return $apartments;
+  }
+
+  /**
+   * Get additional applicants.
+   *
+   * @return array
+   *   Array of applicants.
+   */
+  public function getApplicants(): array {
+    return $this->applicant->getValue();
+  }
+
+  /**
+   * Is additional applicant set to the application form.
+   *
+   * @return bool
+   */
+  public function hasAdditionalApplicant(): bool {
+    return $this->applicant->isEmpty() ? FALSE : TRUE;
+  }
+
+  /**
+   * Application has been sent to backend and therefore is locked.
+   *
+   * @return bool
+   */
+  public function isLocked(): bool {
+    return $this->field_locked->value ? TRUE : FALSE;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
     $fields += static::ownerBaseFieldDefinitions($entity_type);
 
@@ -103,8 +170,7 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-
-    # change to entity reference.
+    // Change to entity reference.
     $fields['parent_id'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('Application parent'))
       ->setDescription(t('The parent application of application entity.'))
@@ -116,8 +182,6 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
       ->setReadOnly(TRUE);
 
     $fields['apartment'] = BaseFieldDefinition::create('asu_apartment')
-      ->setLabel(t('Apartment ID'))
-      ->setDescription(t('The id of the project apartments'))
       ->setCardinality(-1)
       ->setReadOnly(FALSE)
       ->setDisplayOptions('view', [
@@ -131,11 +195,10 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
         'settings' => [],
       ]);
 
-
     $fields['applicant'] = BaseFieldDefinition::create('asu_applicant')
       ->setLabel(t('Applicants'))
       ->setDescription(t('Basic information of the people who are part of the application'))
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setCardinality(1)
       ->setDisplayOptions('form', [
         'type' => 'asu_applicant_widget',
         'weight' => 5,
@@ -159,35 +222,27 @@ class Application extends EditorialContentEntityBase implements ContentEntityInt
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the entity was last edited.'));
 
-    #REMOVE _FIELD
     $fields['field_locked'] = BaseFieldDefinition::create('boolean')
-    ->setLabel(t('Locked'))
-    ->setDefaultValue(0)
-    ->setReadOnly(TRUE);
+      ->setLabel(t('Locked'))
+      ->setDefaultValue(0)
+      ->setReadOnly(TRUE);
 
     return $fields;
   }
 
   /**
-   * @inheritDoc
+   * {@inheritDoc}
    */
-  public static function preCreate(EntityStorageInterface $storage, array &$values)
-  {
-    parent::preCreate($storage, $values); // TODO: Change the autogenerated stub
+  public static function preCreate(EntityStorageInterface $storage, array &$values) {
+    parent::preCreate($storage, $values);
 
     $parameters = \Drupal::routeMatch()->getParameters();
     $project_id = $parameters->get('project_id');
-
-    //get apartments, not here I guess.
-    /** @var \GuzzleHttp\Client $client */
-    #$client = Drupal::httpClient();
-    #$apartments = $client->send();
 
     $values += [
       'uid' => \Drupal::currentUser()->id(),
       'project_id' => $project_id,
     ];
-
   }
 
 }

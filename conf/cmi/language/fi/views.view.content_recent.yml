@@ -1,3 +1,5 @@
+label: 'Uusin sisältö'
+description: 'Uusin sisältö.'
 display:
   default:
     display_title: Isäntä
@@ -12,6 +14,10 @@ display:
       fields:
         changed:
           separator: ', '
+      title: 'Uusin sisältö'
       empty:
         area_text_custom:
           content: 'Ei sisältöä.'
+      use_more_text: Lisää
+  block_1:
+    display_title: Lohko

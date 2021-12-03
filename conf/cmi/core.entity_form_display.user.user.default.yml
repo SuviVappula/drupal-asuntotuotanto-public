@@ -3,20 +3,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.user.user.field_address
-    - field.field.user.user.field_bank_account_number
-    - field.field.user.user.field_city
-    - field.field.user.user.field_contact_methods
-    - field.field.user.user.field_first_name
-    - field.field.user.user.field_identification_number
-    - field.field.user.user.field_last_name
-    - field.field.user.user.field_phone_number
-    - field.field.user.user.field_postal_code
-    - field.field.user.user.field_right_of_r
-    - field.field.user.user.field_wealth_report
+    - field.field.user.user.field_backend_password
+    - field.field.user.user.field_backend_profile
+    - field.field.user.user.field_email_is_valid
   module:
-    - file
-    - personal_id
     - user
 id: user.user.default
 targetEntityType: user
@@ -28,96 +18,34 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_address:
-    weight: 5
+  field_backend_password:
+    weight: 11
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_bank_account_number:
-    weight: 4
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_city:
-    weight: 7
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_contact_methods:
-    type: options_select
+  field_backend_profile:
     weight: 10
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  language:
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_first_name:
-    weight: 1
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_identification_number:
-    weight: 6
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: personal_id_plain_widget
-    region: content
-  field_last_name:
-    weight: 2
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_phone_number:
-    weight: 3
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_postal_code:
-    type: string_textfield
-    weight: 8
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_right_of_r:
-    type: number
+  translation:
     weight: 9
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_wealth_report:
-    type: file_generic
-    weight: 11
-    region: content
-    settings:
-      progress_indicator: throbber
-    third_party_settings: {  }
-  language:
-    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_email_is_valid: true
   langcode: true
   path: true
   timezone: true

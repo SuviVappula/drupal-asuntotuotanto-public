@@ -1,14 +1,21 @@
-uuid: c75dcdbe-5233-407b-a327-d72efac33a5f
+uuid: b00423ad-44d5-4089-9a37-c65992c47207
 langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
+  default_config_hash: EDyVdaROG6pYzyEct43c01Wq4gpATszrk-qR6gqnQ84
 id: anonymous
-label: 'Anonymous user'
+label: 'Anonyymi käyttäjä'
 weight: 0
 is_admin: false
 permissions:
   - 'access content'
+  - 'administer rest resources'
+  - 'create application'
   - 'display eu cookie compliance popup'
+  - 'restful get asu_applications'
+  - 'restful get asu_filters'
+  - 'restful get asu_initialize'
+  - 'restful post asu_elastic_proxy'
   - 'view media'
+  - 'view remote entities'

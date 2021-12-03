@@ -1,0 +1,18 @@
+uuid: 06e34d81-9b0b-46bc-b97d-5e9b93b934ce
+langcode: en
+status: true
+dependencies:
+  module:
+    - external_entities
+id: apartment.field_application_period_active
+field_name: field_application_period_active
+entity_type: apartment
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

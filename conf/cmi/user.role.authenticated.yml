@@ -1,14 +1,22 @@
-uuid: 11509c1f-3756-4572-98f3-7fffd4c493fc
+uuid: f5f5c3a2-88d2-4ab3-b472-d84f3ed07391
 langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+  default_config_hash: 83Nuup-6oYkkdAsvg3nrR2pBOgtTXEV1JrzpCCLkYLM
 id: authenticated
-label: 'Authenticated user'
+label: 'Sisäänkirjautunut käyttäjä'
 weight: 1
 is_admin: false
 permissions:
   - 'access content'
+  - 'administer rest resources'
+  - 'create application'
   - 'display eu cookie compliance popup'
+  - 'restful get asu_applications'
+  - 'restful get asu_filters'
+  - 'restful get asu_initialize'
+  - 'restful post asu_elastic_proxy'
+  - 'use text format full_html'
   - 'view media'
+  - 'view remote entities'

@@ -1,0 +1,4 @@
+ignored_config_entities:
+  - asu_mailer.email_content_settings
+_core:
+  default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk

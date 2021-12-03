@@ -1,0 +1,24 @@
+uuid: afb2285d-d106-4d5a-886c-9afe8097738c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.apartment.field_application_period_active
+  module:
+    - external_entities
+id: apartment.apartment.field_application_period_active
+field_name: field_application_period_active
+entity_type: apartment
+bundle: apartment
+label: 'Application period active'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

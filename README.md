@@ -13,7 +13,7 @@ Project is built using [helfi-platform](https://github.com/City-of-Helsinki/drup
 
 Env | Branch | Drush alias | URL
 --- | ------ | ----------- | ---
-development | * | - | http://asuntotuotanto-public.docker.sh/
+development | * | - | http://asuntotuotanto-public.docker.so/
 production | main | @main | TBD
 
 ## Requirements

@@ -1,4 +1,4 @@
-uuid: 31550d15-7971-4561-a35c-659e2cb26272
+uuid: 2bd3aced-f346-4f9d-adad-ec48524891ab
 langcode: en
 status: true
 dependencies:
@@ -16,6 +16,9 @@ settings:
     -
       value: 50-50
       label: 'Divided 50/50'
+    -
+      value: 50-50-fw
+      label: 'Divided 50/50 Full width'
     -
       value: 30-70
       label: 'Divided 30/70'
